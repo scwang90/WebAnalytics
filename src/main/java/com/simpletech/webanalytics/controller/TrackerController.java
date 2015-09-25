@@ -1,0 +1,51 @@
+package com.simpletech.webanalytics.controller;
+
+import com.simpletech.webanalytics.model.entity.JsDetect;
+import com.simpletech.webanalytics.model.entity.JsEvent;
+import com.simpletech.webanalytics.service.TrackerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * 探针数据接收 API
+ * Created by Administrator on 2015/9/21.
+ */
+@Controller
+@RequestMapping("tracker")
+public class TrackerController {
+
+    @Autowired
+    TrackerService service;
+
+    /**
+     * JS探针页面统计
+     * @param idsite 网站ID
+     * @param detect 页面参数接收对象
+     * @throws Exception
+     */
+    @RequestMapping("1.0/tpv")
+    public void ptv(HttpServletRequest request,HttpServletResponse response,String idsite,JsDetect detect) throws Exception {
+        detect.check();
+        detect.bind(request, response);
+        service.trackerPageView(idsite,detect);
+        request.getRequestDispatcher("/images/pixel.jpg").forward(request, response);
+    }
+
+    /**
+     * JS探针事件统计
+     * @param idsite 网站ID
+     * @param event 事件接收对象
+     * @throws Exception
+     */
+    @RequestMapping("1.0/ten")
+    public void ten(HttpServletRequest request,HttpServletResponse response,String idsite,JsEvent event) throws Exception {
+        event.check();
+        event.bind(request, response);
+        service.trackerEvent(idsite, event);
+        request.getRequestDispatcher("/images/pixel.jpg").forward(request, response);
+    }
+}
