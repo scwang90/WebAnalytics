@@ -9,7 +9,8 @@ public class UserAgent {
 	private String engine; 
 	private String version; // 5 
 	private String engineVersion;
-	
+	private String model;
+
 	public boolean isMobile()
 	{
 		return mobile;
@@ -66,7 +67,10 @@ public class UserAgent {
 	{
 		this.engineVersion = engineVersion;
 	}
-	
-	
-
+	public void setModel(String model) {
+		this.model = model;
+	}
+	public String getModel() {
+		return model;
+	}
 }

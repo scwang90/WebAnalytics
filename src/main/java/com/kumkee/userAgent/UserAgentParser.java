@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 public class UserAgentParser
 {
-
 	public UserAgent parse(String userAgentString)
 	{
 		UserAgent userAgent = new UserAgent();
@@ -18,6 +17,7 @@ public class UserAgentParser
 		userAgent.setOs(this.OS(userAgentString));
 		userAgent.setPlatform(this.platform(userAgentString));
 		userAgent.setMobile(Platform.mobilePlatforms.contains(userAgent.getPlatform()) || userAgent.getBrowser().equalsIgnoreCase(Browser.PSP));
+		userAgent.setModel(Model.parser(userAgentString).getRemark());
 		return userAgent;
 	}
 

@@ -29,6 +29,7 @@
     <%--<button onclick="send()">发送探针数据</button>--%>
 </div>
 <h1>jsp获取客户端信息</h1>
+品牌:<%=useragent.getModel()%><br>
 浏览器:<%=useragent.getBrowser()%><br>
 浏览器版本:<%=useragent.getVersion()%><br>
 平台:<%=useragent.getPlatform()%><br>
