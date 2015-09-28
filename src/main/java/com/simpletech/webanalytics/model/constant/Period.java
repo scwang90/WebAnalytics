@@ -10,22 +10,18 @@ import java.util.Calendar;
  */
 public enum Period {
 
-    year(null, "yyMM", Calendar.YEAR),
-    month(year, "yyMM", Calendar.MONTH),
-    week(month, "yy-ww", Calendar.WEEK_OF_YEAR),
-    day(week, "yyMMdd", Calendar.DAY_OF_MONTH),
-    hour(day, "yyMMddHH", Calendar.HOUR_OF_DAY),
+    year("yyMM", Calendar.YEAR),
+    month("yyMM", Calendar.MONTH),
+    week("yy-ww", Calendar.WEEK_OF_YEAR),
+    day("yyMMdd", Calendar.DAY_OF_MONTH),
+    hour("yyMMddHH", Calendar.HOUR_OF_DAY),
     ;
     private final int field;
-    private final int parentfield;
     private final DateFormat format;
-    private final DateFormat parentformat;
 
-    Period(Period parent,String format,int field){
+    Period(String format,int field){
         this.format = new SimpleDateFormat(format);
         this.field = field;
-        this.parentfield = parent.field;
-        this.parentformat = parent.format;
     }
 
     public int getField() {
@@ -33,7 +29,9 @@ public enum Period {
     }
 
     public int getParentField() {
-        return parentfield;
+        if (this.ordinal() == 0)
+            return field;
+        return values()[ordinal()-1].field;
     }
 
     public DateFormat getFormat() {
@@ -41,6 +39,8 @@ public enum Period {
     }
 
     public DateFormat getParentformat() {
-        return parentformat;
+        if (this.ordinal() == 0)
+            return format;
+        return values()[ordinal()-1].format;
     }
 }
