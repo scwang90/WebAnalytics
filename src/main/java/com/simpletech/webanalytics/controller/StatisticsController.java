@@ -101,8 +101,8 @@ public class StatisticsController {
      * @return 开始时间
      */
     private Date timeStart(Period period, int offset) throws ParseException {
-        int field = period.getField();
-        DateFormat format = period.getFormat();
+        int field = period.getParentField();
+        DateFormat format = period.getParentformat();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(format.parse(format.format(calendar.getTime())));
         calendar.add(field,offset);
@@ -116,8 +116,8 @@ public class StatisticsController {
      * @return 结束时间
      */
     private Date timeEnd(Period period, int offset) throws ParseException {
-        int field = period.getField();
-        DateFormat format = period.getFormat();
+        int field = period.getParentField();
+        DateFormat format = period.getParentformat();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(format.parse(format.format(calendar.getTime())));
         calendar.add(field,offset+1);
@@ -129,7 +129,7 @@ public class StatisticsController {
      * @param list 数据库有效数据列表
      * @return 填充的数据
      */
-    private List<PeriodValue> fulldata(List<PeriodValue> list, SimpleDateFormat format, int field, Date start, Date end) {
+    private List<PeriodValue> fulldata(List<PeriodValue> list, DateFormat format, int field, Date start, Date end) {
         Map<String,PeriodValue> map = tomap(list);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(start);
@@ -169,7 +169,7 @@ public class StatisticsController {
     }
 
     @RequestMapping("event/{siteId}")
-    public Object event() throws Exception {
+    public Object event(@PathVariable String siteId) throws Exception {
         return null;
     }
 
