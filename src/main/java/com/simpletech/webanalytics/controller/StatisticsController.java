@@ -40,13 +40,14 @@ public class StatisticsController {
      * 灵活通用 Visit|PV|UV|IP统计数据获取API
      *
      * @param siteId 网站ID
-     * @param period 时段周期
+     * @param period 时段周期 [时|日|周|月]
+     * @param norm   统计指标 [Visit|PV|UV|IP]
      * @param start  开始时间 java时间long值 如new Date().getTime()
      * @param end    结束时间 java时间long值 如new Date().getTime()
      * @return PV统计数据 {status:[true|false],data:[{time,date,val},...]}
      */
-    @RequestMapping("{norm:visit|pv|uv|ip}/{siteId}/{period:hour|day|week|month}")
-    public Object norm(@PathVariable Norm norm, @PathVariable String siteId, @PathVariable Period period, @RequestParam Date start, @RequestParam Date end) throws Exception {
+    @RequestMapping("{siteId}/{period:hour|day|week|month}/{norm:visit|pv|uv|ip}")
+    public Object norm(@PathVariable String siteId, @PathVariable Period period, @PathVariable Norm norm, @RequestParam Date start, @RequestParam Date end) throws Exception {
         List<PeriodValue> list;
         switch (norm) {
             case visit:
@@ -68,11 +69,20 @@ public class StatisticsController {
         return list;
     }
 
-
-    @RequestMapping("{norm:visit|pv|uv|ip}/{siteId}/{period:hour|day|week|month}/{offset:\\d+}")
-    public Object norm(@PathVariable Norm norm, @PathVariable String siteId, @PathVariable Period period,@PathVariable int offset) throws Exception {
-        Date end = timeEnd(period, offset);
-        Date start = timeStart(period, offset);
+    /**
+     * 灵活通用 Visit|PV|UV|IP统计数据获取API
+     *
+     * @param siteId 网站ID
+     * @param period 时段周期 [hour|day|week|month]=[时|日|周|月]
+     * @param norm   统计指标 [Visit|PV|UV|IP]
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year] 注：要大于 period
+     * @return PV统计数据 {status:[true|false],data:[{time,date,val},...]}
+     */
+    @RequestMapping("{siteId}/{offset:-?\\d+}/{span:day|week|month|year}/{period:hour|day|week|month}/{norm:visit|pv|uv|ip}")
+    public Object norm(@PathVariable String siteId, @PathVariable int offset, @PathVariable Period span, @PathVariable Period period, @PathVariable Norm norm) throws Exception {
+        Date end = timeEnd(span, offset);
+        Date start = timeStart(span, offset);
         List<PeriodValue> list;
         switch (norm) {
             case visit:
@@ -96,41 +106,44 @@ public class StatisticsController {
 
     /**
      * 根据周期和便宜计算开始时间
-     * @param period 时段周期
+     *
+     * @param span   时间跨度
      * @param offset 偏移
      * @return 开始时间
      */
-    private Date timeStart(Period period, int offset) throws ParseException {
-        int field = period.getParentField();
-        DateFormat format = period.getParentformat();
+    private Date timeStart(Period span, int offset) throws ParseException {
+        int field = span.getField();
+        DateFormat format = span.getFormat();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(format.parse(format.format(calendar.getTime())));
-        calendar.add(field,offset);
+        calendar.add(field, offset);
         return calendar.getTime();
     }
 
     /**
      * 根据周期和便宜计算结束时间
-     * @param period 时段周期
+     *
+     * @param span   时间跨度
      * @param offset 偏移
      * @return 结束时间
      */
-    private Date timeEnd(Period period, int offset) throws ParseException {
-        int field = period.getParentField();
-        DateFormat format = period.getParentformat();
+    private Date timeEnd(Period span, int offset) throws ParseException {
+        int field = span.getField();
+        DateFormat format = span.getFormat();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(format.parse(format.format(calendar.getTime())));
-        calendar.add(field,offset+1);
+        calendar.add(field, offset + 1);
         return calendar.getTime();
     }
 
     /**
      * 按天来填充数据
+     *
      * @param list 数据库有效数据列表
      * @return 填充的数据
      */
     private List<PeriodValue> fulldata(List<PeriodValue> list, DateFormat format, int field, Date start, Date end) {
-        Map<String,PeriodValue> map = tomap(list);
+        Map<String, PeriodValue> map = tomap(list);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(start);
         List<PeriodValue> nlist = new ArrayList<>();
@@ -143,13 +156,13 @@ public class StatisticsController {
                 value.setDate(keytime);
                 value.setTime(calendar.getTime());
                 nlist.add(value);
-            }else {
+            } else {
                 nlist.add(value);
                 map.remove(keytime);
             }
             calendar.add(field, 1);
         }
-        for (Map.Entry<String, PeriodValue> entry : map.entrySet()){
+        for (Map.Entry<String, PeriodValue> entry : map.entrySet()) {
             nlist.add(entry.getValue());
         }
         return nlist;
@@ -157,13 +170,14 @@ public class StatisticsController {
 
     /**
      * 把list转为map 方便查找
+     *
      * @param list 数据库有效数据列表
      * @return map
      */
     private Map<String, PeriodValue> tomap(List<PeriodValue> list) {
         Map<String, PeriodValue> map = new LinkedHashMap<>();
-        for (PeriodValue value : list){
-            map.put(value.getDate(),value);
+        for (PeriodValue value : list) {
+            map.put(value.getDate(), value);
         }
         return map;
     }
