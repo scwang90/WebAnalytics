@@ -29,7 +29,7 @@ public class StatisticsController {
     private static SimpleDateFormat fmonth = new SimpleDateFormat("yyMM");
 
     @Autowired
-    StatisticsService statisticsService;
+    StatisticsService service;
 
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder) throws Exception {
@@ -51,16 +51,16 @@ public class StatisticsController {
         List<PeriodValue> list;
         switch (norm) {
             case visit:
-                list = statisticsService.visit(siteId, period, start, end);
+                list = service.visit(siteId, period, start, end);
                 break;
             case pv:
-                list = statisticsService.pageView(siteId, period, start, end);
+                list = service.pageView(siteId, period, start, end);
                 break;
             case uv:
-                list = statisticsService.uniqueVisitor(siteId, period, start, end);
+                list = service.uniqueVisitor(siteId, period, start, end);
                 break;
             case ip:
-                list = statisticsService.internetProtocol(siteId, period, start, end);
+                list = service.internetProtocol(siteId, period, start, end);
                 break;
             default:
                 throw new ServiceException("无效指标");
@@ -73,10 +73,10 @@ public class StatisticsController {
      * 灵活通用 Visit|PV|UV|IP统计数据获取API
      *
      * @param siteId 网站ID
-     * @param period 时段周期 [hour|day|week|month]=[时|日|周|月]
-     * @param norm   统计指标 [Visit|PV|UV|IP]
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year] 注：要大于 period
+     * @param period 时段周期 [hour|day|week|month]=[时|日|周|月]
+     * @param norm   统计指标 [Visit|PV|UV|IP]
      * @return PV统计数据 {status:[true|false],data:[{time,date,val},...]}
      */
     @RequestMapping("{siteId}/{offset:-?\\d+}/{span:day|week|month|year}/{period:hour|day|week|month}/{norm:visit|pv|uv|ip}")
@@ -86,16 +86,16 @@ public class StatisticsController {
         List<PeriodValue> list;
         switch (norm) {
             case visit:
-                list = statisticsService.visit(siteId, period, start, end);
+                list = service.visit(siteId, period, start, end);
                 break;
             case pv:
-                list = statisticsService.pageView(siteId, period, start, end);
+                list = service.pageView(siteId, period, start, end);
                 break;
             case uv:
-                list = statisticsService.uniqueVisitor(siteId, period, start, end);
+                list = service.uniqueVisitor(siteId, period, start, end);
                 break;
             case ip:
-                list = statisticsService.internetProtocol(siteId, period, start, end);
+                list = service.internetProtocol(siteId, period, start, end);
                 break;
             default:
                 throw new ServiceException("无效指标");

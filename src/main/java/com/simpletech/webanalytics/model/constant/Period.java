@@ -10,7 +10,7 @@ import java.util.Calendar;
  */
 public enum Period {
 
-    year("yyMM", Calendar.YEAR),
+    year("yy", Calendar.YEAR),
     month("yyMM", Calendar.MONTH),
     week("yy-ww", Calendar.WEEK_OF_YEAR),
     day("yyMMdd", Calendar.DAY_OF_MONTH),
