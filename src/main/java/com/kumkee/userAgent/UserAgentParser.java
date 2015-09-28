@@ -7,17 +7,24 @@ import java.util.regex.Pattern;
 
 public class UserAgentParser
 {
-	public UserAgent parse(String userAgentString)
+	public UserAgent parse(String useragent)
 	{
 		UserAgent userAgent = new UserAgent();
-		userAgent.setBrowser(this.browser(userAgentString));
-		userAgent.setVersion(this.browserVersion(userAgentString, userAgent.getBrowser()));
-		userAgent.setEngine(this.engine(userAgentString));
-		userAgent.setEngineVersion(engineVersion(userAgentString));
-		userAgent.setOs(this.OS(userAgentString));
-		userAgent.setPlatform(this.platform(userAgentString));
-		userAgent.setMobile(Platform.mobilePlatforms.contains(userAgent.getPlatform()) || userAgent.getBrowser().equalsIgnoreCase(Browser.PSP));
-		userAgent.setModel(Model.parser(userAgentString).getRemark());
+		userAgent.setBrowseer(this.browser(useragent));
+		userAgent.setVersion(this.browserVersion(useragent, userAgent.getBrowseer()));
+		userAgent.setEngine(this.engine(useragent));
+		userAgent.setEngineVersion(engineVersion(useragent));
+		userAgent.setOs(this.OS(useragent));
+		userAgent.setPlatform(this.platform(useragent));
+		userAgent.setMobile(Platform.mobilePlatforms.contains(userAgent.getPlatform()) || userAgent.getBrowseer().equalsIgnoreCase(Browseer.PSP));
+		Brand brand = Brand.parser(useragent);
+		userAgent.setModel(brand.getModel());
+		userAgent.setBrand(brand);
+		userAgent.setNetType(Nettype.parser(useragent));
+		userAgent.setDevice(Device.parser(useragent));
+		userAgent.setApplication(Application.parser(useragent));
+		userAgent.setOperateSystem(OperateSystem.parser(useragent));
+		userAgent.setBrowseer(Browser.parser(useragent));
 		return userAgent;
 	}
 
@@ -97,173 +104,173 @@ public class UserAgentParser
 
 	public String browser(String userAgentString)
 	{
-		if(matches(Browser.KonquerorPattern, userAgentString))
-			return Browser.Konqueror;
-		else if(matches(Browser.IEPattern, userAgentString))
-			return Browser.IE;
-		else if(matches(Browser.QQPattern, userAgentString))
-			return Browser.QQ;
-		else if(matches(Browser.MIUIPattern, userAgentString))
-			return Browser.MIUI;
-		else if(matches(Browser.XiaomiPattern, userAgentString))
-			return Browser.Xiaomi;
-		else if(matches(Browser.SougouPattern, userAgentString))
-			return Browser.Sougou;
-		else if(matches(Browser.BaiduPattern, userAgentString))
-			return Browser.Baidu;
-		else if(matches(Browser._360Pattern, userAgentString))
-			return Browser._360;
-		else if(matches(Browser.WeixinPattern, userAgentString))
-			return Browser.Weixin;
-		else if(matches(Browser.OperaPattern, userAgentString))
-			return Browser.Opera;
-		else if(matches(Browser.ChromePattern, userAgentString))
-			return Browser.Chrome;
-		else if(matches(Browser.SafariPattern, userAgentString))
-			return Browser.Safari;
-		else if(matches(Browser.PS3Pattern, userAgentString))
-			return Browser.PS3;
-		else if(matches(Browser.PSPPattern, userAgentString))
-			return Browser.PSP;
-		else if(matches(Browser.FirefoxPattern, userAgentString))
-			return Browser.Firefox;
-		else if(matches(Browser.LotusPattern, userAgentString))
-			return Browser.Lotus;
-		else if(matches(Browser.NetscapePattern, userAgentString))
-			return Browser.Netscape;
-		else if(matches(Browser.SeamonkeyPattern, userAgentString))
-			return Browser.Seamonkey;
-		else if(matches(Browser.ThunderbirdPattern, userAgentString))
-			return Browser.Thunderbird;
-		else if(matches(Browser.OutlookPattern, userAgentString))
-			return Browser.Outlook;
-		else if(matches(Browser.EvolutionPattern, userAgentString))
-			return Browser.Evolution;
-		else if(matches(Browser.MSIEMobilePattern, userAgentString))
-			return Browser.MSIEMobile;
-		else if(matches(Browser.MSIEPattern, userAgentString))
-			return Browser.MSIE;
-		else if(matches(Browser.BlackberryPattern, userAgentString))
-			return Browser.Blackberry;
-		else if(matches(Browser.GabblePattern, userAgentString))
-			return Browser.Gabble;
-		else if(matches(Browser.YammerDesktopPattern, userAgentString))
-			return Browser.YammerDesktop;
-		else if(matches(Browser.YammerMobilePattern, userAgentString))
-			return Browser.YammerMobile;
-		else if(matches(Browser.ApacheHTTPClientPattern, userAgentString))
-			return Browser.ApacheHTTPClient;
-		else if(matches(Browser.EDGEPattern, userAgentString))
-			return Browser.EDGE;
+		if(matches(Browseer.KonquerorPattern, userAgentString))
+			return Browseer.Konqueror;
+		else if(matches(Browseer.IEPattern, userAgentString))
+			return Browseer.IE;
+		else if(matches(Browseer.QQPattern, userAgentString))
+			return Browseer.QQ;
+		else if(matches(Browseer.MIUIPattern, userAgentString))
+			return Browseer.MIUI;
+		else if(matches(Browseer.XiaomiPattern, userAgentString))
+			return Browseer.Xiaomi;
+		else if(matches(Browseer.SougouPattern, userAgentString))
+			return Browseer.Sougou;
+		else if(matches(Browseer.BaiduPattern, userAgentString))
+			return Browseer.Baidu;
+		else if(matches(Browseer._360Pattern, userAgentString))
+			return Browseer._360;
+		else if(matches(Browseer.WeixinPattern, userAgentString))
+			return Browseer.Weixin;
+		else if(matches(Browseer.OperaPattern, userAgentString))
+			return Browseer.Opera;
+		else if(matches(Browseer.ChromePattern, userAgentString))
+			return Browseer.Chrome;
+		else if(matches(Browseer.SafariPattern, userAgentString))
+			return Browseer.Safari;
+		else if(matches(Browseer.PS3Pattern, userAgentString))
+			return Browseer.PS3;
+		else if(matches(Browseer.PSPPattern, userAgentString))
+			return Browseer.PSP;
+		else if(matches(Browseer.FirefoxPattern, userAgentString))
+			return Browseer.Firefox;
+		else if(matches(Browseer.LotusPattern, userAgentString))
+			return Browseer.Lotus;
+		else if(matches(Browseer.NetscapePattern, userAgentString))
+			return Browseer.Netscape;
+		else if(matches(Browseer.SeamonkeyPattern, userAgentString))
+			return Browseer.Seamonkey;
+		else if(matches(Browseer.ThunderbirdPattern, userAgentString))
+			return Browseer.Thunderbird;
+		else if(matches(Browseer.OutlookPattern, userAgentString))
+			return Browseer.Outlook;
+		else if(matches(Browseer.EvolutionPattern, userAgentString))
+			return Browseer.Evolution;
+		else if(matches(Browseer.MSIEMobilePattern, userAgentString))
+			return Browseer.MSIEMobile;
+		else if(matches(Browseer.MSIEPattern, userAgentString))
+			return Browseer.MSIE;
+		else if(matches(Browseer.BlackberryPattern, userAgentString))
+			return Browseer.Blackberry;
+		else if(matches(Browseer.GabblePattern, userAgentString))
+			return Browseer.Gabble;
+		else if(matches(Browseer.YammerDesktopPattern, userAgentString))
+			return Browseer.YammerDesktop;
+		else if(matches(Browseer.YammerMobilePattern, userAgentString))
+			return Browseer.YammerMobile;
+		else if(matches(Browseer.ApacheHTTPClientPattern, userAgentString))
+			return Browseer.ApacheHTTPClient;
+		else if(matches(Browseer.EDGEPattern, userAgentString))
+			return Browseer.EDGE;
 		else
-			return Browser.Unknown;
+			return Browseer.Unknown;
 	}
 
 	public Pattern browserPattern(String userAgentString)
 	{
-		if(matches(Browser.KonquerorPattern, userAgentString))
-			return Browser.KonquerorPattern;
-		else if(matches(Browser.IEPattern, userAgentString))
-			return Browser.IEPattern;
-		else if(matches(Browser.QQPattern, userAgentString))
-			return Browser.QQPattern;
-		else if(matches(Browser.MIUIPattern, userAgentString))
-			return Browser.MIUIPattern;
-		else if(matches(Browser.XiaomiPattern, userAgentString))
-			return Browser.XiaomiPattern;
-		else if(matches(Browser.WeixinPattern, userAgentString))
-			return Browser.WeixinPattern;
-		else if(matches(Browser.SougouPattern, userAgentString))
-			return Browser.SougouPattern;
-		else if(matches(Browser.BaiduPattern, userAgentString))
-			return Browser.BaiduPattern;
-		else if(matches(Browser._360Pattern, userAgentString))
-			return Browser._360Pattern;
-		else if(matches(Browser.OperaPattern, userAgentString))
-			return Browser.OperaPattern;
-		else if(matches(Browser.ChromePattern, userAgentString))
-			return Browser.ChromePattern;
-		else if(matches(Browser.SafariPattern, userAgentString))
-			return Browser.SafariPattern;
-		else if(matches(Browser.PS3Pattern, userAgentString))
-			return Browser.PS3Pattern;
-		else if(matches(Browser.PSPPattern, userAgentString))
-			return Browser.PSPPattern;
-		else if(matches(Browser.FirefoxPattern, userAgentString))
-			return Browser.FirefoxPattern;
-		else if(matches(Browser.LotusPattern, userAgentString))
-			return Browser.LotusPattern;
-		else if(matches(Browser.NetscapePattern, userAgentString))
-			return Browser.NetscapePattern;
-		else if(matches(Browser.SeamonkeyPattern, userAgentString))
-			return Browser.SeamonkeyPattern;
-		else if(matches(Browser.ThunderbirdPattern, userAgentString))
-			return Browser.ThunderbirdPattern;
-		else if(matches(Browser.OutlookPattern, userAgentString))
-			return Browser.OutlookPattern;
-		else if(matches(Browser.EvolutionPattern, userAgentString))
-			return Browser.EvolutionPattern;
-		else if(matches(Browser.MSIEMobilePattern, userAgentString))
-			return Browser.MSIEMobilePattern;
-		else if(matches(Browser.MSIEPattern, userAgentString))
-			return Browser.MSIEPattern;
-		else if(matches(Browser.BlackberryPattern, userAgentString))
-			return Browser.BlackberryPattern;
-		else if(matches(Browser.GabblePattern, userAgentString))
-			return Browser.GabblePattern;
-		else if(matches(Browser.YammerDesktopPattern, userAgentString))
-			return Browser.YammerDesktopPattern;
-		else if(matches(Browser.YammerMobilePattern, userAgentString))
-			return Browser.YammerMobilePattern;
-		else if(matches(Browser.ApacheHTTPClientPattern, userAgentString))
-			return Browser.ApacheHTTPClientPattern;
-		else if(matches(Browser.EDGEPattern, userAgentString))
-			return Browser.EDGEPattern;
+		if(matches(Browseer.KonquerorPattern, userAgentString))
+			return Browseer.KonquerorPattern;
+		else if(matches(Browseer.IEPattern, userAgentString))
+			return Browseer.IEPattern;
+		else if(matches(Browseer.QQPattern, userAgentString))
+			return Browseer.QQPattern;
+		else if(matches(Browseer.MIUIPattern, userAgentString))
+			return Browseer.MIUIPattern;
+		else if(matches(Browseer.XiaomiPattern, userAgentString))
+			return Browseer.XiaomiPattern;
+		else if(matches(Browseer.WeixinPattern, userAgentString))
+			return Browseer.WeixinPattern;
+		else if(matches(Browseer.SougouPattern, userAgentString))
+			return Browseer.SougouPattern;
+		else if(matches(Browseer.BaiduPattern, userAgentString))
+			return Browseer.BaiduPattern;
+		else if(matches(Browseer._360Pattern, userAgentString))
+			return Browseer._360Pattern;
+		else if(matches(Browseer.OperaPattern, userAgentString))
+			return Browseer.OperaPattern;
+		else if(matches(Browseer.ChromePattern, userAgentString))
+			return Browseer.ChromePattern;
+		else if(matches(Browseer.SafariPattern, userAgentString))
+			return Browseer.SafariPattern;
+		else if(matches(Browseer.PS3Pattern, userAgentString))
+			return Browseer.PS3Pattern;
+		else if(matches(Browseer.PSPPattern, userAgentString))
+			return Browseer.PSPPattern;
+		else if(matches(Browseer.FirefoxPattern, userAgentString))
+			return Browseer.FirefoxPattern;
+		else if(matches(Browseer.LotusPattern, userAgentString))
+			return Browseer.LotusPattern;
+		else if(matches(Browseer.NetscapePattern, userAgentString))
+			return Browseer.NetscapePattern;
+		else if(matches(Browseer.SeamonkeyPattern, userAgentString))
+			return Browseer.SeamonkeyPattern;
+		else if(matches(Browseer.ThunderbirdPattern, userAgentString))
+			return Browseer.ThunderbirdPattern;
+		else if(matches(Browseer.OutlookPattern, userAgentString))
+			return Browseer.OutlookPattern;
+		else if(matches(Browseer.EvolutionPattern, userAgentString))
+			return Browseer.EvolutionPattern;
+		else if(matches(Browseer.MSIEMobilePattern, userAgentString))
+			return Browseer.MSIEMobilePattern;
+		else if(matches(Browseer.MSIEPattern, userAgentString))
+			return Browseer.MSIEPattern;
+		else if(matches(Browseer.BlackberryPattern, userAgentString))
+			return Browseer.BlackberryPattern;
+		else if(matches(Browseer.GabblePattern, userAgentString))
+			return Browseer.GabblePattern;
+		else if(matches(Browseer.YammerDesktopPattern, userAgentString))
+			return Browseer.YammerDesktopPattern;
+		else if(matches(Browseer.YammerMobilePattern, userAgentString))
+			return Browseer.YammerMobilePattern;
+		else if(matches(Browseer.ApacheHTTPClientPattern, userAgentString))
+			return Browseer.ApacheHTTPClientPattern;
+		else if(matches(Browseer.EDGEPattern, userAgentString))
+			return Browseer.EDGEPattern;
 		else
-			return Browser.UnknownPattern;
+			return Browseer.UnknownPattern;
 	}
 
 	public String browserVersion(String userAgentString, String browser)
 	{
 		Pattern pattern;
 
-		if(browser.equalsIgnoreCase(Browser.IE))
+		if(browser.equalsIgnoreCase(Browseer.IE))
 		{
 			pattern = BrowserVersion.IEPattern;
 		}
-		else if(browser.equalsIgnoreCase(Browser.Chrome))
+		else if(browser.equalsIgnoreCase(Browseer.Chrome))
 		{
 			pattern = BrowserVersion.ChromePattern;
 		}
-		else if(browser.equalsIgnoreCase(Browser.Safari))
+		else if(browser.equalsIgnoreCase(Browseer.Safari))
 		{
 			pattern = BrowserVersion.SafariPattern;
 		}
-		else if(browser.equalsIgnoreCase(Browser.PS3))
+		else if(browser.equalsIgnoreCase(Browseer.PS3))
 		{
 			pattern = BrowserVersion.PS3Pattern;
 		}
-		else if(browser.equalsIgnoreCase(Browser.PSP))
+		else if(browser.equalsIgnoreCase(Browseer.PSP))
 		{
 			pattern = BrowserVersion.PSPPattern;
 		}
-		else if(browser.equalsIgnoreCase(Browser.Lotus))
+		else if(browser.equalsIgnoreCase(Browseer.Lotus))
 		{
 			pattern = BrowserVersion.LotusPattern;
 		}
-		else if(browser.equalsIgnoreCase(Browser.Blackberry))
+		else if(browser.equalsIgnoreCase(Browseer.Blackberry))
 		{
 			pattern = BrowserVersion.BlackberryPattern;
 		}
-		else if(browser.equalsIgnoreCase(Browser.YammerDesktop))
+		else if(browser.equalsIgnoreCase(Browseer.YammerDesktop))
 		{
 			pattern = BrowserVersion.YammerDesktopPattern;
 		}
-		else if(browser.equalsIgnoreCase(Browser.YammerMobile))
+		else if(browser.equalsIgnoreCase(Browseer.YammerMobile))
 		{
 			pattern = BrowserVersion.YammerMobilePattern;
 		}
-		else if(browser.equalsIgnoreCase(Browser.ApacheHTTPClient))
+		else if(browser.equalsIgnoreCase(Browseer.ApacheHTTPClient))
 		{
 			pattern = BrowserVersion.ApacheDesktopClientPattern;
 		}

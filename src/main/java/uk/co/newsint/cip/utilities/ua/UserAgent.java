@@ -19,9 +19,9 @@ public class UserAgent
     private String deviceType = UNKNOWN;
     // deviceMaker (example --> BlackBerry)
     private String deviceMaker = UNKNOWN;
-    // device Model (example --> Bold)
+    // device Brand (example --> Bold)
     private String deviceModel = UNKNOWN;
-    // device Model Version (example --> 9900)
+    // device Brand Version (example --> 9900)
     private String deviceModelVersion = UNKNOWN;
     // device Display pixel width
     private String displayWidth = UNKNOWN;

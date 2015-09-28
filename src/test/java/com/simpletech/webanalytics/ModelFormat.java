@@ -1,6 +1,6 @@
 package com.simpletech.webanalytics;
 
-import com.kumkee.userAgent.Model;
+import com.kumkee.userAgent.Brand;
 import org.junit.Test;
 
 import java.util.regex.Matcher;
@@ -13,9 +13,16 @@ public class ModelFormat {
 
     @Test
     public void parser(){
-        String useragent = "Mozilla/5.0 (Linux; U; Android 4.4.2; zh-cn; MI 3 Build/KOT49H) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/5.4 TBS/025469 Mobile Safari/533.1 V1_AND_SQ_5.9.1_272_YYB_D QQ/5.9.1.2535 NetType/WIFI WebP/0.3.0 Pixel/1080";
-        System.out.println(Pattern.compile("\\bmi\\b|xiaomi",Pattern.CASE_INSENSITIVE).matcher(useragent).find());
-        System.out.println(Model.parser(useragent).getRemark());
+        String useragent = "Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaN97-1/20.0.019; Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebKit/525 (KHTML, like Gecko) BrowserNG/7.1.18124";
+        Matcher matcher = Pattern.compile("\\b(m[\\w\\-\\. ]*) build\\b", Pattern.CASE_INSENSITIVE).matcher(useragent);
+        if (matcher.find()){
+            System.out.println(true);
+            System.out.println(matcher.group(1));
+        } else {
+            System.out.println(false);
+        }
+        System.out.println(Brand.parser(useragent).getRemark());
+        System.out.println(Brand.parser(useragent).getModel());
     }
 
     @Test
@@ -27,32 +34,4 @@ public class ModelFormat {
         }
     }
 
-    @Test
-    public void code(){
-        String text = "HT(\"htc\",\"htc\",\"HTC\"),\n" +
-                "    LG(\"\\\\blg\\\\b\",\"lg\",\"LG\"),\n" +
-                "    SS(\"samsung\",\"samsung\",\"三星\"),\n" +
-                "    SI(\"sonyericsson\",\"sonyericsson\",\"索爱\"),\n" +
-                "    SY(\"sony\",\"sony\",\"索尼\"),\n" +
-                "    AS(\"asus\",\"asus\",\"华硕\"),\n" +
-                "    OA(\"onda\",\"onda\",\"昂达\"),\n" +
-                "    WT(\"woxter\",\"woxter\",\"WOXTER\"),\n" +
-                "    HW(\"huawei\",\"huawei\",\"华为\"),\n" +
-                "    DL(\"dell\",\"dell\",\"戴尔\"),\n" +
-                "    AH(\"archos\",\"archos\",\"爱可视\"),\n" +
-                "    MT(\"motorola\",\"motorola\",\"摩托罗拉\"),\n" +
-                "    XM(\"\\\\bmi\\\\b|xiaomi\",\"xiaomi\",\"小米\"),\n" +
-                "    AP(\"apple\\\\b|\\\\bios\\\\b|iphone|ipad|\\\\bmac\\\\b\",\"apple\",\"苹果\"),\n" +
-                "    NK(\"nokia|symbian\",\"nokia\",\"诺基亚\"),\n" +
-                "    PC(\"windows|linux|wow\",\"computer\",\"电脑\"),\n" +
-                "    UN(\"\",\"\",\"未知\"),";
-        String[] lines = text.split("\n");
-        for (String line : lines) {
-//            System.out.println(line);
-            Pattern pattern = Pattern.compile("(\\w+)\\((\".*\"),(\".*\"),(\".*\")\\),");
-            Matcher matcher = pattern.matcher(line);
-            matcher.find();
-            System.out.println(matcher.group(1)+"("+matcher.group(3)+","+matcher.group(4)+","+matcher.group(2)+"),");
-        }
-    }
 }

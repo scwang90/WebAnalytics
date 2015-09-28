@@ -32,7 +32,7 @@ public class UserAgentController {
         out.println("<br>OS : " + userAgent.getOS());
         out.println("<br>OSMaker : " + userAgent.getOSMaker());
         out.println("<br>OSVersion : " + userAgent.getOSVersion());
-        out.println("<br>Browser : " + userAgent.getBrowser());
+        out.println("<br>Browseer : " + userAgent.getBrowser());
         out.println("<br>BrowserVersion : " + userAgent.getBrowserVersion());
         out.println("<br>agent : " + agent);
 

@@ -51,4 +51,5 @@ public interface StatisticsService {
      * @return IP统计数据 {status:[true|false],data:[{time,date,val},...]}
      */
     List<PeriodValue> internetProtocol(String idsite, Period period, Date start, Date end) throws Exception;
+
 }

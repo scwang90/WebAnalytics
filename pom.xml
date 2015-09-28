@@ -14,17 +14,16 @@
 
     <dependencies>
 
-        <!--<dependency>
+        <dependency>
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
             <version>1.17</version>
         </dependency>
-
         <dependency>
             <groupId>nl.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
             <version>1.2.4</version>
-        </dependency>-->
+        </dependency>
 
         <!-- JDBC -->
         <dependency>

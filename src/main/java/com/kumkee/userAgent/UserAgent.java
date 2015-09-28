@@ -3,13 +3,19 @@ package com.kumkee.userAgent;
 public class UserAgent {
 
 	private boolean mobile; // false
-	private String browser; // Firefox
+	private String browseer; // Firefox
 	private String platform; // Windows
 	private String os; // Windows 7
 	private String engine; 
 	private String version; // 5 
 	private String engineVersion;
 	private String model;
+	private Brand brand;
+	private Nettype netType;
+	private Device device;
+	private Application application;
+	private OperateSystem operateSystem;
+	private Browser browser;
 
 	public boolean isMobile()
 	{
@@ -19,13 +25,13 @@ public class UserAgent {
 	{
 		this.mobile = mobile;
 	}
-	public String getBrowser()
+	public String getBrowseer()
 	{
-		return browser;
+		return browseer;
 	}
-	public void setBrowser(String browser)
+	public void setBrowseer(String browser)
 	{
-		this.browser = browser;
+		this.browseer = browser;
 	}
 	public String getPlatform()
 	{
@@ -72,5 +78,41 @@ public class UserAgent {
 	}
 	public String getModel() {
 		return model;
+	}
+	public void setBrand(Brand brand) {
+		this.brand = brand;
+	}
+	public Brand getBrand() {
+		return brand;
+	}
+	public void setNetType(Nettype netType) {
+		this.netType = netType;
+	}
+	public Nettype getNetType() {
+		return netType;
+	}
+	public void setDevice(Device device) {
+		this.device = device;
+	}
+	public Device getDevice() {
+		return device;
+	}
+	public void setApplication(Application application) {
+		this.application = application;
+	}
+	public Application getApplication() {
+		return application;
+	}
+	public void setOperateSystem(OperateSystem operateSystem) {
+		this.operateSystem = operateSystem;
+	}
+	public OperateSystem getOperateSystem() {
+		return operateSystem;
+	}
+	public void setBrowseer(Browser browseer) {
+		this.browser = browseer;
+	}
+	public Browser getBrowser() {
+		return browser;
 	}
 }

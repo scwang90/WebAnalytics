@@ -1,70 +1,101 @@
 package com.kumkee.userAgent;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Browser {
+public enum Browser {
 
-	public static final Pattern IEPattern = Pattern.compile("\\brv:", Pattern.CASE_INSENSITIVE);
-	public static final Pattern EDGEPattern = Pattern.compile("\\bedge\\w*", Pattern.CASE_INSENSITIVE);
-	public static final Pattern QQPattern = Pattern.compile("\\bqq\\w*", Pattern.CASE_INSENSITIVE);
-	public static final Pattern BaiduPattern = Pattern.compile("\\bbaidu\\w*", Pattern.CASE_INSENSITIVE);
-	public static final Pattern XiaomiPattern = Pattern.compile("xiaomi\\w*", Pattern.CASE_INSENSITIVE);
-	public static final Pattern MIUIPattern = Pattern.compile("\\bmiui\\w*", Pattern.CASE_INSENSITIVE);
-	public static final Pattern WeixinPattern = Pattern.compile("micromessenger", Pattern.CASE_INSENSITIVE);
-	public static final Pattern _360Pattern = Pattern.compile("360se", Pattern.CASE_INSENSITIVE);
-	public static final Pattern SougouPattern = Pattern.compile(" se ", Pattern.CASE_INSENSITIVE);
+    Sougou("sougou","SG","搜狗浏览器","\\bse\\b[/ ]?([\\w\\.\\-]+)"),
+    Qihu("360","360","360浏览器","360se/([\\w\\.\\-]+)"),
+    Weixin("micromessenger","WX","微信浏览器","micromessenger/([\\w\\.\\-]+)"),
+    Baidu("baidu","BD","百度浏览器","baidu\\w*/([\\w\\.\\-]+)"),
+    QQBrowser("qq","QQ","QQ浏览器","\\bqq\\w*/([\\w\\.\\-]+)"),
+    Xiaomi("xiaomi","XM","小米浏览器","xiaomi\\w*/([\\w\\.\\-]+)"),
+    Miui("miui","MU","MIUI浏览器","miui\\w*/([\\w\\.\\-]+)"),
+    Edge("edge","EDGE","微软 EDGE","\\bedge[ /]?([\\w\\.\\-]*)"),
+    Opera("opera","OPR","欧鹏浏览器","opera[ /]?([\\w\\.\\-]*)|opr[ /]?([\\w\\.\\-]*)"),
+    Firefox("firefox","FFOX","火狐浏览器","firefox/([\\w\\.\\-]*)"),
+    MSIEMobile("MSIEMobile","IEMB","IE移动版","iemobile/([\\w\\.\\-]+)"),
+    Msie11("msie11","IE11","Internet Explorer 11","\\bmsie[ :]+(11[\\w\\.\\-]+)|rv:(1[\\w\\.\\-]+)"),
+    Msie10("msie10","IE10","Internet Explorer 10","\\bmsie[ :]+(10[\\w\\.\\-]+)"),
+    Msie5("msie5","IE5","Internet Explorer 5","\\bmsie[ :]+(5[\\w\\.\\-]+)"),
+    Msie6("msie6","IE6","Internet Explorer 6","\\bmsie[ :]+(6[\\w\\.\\-]+)"),
+    Msie7("msie7","IE7","Internet Explorer 7","\\bmsie[ :]+(7[\\w\\.\\-]+)"),
+    Msie8("msie8","IE8","Internet Explorer 8","\\bmsie[ :]+(8[\\w\\.\\-]+)"),
+    Msie9("msie9","IE9","Internet Explorer 9","\\bmsie[ :]+(9[\\w\\.\\-]+)"),
+    Konqueror("konqueror","KQE","Internet Explorer 9","konqueror[ /]?([\\w\\.\\-]+)"),
+    Playstation3("konqueror3","PS3","playstation 3","playstation (3)"),
+    PlaystationP("konquerorP","PSP","playstation portable","playstation (portable)"),
+    LotusNotes("lotusnotes","LTNT","Lotus-Notes","lotus.notes/([\\w\\.\\-]+)"),
+    ThunderBird("thunderbird","TDBD","火鸟浏览器","thunderbird/([\\w\\.\\-]+)"),
+    Netscape("netscape","NETP","Netscape","netscape/([\\w\\.\\-]+)"),
+    SeamonKey("seamonkey","SEAK","Seamonkey","seamonkey/([\\w\\.\\-]+)"),
+    OutLook("outlook","OUTL","OutLook","microsoft.outlook/([\\w\\.\\-]+)"),
+    Evolution("evolution","EVOT","Evolution","evolution/([\\w\\.\\-]+)"),
+    Gabble("gabble","GABE","Gabble","gabble/([\\w\\.\\-]+)"),
+    AdobeAir("adobeair","ADBA","AdobeAir","adobeair/([\\w\\.\\-]+)"),
+    HttpClient("httpclient","APHC","AdobeAir","apache.httpclient/([\\w\\.\\-]+)"),
+    Yammer("yammer","YAME","Yammer","Yammer[ /]+([\\w\\.\\-]+)"),
+    BlackBerry("blackberry","BLBE","BlackBerry","blackberry/([\\w\\.\\-]+)"),
+    Chrome("chrome","CHO","谷歌浏览器","chrome/([\\w\\.\\-]*)"),
+    Safari("safari","SF","苹果 Safari","safari/([\\w\\.\\-]*)"),
 
-	public static final Pattern SafariPattern = Pattern.compile("safari", Pattern.CASE_INSENSITIVE);
-	public static final Pattern OperaPattern = Pattern.compile("(opera|opr)", Pattern.CASE_INSENSITIVE);
-	public static final Pattern ChromePattern = Pattern.compile("chrome", Pattern.CASE_INSENSITIVE); 
-	public static final Pattern KonquerorPattern = Pattern.compile("konqueror", Pattern.CASE_INSENSITIVE);
-	public static final Pattern PS3Pattern = Pattern.compile("playstation 3", Pattern.CASE_INSENSITIVE);
-	public static final Pattern PSPPattern = Pattern.compile("playstation portable", Pattern.CASE_INSENSITIVE);
-	public static final Pattern FirefoxPattern = Pattern.compile("firefox", Pattern.CASE_INSENSITIVE); 
-	public static final Pattern LotusPattern = Pattern.compile("lotus.notes", Pattern.CASE_INSENSITIVE); 
-	public static final Pattern ThunderbirdPattern = Pattern.compile("thunderbird", Pattern.CASE_INSENSITIVE);
-	public static final Pattern NetscapePattern = Pattern.compile("netscape", Pattern.CASE_INSENSITIVE); 
-	public static final Pattern SeamonkeyPattern = Pattern.compile("seamonkey", Pattern.CASE_INSENSITIVE); 
-	public static final Pattern OutlookPattern = Pattern.compile("microsoft.outlook", Pattern.CASE_INSENSITIVE); 
-	public static final Pattern EvolutionPattern = Pattern.compile("evolution", Pattern.CASE_INSENSITIVE);
-	public static final Pattern MSIEMobilePattern = Pattern.compile("emobile|windows phone", Pattern.CASE_INSENSITIVE); 
-	public static final Pattern GabblePattern = Pattern.compile("Gabble", Pattern.CASE_INSENSITIVE); 
-	public static final Pattern YammerDesktopPattern = Pattern.compile("AdobeAir", Pattern.CASE_INSENSITIVE);
-	public static final Pattern ApacheHTTPClientPattern = Pattern.compile("Apache\\-HttpClient", Pattern.CASE_INSENSITIVE); 
-	public static final Pattern YammerMobilePattern = Pattern.compile("Yammer[\\s]+([\\d\\w\\.\\-]+)", Pattern.CASE_INSENSITIVE);
-	public static final Pattern BlackberryPattern = Pattern.compile("BlackBerry", Pattern.CASE_INSENSITIVE);
-	public static final Pattern MSIEPattern = Pattern.compile("msie", Pattern.CASE_INSENSITIVE);
-	public static final Pattern UnknownPattern = Pattern.compile("unknown", Pattern.CASE_INSENSITIVE);
+    Unknown("unknown","UN","未知","");
 
-	public static final String IE = "IE";
-	public static final String Konqueror = "Konqueror";
-	public static final String EDGE = "΢�� EDGE";
-	public static final String Baidu = "Baidu Browser";
-	public static final String Sougou = "Sogou Explorer ";
-	public static final String Xiaomi = "Xiaomi Browser";
-	public static final String MIUI = "MIUI Browser";
-	public static final String Weixin = "Weixin";
-	public static final String QQ = "QQBrowser";
-	public static final String _360 = "360";
-	public static final String Chrome = "Chrome";
-	public static final String Safari = "Safari";
-	public static final String Opera = "Opera";
-	public static final String PS3 = "PS3";
-	public static final String PSP = "PSP";
-	public static final String Firefox = "Firefox";
-	public static final String Lotus = "Lotus";
-	public static final String Netscape = "Netscape";
-	public static final String Seamonkey = "Seamonkey";
-	public static final String Thunderbird = "Thunderbird";
-	public static final String Outlook = "Outlook";
-	public static final String Evolution = "Evolution";
-	public static final String MSIEMobile = "IEMobile";
-	public static final String MSIE = "MSIE";
-	public static final String Blackberry = "Blackberry";
-	public static final String Gabble = "Gabble";
-	public static final String YammerDesktop = "Yammer Desktop";
-	public static final String YammerMobile = "Yammer Mobile";
-	public static final String ApacheHTTPClient = "Apache HTTP Client";
-	public static final String Unknown = "Unknown";
+    private final Pattern pattern;
+    private final String name;
+    private final String acronym;
+    private final String remark;
+    private String version;
+
+    Browser(String name, String acronym, String remark, String pattern) {
+        this.version = "";
+        this.name = name;
+        this.remark = remark;
+        this.acronym = acronym;
+        this.pattern = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
+    }
+
+    public static Browser parser(String useragent) {
+        for (Browser app : values()) {
+            if (app.matches(useragent)) {
+                return app;
+            }
+        }
+        return Browser.Unknown;
+    }
+
+    private boolean matches(String useragent) {
+        Matcher matcher = pattern.matcher(useragent);
+        if (matcher.find()) {
+            int index = 0;
+            while ((version == null || version.trim().length() == 0) && index++ < matcher.groupCount()) {
+                version = matcher.group(index);
+            }
+            version = (version == null) ? "" : version;
+            return true;
+        }
+        return false;
+    }
+
+    public Pattern getPattern() {
+        return pattern;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public String getAcronym() {
+        return acronym;
+    }
 }
 

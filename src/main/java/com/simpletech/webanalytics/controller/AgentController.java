@@ -17,7 +17,7 @@ public class AgentController {
     @RequestMapping("user")
     public void user(HttpServletRequest request,PrintWriter out){
         UserAgent agent = new UserAgent(request.getHeader("User-Agent"));
-        out.println("<br>Browser : "+agent.getBrowser());
+        out.println("<br>Browseer : "+agent.getBrowser());
         out.println("<br>BrowserVersion : " + agent.getBrowserVersion());
         out.println("<br>OsName : " + agent.getOperatingSystem().getName());
         out.println("<br>DeviceType : " + agent.getOperatingSystem().getDeviceType());

@@ -29,6 +29,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: eu.bitwalker:UserAgentUtils:1.17" level="project" />
+    <orderEntry type="library" name="Maven: eu.bitwalker:UserAgentUtils:1.17" level="project" />
     <orderEntry type="library" name="Maven: nl.bitwalker:UserAgentUtils:1.2.4" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.8" level="project" />
     <orderEntry type="library" name="Maven: c3p0:c3p0:0.9.1.2" level="project" />

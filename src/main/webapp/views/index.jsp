@@ -16,6 +16,7 @@
 <body>
 <%
     String agent = request.getHeader("user-agent");
+    System.out.println(agent);
     UserAgentParser userAgentParser = new UserAgentParser();
     UserAgent useragent = userAgentParser.parse(agent);
 %>
@@ -29,8 +30,16 @@
     <%--<button onclick="send()">发送探针数据</button>--%>
 </div>
 <h1>jsp获取客户端信息</h1>
-品牌:<%=useragent.getModel()%><br>
-浏览器:<%=useragent.getBrowser()%><br>
+APP:<%=useragent.getApplication().getRemark()%><br>
+平台:<%=useragent.getDevice().getRemark()%><br>
+品牌:<%=useragent.getBrand().getRemark()%><br>
+型号:<%=useragent.getBrand().getModel()%><br>
+新浏览器:<%=useragent.getBrowser().getRemark()%><br>
+新浏览器版本:<%=useragent.getBrowser().getVersion()%><br>
+新操作系统:<%=useragent.getOperateSystem().getRemark()%><br>
+新系统版本:<%=useragent.getOperateSystem().getVersion()%><br>
+网络类型:<%=useragent.getNetType().getRemark()%><br>
+浏览器:<%=useragent.getBrowseer()%><br>
 浏览器版本:<%=useragent.getVersion()%><br>
 平台:<%=useragent.getPlatform()%><br>
 操作系统:<%=useragent.getOs()%><br>

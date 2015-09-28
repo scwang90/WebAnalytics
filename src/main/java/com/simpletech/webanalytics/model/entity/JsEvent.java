@@ -6,7 +6,7 @@ import com.simpletech.webanalytics.model.Event;
 import java.util.Date;
 
 /**
- * Js探针 事件抓取 Model
+ * Js探针 事件抓取 Brand
  * Created by Administrator on 2015/9/25.
  */
 public class JsEvent extends JsDetect {

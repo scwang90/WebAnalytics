@@ -47,13 +47,15 @@ public class JsDetect {
     /**
      * 服务器获取数据
      */
-    private String browser;
-    private String version;
-    private String platform;
-    private String operateSystem;
-    private String engine;
-    private String engineVersion;
-    private String remoteAddr;
+    private String brand;           //品牌
+    private String model;           //型号
+    private String browser;         //浏览器
+    private String version;         //浏览器版本
+    private String platform;        //平台 电脑|手机|平板
+    private String operateSystem;   //操作系统
+    private String engine;          //浏览器引擎
+    private String engineVersion;   //浏览器引擎版本
+    private String remoteAddr;      //客户端IP（外网）
 
     /**
      * 检测是否满足必须参数
@@ -73,10 +75,13 @@ public class JsDetect {
         String agent = request.getHeader("user-agent");
         UserAgentParser userAgentParser = new UserAgentParser();
         UserAgent useragent = userAgentParser.parse(agent);
-        this.browser = useragent.getBrowser();
-        this.version = useragent.getVersion();
-        this.platform = useragent.getPlatform();
-        this.operateSystem = useragent.getOs();
+
+        this.brand = useragent.getBrand().getAcronym();
+        this.model = useragent.getBrand().getModel();
+        this.browser = useragent.getBrowser().getAcronym();
+        this.version = useragent.getBrowser().getVersion();
+        this.platform = useragent.getDevice().getAcronym();
+        this.operateSystem = useragent.getOperateSystem().getAcronym();
         this.engine = useragent.getEngine();
         this.engineVersion = useragent.getEngineVersion();
         this.remoteAddr = request.getRemoteAddr();
@@ -277,5 +282,21 @@ public class JsDetect {
 
     public void setRemoteAddr(String remoteAddr) {
         this.remoteAddr = remoteAddr;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 }
