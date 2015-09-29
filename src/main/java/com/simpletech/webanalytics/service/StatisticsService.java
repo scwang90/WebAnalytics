@@ -1,55 +1,83 @@
 package com.simpletech.webanalytics.service;
 
+import com.simpletech.webanalytics.model.constant.Norm;
 import com.simpletech.webanalytics.model.constant.Period;
+import com.simpletech.webanalytics.model.entity.EventPeriodValue;
+import com.simpletech.webanalytics.model.entity.EventValue;
+import com.simpletech.webanalytics.model.entity.PageValue;
 import com.simpletech.webanalytics.model.entity.PeriodValue;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * Í³¼ÆAPI Service
+ * ç»Ÿè®¡API Service
  * Created by Administrator on 2015/9/25.
  */
 public interface StatisticsService {
 
+    /**
+     * Visit|PV|UV|IPç»Ÿè®¡æ•°æ®è·å–API
+     * è·å– idsiteç½‘ç«™ åœ¨ start-end çš„ [å°æ—¶\æ—¥\å‘¨\æœˆ] [Visit|PV|UV|IP]ç»Ÿè®¡æ•°æ®
+     *
+     * @param idsite ç½‘ç«™ID
+     * @param period æ—¶æ®µå‘¨æœŸ [æ—¶|æ—¥|å‘¨|æœˆ]
+     * @param norm   ç»Ÿè®¡æŒ‡æ ‡ [Visit|PV|UV|IP]
+     * @param start  å¼€å§‹æ—¶é—´ 
+     * @param end    ç»“æŸæ—¶é—´ 
+     * @return event ç»Ÿè®¡æ•°æ®
+     */
+    List<PeriodValue> norm(String idsite, Period period, Norm norm, Date start, Date end) throws Exception;
 
     /**
-     * VisitÍ³¼ÆÊı¾İ»ñÈ¡API
-     * @param idsite ÍøÕ¾ID
-     * @param period Ê±¶ÎÖÜÆÚ
-     * @param start ¿ªÊ¼Ê±¼ä javaÊ±¼älongÖµ Èçnew Date().getTime()
-     * @param end ½áÊøÊ±¼ä javaÊ±¼älongÖµ Èçnew Date().getTime()
-     * @return PVÍ³¼ÆÊı¾İ {status:[true|false],data:[{time,date,val},...]}
+     * event ç»Ÿè®¡æ•°æ®è·å–API
+     * è·å– idsiteç½‘ç«™ äº‹ä»¶ åœ¨ start-end çš„ [å°æ—¶\æ—¥\å‘¨\æœˆ] ç»Ÿè®¡æ•°æ®
+     *
+     * @param idsite ç½‘ç«™ID
+     * @param start  å¼€å§‹æ—¶é—´ 
+     * @param end    ç»“æŸæ—¶é—´ 
+     * @param limit  åˆ†é¡µé™åˆ¶
+     * @param skip   åˆ†é¡µèµ·å§‹
+     * @return eventç»Ÿè®¡æ•°æ®
      */
-    List<PeriodValue> visit(String idsite, Period period, Date start, Date end) throws Exception;
-    /**
-     * PVÍ³¼ÆÊı¾İ»ñÈ¡API
-     * @param idsite ÍøÕ¾ID
-     * @param period Ê±¶ÎÖÜÆÚ
-     * @param start ¿ªÊ¼Ê±¼ä javaÊ±¼älongÖµ Èçnew Date().getTime()
-     * @param end ½áÊøÊ±¼ä javaÊ±¼älongÖµ Èçnew Date().getTime()
-     * @return PVÍ³¼ÆÊı¾İ {status:[true|false],data:[...]}
-     */
-    List<PeriodValue> pageView(String idsite, Period period, Date start, Date end) throws Exception;
+    List<EventValue> event(String idsite, Date start, Date end, int limit, int skip) throws Exception;
 
     /**
-     * UVÍ³¼ÆÊı¾İ»ñÈ¡API
-     * @param idsite ÍøÕ¾ID
-     * @param period Ê±¶ÎÖÜÆÚ
-     * @param start ¿ªÊ¼Ê±¼ä javaÊ±¼älongÖµ Èçnew Date().getTime()
-     * @param end ½áÊøÊ±¼ä javaÊ±¼älongÖµ Èçnew Date().getTime()
-     * @return PVÍ³¼ÆÊı¾İ {status:[true|false],data:[...]}
+     * æŒ‡å®š åç§°name event ç»Ÿè®¡æ•°æ®è·å–API
+     * è·å– idsiteç½‘ç«™ äº‹ä»¶name åœ¨ start-end çš„ [å°æ—¶\æ—¥\å‘¨\æœˆ] ç»Ÿè®¡æ•°æ®
+     *
+     * @param idsite ç½‘ç«™ID
+     * @param name   äº‹ä»¶åç§°
+     * @param start  å¼€å§‹æ—¶é—´
+     * @param end    ç»“æŸæ—¶é—´
+     * @param limit  åˆ†é¡µé™åˆ¶
+     * @param skip   åˆ†é¡µèµ·å§‹
+     * @param period æˆªæ–­å‘¨æœŸ
+     * @return eventç»Ÿè®¡æ•°æ®
      */
-    List<PeriodValue> uniqueVisitor(String idsite, Period period, Date start, Date end) throws Exception;
+    List<EventPeriodValue> event(String idsite, String name, Period period, Date start, Date end, int limit, int skip) throws Exception;
 
     /**
-     * IPÍ³¼ÆÊı¾İ»ñÈ¡API
-     * @param idsite ÍøÕ¾ID
-     * @param period Ê±¶ÎÖÜÆÚ
-     * @param start ¿ªÊ¼Ê±¼ä javaÊ±¼älongÖµ Èçnew Date().getTime()
-     * @param end ½áÊøÊ±¼ä javaÊ±¼älongÖµ Èçnew Date().getTime()
-     * @return IPÍ³¼ÆÊı¾İ {status:[true|false],data:[{time,date,val},...]}
+     * é¡µé¢æ ‡é¢˜æ’è¡Œ
+     *
+     * @param siteId ç½‘ç«™ID
+     * @param start  å¼€å§‹æ—¶é—´ ("yyyyMMddHHmmss")
+     * @param end    ç»“æŸæ—¶é—´ ("yyyyMMddHHmmss")
+     * @param limit  åˆ†é¡µé™åˆ¶
+     * @param skip   åˆ†é¡µèµ·å§‹
+     * @return æ ‡é¢˜æ’è¡Œ
      */
-    List<PeriodValue> internetProtocol(String idsite, Period period, Date start, Date end) throws Exception;
+    List<PageValue> pagetitle(String siteId, Date start, Date end, int limit, int skip) throws Exception;
 
+    /**
+     * é¡µé¢é“¾æ¥æ’è¡Œ - è‡ªå®šä¹‰æ—¶æ®µ
+     *
+     * @param siteId ç½‘ç«™ID
+     * @param start  å¼€å§‹æ—¶é—´ ("yyyyMMddHHmmss")
+     * @param end    ç»“æŸæ—¶é—´ ("yyyyMMddHHmmss")
+     * @param limit  åˆ†é¡µé™åˆ¶
+     * @param skip   åˆ†é¡µèµ·å§‹
+     * @return é“¾æ¥æ’è¡Œ
+     */
+    List<PageValue> pageurl(String siteId, Date start, Date end, int limit, int skip) throws Exception;
 }

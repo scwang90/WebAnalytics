@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.simpletech.webanalytics.dao.base.BaseDao;
 import com.simpletech.webanalytics.model.Url;
+import com.simpletech.webanalytics.model.entity.PageValue;
 
 /**
  * 数据库表t_url的Dao接口
@@ -14,11 +15,18 @@ public interface UrlDao extends BaseDao<Url>{
 
 	/**
 	 * 根据 idsite 获取 url 的对象
-	 * @param idsite
-	 * @param url
+	 * @param idsite 网站ID
+	 * @param url 链接
 	 * @return 返回有效的 Url 对象
 	 * @throws Exception
 	 */
-	public Url getUrl(String idsite, String url) throws Exception;
+	Url getUrl(String idsite, String url) throws Exception;
 
+	/**
+	 * 填充名称
+	 * @param pagetitle PageValue 数据
+	 * @return 带名称的 PageValue
+	 * @throws Exception
+	 */
+	List<PageValue> fullName(List<PageValue> pagetitle) throws Exception;
 }

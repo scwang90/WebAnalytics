@@ -4,7 +4,6 @@ import com.simpletech.webanalytics.model.constant.Norm;
 import com.simpletech.webanalytics.model.constant.Period;
 import com.simpletech.webanalytics.model.entity.PeriodValue;
 import com.simpletech.webanalytics.service.StatisticsService;
-import com.simpletech.webanalytics.util.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -23,11 +22,6 @@ import java.util.*;
 @RequestMapping("api")
 public class StatisticsController {
 
-    private static SimpleDateFormat fday = new SimpleDateFormat("yyMMdd");
-    private static SimpleDateFormat fhour = new SimpleDateFormat("yyMMddHH");
-    private static SimpleDateFormat fweek = new SimpleDateFormat("yy-ww");
-    private static SimpleDateFormat fmonth = new SimpleDateFormat("yyMM");
-
     @Autowired
     StatisticsService service;
 
@@ -37,40 +31,158 @@ public class StatisticsController {
     }
 
     /**
-     * 灵活通用 Visit|PV|UV|IP统计数据获取API
+     * 页面标题排行 - 自定义时段
+     *
+     * @param siteId 网站ID
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param limit  分页限制
+     * @param skip   分页起始
+     * @return 标题排行
+     */
+    @RequestMapping("pagetitle/site/{siteId}/{limit:\\d+}/{skip:\\d+}")
+    public Object pagetitle(@PathVariable String siteId, @PathVariable int limit, @PathVariable int skip, @RequestParam Date start, @RequestParam Date end) throws Exception{
+        return service.pagetitle(siteId, start, end, limit, skip);
+    }
+
+    /**
+     * 页面标题排行 - 固定时段
+     *
+     * @param siteId 网站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year] 注：要大于 period
+     * @param limit  分页限制
+     * @param skip   分页起始
+     * @return 标题排行
+     * @throws Exception
+     */
+    @RequestMapping("pagetitle/site/{siteId}/{offset:-?\\d+}/{span:day|week|month|year}/{limit:\\d+}/{skip:\\d+}")
+    public Object pagetitle(@PathVariable String siteId,@PathVariable int offset, @PathVariable Period span, @PathVariable int limit, @PathVariable int skip) throws Exception{
+        Date end = timeEnd(span, offset);
+        Date start = timeStart(span, offset);
+        return service.pagetitle(siteId, start, end, limit, skip);
+    }
+
+
+    /**
+     * 页面链接排行 - 自定义时段
+     *
+     * @param siteId 网站ID
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param limit  分页限制
+     * @param skip   分页起始
+     * @return 链接排行
+     */
+    @RequestMapping("pageurl/site/{siteId}/{limit:\\d+}/{skip:\\d+}")
+    public Object pageurl(@PathVariable String siteId, @PathVariable int limit, @PathVariable int skip, @RequestParam Date start, @RequestParam Date end) throws Exception{
+        return service.pageurl(siteId, start, end, limit, skip);
+    }
+
+    /**
+     * 页面链接排行 - 固定时段
+     *
+     * @param siteId 网站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year] 注：要大于 period
+     * @param limit  分页限制
+     * @param skip   分页起始
+     * @return 链接排行
+     * @throws Exception
+     */
+    @RequestMapping("pageurl/site/{siteId}/{offset:-?\\d+}/{span:day|week|month|year}/{limit:\\d+}/{skip:\\d+}")
+    public Object pageurl(@PathVariable String siteId,@PathVariable int offset, @PathVariable Period span, @PathVariable int limit, @PathVariable int skip) throws Exception{
+        Date end = timeEnd(span, offset);
+        Date start = timeStart(span, offset);
+        return service.pageurl(siteId, start, end, limit, skip);
+    }
+
+    /**
+     * 自定义时段 event 统计数据获取API
+     *
+     * @param siteId 网站ID
+     * @param name   事件名称
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param limit  分页限制
+     * @param skip   分页起始
+     * @return PV统计数据 {status:[true|false],data:[{time,date,num,rn,user,ru},...]}
+     */
+    @RequestMapping("event/site/{siteId}/name/{name}/{period:hour|day|week|month}/{limit:\\d+}/{skip:\\d+}")
+    public Object event(@PathVariable String siteId, @PathVariable String name, @PathVariable Period period, @PathVariable int limit, @PathVariable int skip, @RequestParam Date start, @RequestParam Date end) throws Exception {
+        return service.event(siteId, name, period, start, end, limit, skip);
+    }
+
+    /**
+     * 固定时段 event 统计数据获取API
+     *
+     * @param siteId 网站ID
+     * @param name   事件名称
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year] 注：要大于 period
+     * @param limit  分页限制
+     * @param skip   分页起始
+     * @return event统计数据 {status:[true|false],data:[{time,date,name,num,rn,user,ru},...]}
+     */
+    @RequestMapping("event/site/{siteId}/name/{name}/{offset:-?\\d+}/{span:day|week|month|year}/{period:hour|day|week|month}/{limit:\\d+}/{skip:\\d+}")
+    public Object event(@PathVariable String siteId, @PathVariable String name, @PathVariable int offset, @PathVariable Period span, @PathVariable Period period, @PathVariable int limit, @PathVariable int skip) throws Exception {
+        Date end = timeEnd(span, offset);
+        Date start = timeStart(span, offset);
+        return service.event(siteId, name, period, start, end, limit, skip);
+    }
+
+
+    /**
+     * 自定义时段 event 统计数据获取API
+     *
+     * @param siteId 网站ID
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param limit  分页限制
+     * @param skip   分页起始
+     * @return PV统计数据 {status:[true|false],data:[{name,num,rn,user,ru},...]}
+     */
+    @RequestMapping("event/site/{siteId}/{limit:\\d+}/{skip:\\d+}")
+    public Object event(@PathVariable String siteId, @PathVariable int limit, @PathVariable int skip, @RequestParam Date start, @RequestParam Date end) throws Exception {
+        return service.event(siteId, start, end, limit, skip);
+    }
+
+    /**
+     * 固定时段 event 统计数据获取API
+     *
+     * @param siteId 网站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year] 注：要大于 period
+     * @param limit  分页限制
+     * @param skip   分页起始
+     * @return event统计数据 {status:[true|false],data:[{name,num,rn,user,ru},...]}
+     */
+    @RequestMapping("event/site/{siteId}/{offset:-?\\d+}/{span:day|week|month|year}/{limit:\\d+}/{skip:\\d+}")
+    public Object event(@PathVariable String siteId, @PathVariable int offset, @PathVariable Period span, @PathVariable int limit, @PathVariable int skip) throws Exception {
+        Date end = timeEnd(span, offset);
+        Date start = timeStart(span, offset);
+        return service.event(siteId, start, end, limit, skip);
+    }
+
+    /**
+     * 自定义时段 Visit|PV|UV|IP统计数据获取API
      *
      * @param siteId 网站ID
      * @param period 时段周期 [时|日|周|月]
      * @param norm   统计指标 [Visit|PV|UV|IP]
-     * @param start  开始时间 java时间long值 如new Date().getTime()
-     * @param end    结束时间 java时间long值 如new Date().getTime()
-     * @return PV统计数据 {status:[true|false],data:[{time,date,val},...]}
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return event统计数据
      */
-    @RequestMapping("{siteId}/{period:hour|day|week|month}/{norm:visit|pv|uv|ip}")
+    @RequestMapping("visit/site/{siteId}/{period:hour|day|week|month}/{norm:visit|pv|uv|ip}")
     public Object norm(@PathVariable String siteId, @PathVariable Period period, @PathVariable Norm norm, @RequestParam Date start, @RequestParam Date end) throws Exception {
-        List<PeriodValue> list;
-        switch (norm) {
-            case visit:
-                list = service.visit(siteId, period, start, end);
-                break;
-            case pv:
-                list = service.pageView(siteId, period, start, end);
-                break;
-            case uv:
-                list = service.uniqueVisitor(siteId, period, start, end);
-                break;
-            case ip:
-                list = service.internetProtocol(siteId, period, start, end);
-                break;
-            default:
-                throw new ServiceException("无效指标");
-        }
+        List<PeriodValue> list = service.norm(siteId, period, norm, start, end);
         list = fulldata(list, period.getFormat(), period.getField(), start, end);
         return list;
     }
 
     /**
-     * 灵活通用 Visit|PV|UV|IP统计数据获取API
+     * 固定时段 Visit|PV|UV|IP统计数据获取API
      *
      * @param siteId 网站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
@@ -79,27 +191,11 @@ public class StatisticsController {
      * @param norm   统计指标 [Visit|PV|UV|IP]
      * @return PV统计数据 {status:[true|false],data:[{time,date,val},...]}
      */
-    @RequestMapping("{siteId}/{offset:-?\\d+}/{span:day|week|month|year}/{period:hour|day|week|month}/{norm:visit|pv|uv|ip}")
+    @RequestMapping("visit/site/{siteId}/{offset:-?\\d+}/{span:day|week|month|year}/{period:hour|day|week|month}/{norm:visit|pv|uv|ip}")
     public Object norm(@PathVariable String siteId, @PathVariable int offset, @PathVariable Period span, @PathVariable Period period, @PathVariable Norm norm) throws Exception {
         Date end = timeEnd(span, offset);
         Date start = timeStart(span, offset);
-        List<PeriodValue> list;
-        switch (norm) {
-            case visit:
-                list = service.visit(siteId, period, start, end);
-                break;
-            case pv:
-                list = service.pageView(siteId, period, start, end);
-                break;
-            case uv:
-                list = service.uniqueVisitor(siteId, period, start, end);
-                break;
-            case ip:
-                list = service.internetProtocol(siteId, period, start, end);
-                break;
-            default:
-                throw new ServiceException("无效指标");
-        }
+        List<PeriodValue> list = service.norm(siteId, period, norm, start, end);
         list = fulldata(list, period.getFormat(), period.getField(), start, end);
         return list;
     }
@@ -137,7 +233,7 @@ public class StatisticsController {
     }
 
     /**
-     * 按天来填充数据
+     * 填充数据
      *
      * @param list 数据库有效数据列表
      * @return 填充的数据
@@ -152,7 +248,7 @@ public class StatisticsController {
             PeriodValue value = map.get(keytime);
             if (value == null) {
                 value = new PeriodValue();
-                value.setVal(0);
+                value.setVal(0l);
                 value.setDate(keytime);
                 value.setTime(calendar.getTime());
                 nlist.add(value);
@@ -180,11 +276,6 @@ public class StatisticsController {
             map.put(value.getDate(), value);
         }
         return map;
-    }
-
-    @RequestMapping("event/{siteId}")
-    public Object event(@PathVariable String siteId) throws Exception {
-        return null;
     }
 
 }

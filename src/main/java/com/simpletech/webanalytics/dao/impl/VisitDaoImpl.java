@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.simpletech.webanalytics.mapper.StatisticsMapper;
 import com.simpletech.webanalytics.mapper.VisitMapper;
+import com.simpletech.webanalytics.model.entity.EventValue;
 import com.simpletech.webanalytics.model.entity.PeriodValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,22 +26,22 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao{
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	@Autowired
-	VisitMapper mapper;
+	StatisticsMapper mapper;
 
 	@Override
-	public Visit getVisit(String idsite, String idvistitor) throws Exception {
-		String where = "where idsite=%s and idvistitor='%s'";
-		for (Visit visit : findWhere(String.format(where,idsite,idvistitor))){
+	public Visit getVisit(String idsite, String idvisitor) throws Exception {
+		String where = "where idsite=%s and idvisitor='%s'";
+		for (Visit visit : findWhere(String.format(where,idsite,idvisitor))){
 			return visit;
 		}
 		return null;
 	}
 
 	@Override
-	public Visit getVisitHalfHour(String idsite, String idvistitor) throws Exception {
+	public Visit getVisitHalfHour(String idsite, String idvisitor) throws Exception {
 		Date time = new Date(new Date().getTime()-30*60*1000);
-		String where = "where idsite=%s and idvistitor='%s' and visit_servertime > '%s'";
-		for (Visit visit : findWhere(String.format(where,idsite,idvistitor,format.format(time)))){
+		String where = "where idsite=%s and idvisitor='%s' and visit_servertime > '%s'";
+		for (Visit visit : findWhere(String.format(where,idsite,idvisitor,format.format(time)))){
 			return visit;
 		}
 		return null;
@@ -67,7 +69,7 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao{
 
 	@Override
 	public List<PeriodValue> pageViewHour(String idsite, Date start, Date end) throws Exception {
-		return mapper.pageViewHour(idsite,start,end);
+		return mapper.pageViewHour(idsite, start, end);
 	}
 
 	@Override
@@ -92,37 +94,47 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao{
 
 	@Override
 	public List<PeriodValue> uniqueVisitorDay(String idsite, Date start, Date end) throws Exception {
-		return mapper.uniqueVisitorDay(idsite, start,end);
+		return mapper.uniqueVisitorDay(idsite, start, end);
 	}
 
 	@Override
 	public List<PeriodValue> uniqueVisitorWeek(String idsite, Date start, Date end) throws Exception {
-		return mapper.uniqueVisitorWeek(idsite, start,end);
+		return mapper.uniqueVisitorWeek(idsite, start, end);
 	}
 
 	@Override
 	public List<PeriodValue> uniqueVisitorMonth(String idsite, Date start, Date end) throws Exception {
-		return mapper.uniqueVisitorMonth(idsite, start,end);
+		return mapper.uniqueVisitorMonth(idsite, start, end);
 	}
 
 	@Override
 	public List<PeriodValue> internetProtocolHour(String idsite, Date start, Date end) throws Exception {
-		return mapper.internetProtocolHour(idsite, start,end);
+		return mapper.internetProtocolHour(idsite, start, end);
 	}
 
 	@Override
 	public List<PeriodValue> internetProtocolDay(String idsite, Date start, Date end) throws Exception {
-		return mapper.internetProtocolDay(idsite, start,end);
+		return mapper.internetProtocolDay(idsite, start, end);
 	}
 
 	@Override
 	public List<PeriodValue> internetProtocolWeek(String idsite, Date start, Date end) throws Exception {
-		return mapper.internetProtocolWeek(idsite, start,end);
+		return mapper.internetProtocolWeek(idsite, start, end);
 	}
 
 	@Override
 	public List<PeriodValue> internetProtocolMonth(String idsite, Date start, Date end) throws Exception {
-		return mapper.internetProtocolMonth(idsite, start,end);
+		return mapper.internetProtocolMonth(idsite, start, end);
+	}
+
+	@Override
+	public Long countVisit(String idsite, Date start, Date end) throws Exception {
+		return mapper.countVisit(idsite, start, end);
+	}
+
+	@Override
+	public Long countUsers(String idsite, Date start, Date end) throws Exception {
+		return mapper.countUsers(idsite, start, end);
 	}
 }
 

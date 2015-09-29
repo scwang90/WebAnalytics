@@ -1,65 +1,42 @@
 package com.simpletech.webanalytics.dao;
 
-import java.util.List;
-
 import com.simpletech.webanalytics.dao.base.BaseDao;
 import com.simpletech.webanalytics.model.Action;
+import com.simpletech.webanalytics.model.entity.PageValue;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 数据库表t_action的Dao接口
+ *
  * @author 树朾
  * @date 2015-09-21 17:03:53 中国标准时间
  */
-public interface ActionDao extends BaseDao<Action>{
+public interface ActionDao extends BaseDao<Action> {
 
-	/**
-	 * 插入一条新数据
-	 * @param model
-	 * @return
-	 * @throws Exception
-	 */
-	public int insert(Action model) throws Exception;
-	/**
-	 * 根据ID删除
-	 * @param id
-	 * @return
-	 * @throws Exception
-	 */
-	public int delete(Object id) throws Exception;
-	/**
-	 * 更新一条数据
-	 * @param model
-	 * @return
-	 * @throws Exception
-	 */
-	public int update(Action model) throws Exception;
-	/**
-	 * 统计全部出数据
-	 * @return
-	 * @throws Exception
-	 */
-	public int countAll() throws Exception;
-	/**
-	 * 根据ID获取
-	 * @param id
-	 * @return
-	 * @throws Exception
-	 */
-	public Action findById(Object id) throws Exception;
-	/**
-	 * 获取全部数据
-	 * @return
-	 * @throws Exception
-	 */
-	public List<Action> findAll() throws Exception;
-	/**
-	 * 分页查询数据
-	 * @param limit
-	 * @param start
-	 * @return
-	 * @throws Exception
-	 */
-	public List<Action> findByPage(int limit, int start) throws Exception;
-	
+    /**
+     * 页面标题排行
+     *
+     * @param siteId 网站ID
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param limit  分页限制
+     * @param skip   分页起始
+     * @return 标题排行
+     */
+    List<PageValue> pagetitle(String siteId, Date start, Date end, int limit, int skip) throws Exception;
+
+    /**
+     * 页面链接排行 - 自定义时段
+     *
+     * @param siteId 网站ID
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param limit  分页限制
+     * @param skip   分页起始
+     * @return 链接排行
+     */
+    List<PageValue> pageurl(String siteId, Date start, Date end, int limit, int skip) throws Exception;
 
 }

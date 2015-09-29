@@ -8,16 +8,51 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * PV ͳ��
- * Created by Administrator on 2015/9/25.
+ * 事件统计值
+ * Created by Administrator on 2015/9/29.
  */
-public class PeriodValue {
+public class EventPeriodValue {
 
     private static final SimpleDateFormat format = new SimpleDateFormat();
 
     private Date time;
     private String date;
-    private Long val;
+    private Long num;
+    private Float rn;
+    private Integer user;
+    private Float ru;
+
+    public Float getRn() {
+        return rn;
+    }
+
+    public void setRn(Float rn) {
+        this.rn = rn;
+    }
+
+    public Integer getUser() {
+        return user;
+    }
+
+    public void setUser(Integer user) {
+        this.user = user;
+    }
+
+    public Float getRu() {
+        return ru;
+    }
+
+    public void setRu(Float ru) {
+        this.ru = ru;
+    }
+
+    public Long getNum() {
+        return num;
+    }
+
+    public void setNum(Long num) {
+        this.num = num;
+    }
 
     public Date getTime() {
         return time;
@@ -33,15 +68,7 @@ public class PeriodValue {
 
     public void setDate(String date) {
         this.date = date;
-        this.bindTime(date);
-    }
-
-    public Long getVal() {
-        return val;
-    }
-
-    public void setVal(Long val) {
-        this.val = val;
+        bindTime(date);
     }
 
     private void bindTime(String date) {
@@ -58,5 +85,4 @@ public class PeriodValue {
             e.printStackTrace();
         }
     }
-
 }

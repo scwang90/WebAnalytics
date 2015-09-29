@@ -24,7 +24,7 @@ public interface EventMapper extends MybatisMultiDao<Event>{
 	 * @param model 添加的数据
 	 * @return 改变的行数
 	 */
-	@Insert("INSERT INTO t_event ( id , idsite , idvistitor , local_time , create_time , update_time , category , action , name , value ) VALUES ( #{id} , #{idsite} , #{idvistitor} , #{localTime} , #{createTime} , #{updateTime} , #{category} , #{action} , #{name} , #{value} )")
+	@Insert("INSERT INTO t_event ( id , idsite , idvisitor , local_time , create_time , update_time , category , action , name , value ) VALUES ( #{id} , #{idsite} , #{idvisitor} , #{localTime} , #{createTime} , #{updateTime} , #{category} , #{action} , #{name} , #{value} )")
 	int insert(Event model) throws Exception;
 	/**
 	 * 根据ID删除
@@ -38,7 +38,7 @@ public interface EventMapper extends MybatisMultiDao<Event>{
 	 * @param model 更新的数据
 	 * @return 改变的行数
 	 */
-	@Update("UPDATE t_event SET id=#{id} , idsite=#{idsite} , idvistitor=#{idvistitor} , local_time=#{localTime} , create_time=#{createTime} , update_time=#{updateTime} , category=#{category} , action=#{action} , name=#{name} , value=#{value} WHERE id=#{id} ")
+	@Update("UPDATE t_event SET id=#{id} , idsite=#{idsite} , idvisitor=#{idvisitor} , local_time=#{localTime} , create_time=#{createTime} , update_time=#{updateTime} , category=#{category} , action=#{action} , name=#{name} , value=#{value} WHERE id=#{id} ")
 	int update(Event model) throws Exception;
 	/**
 	 * 统计全部出数据
@@ -51,13 +51,13 @@ public interface EventMapper extends MybatisMultiDao<Event>{
 	 * @param id 主键ID
 	 * @return null 或者 主键等于id的数据
 	 */
-	@Select("SELECT id , idsite , idvistitor , local_time localTime , create_time createTime , update_time updateTime , category , action , name , value FROM t_event WHERE id=#{id}")
+	@Select("SELECT id , idsite , idvisitor , local_time localTime , create_time createTime , update_time updateTime , category , action , name , value FROM t_event WHERE id=#{id}")
 	Event findById(@Param("id") Object id) throws Exception;
 	/**
 	 * 获取全部数据
 	 * @return 全部数据列表
 	 */
-	@Select("SELECT id , idsite , idvistitor , local_time localTime , create_time createTime , update_time updateTime , category , action , name , value FROM t_event ${order}")
+	@Select("SELECT id , idsite , idvisitor , local_time localTime , create_time createTime , update_time updateTime , category , action , name , value FROM t_event ${order}")
 	List<Event> findAll(@Param("order") String order) throws Exception;
 	/**
 	 * 分页查询数据
@@ -65,7 +65,7 @@ public interface EventMapper extends MybatisMultiDao<Event>{
 	 * @param start 起始返回
 	 * @return 分页列表数据
 	 */
-	@Select("SELECT id , idsite , idvistitor , local_time localTime , create_time createTime , update_time updateTime , category , action , name , value FROM t_event ${order} LIMIT ${start},${limit}")
+	@Select("SELECT id , idsite , idvisitor , local_time localTime , create_time createTime , update_time updateTime , category , action , name , value FROM t_event ${order} LIMIT ${start},${limit}")
 	List<Event> findByPage(@Param("order") String order, @Param("limit") int limit, @Param("start") int start) throws Exception;
 	/**
 	 * 选择性删除
@@ -102,7 +102,7 @@ public interface EventMapper extends MybatisMultiDao<Event>{
 	 * @param where SQL条件语句
 	 * @return 符合条件的列表数据
 	 */
-	@Select("SELECT id , idsite , idvistitor , local_time localTime , create_time createTime , update_time updateTime , category , action , name , value FROM t_event ${where} ${order}")
+	@Select("SELECT id , idsite , idvisitor , local_time localTime , create_time createTime , update_time updateTime , category , action , name , value FROM t_event ${where} ${order}")
 	List<Event> findWhere(@Param("order") String order, @Param("where") String where) throws Exception;
 	/**
 	 * 选择性分页查询
@@ -111,7 +111,7 @@ public interface EventMapper extends MybatisMultiDao<Event>{
 	 * @param start 起始返回
 	 * @return 符合条件的列表数据
 	 */
-	@Select("SELECT id , idsite , idvistitor , local_time localTime , create_time createTime , update_time updateTime , category , action , name , value FROM t_event ${where} ${order} LIMIT ${start},${limit}")
+	@Select("SELECT id , idsite , idvisitor , local_time localTime , create_time createTime , update_time updateTime , category , action , name , value FROM t_event ${where} ${order} LIMIT ${start},${limit}")
 	List<Event> findWhereByPage(@Param("order") String order, @Param("where") String where, @Param("limit") int limit, @Param("start") int start) throws Exception;
 	/**
 	 * 根据属性查询
@@ -119,6 +119,6 @@ public interface EventMapper extends MybatisMultiDao<Event>{
 	 * @param value 值
 	 * @return 返回符合条件的数据列表
 	 */
-	@Select("SELECT id , idsite , idvistitor , local_time localTime , create_time createTime , update_time updateTime , category , action , name , value FROM t_event WHERE ${propertyName}=#{value} ${order}")
+	@Select("SELECT id , idsite , idvisitor , local_time localTime , create_time createTime , update_time updateTime , category , action , name , value FROM t_event WHERE ${propertyName}=#{value} ${order}")
 	List<Event> findByPropertyName(@Param("order") String order, @Param("propertyName") String propertyName, @Param("value") Object value) throws Exception;
 }

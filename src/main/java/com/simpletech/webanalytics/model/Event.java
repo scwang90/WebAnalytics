@@ -24,7 +24,7 @@ public class Event{
 	/**
 	 * 访问者ID
 	 */
-	private String idvistitor;
+	private String idvisitor;
 	/**
 	 * 本地时间
 	 */
@@ -75,15 +75,15 @@ public class Event{
 	public void setIdsite(String idsite) {
 		this.idsite = idsite;
 	}
-	
-	public String getIdvistitor(){
-		return this.idvistitor;
+
+	public String getIdvisitor() {
+		return idvisitor;
 	}
 
-	public void setIdvistitor(String idvistitor) {
-		this.idvistitor = idvistitor;
+	public void setIdvisitor(String idvisitor) {
+		this.idvisitor = idvisitor;
 	}
-	
+
 	public java.util.Date getLocalTime(){
 		return this.localTime;
 	}

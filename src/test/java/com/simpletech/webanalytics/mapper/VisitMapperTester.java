@@ -27,30 +27,6 @@ public class VisitMapperTester {
 	VisitMapper mapper;
 
 	@Test
-	public void visit() throws Exception{
-		Object result = mapper.visitDay("1",monthf.parse("2015-9-0"),monthf.parse("2015-9-30"));
-		System.out.println(JacksonUtil.toJson(result));
-	}
-
-	@Test
-	public void pv() throws Exception{
-		Object result = mapper.pageViewDay("1",monthf.parse("2015-9-0"),monthf.parse("2015-9-30"));
-		System.out.println(JacksonUtil.toJson(result));
-	}
-
-	@Test
-	public void uv() throws Exception{
-		Object result = mapper.uniqueVisitorDay("1", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
-		System.out.println(JacksonUtil.toJson(result));
-	}
-
-	@Test
-	public void ip() throws Exception{
-		Object result = mapper.internetProtocolDay("1", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
-		System.out.println(JacksonUtil.toJson(result));
-	}
-
-	@Test
 	public void insert() throws Exception{
 		Visit model = new Visit();
 		Object result = mapper.insert(model);

@@ -26,10 +26,10 @@ public class DateSkip {
         Date end = timeEnd(span, offset);
         System.out.println("s=>" + full.format(start));
         System.out.println("e=>" + full.format(end));
-        fulldata(span.getFormat(),period,start,end);
+        fulldata(period,start,end);
     }
 
-    private void fulldata(DateFormat format,Period period, Date start, Date end) {
+    private void fulldata(Period period, Date start, Date end) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(start);
         while (calendar.getTime().before(end)) {

@@ -18,6 +18,7 @@ public enum Period {
     ;
     private final int field;
     private final DateFormat format;
+    public static final String[] PERIODS = {"yy","yyMM","yyMMdd","yyMMddhh","yy-ww",};
 
     Period(String format,int field){
         this.format = new SimpleDateFormat(format);

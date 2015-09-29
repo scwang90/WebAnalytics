@@ -16,9 +16,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.text.SimpleDateFormat;
 
 /**
- * StatisticsController ²âÊÔÀà
- * @author Ê÷–b
- * @date 2015-09-21 17:03:53 ÖÐ¹ú±ê×¼Ê±¼ä
+ * StatisticsController ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @author ï¿½ï¿½ï¿½b
+ * @date 2015-09-21 17:03:53 ï¿½Ð¹ï¿½ï¿½ï¿½×¼Ê±ï¿½ï¿½
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-*.xml")
@@ -43,6 +43,18 @@ public class StatisticsControllerTester {
 //                System.out.println(JacksonUtil.toJson(result));
             }
         }
+    }
+
+    @Test
+    public void pagetitle() throws Exception{
+        Object result = controller.pagetitle("1", 0, Period.month, 100, 0);
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
+    public void pageurl() throws Exception{
+        Object result = controller.pageurl("1", 0, Period.month, 100, 0);
+        System.out.println(JacksonUtil.toJson(result));
     }
 
 

@@ -90,7 +90,7 @@ public class JsDetect {
     public Visit build(String idsite) {
         Visit visit = new Visit();
         visit.setIdsite(idsite);
-        visit.setIdvistitor(this.getIdvtor());
+        visit.setIdvisitor(this.getIdvtor());
         visit.setBrowserName(this.getBrowser());
         visit.setBrowserVersion(this.getVersion());
         visit.setCountVisits(this.getIdvc());

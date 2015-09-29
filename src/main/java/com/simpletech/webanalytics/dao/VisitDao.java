@@ -2,6 +2,7 @@ package com.simpletech.webanalytics.dao;
 
 import com.simpletech.webanalytics.dao.base.BaseDao;
 import com.simpletech.webanalytics.model.Visit;
+import com.simpletech.webanalytics.model.entity.EventValue;
 import com.simpletech.webanalytics.model.entity.PeriodValue;
 
 import java.util.Date;
@@ -17,18 +18,18 @@ public interface VisitDao extends BaseDao<Visit>{
 	/**
 	 * 获取 idsite网站 的 Visit
 	 * @param idsite 网站ID
-	 * @param idvistitor 访问者
+	 * @param idvisitor 访问者
 	 * @return Visit
 	 */
-	Visit getVisit(String idsite, String idvistitor) throws Exception;
+	Visit getVisit(String idsite, String idvisitor) throws Exception;
 
 	/**
 	 * 获取 idsite网站 访问者30分钟内的 Visit
 	 * @param idsite 网站ID
-	 * @param idvistitor 访问者
+	 * @param idvisitor 访问者
 	 * @return Visit
 	 */
-	Visit getVisitHalfHour(String idsite, String idvistitor) throws Exception;
+	Visit getVisitHalfHour(String idsite, String idvisitor) throws Exception;
 
 	/**
 	 * 获取 idsite网站 start-end 的 小时\日\周\月Visit
@@ -42,7 +43,7 @@ public interface VisitDao extends BaseDao<Visit>{
 	List<PeriodValue> visitMonth(String idsite, Date start, Date end) throws Exception;
 
 	/**
-	 * 获取 idsite网站 start-end 的 小时\日\周\月PV
+	 * 获取 idsite网站 在 start-end 的 小时\日\周\月PV
 	 * @param idsite 网站ID
 	 * @param start 开始时间
 	 * @param end 结束时间
@@ -53,7 +54,7 @@ public interface VisitDao extends BaseDao<Visit>{
 	List<PeriodValue> pageViewMonth(String idsite, Date start, Date end) throws Exception;
 
 	/**
-	 * 获取 idsite网站 start-end 的 小时\日\周\月UV
+	 * 获取 idsite网站 在 start-end 的 小时\日\周\月UV
 	 * @param idsite 网站ID
 	 * @param start 开始时间
 	 * @param end 结束时间
@@ -64,7 +65,7 @@ public interface VisitDao extends BaseDao<Visit>{
 	List<PeriodValue> uniqueVisitorMonth(String idsite, Date start, Date end) throws Exception;
 
 	/**
-	 * 获取 idsite网站 start-end 的 小时\日\周\月IP
+	 * 获取 idsite网站 在 start-end 的 小时\日\周\月IP
 	 * @param idsite 网站ID
 	 * @param start 开始时间
 	 * @param end 结束时间
@@ -74,4 +75,23 @@ public interface VisitDao extends BaseDao<Visit>{
 	List<PeriodValue> internetProtocolWeek(String idsite, Date start, Date end) throws Exception;
 	List<PeriodValue> internetProtocolMonth(String idsite, Date start, Date end) throws Exception;
 
+	/**
+	 * 统计 idsite网站 在 start-end 的 总 Visit
+	 *
+	 * @param idsite 网站ID
+	 * @param start 开始时间
+	 * @param end 结束时间
+	 * @return 统计值
+	 */
+	Long countVisit(String idsite, Date start, Date end) throws Exception;
+
+	/**
+	 * 统计 idsite网站 在 start-end 的 总 用户（排重）
+	 *
+	 * @param idsite 网站ID
+	 * @param start 开始时间
+	 * @param end 结束时间
+	 * @return 统计值
+	 */
+	Long countUsers(String idsite, Date start, Date end) throws Exception;
 }

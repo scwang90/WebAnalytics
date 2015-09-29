@@ -41,7 +41,7 @@ public class Visit{
 	/**
 	 * 访问者ID
 	 */
-	private String idvistitor;
+	private String idvisitor;
 	/**
 	 * 访问服务器时间
 	 */
@@ -217,15 +217,15 @@ public class Visit{
 	public void setOlduser(Boolean olduser) {
 		this.olduser = olduser;
 	}
-	
-	public String getIdvistitor(){
-		return this.idvistitor;
+
+	public String getIdvisitor() {
+		return idvisitor;
 	}
 
-	public void setIdvistitor(String idvistitor) {
-		this.idvistitor = idvistitor;
+	public void setIdvisitor(String idvisitor) {
+		this.idvisitor = idvisitor;
 	}
-	
+
 	public java.util.Date getVisitServertime(){
 		return this.visitServertime;
 	}
