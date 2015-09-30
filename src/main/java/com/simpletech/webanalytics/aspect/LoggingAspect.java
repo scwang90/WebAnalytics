@@ -7,6 +7,8 @@ import org.aspectj.lang.annotation.Aspect;
 
 import com.simpletech.webanalytics.util.JacksonUtil;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 日志处理切面
  * @author 树朾
@@ -16,21 +18,29 @@ import com.simpletech.webanalytics.util.JacksonUtil;
 public class LoggingAspect {
 
 	public static boolean log = true;
-	
+
 	public void before(JoinPoint point) {
 		if (log){
 			out.print(LoggingAspect.class.getSimpleName()+"-");
 			out.print(point.getTarget().getClass().getSimpleName()+".");
-			out.print(point.getSignature().getName()+"-begin-args-");
-			try {
-				out.print(JacksonUtil.toJson(point.getArgs()));
-			} catch (Throwable e) {
-				// TODO: handle exception
-				out.print("[");
+			out.print(point.getSignature().getName() + "-begin-args-");
+			Object[] args = point.getArgs();
+			if (args != null && args.length > 0){
+				out.print("([");
 				for (Object object : point.getArgs()) {
-					out.print(object+",");
+					try {
+						out.print(JacksonUtil.toJson(object)+",");
+					} catch (Throwable e) {
+						if (object instanceof HttpServletRequest) {
+							out.print(((HttpServletRequest) object).getQueryString()+",");
+						} else {
+							out.print(object+",");
+						}
+					}
 				}
-				out.print("\b]");
+				out.print("\n])");
+			} else {
+				out.print("()");
 			}
 			out.println();
 		}

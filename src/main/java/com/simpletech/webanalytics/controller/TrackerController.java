@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * 探针数据接收 API
@@ -22,27 +24,60 @@ public class TrackerController {
     TrackerService service;
 
     /**
+     * piwik监听测试
+     *
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("tracker")
+    public void tracker(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Map<String, Object> map = request.getParameterMap();
+        for (Map.Entry<String, Object> param : map.entrySet()) {
+            if ("action_name".equals(param.getKey())){
+                String parameter = request.getParameter(param.getKey());
+                if(!parameter.matches("[\\u4E00-\\u9FA5]+")){
+                    parameter = new String(parameter.getBytes("ISO-8859-1"),"UTF-8");
+                }
+                System.out.println("paramr:" + param.getKey() + "=>" + parameter);
+            } else {
+                System.out.println("paramr:" + param.getKey() + "=>" + request.getParameter(param.getKey()));
+            }
+        }
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String name = headerNames.nextElement();
+            System.out.println("header:" + name + "=>" + request.getHeader(name));
+        }
+        System.out.println("query:"+request.getQueryString());
+        request.getRequestDispatcher("/images/pixel.jpg").forward(request, response);
+    }
+
+
+    /**
      * JS探针页面统计
+     *
      * @param idsite 网站ID
      * @param detect 页面参数接收对象
      * @throws Exception
      */
     @RequestMapping("1.0/tpv")
-    public void ptv(HttpServletRequest request,HttpServletResponse response,String idsite,JsDetect detect) throws Exception {
+    public void ptv(HttpServletRequest request, HttpServletResponse response, String idsite, JsDetect detect) throws Exception {
         detect.check();
         detect.bind(request, response);
-        service.trackerPageView(idsite,detect);
+        service.trackerPageView(idsite, detect);
         request.getRequestDispatcher("/images/pixel.jpg").forward(request, response);
     }
 
     /**
      * JS探针事件统计
+     *
      * @param idsite 网站ID
-     * @param event 事件接收对象
+     * @param event  事件接收对象
      * @throws Exception
      */
     @RequestMapping("1.0/ten")
-    public void ten(HttpServletRequest request,HttpServletResponse response,String idsite,JsEvent event) throws Exception {
+    public void ten(HttpServletRequest request, HttpServletResponse response, String idsite, JsEvent event) throws Exception {
         event.check();
         event.bind(request, response);
         service.trackerEvent(idsite, event);

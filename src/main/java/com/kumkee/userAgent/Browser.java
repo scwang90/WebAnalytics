@@ -57,11 +57,22 @@ public enum Browser {
     }
 
     public static Browser parser(String useragent) {
-        for (Browser app : values()) {
-            if (app.matches(useragent)) {
-                return app;
+        for (Browser browser : values()) {
+            if (browser.matches(useragent)) {
+                return browser;
             }
         }
+        Browser.Unknown.version = "";
+        return Browser.Unknown;
+    }
+
+    public static Browser parserAcronym(String acronym) {
+        for (Browser browser : values()) {
+            if (browser.acronym.equals(acronym)) {
+                return browser;
+            }
+        }
+        Browser.Unknown.version = "";
         return Browser.Unknown;
     }
 

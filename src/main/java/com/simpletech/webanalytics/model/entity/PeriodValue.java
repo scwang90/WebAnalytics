@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * PV Í³¼Æ
+ * PV ç»Ÿè®¡
  * Created by Administrator on 2015/9/25.
  */
 public class PeriodValue {

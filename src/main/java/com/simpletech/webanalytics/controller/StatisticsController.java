@@ -31,6 +31,21 @@ public class StatisticsController {
     }
 
     /**
+     * 新老用户 - 自定义时段
+     *
+     * @param siteId 网站ID
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param limit  分页限制
+     * @param skip   分页起始
+     * @return 标题排行
+     */
+    @RequestMapping("user/site/{siteId}/")
+    public Object user(@PathVariable String siteId, @PathVariable int limit, @PathVariable int skip, @RequestParam Date start, @RequestParam Date end) throws Exception{
+        return service.pagetitle(siteId, start, end, limit, skip);
+    }
+
+    /**
      * 页面标题排行 - 自定义时段
      *
      * @param siteId 网站ID

@@ -32,9 +32,19 @@ public enum Nettype {
     }
 
     public static Nettype parser(String useragent) {
-        for (Nettype app : values()) {
-            if (app.matches(useragent)){
-                return app;
+        for (Nettype net : values()) {
+            if (net.matches(useragent)){
+                return net;
+            }
+        }
+        Nettype.Unknown.value = "";
+        return Nettype.Unknown;
+    }
+
+    public static Nettype parserAcronym(String acronym) {
+        for (Nettype net : values()) {
+            if (net.acronym.equals(acronym)) {
+                return net;
             }
         }
         Nettype.Unknown.value = "";

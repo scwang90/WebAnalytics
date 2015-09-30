@@ -49,6 +49,11 @@ public class IndexController {
         }
     }
 
+    @RequestMapping("skip/{skip:\\d*}")
+    public String skip(@PathVariable String skip){
+        return "index";
+    }
+
     @RequestMapping("{index}")
     public String index(@PathVariable String index){
         return index;

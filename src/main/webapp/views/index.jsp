@@ -8,6 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.kumkee.userAgent.UserAgentParser" %>
 <%@ page import="com.kumkee.userAgent.UserAgent" %>
+<%@ page import="com.ipmapping.IPCatcherUtil" %>
+<%@ page import="com.ipmapping.IP" %>
+<%@ page import="java.util.Arrays" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -19,6 +22,10 @@
     System.out.println(agent);
     UserAgentParser userAgentParser = new UserAgentParser();
     UserAgent useragent = userAgentParser.parse(agent);
+
+    /*annotation ipmapping code*/
+    String ipAddr = IPCatcherUtil.getIpAddr(request);
+    IP.load(application.getRealPath("/WEB-INF/classes/17monipdb.dat"));
 %>
 <h1>通告</h1>
 <p>根据9.16日发布的测试版本，修复分辨率识别和浏览器识别，重新发布测试</p>
@@ -36,6 +43,8 @@ APP:<%=useragent.getApplication().getRemark()%><br>
 型号:<%=useragent.getBrand().getModel()%><br>
 新浏览器:<%=useragent.getBrowser().getRemark()%><br>
 新浏览器版本:<%=useragent.getBrowser().getVersion()%><br>
+新浏览器引擎:<%=useragent.getBrowserEngine().getRemark()%><br>
+新浏引擎版本:<%=useragent.getBrowserEngine().getVersion()%><br>
 新操作系统:<%=useragent.getOperateSystem().getRemark()%><br>
 新系统版本:<%=useragent.getOperateSystem().getVersion()%><br>
 网络类型:<%=useragent.getNetType().getRemark()%><br>
@@ -45,7 +54,8 @@ APP:<%=useragent.getApplication().getRemark()%><br>
 操作系统:<%=useragent.getOs()%><br>
 引擎:<%=useragent.getEngine()%><br>
 引擎版本:<%=useragent.getEngineVersion()%><br>
-客户端IP:<%=request.getRemoteAddr()%>&nbsp;&nbsp;&nbsp;&nbsp;（注：这是外网IP）<br>
+客户端IP:<%=request.getRemoteAddr()%>,<%=ipAddr%> &nbsp;（注：这是外网IP）<br>
+地址信息:<%=Arrays.toString(IP.find(ipAddr))%><br>
 <%--客户端主机:<%=request.getRemoteHost()%><br>--%>
 源代理:<%=agent%><br>
 <br>
@@ -57,7 +67,22 @@ APP:<%=useragent.getApplication().getRemark()%><br>
 </p>
 
 </body>
-<script src="js/ds.js"/>
+<script src="/js/ds.js"></script>
+<!-- Piwik -->
+<%--<script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+        var u="//118.118.118.6:8080/tracker/";
+        _paq.push(['setTrackerUrl', u+'tracker']);
+        _paq.push(['setSiteId', 2222222]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src='/js/piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+</script>--%>
+<!-- End Piwik Code -->
+
 <script>
     function send(){
         var image = new Image(1, 1);
@@ -97,7 +122,7 @@ APP:<%=useragent.getApplication().getRemark()%><br>
     var windowAlias = window, documentAlias = document,
             screenAlias = screen,
             deviceScreen = screenAlias.width + 'x' + screenAlias.height;
-    var referrertip = "&nbsp;&nbsp;&nbsp;&nbsp;(需要跳转才能有数据，<a href='skip'>点击跳转测试</a>)";
+    var referrertip = "&nbsp;&nbsp;&nbsp;&nbsp;(需要跳转才能有数据，<a href='skip/0'>点击跳转测试</a>)";
 
     if(screenAlias.width<1000 || screenAlias.height<1000){
         deviceScreen = screenAlias.width*windowAlias.devicePixelRatio + 'x' + screenAlias.height*windowAlias.devicePixelRatio;

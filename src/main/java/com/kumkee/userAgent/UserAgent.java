@@ -16,6 +16,7 @@ public class UserAgent {
 	private Application application;
 	private OperateSystem operateSystem;
 	private Browser browser;
+	private BrowserEngine browserEngine;
 
 	public boolean isMobile()
 	{
@@ -109,10 +110,18 @@ public class UserAgent {
 	public OperateSystem getOperateSystem() {
 		return operateSystem;
 	}
-	public void setBrowseer(Browser browseer) {
-		this.browser = browseer;
+	public void setBrowser(Browser browser) {
+		this.browser = browser;
 	}
 	public Browser getBrowser() {
 		return browser;
+	}
+
+	public void setBrowserEngine(BrowserEngine browserEngine) {
+		this.browserEngine = browserEngine;
+	}
+
+	public BrowserEngine getBrowserEngine() {
+		return browserEngine;
 	}
 }

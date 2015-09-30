@@ -34,6 +34,17 @@ public enum Application {
                 return app;
             }
         }
+        Application.Unknown.version = "";
+        return Application.Unknown;
+    }
+
+    public static Application parserAcronym(String acronym) {
+        for (Application app : values()) {
+            if (app.acronym.equals(acronym)) {
+                return app;
+            }
+        }
+        Application.Unknown.version = "";
         return Application.Unknown;
     }
 

@@ -45,7 +45,7 @@ public class TrackerServiceImpl implements TrackerService{
             action.setServerTime(new Date());
             action.setIdurl(url.getId());
             action.setIdtitle(title.getId());
-            action.setTimeSpent(0);
+            action.setTimeSpent(detect.getGtms());
             action.setIdvisitor(detect.getIdvtor());
             actionService.insert(action);
         }

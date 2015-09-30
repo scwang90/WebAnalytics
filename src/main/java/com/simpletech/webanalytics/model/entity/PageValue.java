@@ -1,11 +1,14 @@
 package com.simpletech.webanalytics.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * 事件统计值
  * Created by Administrator on 2015/9/29.
  */
 public class PageValue {
 
+    @JsonIgnore
     private String pid;
     private String name;
     private Integer pv;

@@ -24,7 +24,8 @@ public class UserAgentParser
 		userAgent.setDevice(Device.parser(useragent));
 		userAgent.setApplication(Application.parser(useragent));
 		userAgent.setOperateSystem(OperateSystem.parser(useragent));
-		userAgent.setBrowseer(Browser.parser(useragent));
+		userAgent.setBrowser(Browser.parser(useragent));
+		userAgent.setBrowserEngine(BrowserEngine.parser(useragent));
 		return userAgent;
 	}
 

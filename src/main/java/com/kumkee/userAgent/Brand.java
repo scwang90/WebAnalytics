@@ -13,7 +13,7 @@ public enum Brand {
     //Mozilla/5.0 (Linux; U; Android 4.2.2; zh-cn; vivo Y15T Build/JDQ39) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/5.4 TBS/025469 Mobile Safari/533.1 MicroMessenger/6.2.2.54_rec1912d.581 NetType/WIFI Language/zh_CN
     Htc("htc","HT","HTC","htc"),
     Lg("lg","LG","LG","\\blg\\b"),
-    Samsung("samsung","SS","三星","samsung"),
+    Samsung("samsung","SS","三星","(EK-G[\\w\\-\\. ]*)|(samsung)"),
     Sonyericsson("sonyericsson","SI","索爱","sonyericsson"),
     Sony("sony","SY","索尼","sony"),
     Asus("asus","AS","华硕","asus"),
@@ -23,7 +23,7 @@ public enum Brand {
     Dell("dell","DL","戴尔","dell"),
     Archos("archos","AH","爱可视","archos"),
 
-    Motorola("motorola","MT","摩托罗拉","\\b(mot[\\w\\-\\. ]*) build|\\b(mb[\\w\\-\\. ]*) build|\\b(xoom[\\w\\-\\. ]*) build|(motorola)"),
+    Motorola("motorola","MT","摩托罗拉","\\b(mot[\\w\\-\\. ]*) build|\\b(mb[\\w\\-\\. ]*) build|\\b(xoom[\\w\\-\\. ]*) build"),
     Motorola1("motorola","MT","摩托罗拉","(motorola)"),
 
     //htc|lg|samsung|sonyericsson|sony|asus|onda|woxter|huawei|dell|archos|motorola
@@ -78,6 +78,16 @@ public enum Brand {
     public static Brand parser(String useragent){
         for (Brand brand:values()){
             if (brand.matches(useragent)){
+                return brand;
+            }
+        }
+        Brand.Unknown.model = "";
+        return Brand.Unknown;
+    }
+
+    public static Brand parserAcronym(String acronym) {
+        for (Brand brand : values()) {
+            if (brand.acronym.equals(acronym)) {
                 return brand;
             }
         }

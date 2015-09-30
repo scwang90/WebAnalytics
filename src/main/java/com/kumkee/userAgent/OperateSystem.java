@@ -51,11 +51,22 @@ public enum OperateSystem {
     }
 
     public static OperateSystem parser(String useragent) {
-        for (OperateSystem app : values()) {
-            if (app.matches(useragent)) {
-                return app;
+        for (OperateSystem op : values()) {
+            if (op.matches(useragent)) {
+                return op;
             }
         }
+        OperateSystem.Unknown.version = "";
+        return OperateSystem.Unknown;
+    }
+
+    public static OperateSystem parserAcronym(String acronym) {
+        for (OperateSystem op : values()) {
+            if (op.acronym.equals(acronym)) {
+                return op;
+            }
+        }
+        OperateSystem.Unknown.version = "";
         return OperateSystem.Unknown;
     }
 
