@@ -26,12 +26,12 @@ public class ActionDaoImpl extends BaseDaoImpl<Action> implements ActionDao {
 
 
     @Override
-    public List<PageValue> pagetitle(String siteId, Date start, Date end, int limit, int skip) throws Exception {
+    public List<PageValue> pagetitle(int siteId, Date start, Date end, int limit, int skip) throws Exception {
         return mapper.pagetitle(siteId, start, end, limit, skip);
     }
 
     @Override
-    public List<PageValue> pageurl(String siteId, Date start, Date end, int limit, int skip) throws Exception {
+    public List<PageValue> pageurl(int siteId, Date start, Date end, int limit, int skip) throws Exception {
         return mapper.pageurl(siteId, start, end, limit, skip);
     }
 

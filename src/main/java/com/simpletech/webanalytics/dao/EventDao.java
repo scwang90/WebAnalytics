@@ -6,7 +6,7 @@ import java.util.List;
 import com.simpletech.webanalytics.dao.base.BaseDao;
 import com.simpletech.webanalytics.model.Event;
 import com.simpletech.webanalytics.model.entity.EventPeriodValue;
-import com.simpletech.webanalytics.model.entity.EventValue;
+import com.simpletech.webanalytics.model.entity.EventNameValue;
 
 /**
  * 数据库表t_event的Dao接口
@@ -26,7 +26,7 @@ public interface EventDao extends BaseDao<Event> {
      * @param skip   分页起始
      * @return event统计数据
      */
-    List<EventValue> event(String idsite, Date start, Date end, int limit, int skip) throws Exception;
+    List<EventNameValue> event(int idsite, Date start, Date end, int limit, int skip) throws Exception;
 
 
     /**
@@ -40,11 +40,11 @@ public interface EventDao extends BaseDao<Event> {
      * @param skip     分页起始
      * @return event统计数据
      */
-    List<EventPeriodValue> eventMonth(String idsite, String category, Date start, Date end, int limit, int skip) throws Exception;
+    List<EventPeriodValue> eventMonth(int idsite, String category, Date start, Date end, int limit, int skip) throws Exception;
 
-    List<EventPeriodValue> eventWeek(String idsite, String category, Date start, Date end, int limit, int skip) throws Exception;
+    List<EventPeriodValue> eventWeek(int idsite, String category, Date start, Date end, int limit, int skip) throws Exception;
 
-    List<EventPeriodValue> eventDay(String idsite, String category, Date start, Date end, int limit, int skip) throws Exception;
+    List<EventPeriodValue> eventDay(int idsite, String category, Date start, Date end, int limit, int skip) throws Exception;
 
-    List<EventPeriodValue> eventHour(String idsite, String category, Date start, Date end, int limit, int skip) throws Exception;
+    List<EventPeriodValue> eventHour(int idsite, String category, Date start, Date end, int limit, int skip) throws Exception;
 }

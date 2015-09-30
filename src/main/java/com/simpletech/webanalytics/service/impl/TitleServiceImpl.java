@@ -25,7 +25,7 @@ public class TitleServiceImpl extends BaseServiceImpl<Title> implements TitleSer
 	TitleDao dao;
 
 	@Override
-	public Title getTitle(String idsite, String _title) throws Exception {
+	public Title getTitle(int idsite, String _title) throws Exception {
 		Title title = dao.getUrl(idsite,_title);
 		if (title == null){
 			title = new Title();

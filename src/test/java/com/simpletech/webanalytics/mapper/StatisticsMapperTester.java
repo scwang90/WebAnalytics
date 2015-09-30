@@ -27,49 +27,49 @@ public class StatisticsMapperTester {
 
     @Test
     public void eventDay() throws Exception {
-        Object result = mapper.eventDay("1", "ec", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"),100,0);
+        Object result = mapper.eventDay(1, "ec", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"),100,0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void cvisit() throws Exception {
-        Object result = mapper.countVisit("1", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
+        Object result = mapper.countVisit(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void cuser() throws Exception {
-        Object result = mapper.countUsers("1", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
+        Object result = mapper.countUsers(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void event() throws Exception {
-        Object result = mapper.event("1", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"), 100, 0);
+        Object result = mapper.event(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void visit() throws Exception {
-        Object result = mapper.visitDay("1", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
+        Object result = mapper.visitDay(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void pv() throws Exception {
-        Object result = mapper.pageViewDay("1", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
+        Object result = mapper.pageViewDay(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void uv() throws Exception {
-        Object result = mapper.uniqueVisitorDay("1", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
+        Object result = mapper.uniqueVisitorDay(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void ip() throws Exception {
-        Object result = mapper.internetProtocolDay("1", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
+        Object result = mapper.internetProtocolDay(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
         System.out.println(JacksonUtil.toJson(result));
     }
 

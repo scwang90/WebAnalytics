@@ -4,13 +4,13 @@ package com.simpletech.webanalytics.model.entity;
  * 事件统计值
  * Created by Administrator on 2015/9/29.
  */
-public class EventValue {
+public class EventNameValue {
 
     private String name;
-    private Long num;
-    private Float rn;
-    private Integer user;
-    private Float ru;
+    private long num;
+    private float rn;
+    private int user;
+    private float ru;
 
     public String getName() {
         return name;
@@ -20,35 +20,35 @@ public class EventValue {
         this.name = name;
     }
 
-    public Float getRn() {
+    public float getRn() {
         return rn;
     }
 
-    public void setRn(Float rn) {
+    public void setRn(float rn) {
         this.rn = rn;
     }
 
-    public Integer getUser() {
+    public int getUser() {
         return user;
     }
 
-    public void setUser(Integer user) {
+    public void setUser(int user) {
         this.user = user;
     }
 
-    public Float getRu() {
+    public float getRu() {
         return ru;
     }
 
-    public void setRu(Float ru) {
+    public void setRu(float ru) {
         this.ru = ru;
     }
 
-    public Long getNum() {
+    public long getNum() {
         return num;
     }
 
-    public void setNum(Long num) {
+    public void setNum(long num) {
         this.num = num;
     }
 

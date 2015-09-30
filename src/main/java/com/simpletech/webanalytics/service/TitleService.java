@@ -19,6 +19,6 @@ public interface TitleService extends BaseService<Title>{
 	 * @return 返回有效的 Title 对象
 	 * @throws Exception
 	 */
-	Title getTitle(String idsite, String title) throws Exception;
+	Title getTitle(int idsite, String title) throws Exception;
 
 }

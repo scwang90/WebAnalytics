@@ -47,13 +47,13 @@ public class StatisticsControllerTester {
 
     @Test
     public void pagetitle() throws Exception{
-        Object result = controller.pagetitle("1", 0, Period.month, 100, 0);
+        Object result = controller.pagetitle(1, 0, Period.month, 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void pageurl() throws Exception{
-        Object result = controller.pageurl("1", 0, Period.month, 100, 0);
+        Object result = controller.pageurl(1, 0, Period.month, 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 

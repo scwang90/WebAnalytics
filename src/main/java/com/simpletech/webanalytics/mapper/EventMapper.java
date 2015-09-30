@@ -15,7 +15,7 @@ import com.simpletech.webanalytics.dao.base.BaseDaoMybatisMYSQLImpl.MybatisMulti
 /**
  * 数据库表t_event的mapper接口
  * @author 树朾
- * @date 2015-09-25 16:32:39 中国标准时间
+ * @date 2015-09-30 18:37:15 中国标准时间
  */
 public interface EventMapper extends MybatisMultiDao<Event>{
 

@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.simpletech.webanalytics.mapper.StatisticsMapper;
-import com.simpletech.webanalytics.mapper.VisitMapper;
-import com.simpletech.webanalytics.model.entity.EventValue;
-import com.simpletech.webanalytics.model.entity.PeriodValue;
+import com.simpletech.webanalytics.model.constant.Period;
+import com.simpletech.webanalytics.model.entity.VisitValue;
+import com.simpletech.webanalytics.model.entity.VisitorValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +29,7 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao{
 	StatisticsMapper mapper;
 
 	@Override
-	public Visit getVisit(String idsite, String idvisitor) throws Exception {
+	public Visit getVisit(int idsite, String idvisitor) throws Exception {
 		String where = "where idsite=%s and idvisitor='%s'";
 		for (Visit visit : findWhere(String.format(where,idsite,idvisitor))){
 			return visit;
@@ -38,7 +38,7 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao{
 	}
 
 	@Override
-	public Visit getVisitHalfHour(String idsite, String idvisitor) throws Exception {
+	public Visit getVisitHalfHour(int idsite, String idvisitor) throws Exception {
 		Date time = new Date(new Date().getTime()-30*60*1000);
 		String where = "where idsite=%s and idvisitor='%s' and visit_servertime > '%s'";
 		for (Visit visit : findWhere(String.format(where,idsite,idvisitor,format.format(time)))){
@@ -48,93 +48,118 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao{
 	}
 
 	@Override
-	public List<PeriodValue> visitHour(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> visitHour(int idsite, Date start, Date end) throws Exception {
 		return mapper.visitHour(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> visitDay(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> visitDay(int idsite, Date start, Date end) throws Exception {
 		return mapper.visitDay(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> visitWeek(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> visitWeek(int idsite, Date start, Date end) throws Exception {
 		return mapper.visitWeek(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> visitMonth(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> visitMonth(int idsite, Date start, Date end) throws Exception {
 		return mapper.visitMonth(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> pageViewHour(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> pageViewHour(int idsite, Date start, Date end) throws Exception {
 		return mapper.pageViewHour(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> pageViewDay(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> pageViewDay(int idsite, Date start, Date end) throws Exception {
 		return mapper.pageViewDay(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> pageViewWeek(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> pageViewWeek(int idsite, Date start, Date end) throws Exception {
 		return mapper.pageViewWeek(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> pageViewMonth(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> pageViewMonth(int idsite, Date start, Date end) throws Exception {
 		return mapper.pageViewMonth(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> uniqueVisitorHour(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> uniqueVisitorHour(int idsite, Date start, Date end) throws Exception {
 		return mapper.uniqueVisitorHour(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> uniqueVisitorDay(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> uniqueVisitorDay(int idsite, Date start, Date end) throws Exception {
 		return mapper.uniqueVisitorDay(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> uniqueVisitorWeek(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> uniqueVisitorWeek(int idsite, Date start, Date end) throws Exception {
 		return mapper.uniqueVisitorWeek(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> uniqueVisitorMonth(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> uniqueVisitorMonth(int idsite, Date start, Date end) throws Exception {
 		return mapper.uniqueVisitorMonth(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> internetProtocolHour(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> internetProtocolHour(int idsite, Date start, Date end) throws Exception {
 		return mapper.internetProtocolHour(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> internetProtocolDay(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> internetProtocolDay(int idsite, Date start, Date end) throws Exception {
 		return mapper.internetProtocolDay(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> internetProtocolWeek(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> internetProtocolWeek(int idsite, Date start, Date end) throws Exception {
 		return mapper.internetProtocolWeek(idsite, start, end);
 	}
 
 	@Override
-	public List<PeriodValue> internetProtocolMonth(String idsite, Date start, Date end) throws Exception {
+	public List<VisitValue> internetProtocolMonth(int idsite, Date start, Date end) throws Exception {
 		return mapper.internetProtocolMonth(idsite, start, end);
 	}
 
 	@Override
-	public Long countVisit(String idsite, Date start, Date end) throws Exception {
+	public List<VisitorValue> visitorHour(int idsite, Date start, Date end) throws Exception {
+		return mapper.visitorHour(idsite, start, end);
+	}
+
+	@Override
+	public List<VisitorValue> visitorDay(int idsite, Date start, Date end) throws Exception {
+		return mapper.visitorDay(idsite, start, end);
+	}
+
+	@Override
+	public List<VisitorValue> visitorWeek(int idsite, Date start, Date end) throws Exception {
+		return mapper.visitorWeek(idsite, start, end);
+	}
+
+	@Override
+	public List<VisitorValue> visitorMonth(int idsite, Date start, Date end) throws Exception {
+		return mapper.visitorMonth(idsite, start, end);
+	}
+
+	@Override
+	public Long countVisit(int idsite, Date start, Date end) throws Exception {
 		return mapper.countVisit(idsite, start, end);
 	}
 
 	@Override
-	public Long countUsers(String idsite, Date start, Date end) throws Exception {
+	public Long countUsers(int idsite, Date start, Date end) throws Exception {
 		return mapper.countUsers(idsite, start, end);
+	}
+
+	@Override
+	public boolean existVisitor(int idsite, String idvtor) throws Exception {
+		return mapper.countVisitor(idsite, idvtor);
 	}
 }
 

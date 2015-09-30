@@ -7,7 +7,7 @@ import com.simpletech.webanalytics.annotations.dbmodel.Table;
 /**
  * 数据库表t_event
  * @author 树朾
- * @date 2015-09-25 16:32:39 中国标准时间
+ * @date 2015-09-30 18:37:16 中国标准时间
  */
 @Table("t_event")
 public class Event{
@@ -20,7 +20,7 @@ public class Event{
 	/**
 	 * 网站ID
 	 */
-	private String idsite;
+	private Integer idsite;
 	/**
 	 * 访问者ID
 	 */
@@ -68,22 +68,22 @@ public class Event{
 		this.id = id;
 	}
 	
-	public String getIdsite(){
+	public Integer getIdsite(){
 		return this.idsite;
 	}
 
-	public void setIdsite(String idsite) {
+	public void setIdsite(Integer idsite) {
 		this.idsite = idsite;
 	}
-
-	public String getIdvisitor() {
-		return idvisitor;
+	
+	public String getIdvisitor(){
+		return this.idvisitor;
 	}
 
 	public void setIdvisitor(String idvisitor) {
 		this.idvisitor = idvisitor;
 	}
-
+	
 	public java.util.Date getLocalTime(){
 		return this.localTime;
 	}

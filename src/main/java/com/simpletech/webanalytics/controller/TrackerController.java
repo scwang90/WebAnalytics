@@ -62,7 +62,7 @@ public class TrackerController {
      * @throws Exception
      */
     @RequestMapping("1.0/tpv")
-    public void ptv(HttpServletRequest request, HttpServletResponse response, String idsite, JsDetect detect) throws Exception {
+    public void ptv(HttpServletRequest request, HttpServletResponse response, int idsite, JsDetect detect) throws Exception {
         detect.check();
         detect.bind(request, response);
         service.trackerPageView(idsite, detect);
@@ -77,7 +77,7 @@ public class TrackerController {
      * @throws Exception
      */
     @RequestMapping("1.0/ten")
-    public void ten(HttpServletRequest request, HttpServletResponse response, String idsite, JsEvent event) throws Exception {
+    public void ten(HttpServletRequest request, HttpServletResponse response, int idsite, JsEvent event) throws Exception {
         event.check();
         event.bind(request, response);
         service.trackerEvent(idsite, event);

@@ -20,7 +20,7 @@ public interface VisitService extends BaseService<Visit>{
 	 * @param title Title 对象
 	 * @return 返回有效的 Visit 对象
 	 */
-	Visit getVisitHalfHour(String idsite, JsDetect detect, Url url, Title title) throws Exception;
+	Visit getVisitHalfHour(int idsite, JsDetect detect, Url url, Title title) throws Exception;
 
 	/**
 	 * 获取 idsite网站 访问者detect Visit（如果不存在则添加）
@@ -30,5 +30,5 @@ public interface VisitService extends BaseService<Visit>{
 	 * @param title Title 对象
 	 * @return 返回有效的 Visit 对象
 	 */
-	Visit getVisit(String idsite, JsDetect detect, Url url, Title title) throws Exception;
+	Visit getVisit(int idsite, JsDetect detect, Url url, Title title) throws Exception;
 }

@@ -18,7 +18,7 @@ public class JsEvent extends JsDetect {
     private String en;      //(可选) 事件名称 (如: 电影名字,歌曲名称或文件名称…)
     private Float ev;       //(可选) 事件的值 (必须是一个浮点数或整数值(数字),而不是一个字符串)
 
-    public Event buildEvent(String idsite) {
+    public Event buildEvent(int idsite) {
         Event event = new Event();
         event.setCategory(this.ec);
         event.setAction(this.ea);

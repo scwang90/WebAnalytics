@@ -20,7 +20,7 @@ public interface TitleDao extends BaseDao<Title>{
 	 * @return 返回有效的 Title 对象
 	 * @throws Exception
 	 */
-	Title getUrl(String idsite, String title) throws Exception;
+	Title getUrl(int idsite, String title) throws Exception;
 
 	/**
 	 * 填充名称

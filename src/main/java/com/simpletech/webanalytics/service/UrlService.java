@@ -18,6 +18,6 @@ public interface UrlService extends BaseService<Url>{
 	 * @return 返回有效的 Url 对象
 	 * @throws Exception
 	 */
-	Url getUrl(String idsite, String url) throws Exception;
+	Url getUrl(int idsite, String url) throws Exception;
 
 }

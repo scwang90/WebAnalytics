@@ -19,7 +19,7 @@ public class UrlServiceImpl extends BaseServiceImpl<Url> implements UrlService{
 	UrlDao dao;
 
 	@Override
-	public Url getUrl(String idsite, String _url) throws Exception{
+	public Url getUrl(int idsite, String _url) throws Exception{
 		Url url = dao.getUrl(idsite,_url);
 		if (url == null){
 			url = new Url();

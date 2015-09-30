@@ -21,9 +21,9 @@ import java.util.Map;
 public class UrlDaoImpl extends BaseDaoImpl<Url> implements UrlDao{
 
 	@Override
-	public Url getUrl(String idsite, String _url) throws Exception {
+	public Url getUrl(int idsite, String _url) throws Exception {
 		for (Url url : super.findByPropertyName("hash",_url.hashCode())){
-			if (AfStringUtil.equals(idsite,url.getIdsite())){
+			if (idsite == url.getIdsite()){
 				return url;
 			}
 		}

@@ -20,9 +20,9 @@ import java.util.Map;
 public class TitleDaoImpl extends BaseDaoImpl<Title> implements TitleDao{
 
 	@Override
-	public Title getUrl(String idsite, String _title) throws Exception {
+	public Title getUrl(int idsite, String _title) throws Exception {
 		for (Title title : super.findByPropertyName("hash",_title.hashCode())){
-			if (AfStringUtil.equals(idsite,title.getIdsite())){
+			if (idsite == title.getIdsite()){
 				return title;
 			}
 		}

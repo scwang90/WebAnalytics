@@ -7,7 +7,7 @@ import com.simpletech.webanalytics.annotations.dbmodel.Table;
 /**
  * 数据库表t_action
  * @author 树朾
- * @date 2015-09-21 17:03:53 中国标准时间
+ * @date 2015-09-30 18:37:15 中国标准时间
  */
 @Table("t_action")
 public class Action{
@@ -30,7 +30,7 @@ public class Action{
 	/**
 	 * 网站ID
 	 */
-	private String idsite;
+	private Integer idsite;
 	/**
 	 * 访客用户ID
 	 */
@@ -59,7 +59,6 @@ public class Action{
 	private Integer timeSpent;
 
 	public Action() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public String getId(){
@@ -86,11 +85,11 @@ public class Action{
 		this.updateTime = updateTime;
 	}
 	
-	public String getIdsite(){
+	public Integer getIdsite(){
 		return this.idsite;
 	}
 
-	public void setIdsite(String idsite) {
+	public void setIdsite(Integer idsite) {
 		this.idsite = idsite;
 	}
 	

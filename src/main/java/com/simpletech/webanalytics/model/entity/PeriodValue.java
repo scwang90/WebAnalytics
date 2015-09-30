@@ -1,23 +1,26 @@
 package com.simpletech.webanalytics.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.simpletech.webanalytics.model.constant.Period;
+import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.AfStringUtil;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * PV 统计
+ * 周期统计数据（基类）
  * Created by Administrator on 2015/9/25.
  */
-public class PeriodValue {
+public abstract class PeriodValue {
 
     private static final SimpleDateFormat format = new SimpleDateFormat();
 
     private Date time;
     private String date;
-    private Long val;
 
     public Date getTime() {
         return time;
@@ -36,14 +39,6 @@ public class PeriodValue {
         this.bindTime(date);
     }
 
-    public Long getVal() {
-        return val;
-    }
-
-    public void setVal(Long val) {
-        this.val = val;
-    }
-
     private void bindTime(String date) {
         try {
             if (AfStringUtil.isNotEmpty(date)){
@@ -59,4 +54,20 @@ public class PeriodValue {
         }
     }
 
+    @JsonIgnore
+    public void setEmpty() {
+        try {
+            Field[] fields = AfReflecter.getField(this.getClass(), PeriodValue.class);
+            for (Field field : fields) {
+                if (!Modifier.isStatic(field.getModifiers())) {
+                    field.setAccessible(true);
+                    if (field.getType().equals(String.class)){
+                        field.set(this,"");
+                    }
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 }

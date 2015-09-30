@@ -26,7 +26,7 @@ public class JsDetect {
      * 访问者相关
      */
     @Must("网站ID")
-    private String idsite;  //(必需) 网站ID
+    private int idsite;  //(必需) 网站ID
     @Must("访问者ID")
     private String idvtor;  //(必需) 访问者ID 16个字符的十六进制字符串
     private boolean idn;    //(推荐) 是否新的访问者
@@ -116,7 +116,7 @@ public class JsDetect {
         }
     }
 
-    public Visit build(String idsite) {
+    public Visit build(int idsite) {
         Visit visit = new Visit();
         visit.setIdsite(idsite);
         visit.setIdvisitor(this.getIdvtor());
@@ -126,7 +126,7 @@ public class JsDetect {
         visit.setLocationIp(this.getRemoteAddr());
         visit.setVisitServertime(new Date());
         visit.setVisitLocaltime(new Date(this.getVisits()));
-        visit.setOlduser(!this.isIdn());
+        visit.setNewUser(this.isIdn());
         visit.setOperateSystem(this.getPlatform());
         visit.setOperateVersion(this.getOperateSystem());
         visit.setScreenDepth(this.getColor());
@@ -146,11 +146,11 @@ public class JsDetect {
     }
 
 
-    public String getIdsite() {
+    public int getIdsite() {
         return idsite;
     }
 
-    public void setIdsite(String idsite) {
+    public void setIdsite(int idsite) {
         this.idsite = idsite;
     }
 

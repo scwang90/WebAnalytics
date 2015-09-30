@@ -4,23 +4,23 @@ import com.simpletech.webanalytics.model.entity.JsDetect;
 import com.simpletech.webanalytics.model.entity.JsEvent;
 
 /**
- * JS探针 接收服务
+ * JS鎺㈤拡 鎺ユ敹鏈嶅姟
  * Created by Administrator on 2015/9/22.
  */
 public interface TrackerService {
     /**
-     * JS探针页面统计
-     * @param idsite 网站ID
-     * @param detect 页面参数接收对象
+     * JS鎺㈤拡椤甸潰缁熻
+     * @param idsite 缃戠珯ID
+     * @param detect 椤甸潰鍙傛暟鎺ユ敹瀵硅薄
      * @throws Exception
      */
-    void trackerPageView(String idsite, JsDetect detect) throws Exception;
+    void trackerPageView(int idsite, JsDetect detect) throws Exception;
 
     /**
-     * JS探针事件统计
-     * @param idsite 网站ID
-     * @param event 事件参数接收对象
+     * JS鎺㈤拡浜嬩欢缁熻
+     * @param idsite 缃戠珯ID
+     * @param event 浜嬩欢鍙傛暟鎺ユ敹瀵硅薄
      * @throws Exception
      */
-    void trackerEvent(String idsite, JsEvent event) throws Exception;
+    void trackerEvent(int idsite, JsEvent event) throws Exception;
 }

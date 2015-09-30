@@ -1,16 +1,13 @@
 package com.simpletech.webanalytics.model;
 
-import com.simpletech.webanalytics.model.entity.JsDetect;
 import com.simpletech.webanalytics.annotations.dbmodel.Column;
 import com.simpletech.webanalytics.annotations.dbmodel.Id;
 import com.simpletech.webanalytics.annotations.dbmodel.Table;
 
-import java.util.Date;
-
 /**
  * 数据库表t_visit
  * @author 树朾
- * @date 2015-09-23 18:27:09 中国标准时间
+ * @date 2015-09-30 18:37:16 中国标准时间
  */
 @Table("t_visit")
 public class Visit{
@@ -23,7 +20,7 @@ public class Visit{
 	/**
 	 * 网站ID
 	 */
-	private String idsite;
+	private Integer idsite;
 	/**
 	 * 创建时间
 	 */
@@ -35,9 +32,10 @@ public class Visit{
 	@Column("update_time")
 	private java.util.Date updateTime;
 	/**
-	 * 是否老用户
+	 * 是否新用户
 	 */
-	private Boolean olduser;
+	@Column("new_user")
+	private Boolean newUser;
 	/**
 	 * 访问者ID
 	 */
@@ -186,11 +184,11 @@ public class Visit{
 		this.id = id;
 	}
 	
-	public String getIdsite(){
+	public Integer getIdsite(){
 		return this.idsite;
 	}
 
-	public void setIdsite(String idsite) {
+	public void setIdsite(Integer idsite) {
 		this.idsite = idsite;
 	}
 	
@@ -210,22 +208,22 @@ public class Visit{
 		this.updateTime = updateTime;
 	}
 	
-	public Boolean getOlduser(){
-		return this.olduser;
+	public Boolean getNewUser(){
+		return this.newUser;
 	}
 
-	public void setOlduser(Boolean olduser) {
-		this.olduser = olduser;
+	public void setNewUser(Boolean newUser) {
+		this.newUser = newUser;
 	}
-
-	public String getIdvisitor() {
-		return idvisitor;
+	
+	public String getIdvisitor(){
+		return this.idvisitor;
 	}
 
 	public void setIdvisitor(String idvisitor) {
 		this.idvisitor = idvisitor;
 	}
-
+	
 	public java.util.Date getVisitServertime(){
 		return this.visitServertime;
 	}
@@ -441,5 +439,5 @@ public class Visit{
 	public void setCountEvents(Integer countEvents) {
 		this.countEvents = countEvents;
 	}
-
+	
 }

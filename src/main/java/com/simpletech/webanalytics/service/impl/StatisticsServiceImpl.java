@@ -3,10 +3,7 @@ package com.simpletech.webanalytics.service.impl;
 import com.simpletech.webanalytics.dao.*;
 import com.simpletech.webanalytics.model.constant.Norm;
 import com.simpletech.webanalytics.model.constant.Period;
-import com.simpletech.webanalytics.model.entity.EventPeriodValue;
-import com.simpletech.webanalytics.model.entity.EventValue;
-import com.simpletech.webanalytics.model.entity.PageValue;
-import com.simpletech.webanalytics.model.entity.PeriodValue;
+import com.simpletech.webanalytics.model.entity.*;
 import com.simpletech.webanalytics.service.SiteService;
 import com.simpletech.webanalytics.service.StatisticsService;
 import com.simpletech.webanalytics.util.ServiceException;
@@ -38,7 +35,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     UrlDao urlDao;
 
     @Override
-    public List<PeriodValue> norm(String idsite, Period period, Norm norm, Date start, Date end) throws Exception {
+    public List<VisitValue> norm(int idsite, Period period, Norm norm, Date start, Date end) throws Exception {
         switch (norm) {
             case visit:
                 return this.visit(idsite, period, start, end);
@@ -54,11 +51,11 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<EventValue> event(String idsite, Date start, Date end, int limit, int skip) throws Exception {
+    public List<EventNameValue> event(int idsite, Date start, Date end, int limit, int skip) throws Exception {
         Long visit = visitDao.countVisit(idsite, start, end);
         Long users = visitDao.countUsers(idsite, start, end);
-        List<EventValue> events = eventDao.event(idsite, start, end, limit, skip);
-        for (EventValue value : events) {
+        List<EventNameValue> events = eventDao.event(idsite, start, end, limit, skip);
+        for (EventNameValue value : events) {
             value.setRn(value.getNum() * 1f / visit);
             value.setRu(value.getUser() * 1f / users);
         }
@@ -66,7 +63,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<EventPeriodValue> event(String idsite, String category, Period period, Date start, Date end, int limit, int skip) throws Exception {
+    public List<EventPeriodValue> event(int idsite, String category, Period period, Date start, Date end, int limit, int skip) throws Exception {
         List<EventPeriodValue> events = new ArrayList<>();
         switch (period) {
             case hour:
@@ -92,20 +89,45 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<PageValue> pagetitle(String siteId, Date start, Date end, int limit, int skip) throws Exception {
-        List<PageValue> pagetitle = actionDao.pagetitle(siteId, start, end, limit, skip);
+    public List<PageValue> pagetitle(int idsite, Date start, Date end, int limit, int skip) throws Exception {
+        List<PageValue> pagetitle = actionDao.pagetitle(idsite, start, end, limit, skip);
         pagetitle = titleDao.fullName(pagetitle);
         return pagetitle;
     }
 
     @Override
-    public List<PageValue> pageurl(String siteId, Date start, Date end, int limit, int skip) throws Exception {
-        List<PageValue> pageurl = actionDao.pageurl(siteId, start, end, limit, skip);
+    public List<PageValue> pageurl(int idsite, Date start, Date end, int limit, int skip) throws Exception {
+        List<PageValue> pageurl = actionDao.pageurl(idsite, start, end, limit, skip);
         pageurl = urlDao.fullName(pageurl);
         return pageurl;
     }
 
-    public List<PeriodValue> visit(String idsite, Period period, Date start, Date end) throws Exception {
+    @Override
+    public List<VisitorValue> visitor(int idsite, Period period, Date start, Date end) throws Exception {
+        List<VisitorValue> list = new ArrayList<>();
+        switch (period) {
+            case hour:
+                list = visitDao.visitorHour(idsite, start, end);
+                break;
+            case day:
+                list = visitDao.visitorDay(idsite, start, end);
+                break;
+            case week:
+                list = visitDao.visitorWeek(idsite, start, end);
+                break;
+            case month:
+                list = visitDao.visitorMonth(idsite, start, end);
+                break;
+        }
+        for (VisitorValue value : list) {
+            value.setOv(value.getUv()-value.getNv());
+            value.setNr(1f*value.getNv()/value.getUv());
+            value.setOr(1f*value.getOv()/value.getUv());
+        }
+        return list;
+    }
+
+    public List<VisitValue> visit(int idsite, Period period, Date start, Date end) throws Exception {
         switch (period) {
             case hour:
                 return visitDao.visitHour(idsite, start, end);
@@ -119,7 +141,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         return new ArrayList<>();
     }
 
-    public List<PeriodValue> pageView(String idsite, Period period, Date start, Date end) throws Exception {
+    public List<VisitValue> pageView(int idsite, Period period, Date start, Date end) throws Exception {
         switch (period) {
             case hour:
                 return visitDao.pageViewHour(idsite, start, end);
@@ -133,7 +155,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         return new ArrayList<>();
     }
 
-    public List<PeriodValue> uniqueVisitor(String idsite, Period period, Date start, Date end) throws Exception {
+    public List<VisitValue> uniqueVisitor(int idsite, Period period, Date start, Date end) throws Exception {
         switch (period) {
             case hour:
                 return visitDao.uniqueVisitorHour(idsite, start, end);
@@ -147,7 +169,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         return new ArrayList<>();
     }
 
-    public List<PeriodValue> internetProtocol(String idsite, Period period, Date start, Date end) throws Exception {
+    public List<VisitValue> internetProtocol(int idsite, Period period, Date start, Date end) throws Exception {
         switch (period) {
             case hour:
                 return visitDao.internetProtocolHour(idsite, start, end);

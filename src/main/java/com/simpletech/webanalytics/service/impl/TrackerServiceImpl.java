@@ -29,7 +29,7 @@ public class TrackerServiceImpl implements TrackerService{
     @Autowired
     ActionService actionService;
 
-    public void trackerPageView(String idsite, JsDetect detect) throws Exception{
+    public void trackerPageView(int idsite, JsDetect detect) throws Exception{
         Site site = siteService.findById(idsite);
         if (site != null){
             Url url = urlService.getUrl(idsite, detect.getUrl());
@@ -52,7 +52,7 @@ public class TrackerServiceImpl implements TrackerService{
     }
 
     @Override
-    public void trackerEvent(String idsite, JsEvent event) throws Exception {
+    public void trackerEvent(int idsite, JsEvent event) throws Exception {
         Site site = siteService.findById(idsite);
         if (site != null){
             Url url = urlService.getUrl(idsite, event.getUrl());

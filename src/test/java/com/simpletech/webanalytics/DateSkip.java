@@ -1,7 +1,6 @@
 package com.simpletech.webanalytics;
 
 import com.simpletech.webanalytics.model.constant.Period;
-import com.simpletech.webanalytics.model.entity.PeriodValue;
 import org.junit.Test;
 
 import java.text.DateFormat;

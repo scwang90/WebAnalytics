@@ -11,78 +11,43 @@ import java.util.Date;
  * 事件统计值
  * Created by Administrator on 2015/9/29.
  */
-public class EventPeriodValue {
+public class EventPeriodValue extends PeriodValue{
 
-    private static final SimpleDateFormat format = new SimpleDateFormat();
+    private int num;
+    private float rn;
+    private int user;
+    private float ru;
 
-    private Date time;
-    private String date;
-    private Long num;
-    private Float rn;
-    private Integer user;
-    private Float ru;
-
-    public Float getRn() {
+    public float getRn() {
         return rn;
     }
 
-    public void setRn(Float rn) {
+    public void setRn(float rn) {
         this.rn = rn;
     }
 
-    public Integer getUser() {
+    public int getUser() {
         return user;
     }
 
-    public void setUser(Integer user) {
+    public void setUser(int user) {
         this.user = user;
     }
 
-    public Float getRu() {
+    public float getRu() {
         return ru;
     }
 
-    public void setRu(Float ru) {
+    public void setRu(float ru) {
         this.ru = ru;
     }
 
-    public Long getNum() {
+    public int getNum() {
         return num;
     }
 
-    public void setNum(Long num) {
+    public void setNum(int num) {
         this.num = num;
     }
 
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-        bindTime(date);
-    }
-
-    private void bindTime(String date) {
-        try {
-            if (AfStringUtil.isNotEmpty(date)){
-                for (String period: Period.PERIODS){
-                    if (date.length() == period.length()){
-                        format.applyPattern(period);
-                        time = format.parse(date);
-                    }
-                }
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.simpletech.webanalytics.model.Site;
 import com.simpletech.webanalytics.util.JacksonUtil;
 
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -27,7 +28,7 @@ public class SiteServiceTester {
 	public void insert() throws Exception{
 		Site model = new Site();
 		System.out.println(UUID.randomUUID().toString().length());
-		model.setId(UUID.randomUUID().toString());
+		//model.setId(new Random().nextInt());
 		model.setName("网站分析");
 		model.setDomain("www.webanalytics.com");
 		Object result = service.insert(model);

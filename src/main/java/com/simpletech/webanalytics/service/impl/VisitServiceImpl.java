@@ -23,7 +23,7 @@ public class VisitServiceImpl extends BaseServiceImpl<Visit> implements VisitSer
 	VisitDao dao;
 
 	@Override
-	public Visit getVisitHalfHour(String idsite, JsDetect detect, Url url, Title title) throws Exception {
+	public Visit getVisitHalfHour(int idsite, JsDetect detect, Url url, Title title) throws Exception {
 		Visit visit = dao.getVisitHalfHour(idsite, detect.getIdvtor());
 		if (visit == null){
 			visit = detect.build(idsite);
@@ -31,13 +31,14 @@ public class VisitServiceImpl extends BaseServiceImpl<Visit> implements VisitSer
 			visit.setIdtitleEntry(title.getId());
 			visit.setIdurlExit(url.getId());
 			visit.setIdtitleExit(title.getId());
+			visit.setNewUser(!dao.existVisitor(idsite, detect.getIdvtor()));
 			dao.insert(visit);
 		}
 		return visit;
 	}
 
 	@Override
-	public Visit getVisit(String idsite, JsDetect detect, Url url, Title title) throws Exception {
+	public Visit getVisit(int idsite, JsDetect detect, Url url, Title title) throws Exception {
 		Visit visit = dao.getVisit(idsite, detect.getIdvtor());
 		if (visit == null){
 			visit = detect.build(idsite);

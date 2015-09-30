@@ -7,7 +7,7 @@ import com.simpletech.webanalytics.annotations.dbmodel.Table;
 /**
  * 数据库表t_site
  * @author 树朾
- * @date 2015-09-21 17:03:53 中国标准时间
+ * @date 2015-09-30 18:37:16 中国标准时间
  */
 @Table("t_site")
 public class Site{
@@ -16,7 +16,7 @@ public class Site{
 	 * ID主键
 	 */
 	@Id
-	private String id;
+	private Integer id;
 	/**
 	 * 创建时间
 	 */
@@ -37,14 +37,13 @@ public class Site{
 	private String domain;
 
 	public Site() {
-		// TODO Auto-generated constructor stub
 	}
 	
-	public String getId(){
+	public Integer getId(){
 		return this.id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

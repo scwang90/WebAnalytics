@@ -15,7 +15,7 @@ import com.simpletech.webanalytics.dao.base.BaseDaoMybatisMYSQLImpl.MybatisMulti
 /**
  * 数据库表t_site的mapper接口
  * @author 树朾
- * @date 2015-09-25 15:38:38 中国标准时间
+ * @date 2015-09-30 18:37:15 中国标准时间
  */
 public interface SiteMapper extends MybatisMultiDao<Site>{
 
