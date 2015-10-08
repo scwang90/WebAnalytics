@@ -1,6 +1,6 @@
 package com.simpletech.webanalytics;
 
-import com.kumkee.userAgent.Brand;
+import com.webanalytics.useragent.Brand;
 import org.junit.Test;
 
 import java.util.regex.Matcher;

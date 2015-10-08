@@ -1,5 +1,7 @@
 package com.kumkee.userAgent;
 
+import com.webanalytics.useragent.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -21,7 +23,7 @@ public class UserAgentParser
 		userAgent.setModel(brand.getModel());
 		userAgent.setBrand(brand);
 		userAgent.setNetType(Nettype.parser(useragent));
-		userAgent.setDevice(Device.parser(useragent));
+		userAgent.setDevice(com.webanalytics.useragent.Platform.parser(useragent));
 		userAgent.setApplication(Application.parser(useragent));
 		userAgent.setOperateSystem(OperateSystem.parser(useragent));
 		userAgent.setBrowser(Browser.parser(useragent));

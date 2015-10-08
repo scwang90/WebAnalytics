@@ -233,7 +233,7 @@
             var param = "";
             for(var p in this){
                 if (typeof(detect[p])!="function") {
-                    param += "&" + p + "="+(detect[p]?detect[p]:empty);
+                    param += "&" + p + "="+((global.isDefined(detect[p]))?detect[p]:empty);
                 }
             }
             return param;

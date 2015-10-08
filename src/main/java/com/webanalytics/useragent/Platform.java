@@ -1,4 +1,4 @@
-package com.kumkee.userAgent;
+package com.webanalytics.useragent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
  * 设备枚举
  * Created by Administrator on 2015/9/28.
  */
-public enum Device {
+public enum Platform {
 
     Car("car","CAR","Car Browser","qtcarbrowser"),
     Tablet("tablet","TB","平板","ipad|pad\\b"),
@@ -23,30 +23,30 @@ public enum Device {
     private final String acronym;
     private final String remark;
 
-    Device(String name, String acronym ,String remark,String pattern){
+    Platform(String name, String acronym, String remark, String pattern){
         this.name = name;
         this.remark = remark;
         this.acronym = acronym;
         this.pattern = Pattern.compile(pattern,Pattern.CASE_INSENSITIVE);
     }
 
-    public static Device parser(String useragent){
-        for (Device device:values()){
-            Matcher matcher = device.pattern.matcher(useragent);
+    public static Platform parser(String useragent){
+        for (Platform platform :values()){
+            Matcher matcher = platform.pattern.matcher(useragent);
             if (matcher.find()){
-                return device;
+                return platform;
             }
         }
-        return Device.Unknown;
+        return Platform.Unknown;
     }
 
-    public static Device parserAcronym(String acronym) {
-        for (Device device : values()) {
-            if (device.acronym.equals(acronym)) {
-                return device;
+    public static Platform parserAcronym(String acronym) {
+        for (Platform platform : values()) {
+            if (platform.acronym.equals(acronym)) {
+                return platform;
             }
         }
-        return Device.Unknown;
+        return Platform.Unknown;
     }
 
     public Pattern getPattern() {

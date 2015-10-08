@@ -1,5 +1,8 @@
 package com.kumkee.userAgent;
 
+import com.webanalytics.useragent.*;
+import com.webanalytics.useragent.Platform;
+
 public class UserAgent {
 
 	private boolean mobile; // false
@@ -12,7 +15,7 @@ public class UserAgent {
 	private String model;
 	private Brand brand;
 	private Nettype netType;
-	private Device device;
+	private Platform device;
 	private Application application;
 	private OperateSystem operateSystem;
 	private Browser browser;
@@ -92,12 +95,15 @@ public class UserAgent {
 	public Nettype getNetType() {
 		return netType;
 	}
-	public void setDevice(Device device) {
-		this.device = device;
-	}
-	public Device getDevice() {
+
+	public Platform getDevice() {
 		return device;
 	}
+
+	public void setDevice(Platform device) {
+		this.device = device;
+	}
+
 	public void setApplication(Application application) {
 		this.application = application;
 	}

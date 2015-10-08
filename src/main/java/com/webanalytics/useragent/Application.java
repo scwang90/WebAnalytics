@@ -1,4 +1,4 @@
-package com.kumkee.userAgent;
+package com.webanalytics.useragent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,11 +9,16 @@ import java.util.regex.Pattern;
  */
 public enum Application {
 
-    QQ("qq","QQ","腾讯QQ","\\bqq/(.*)\\b"),
-    Weixin("weixin","WX","微信","\\bmicromessenger/(.*)\\b"),
-    Computer("computer","PC","电脑","windows nt|wow"),
+    QQ("qq", "QQ", "腾讯QQ", "\\bqq/(\\S+)"),
+    Qzone("qzone", "QZ", "QQ空间", "qzone/(\\S+)"),
+    Weixin("micromessenger", "MM", "微信", "micromessenger/(\\S+)"),
+    TXWeibo("txmicroblog", "TXWB", "腾讯微博", "txmicroblog[/ ]?(\\S+)"),
+    Weibo("weibo", "WB", "新浪微博", "weibo__([\\d\\-\\.]+)"),
+    Weibo1("weibo", "WB", "新浪微博", "(weibo)"),
+    Computer("computer", "PC", "电脑", "windows nt|wow"),
 
-    Unknown("unknown","UN","未知","");
+    Unknown("unknown", "UN", "未知", "");
+
     private final Pattern pattern;
     private final String name;
     private final String remark;
@@ -49,7 +54,7 @@ public enum Application {
     }
 
     private boolean matches(String useragent) {
-        if (this.equals(Computer) && Device.parser(useragent).equals(Device.Computer)) {
+        if (this.equals(Computer) && Platform.parser(useragent).equals(Platform.Computer)) {
             return true;
         }
         Matcher matcher = pattern.matcher(useragent);

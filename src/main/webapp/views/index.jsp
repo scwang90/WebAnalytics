@@ -38,6 +38,7 @@
 </div>
 <h1>jsp获取客户端信息</h1>
 APP:<%=useragent.getApplication().getRemark()%><br>
+APPV:<%=useragent.getApplication().getVersion()%><br>
 平台:<%=useragent.getDevice().getRemark()%><br>
 品牌:<%=useragent.getBrand().getRemark()%><br>
 型号:<%=useragent.getBrand().getModel()%><br>
@@ -48,12 +49,15 @@ APP:<%=useragent.getApplication().getRemark()%><br>
 新操作系统:<%=useragent.getOperateSystem().getRemark()%><br>
 新系统版本:<%=useragent.getOperateSystem().getVersion()%><br>
 网络类型:<%=useragent.getNetType().getRemark()%><br>
-浏览器:<%=useragent.getBrowseer()%><br>
-浏览器版本:<%=useragent.getVersion()%><br>
-平台:<%=useragent.getPlatform()%><br>
-操作系统:<%=useragent.getOs()%><br>
-引擎:<%=useragent.getEngine()%><br>
-引擎版本:<%=useragent.getEngineVersion()%><br>
+网络类型V:<%=useragent.getNetType().getValue()%><br>
+<br>
+老浏览器:<%=useragent.getBrowseer()%><br>
+老浏览器版本:<%=useragent.getVersion()%><br>
+老平台:<%=useragent.getPlatform()%><br>
+老操作系统:<%=useragent.getOs()%><br>
+老引擎:<%=useragent.getEngine()%><br>
+老引擎版本:<%=useragent.getEngineVersion()%><br>
+<br>
 客户端IP:<%=request.getRemoteAddr()%>,<%=ipAddr%> &nbsp;（注：这是外网IP）<br>
 地址信息:<%=Arrays.toString(IP.find(ipAddr))%><br>
 <%--客户端主机:<%=request.getRemoteHost()%><br>--%>
@@ -82,7 +86,6 @@ APP:<%=useragent.getApplication().getRemark()%><br>
     })();
 </script>--%>
 <!-- End Piwik Code -->
-
 <script>
     function send(){
         var image = new Image(1, 1);

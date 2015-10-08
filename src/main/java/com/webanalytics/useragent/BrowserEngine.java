@@ -1,4 +1,4 @@
-package com.kumkee.userAgent;
+package com.webanalytics.useragent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

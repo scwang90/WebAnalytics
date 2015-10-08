@@ -1,4 +1,4 @@
-package com.kumkee.userAgent;
+package com.webanalytics.useragent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,33 +9,37 @@ import java.util.regex.Pattern;
  */
 public enum OperateSystem {
 
-    Win95("win95","WD95","Windows 95","windows nt 4\\.0"),
-    Win2000("win2000","WD20","Windows 2000","windows nt 5\\.0"),
-    WinXP("winXP","WDXP","Windows XP","windows nt 5\\.1"),
-    WinXP64("winXP64","WDX6","Windows XP 64-bit","windows nt 5\\.2"),
-    Win2003("win2003","WD03","Windows 2003","windows nt 5\\.1"),
-    WinVista("winVista","WDV","Windows Vista","windows nt 6\\.0"),
-    Win7("win7","WD7","Windows 7","windows nt 6\\.1"),
-    Win8("win8","WD8","Windows 8","windows nt 6\\.2"),
-    Win81("win81","WD81","Windows 8.1","windows nt 6\\.3"),
-    WinPhone("winPhone","WDP","Windows phone","windows phone ([\\w\\.\\-]+)"),
+    Win95("win95", "WD95", "Windows 95", "windows nt 4\\.0"),
+    Win2000("win2000", "WD20", "Windows 2000", "windows nt 5\\.0"),
+    WinXP("winXP", "WDXP", "Windows XP", "windows nt 5\\.1"),
+    WinXP64("winXP64", "WDXP6", "Windows XP 64-bit", "windows nt 5\\.2"),
+    Win2003("win2003", "WD03", "Windows 2003", "windows nt 5\\.1"),
+    WinVista("winVista", "WDV", "Windows Vista", "windows nt 6\\.0"),
+    Win7("win7", "WD7", "Windows 7", "windows nt 6\\.1"),
+    Win8("win8", "WD8", "Windows 8", "windows nt 6\\.2"),
+    Win81("win81", "WD81", "Windows 8.1", "windows nt 6\\.3"),
+    Win10("win10", "WD10", "Windows 10", "windows nt 10\\S+"),
 
-    Osx("osx","OSX","OSX","os x (\\d+[._]\\d+)"),
-    Android("android","AND","Android","android ([\\d\\w\\.\\-]+)"),
-    Ipad("ipad","IPA","iPad OS","iPad.*os (\\d+[._]\\d+)"),
-    Iphone("iphone","IPH","iPhone OS","iPhone.*os (\\d+[._]\\d+)"),
-    Linux("linux","LIN","Linux","linux"),
-    Wii("wii","WII","Wii","wii"),
-    Ps3("ps3","PS3","PS3","playstation 3"),
-    Psp("psp","PSP","PSP","playstation portable"),
-    Symbian("symbian","SMB","Symbian","symbian(os)?"),
-    Blackberry("blackberry","BB","BlackBerry","blackberry"),
-    Darwin("darwin","DW","Darwin","Darwin\\/([\\d\\w\\.\\-]+)"),
-    Adobeair("adobeair","AA","AdobeAir","symbian(os)?"),
-    Java("java","JA","Java","Java[\\s]+([\\d\\w\\.\\-]+)"),
+    WinPhone("winPhone", "WDP", "Windows Phone", "windows phone (\\S+)"),
+    WinCE("winCE", "WDCE", "Windows CE", "windows ce (\\S+)"),
+    WinMobile("winMobile", "WDMB", "Windows Mobile", "windows mobile (\\S+)"),
 
-    Unknown("unknown","UN","未知",""),
-    ;
+    MacOs("macos", "MAC", "Mac OS X", "mac os x (\\S+)"),
+    Android("android", "AND", "Android", "android (\\S+)"),
+    Ipad("ipad", "IPA", "iPad OS", "iPad.*os (\\S+)"),
+    Iphone("iphone", "IPH", "iPhone OS", "iPhone.*os (\\S+)"),
+    Linux("linux", "LIN", "Linux", "linux"),
+    Wii("wii", "WII", "Wii", "wii"),
+    Ps3("ps3", "PS3", "PS3", "playstation 3"),
+    Psp("psp", "PSP", "PSP", "playstation portable"),
+    Symbian("symbian", "SMB", "Symbian", "symbian(os)?"),
+    Blackberry("blackberry", "BB", "BlackBerry", "blackberry"),
+    Darwin("darwin", "DW", "Darwin", "Darwin\\/([\\d\\w\\.\\-]+)"),
+    Adobeair("adobeair", "AA", "AdobeAir", "symbian(os)?"),
+    Java("java", "JA", "Java", "Java[\\s]+([\\d\\w\\.\\-]+)"),
+
+    Unknown("unknown", "UN", "未知", "");
+
     private final Pattern pattern;
     private final String name;
     private final String remark;
@@ -78,9 +82,9 @@ public enum OperateSystem {
                 version = matcher.group(index);
             }
             version = (version == null) ? "" : version;
-            if(version==null||version.trim().length()==0){
-                if (remark.startsWith("Windows")){
-                    version = remark.substring(remark.indexOf(" ")+1);
+            if (version == null || version.trim().length() == 0) {
+                if (remark.startsWith("Windows")) {
+                    version = remark.substring(remark.indexOf(" ") + 1);
                 }
             }
             return true;

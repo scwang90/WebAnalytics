@@ -29,7 +29,7 @@ public class JsDetect {
     private int idsite;  //(必需) 网站ID
     @Must("访问者ID")
     private String idvtor;  //(必需) 访问者ID 16个字符的十六进制字符串
-    private boolean idn;    //(推荐) 是否新的访问者
+    private Boolean idn;    //(推荐) 是否新的访问者
     @Must("访问者当前访问的次数")
     private Integer idvc;   //(必需) 访问者当前访问的次数
     @Must("访问者第一次访问时间")
@@ -48,8 +48,8 @@ public class JsDetect {
     private String title;   //(推荐) 当前页面的标题
     private String screen;  //(推荐) 屏幕分辨率
     private String color;   //(可选) 颜色深度
-    private boolean java;   //(推荐) 是否支持java
-    private boolean cookie; //(推荐) 是否支持cookie
+    private Boolean java;   //(推荐) 是否支持java
+    private Boolean cookie; //(推荐) 是否支持cookie
     private String cset;    //(推荐) 浏览器编码
     private String lang;    //(推荐) 客户端语言
     private String refer;   //(推荐) 上一页面url
@@ -162,11 +162,11 @@ public class JsDetect {
         this.idvtor = idvtor;
     }
 
-    public boolean isIdn() {
+    public Boolean isIdn() {
         return idn;
     }
 
-    public void setIdn(boolean idn) {
+    public void setIdn(Boolean idn) {
         this.idn = idn;
     }
 
@@ -249,19 +249,19 @@ public class JsDetect {
         this.color = color;
     }
 
-    public boolean getJava() {
+    public Boolean getJava() {
         return java;
     }
 
-    public void setJava(boolean java) {
+    public void setJava(Boolean java) {
         this.java = java;
     }
 
-    public boolean getCookie() {
+    public Boolean getCookie() {
         return cookie;
     }
 
-    public void setCookie(boolean cookie) {
+    public void setCookie(Boolean cookie) {
         this.cookie = cookie;
     }
 

@@ -1,5 +1,6 @@
 package com.simpletech.webanalytics;
 
+import com.webanalytics.useragent.Brand;
 import com.webanalytics.useragent.Platform;
 import org.junit.Test;
 
@@ -7,16 +8,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 设备测试
+ * 品牌测试
  * Created by SCWANG on 2015-09-27.
  */
-public class DeviceFormat {
+public class BrandFormat {
 
     @Test
     public void parser(){
         String useragent = "Mozilla/5.0 (Linux; U; Android 4.4.2; zh-cn; MI 3 Build/KOT49H) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/5.4 TBS/025468 Mobile Safari/533.1 QQJSSDK/1.3  Qzone/V1_AND_QZ_5.8.1_288_YYB_D QZONEJSSDK/5.7";
-        System.out.println(Pattern.compile("(\\bmi \\S*|\\bhm \\S*)",Pattern.CASE_INSENSITIVE).matcher(useragent).find());
-        System.out.println(Platform.parser(useragent).getRemark());
+        System.out.println(Pattern.compile("(\\bmi ?\\S*|\\bhm ?\\S*)",Pattern.CASE_INSENSITIVE).matcher(useragent).find());
+        System.out.println(Brand.parser(useragent).getRemark());
+        System.out.println(Brand.parser(useragent).getModel());
     }
 
     @Test
