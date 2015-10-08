@@ -26,7 +26,7 @@ public class JsDetect {
      * 访问者相关
      */
     @Must("网站ID")
-    private int idsite;  //(必需) 网站ID
+    private int idsite;     //(必需) 网站ID
     @Must("访问者ID")
     private String idvtor;  //(必需) 访问者ID 16个字符的十六进制字符串
     private Boolean idn;    //(推荐) 是否新的访问者
@@ -71,6 +71,7 @@ public class JsDetect {
     private String region;          //区域
     private String netType;         //网络类型
     private String endType;         //终端类型
+    private String useragent;       //源 useragent
 
     /**
      * 检测是否满足必须参数
@@ -103,6 +104,7 @@ public class JsDetect {
         this.endType = useragent.getDevice().getAcronym();
         this.remoteAddr = request.getRemoteAddr();
         this.remoteAddr = IPCatcherUtil.getIpAddr(request);
+        this.useragent = agent;
 
         try {
             ServletContext application = request.getSession().getServletContext();
@@ -136,8 +138,11 @@ public class JsDetect {
         visit.setLocationCountry(this.getCountry());
         visit.setLocationCity(this.getCity());
         visit.setLocationRegion(this.getRegion());
+        visit.setEndModel(this.getModel());
+        visit.setEndBrand(this.getBrand());
         visit.setEndType(this.getEndType());
         visit.setNetType(this.getNetType());
+        visit.setUseragent(this.getUseragent());
         visit.setCountEvents(0);
         visit.setVisitTotaltime(0);
         visit.setIdurl(null);
@@ -399,5 +404,13 @@ public class JsDetect {
 
     public void setNetType(String netType) {
         this.netType = netType;
+    }
+
+    public String getUseragent() {
+        return useragent;
+    }
+
+    public void setUseragent(String useragent) {
+        this.useragent = useragent;
     }
 }

@@ -1,7 +1,5 @@
 package com.simpletech.webanalytics.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  * 访问统计数据
  * Created by Administrator on 2015/9/25.

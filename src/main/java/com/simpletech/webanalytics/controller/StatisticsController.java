@@ -2,6 +2,8 @@ package com.simpletech.webanalytics.controller;
 
 import com.simpletech.webanalytics.model.constant.Norm;
 import com.simpletech.webanalytics.model.constant.Period;
+import com.simpletech.webanalytics.model.constant.Ranking;
+import com.simpletech.webanalytics.model.constant.RankingType;
 import com.simpletech.webanalytics.model.entity.PeriodValue;
 import com.simpletech.webanalytics.model.entity.VisitValue;
 import com.simpletech.webanalytics.model.entity.VisitorValue;
@@ -34,6 +36,44 @@ public class StatisticsController {
     }
 
     /**
+     * 数据排行 - 自定义时段
+     * 设备品牌、设备型号、网络类型、浏览器、操作系统、APP、分辨率、颜色深度、语言、国家、省份、城市
+     *
+     * @param ranking  排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city
+     * @param ranktype 排序类型 按 visit|uv|ip|pv
+     * @param siteId   网站ID
+     * @param start    开始时间 ("yyyyMMddHHmmss")
+     * @param end      结束时间 ("yyyyMMddHHmmss")
+     * @param limit    分页限制
+     * @param skip     分页起始
+     * @return 排行数据
+     */
+    @RequestMapping("ranking/site/{siteId:\\d+}/{ranking:brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city}/ranktype/{ranktype:visit|uv|ip|pv}/{limit:\\d+}/{skip:\\d+}")
+    public Object ranking(@PathVariable int siteId, @PathVariable Ranking ranking, @PathVariable RankingType ranktype, @PathVariable int limit, @PathVariable int skip, @RequestParam Date start, @RequestParam Date end) throws Exception {
+        return service.ranking(siteId, ranking, ranktype, start, end, limit, skip);
+    }
+
+    /**
+     * 数据排行 - 固定时段
+     * 设备品牌、设备型号、网络类型、浏览器、操作系统、APP、分辨率、颜色深度、语言、国家、省份、城市
+     *
+     * @param ranking  排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city
+     * @param ranktype 排序类型 按 visit|uv|ip|pv
+     * @param siteId   网站ID
+     * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span     跨度 [day|week|month|year]
+     * @param limit    分页限制
+     * @param skip     分页起始
+     * @return 排行数据
+     */
+    @RequestMapping("ranking/site/{siteId:\\d+}/{ranking:brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city}/ranktype/{ranktype:visit|uv|ip|pv}/{offset:-?\\d+}/{span:day|week|month|year}/{limit:\\d+}/{skip:\\d+}")
+    public Object ranking(@PathVariable int siteId, @PathVariable Ranking ranking, @PathVariable RankingType ranktype, @PathVariable int offset, @PathVariable Period span, @PathVariable int limit, @PathVariable int skip) throws Exception {
+        Date end = timeEnd(span, offset);
+        Date start = timeStart(span, offset);
+        return service.ranking(siteId, ranking, ranktype, start, end, limit, skip);
+    }
+
+    /**
      * 新老用户 - 自定义时段
      *
      * @param siteId 网站ID
@@ -43,7 +83,7 @@ public class StatisticsController {
      * @return 新老用户
      */
     @RequestMapping("visitor/site/{siteId:\\d+}/{period:hour|day|week|month}")
-    public Object visitor(@PathVariable int siteId, @PathVariable Period period, @RequestParam Date start, @RequestParam Date end) throws Exception{
+    public Object visitor(@PathVariable int siteId, @PathVariable Period period, @RequestParam Date start, @RequestParam Date end) throws Exception {
         List<VisitorValue> list = service.visitor(siteId, period, start, end);
         list = fulldata(list, period.getFormat(), period.getField(), start, end, VisitorValue.class);
         return list;
@@ -59,7 +99,7 @@ public class StatisticsController {
      * @return 新老用户
      */
     @RequestMapping("visitor/site/{siteId:\\d+}/{offset:-?\\d+}/{span:day|week|month|year}/{period:hour|day|week|month}")
-    public Object visitor(@PathVariable int siteId,@PathVariable int offset, @PathVariable Period span, @PathVariable Period period) throws Exception{
+    public Object visitor(@PathVariable int siteId, @PathVariable int offset, @PathVariable Period span, @PathVariable Period period) throws Exception {
         Date end = timeEnd(span, offset);
         Date start = timeStart(span, offset);
         List<VisitorValue> list = service.visitor(siteId, period, start, end);
@@ -78,7 +118,7 @@ public class StatisticsController {
      * @return 标题排行
      */
     @RequestMapping("pagetitle/site/{siteId:\\d+}/{limit:\\d+}/{skip:\\d+}")
-    public Object pagetitle(@PathVariable int siteId, @PathVariable int limit, @PathVariable int skip, @RequestParam Date start, @RequestParam Date end) throws Exception{
+    public Object pagetitle(@PathVariable int siteId, @PathVariable int limit, @PathVariable int skip, @RequestParam Date start, @RequestParam Date end) throws Exception {
         return service.pagetitle(siteId, start, end, limit, skip);
     }
 
@@ -94,7 +134,7 @@ public class StatisticsController {
      * @throws Exception
      */
     @RequestMapping("pagetitle/site/{siteId:\\d+}/{offset:-?\\d+}/{span:day|week|month|year}/{limit:\\d+}/{skip:\\d+}")
-    public Object pagetitle(@PathVariable int siteId, @PathVariable int offset, @PathVariable Period span, @PathVariable int limit, @PathVariable int skip) throws Exception{
+    public Object pagetitle(@PathVariable int siteId, @PathVariable int offset, @PathVariable Period span, @PathVariable int limit, @PathVariable int skip) throws Exception {
         Date end = timeEnd(span, offset);
         Date start = timeStart(span, offset);
         return service.pagetitle(siteId, start, end, limit, skip);
@@ -112,7 +152,7 @@ public class StatisticsController {
      * @return 链接排行
      */
     @RequestMapping("pageurl/site/{siteId:\\d+}/{limit:\\d+}/{skip:\\d+}")
-    public Object pageurl(@PathVariable int siteId, @PathVariable int limit, @PathVariable int skip, @RequestParam Date start, @RequestParam Date end) throws Exception{
+    public Object pageurl(@PathVariable int siteId, @PathVariable int limit, @PathVariable int skip, @RequestParam Date start, @RequestParam Date end) throws Exception {
         return service.pageurl(siteId, start, end, limit, skip);
     }
 
@@ -128,7 +168,7 @@ public class StatisticsController {
      * @throws Exception
      */
     @RequestMapping("pageurl/site/{siteId:\\d+}/{offset:-?\\d+}/{span:day|week|month|year}/{limit:\\d+}/{skip:\\d+}")
-    public Object pageurl(@PathVariable int siteId,@PathVariable int offset, @PathVariable Period span, @PathVariable int limit, @PathVariable int skip) throws Exception{
+    public Object pageurl(@PathVariable int siteId, @PathVariable int offset, @PathVariable Period span, @PathVariable int limit, @PathVariable int skip) throws Exception {
         Date end = timeEnd(span, offset);
         Date start = timeStart(span, offset);
         return service.pageurl(siteId, start, end, limit, skip);
@@ -214,7 +254,7 @@ public class StatisticsController {
     @RequestMapping("visit/site/{siteId:\\d+}/{period:hour|day|week|month}/{norm:visit|pv|uv|ip}")
     public Object norm(@PathVariable int siteId, @PathVariable Period period, @PathVariable Norm norm, @RequestParam Date start, @RequestParam Date end) throws Exception {
         List<VisitValue> list = service.norm(siteId, period, norm, start, end);
-        list = fulldata(list, period.getFormat(), period.getField(), start, end ,VisitValue.class);
+        list = fulldata(list, period.getFormat(), period.getField(), start, end, VisitValue.class);
         return list;
     }
 

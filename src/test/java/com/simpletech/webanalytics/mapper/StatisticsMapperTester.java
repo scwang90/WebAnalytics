@@ -26,6 +26,12 @@ public class StatisticsMapperTester {
     StatisticsMapper mapper;
 
     @Test
+    public void coutRanking() throws Exception {
+        Object result = mapper.coutRanking(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
     public void eventDay() throws Exception {
         Object result = mapper.eventDay(1, "ec", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"),100,0);
         System.out.println(JacksonUtil.toJson(result));

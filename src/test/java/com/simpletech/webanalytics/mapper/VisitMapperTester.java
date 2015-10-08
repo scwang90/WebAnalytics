@@ -11,6 +11,7 @@ import com.simpletech.webanalytics.util.JacksonUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 数据库表t_visit的Mapper层测试类
@@ -25,6 +26,16 @@ public class VisitMapperTester {
 
 	@Autowired
 	VisitMapper mapper;
+
+	@Test
+	public void format() throws Exception {
+		List<Visit> result = mapper.findByPropertyName("","browser_name","IE");
+		for (Visit visit : result) {
+			visit.setBrowserName("IE9");
+			mapper.update(visit);
+		}
+		System.out.println(JacksonUtil.toJson(result));
+	}
 
 	@Test
 	public void insert() throws Exception{

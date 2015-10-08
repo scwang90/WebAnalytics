@@ -41,7 +41,7 @@ public enum Browser {
     Evolution("evolution", "EVOT", "Evolution", "evolution/(\\S+)"),
     Gabble("gabble", "GABE", "Gabble", "gabble/(\\S+)"),
     AdobeAir("adobeair", "ADBA", "AdobeAir", "adobeair/(\\S+)"),
-    HttpClient("httpclient", "APHC", "AdobeAir", "apache.httpclient/(\\S+)"),
+    HttpClient("httpclient", "APHC", "HttpClient", "apache.httpclient/(\\S+)"),
     Yammer("yammer", "YAME", "Yammer", "Yammer[ /]+(\\S+)"),
     BlackBerry("blackberry", "BLBE", "BlackBerry", "blackberry/(\\S+)"),
     Chrome("chrome", "CHO", "谷歌浏览器", "chrome/(\\S*)"),

@@ -3,6 +3,8 @@ package com.simpletech.webanalytics.service.impl;
 import com.simpletech.webanalytics.dao.*;
 import com.simpletech.webanalytics.model.constant.Norm;
 import com.simpletech.webanalytics.model.constant.Period;
+import com.simpletech.webanalytics.model.constant.Ranking;
+import com.simpletech.webanalytics.model.constant.RankingType;
 import com.simpletech.webanalytics.model.entity.*;
 import com.simpletech.webanalytics.service.SiteService;
 import com.simpletech.webanalytics.service.StatisticsService;
@@ -120,11 +122,42 @@ public class StatisticsServiceImpl implements StatisticsService {
                 break;
         }
         for (VisitorValue value : list) {
-            value.setOv(value.getUv()-value.getNv());
-            value.setNr(1f*value.getNv()/value.getUv());
-            value.setOr(1f*value.getOv()/value.getUv());
+            value.setOv(value.getUv() - value.getNv());
+            value.setNr(1f * value.getNv() / value.getUv());
+            value.setOr(1f * value.getOv() / value.getUv());
         }
         return list;
+    }
+
+    @Override
+    public List<RankingValue> ranking(int idsite, Ranking ranking, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+        switch (ranking) {
+            case appname:
+                return visitDao.appname(idsite, rankingtype, start, end, limit, skip);
+            case brand:
+                return visitDao.brand(idsite, rankingtype, start, end, limit, skip);
+            case browser:
+                return visitDao.browser(idsite, rankingtype, start, end, limit, skip);
+            case city:
+                return visitDao.city(idsite, rankingtype, start, end, limit, skip);
+            case country:
+                return visitDao.country(idsite, rankingtype, start, end, limit, skip);
+            case depth:
+                return visitDao.depth(idsite, rankingtype, start, end, limit, skip);
+            case lang:
+                return visitDao.lang(idsite, rankingtype, start, end, limit, skip);
+            case model:
+                return visitDao.model(idsite, rankingtype, start, end, limit, skip);
+            case nettype:
+                return visitDao.nettype(idsite, rankingtype, start, end, limit, skip);
+            case province:
+                return visitDao.province(idsite, rankingtype, start, end, limit, skip);
+            case resolution:
+                return visitDao.resolution(idsite, rankingtype, start, end, limit, skip);
+            case system:
+                return visitDao.system(idsite, rankingtype, start, end, limit, skip);
+        }
+        return new ArrayList<>();
     }
 
     public List<VisitValue> visit(int idsite, Period period, Date start, Date end) throws Exception {

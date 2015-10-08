@@ -17,7 +17,7 @@ public enum Brand {
     Sony("sony","SY","索尼","sony"),
     Asus("asus","AS","华硕","asus"),
     Onda("onda","OA","昂达","onda"),
-    Woxter("woxter","WT","WOXTER","woxter"),
+    Woxter("woxter","WT","Woxter","woxter"),
     Huawei("huawei","HW","华为","huawei"),
     Dell("dell","DL","戴尔","dell"),
     Archos("archos","AH","爱可视","archos"),
@@ -44,7 +44,7 @@ public enum Brand {
     Apple1("apple","AP","苹果","(apple)\\b|\\b(ios)\\b"),
 
     Meizu("meizu","MZ","魅族","\\b(m\\S*) build\\b"),
-    Computer("computer","PC","电脑","(windows nt)|(wow)"),
+    Computer("computer","PC","电脑","windows nt|wow"),
 
     Unknown("unknown","UN","未知","\\b(\\S*) build\\b");
 

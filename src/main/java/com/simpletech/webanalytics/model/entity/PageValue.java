@@ -3,7 +3,7 @@ package com.simpletech.webanalytics.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * �¼�ͳ��ֵ
+ * 页面排行统计值
  * Created by Administrator on 2015/9/29.
  */
 public class PageValue {
