@@ -1,18 +1,18 @@
 package com.simpletech.webanalytics.service.impl;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.simpletech.webanalytics.annotations.dbmodel.interpreter.Interpreter;
 import com.simpletech.webanalytics.dao.base.BaseDao;
+import com.simpletech.webanalytics.model.base.ModelBase;
 import com.simpletech.webanalytics.service.BaseService;
 import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.JacksonUtil;
 import com.simpletech.webanalytics.util.Page;
 import com.simpletech.webanalytics.util.ServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * 通用Service层实现基类
@@ -35,6 +35,9 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	@Override
 	public int insert(T model) throws Exception{
 		// TODO Auto-generated method stub
+		if (model instanceof ModelBase) {
+			((ModelBase) model).check();
+		}
 		checkNullID(model);
 		return baseDao.insert(model);
 	}

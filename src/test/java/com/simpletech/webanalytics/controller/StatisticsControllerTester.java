@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 
 /**
  * StatisticsController ������
+ *
  * @author ���b
  * @date 2015-09-21 17:03:53 �й���׼ʱ��
  */
@@ -30,14 +31,14 @@ public class StatisticsControllerTester {
     StatisticsController controller;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         LoggingAspect.log = true;
     }
 
     @Test
-    public void visit() throws Exception{
-        for (Norm norm:Norm.values()){
-            for (Period period:Period.values()){
+    public void visit() throws Exception {
+        for (Norm norm : Norm.values()) {
+            for (Period period : Period.values()) {
 //                Object result = controller.norm(norm, "1", period, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
 //                System.out.println("" + norm + "-" + period);
 //                System.out.println(JacksonUtil.toJson(result));
@@ -46,14 +47,14 @@ public class StatisticsControllerTester {
     }
 
     @Test
-    public void pagetitle() throws Exception{
-        Object result = controller.pagetitle(1, 0, Period.month, 100, 0);
+    public void pagetitle() throws Exception {
+        Object result = controller.pagetitle(1, 100, 0, 0, Period.month, null, null);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
-    public void pageurl() throws Exception{
-        Object result = controller.pageurl(1, 0, Period.month, 100, 0);
+    public void pageurl() throws Exception {
+        Object result = controller.pageurl(1, 100, 0, 0, Period.month, null, null);
         System.out.println(JacksonUtil.toJson(result));
     }
 

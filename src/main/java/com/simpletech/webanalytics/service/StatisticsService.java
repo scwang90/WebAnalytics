@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * 统计API Service
- * Created by Administrator on 2015/9/25.
+ * Created by 树朾 on 2015/9/25.
  */
 public interface StatisticsService {
 
@@ -21,12 +21,11 @@ public interface StatisticsService {
      *
      * @param idsite 网站IDE
      * @param period 时段周期 [时|日|周|月]
-     * @param norm   统计指标 [Visit|PV|UV|IP]
      * @param start  开始时间
      * @param end    结束时间
      * @return event 统计数据
      */
-    List<VisitValue> norm(int idsite, Period period, Norm norm, Date start, Date end) throws Exception;
+    List<VisitValue> visit(int idsite, Period period, Date start, Date end) throws Exception;
 
     /**
      * event 统计数据获取API
@@ -95,14 +94,14 @@ public interface StatisticsService {
      * 数据排行
      * 设备品牌、设备型号、网络类型、浏览器、操作系统、APP、分辨率、颜色深度、语言、国家、省份、城市
      *
-     * @param ranking     排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city
-     * @param rankingtype 排序类型 按 visit|uv|ip|pv
-     * @param siteId      网站ID
-     * @param start       开始时间
-     * @param end         结束时间
-     * @param limit       分页限制
-     * @param skip        分页起始
+     * @param ranking  排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city
+     * @param ranktype 排序类型 按 visit|uv|ip|pv
+     * @param siteId   网站ID
+     * @param start    开始时间
+     * @param end      结束时间
+     * @param limit    分页限制
+     * @param skip     分页起始
      * @return 排行数据
      */
-    List<RankingValue> ranking(int siteId, Ranking ranking, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
+    List<RankingValue> ranking(int siteId, Ranking ranking, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception;
 }

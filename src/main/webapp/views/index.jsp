@@ -71,7 +71,18 @@ APPV:<%=useragent.getApplication().getVersion()%><br>
 </p>
 
 </body>
-<script src="/js/ds.js"></script>
+<%--<script src="/js/ds.js"></script>--%>
+<script type="text/javascript">
+    var _wapaq = _wapaq || [];
+    _wapaq.push(['trackPageView']);
+    (function() {
+        var u="/";
+        _wapaq.push(['setTrackerUrl', u+'tracker']);
+        _wapaq.push(['setSiteId', 1]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'js/ds.js'; s.parentNode.insertBefore(g,s);
+    })();
+</script>
 <!-- Piwik -->
 <%--<script type="text/javascript">
     var _paq = _paq || [];

@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  * JS探针 接收服务
- * Created by Administrator on 2015/9/22.
+ * Created by 树朾 on 2015/9/22.
  */
 @Service
 public class TrackerServiceImpl implements TrackerService{

@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * Js探针 事件抓取 Brand
- * Created by Administrator on 2015/9/25.
+ * Created by 树朾 on 2015/9/25.
  */
 public class JsEvent extends JsDetect {
 

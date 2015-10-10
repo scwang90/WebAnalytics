@@ -3,6 +3,7 @@ package com.simpletech.webanalytics.service.impl;
 
 import java.util.List;
 
+import com.simpletech.webanalytics.model.base.ModelBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,12 @@ public class SiteServiceImpl extends BaseServiceImpl<Site> implements SiteServic
 	@Override
 	public int insert(Site model) throws Exception{
 		// TODO Auto-generated method stub
+		if (ModelBase.class.isInstance(model)) {
+			ModelBase.class.cast(model).check();
+		}
+		if (dao.isNameExist(model.getName())) {
+			throw new ServiceException("网站名称已经存在");
+		}
 		checkNullID(model);
 		return dao.insert(model);
 	}

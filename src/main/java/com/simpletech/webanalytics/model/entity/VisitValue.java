@@ -2,18 +2,44 @@ package com.simpletech.webanalytics.model.entity;
 
 /**
  * 访问统计数据
- * Created by Administrator on 2015/9/25.
+ * Created by 树朾 on 2015/9/25.
  */
 public class VisitValue extends PeriodValue{
 
-    private int val;
+    private int vt;             //visit 数
+    private int pv;             //pv 数
+    private int uv;             //独立用户数
+    private int ip;             //pv 数
 
-    public int getVal() {
-        return val;
+    public int getVt() {
+        return vt;
     }
 
-    public void setVal(int val) {
-        this.val = val;
+    public void setVt(int vt) {
+        this.vt = vt;
     }
 
+    public int getPv() {
+        return pv;
+    }
+
+    public void setPv(int pv) {
+        this.pv = pv;
+    }
+
+    public int getUv() {
+        return uv;
+    }
+
+    public void setUv(int uv) {
+        this.uv = uv;
+    }
+
+    public int getIp() {
+        return ip;
+    }
+
+    public void setIp(int ip) {
+        this.ip = ip;
+    }
 }

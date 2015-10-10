@@ -13,7 +13,7 @@ import java.util.Date;
 
 /**
  * 周期统计数据（基类）
- * Created by Administrator on 2015/9/25.
+ * Created by 树朾 on 2015/9/25.
  */
 public abstract class PeriodValue {
 

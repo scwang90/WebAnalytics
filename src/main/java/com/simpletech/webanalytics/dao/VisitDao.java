@@ -37,7 +37,7 @@ public interface VisitDao extends BaseDao<Visit>{
 	Visit getVisitHalfHour(int idsite, String idvisitor) throws Exception;
 
 	/**
-	 * 获取 idsite网站 start-end 的 小时\日\周\月Visit
+	 * 获取 idsite网站 start-end 的 [小时\日\周\月] [Visit|PV|UV|IP]
 	 * @param idsite 网站ID
 	 * @param start 开始时间
 	 * @param end 结束时间
@@ -46,39 +46,6 @@ public interface VisitDao extends BaseDao<Visit>{
 	List<VisitValue> visitDay(int idsite, Date start, Date end) throws Exception;
 	List<VisitValue> visitWeek(int idsite, Date start, Date end) throws Exception;
 	List<VisitValue> visitMonth(int idsite, Date start, Date end) throws Exception;
-
-	/**
-	 * 获取 idsite网站 在 start-end 的 小时\日\周\月PV
-	 * @param idsite 网站ID
-	 * @param start 开始时间
-	 * @param end 结束时间
-	 */
-	List<VisitValue> pageViewHour(int idsite, Date start, Date end) throws Exception;
-	List<VisitValue> pageViewDay(int idsite, Date start, Date end) throws Exception;
-	List<VisitValue> pageViewWeek(int idsite, Date start, Date end) throws Exception;
-	List<VisitValue> pageViewMonth(int idsite, Date start, Date end) throws Exception;
-
-	/**
-	 * 获取 idsite网站 在 start-end 的 小时\日\周\月UV
-	 * @param idsite 网站ID
-	 * @param start 开始时间
-	 * @param end 结束时间
-	 */
-	List<VisitValue> uniqueVisitorHour(int idsite, Date start, Date end) throws Exception;
-	List<VisitValue> uniqueVisitorDay(int idsite, Date start, Date end) throws Exception;
-	List<VisitValue> uniqueVisitorWeek(int idsite, Date start, Date end) throws Exception;
-	List<VisitValue> uniqueVisitorMonth(int idsite, Date start, Date end) throws Exception;
-
-	/**
-	 * 获取 idsite网站 在 start-end 的 小时\日\周\月IP
-	 * @param idsite 网站ID
-	 * @param start 开始时间
-	 * @param end 结束时间
-	 */
-	List<VisitValue> internetProtocolHour(int idsite, Date start, Date end) throws Exception;
-	List<VisitValue> internetProtocolDay(int idsite, Date start, Date end) throws Exception;
-	List<VisitValue> internetProtocolWeek(int idsite, Date start, Date end) throws Exception;
-	List<VisitValue> internetProtocolMonth(int idsite, Date start, Date end) throws Exception;
 
 	/**
 	 * 新老用户

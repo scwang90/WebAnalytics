@@ -1,14 +1,12 @@
 package com.simpletech.webanalytics.service.impl;
 
 import com.simpletech.webanalytics.dao.*;
-import com.simpletech.webanalytics.model.constant.Norm;
 import com.simpletech.webanalytics.model.constant.Period;
 import com.simpletech.webanalytics.model.constant.Ranking;
 import com.simpletech.webanalytics.model.constant.RankingType;
 import com.simpletech.webanalytics.model.entity.*;
 import com.simpletech.webanalytics.service.SiteService;
 import com.simpletech.webanalytics.service.StatisticsService;
-import com.simpletech.webanalytics.util.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +16,7 @@ import java.util.List;
 
 /**
  * 统计API Service 实现
- * Created by Administrator on 2015/9/25.
+ * Created by 树朾 on 2015/9/25.
  */
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
@@ -37,19 +35,18 @@ public class StatisticsServiceImpl implements StatisticsService {
     UrlDao urlDao;
 
     @Override
-    public List<VisitValue> norm(int idsite, Period period, Norm norm, Date start, Date end) throws Exception {
-        switch (norm) {
-            case visit:
-                return this.visit(idsite, period, start, end);
-            case pv:
-                return this.pageView(idsite, period, start, end);
-            case uv:
-                return this.uniqueVisitor(idsite, period, start, end);
-            case ip:
-                return this.internetProtocol(idsite, period, start, end);
-            default:
-                throw new ServiceException("无效指标");
+    public List<VisitValue> visit(int idsite, Period period, Date start, Date end) throws Exception {
+        switch (period) {
+            case hour:
+                return visitDao.visitHour(idsite, start, end);
+            case day:
+                return visitDao.visitDay(idsite, start, end);
+            case week:
+                return visitDao.visitWeek(idsite, start, end);
+            case month:
+                return visitDao.visitMonth(idsite, start, end);
         }
+        return new ArrayList<>();
     }
 
     @Override
@@ -130,89 +127,34 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<RankingValue> ranking(int idsite, Ranking ranking, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> ranking(int idsite, Ranking ranking, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception {
         switch (ranking) {
             case appname:
-                return visitDao.appname(idsite, rankingtype, start, end, limit, skip);
+                return visitDao.appname(idsite, ranktype, start, end, limit, skip);
             case brand:
-                return visitDao.brand(idsite, rankingtype, start, end, limit, skip);
+                return visitDao.brand(idsite, ranktype, start, end, limit, skip);
             case browser:
-                return visitDao.browser(idsite, rankingtype, start, end, limit, skip);
+                return visitDao.browser(idsite, ranktype, start, end, limit, skip);
             case city:
-                return visitDao.city(idsite, rankingtype, start, end, limit, skip);
+                return visitDao.city(idsite, ranktype, start, end, limit, skip);
             case country:
-                return visitDao.country(idsite, rankingtype, start, end, limit, skip);
+                return visitDao.country(idsite, ranktype, start, end, limit, skip);
             case depth:
-                return visitDao.depth(idsite, rankingtype, start, end, limit, skip);
+                return visitDao.depth(idsite, ranktype, start, end, limit, skip);
             case lang:
-                return visitDao.lang(idsite, rankingtype, start, end, limit, skip);
+                return visitDao.lang(idsite, ranktype, start, end, limit, skip);
             case model:
-                return visitDao.model(idsite, rankingtype, start, end, limit, skip);
+                return visitDao.model(idsite, ranktype, start, end, limit, skip);
             case nettype:
-                return visitDao.nettype(idsite, rankingtype, start, end, limit, skip);
+                return visitDao.nettype(idsite, ranktype, start, end, limit, skip);
             case province:
-                return visitDao.province(idsite, rankingtype, start, end, limit, skip);
+                return visitDao.province(idsite, ranktype, start, end, limit, skip);
             case resolution:
-                return visitDao.resolution(idsite, rankingtype, start, end, limit, skip);
+                return visitDao.resolution(idsite, ranktype, start, end, limit, skip);
             case system:
-                return visitDao.system(idsite, rankingtype, start, end, limit, skip);
+                return visitDao.system(idsite, ranktype, start, end, limit, skip);
         }
         return new ArrayList<>();
     }
 
-    public List<VisitValue> visit(int idsite, Period period, Date start, Date end) throws Exception {
-        switch (period) {
-            case hour:
-                return visitDao.visitHour(idsite, start, end);
-            case day:
-                return visitDao.visitDay(idsite, start, end);
-            case week:
-                return visitDao.visitWeek(idsite, start, end);
-            case month:
-                return visitDao.visitMonth(idsite, start, end);
-        }
-        return new ArrayList<>();
-    }
-
-    public List<VisitValue> pageView(int idsite, Period period, Date start, Date end) throws Exception {
-        switch (period) {
-            case hour:
-                return visitDao.pageViewHour(idsite, start, end);
-            case day:
-                return visitDao.pageViewDay(idsite, start, end);
-            case week:
-                return visitDao.pageViewWeek(idsite, start, end);
-            case month:
-                return visitDao.pageViewMonth(idsite, start, end);
-        }
-        return new ArrayList<>();
-    }
-
-    public List<VisitValue> uniqueVisitor(int idsite, Period period, Date start, Date end) throws Exception {
-        switch (period) {
-            case hour:
-                return visitDao.uniqueVisitorHour(idsite, start, end);
-            case day:
-                return visitDao.uniqueVisitorDay(idsite, start, end);
-            case week:
-                return visitDao.uniqueVisitorWeek(idsite, start, end);
-            case month:
-                return visitDao.uniqueVisitorMonth(idsite, start, end);
-        }
-        return new ArrayList<>();
-    }
-
-    public List<VisitValue> internetProtocol(int idsite, Period period, Date start, Date end) throws Exception {
-        switch (period) {
-            case hour:
-                return visitDao.internetProtocolHour(idsite, start, end);
-            case day:
-                return visitDao.internetProtocolDay(idsite, start, end);
-            case week:
-                return visitDao.internetProtocolWeek(idsite, start, end);
-            case month:
-                return visitDao.internetProtocolMonth(idsite, start, end);
-        }
-        return new ArrayList<>();
-    }
 }

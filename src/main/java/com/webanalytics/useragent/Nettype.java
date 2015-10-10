@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * 网络类型枚举
- * Created by Administrator on 2015/9/28.
+ * Created by 树朾 on 2015/9/28.
  */
 public enum Nettype {
 
@@ -27,7 +27,7 @@ public enum Nettype {
         this.value = "";
         this.name = name;
         this.remark = remark;
-        this.acronym = "";//acronym;
+        this.acronym = acronym;
         this.pattern = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
     }
 

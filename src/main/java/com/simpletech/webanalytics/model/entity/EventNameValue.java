@@ -2,7 +2,7 @@ package com.simpletech.webanalytics.model.entity;
 
 /**
  * 事件统计值
- * Created by Administrator on 2015/9/29.
+ * Created by 树朾 on 2015/9/29.
  */
 public class EventNameValue {
 

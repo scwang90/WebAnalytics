@@ -18,25 +18,25 @@ public interface ActionDao extends BaseDao<Action> {
     /**
      * 页面标题排行
      *
-     * @param siteId 网站ID
+     * @param idsite 网站ID
      * @param start  开始时间
      * @param end    结束时间
      * @param limit  分页限制
      * @param skip   分页起始
      * @return 标题排行
      */
-    List<PageValue> pagetitle(int siteId, Date start, Date end, int limit, int skip) throws Exception;
+    List<PageValue> pagetitle(int idsite, Date start, Date end, int limit, int skip) throws Exception;
 
     /**
      * 页面链接排行
      *
-     * @param siteId 网站ID
+     * @param idsite 网站ID
      * @param start  开始时间
      * @param end    结束时间
      * @param limit  分页限制
      * @param skip   分页起始
      * @return 链接排行
      */
-    List<PageValue> pageurl(int siteId, Date start, Date end, int limit, int skip) throws Exception;
+    List<PageValue> pageurl(int idsite, Date start, Date end, int limit, int skip) throws Exception;
 
 }

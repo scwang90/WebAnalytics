@@ -9,91 +9,26 @@ import java.util.List;
 
 /**
  * 统计Mapper接口
- * Created by Administrator on 2015/9/29.
+ * Created by 树朾 on 2015/9/29.
  */
 public interface StatisticsMapper {
 
     /**
-     * 获取 idsite网站 start-end 的 [小时\日\周\月]Visit
+     * 获取 idsite网站 start-end 的 [小时\日\周\月] [Visit|PV|UV|IP]
      *
      * @param idsite 网站ID
      * @param start  开始时间
      * @param end    结束时间
      * @throws Exception
      */
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d%H') date, COUNT(id) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
+    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d%H') date, COUNT(id) vt, SUM(count_visits) pv, COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
     List<VisitValue> visitHour(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d') date, COUNT(id) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
+    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d') date, COUNT(id) vt, SUM(count_visits) pv, COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
     List<VisitValue> visitDay(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y-%u') date, COUNT(id) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
+    @Select("SELECT DATE_FORMAT(visit_servertime,'%y-%u') date, COUNT(id) vt, SUM(count_visits) pv, COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
     List<VisitValue> visitWeek(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m') date, COUNT(id) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
+    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m') date, COUNT(id) vt, SUM(count_visits) pv, COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
     List<VisitValue> visitMonth(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-
-    /**
-     * 获取 idsite网站 start-end 的 [小时\日\周\月]PV
-     *
-     * @param idsite 网站ID
-     * @param start  开始时间
-     * @param end    结束时间
-     * @throws Exception
-     */
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d%H') date, SUM(count_visits) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
-    List<VisitValue> pageViewHour(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d') date, SUM(count_visits) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
-    List<VisitValue> pageViewDay(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y-%u') date, SUM(count_visits) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
-    List<VisitValue> pageViewWeek(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m') date, SUM(count_visits) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
-    List<VisitValue> pageViewMonth(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-
-    /**
-     * 获取 idsite网站 start-end 的 [小时\日\周\月]UV
-     *
-     * @param idsite 网站ID
-     * @param start  开始时间
-     * @param end    结束时间
-     * @throws Exception
-     */
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d%H') date, COUNT(DISTINCT idvisitor) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
-    List<VisitValue> uniqueVisitorHour(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d') date, COUNT(DISTINCT idvisitor) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
-    List<VisitValue> uniqueVisitorDay(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y-%u') date, COUNT(DISTINCT idvisitor) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
-    List<VisitValue> uniqueVisitorWeek(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m') date, COUNT(DISTINCT idvisitor) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
-    List<VisitValue> uniqueVisitorMonth(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    /**
-     * 获取 idsite网站 start-end 的 [小时\日\周\月]IP
-     *
-     * @param idsite 网站ID
-     * @param start  开始时间
-     * @param end    结束时间
-     * @throws Exception
-     */
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d%H') date, COUNT(DISTINCT location_ip) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
-    List<VisitValue> internetProtocolHour(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d') date, COUNT(DISTINCT location_ip) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
-    List<VisitValue> internetProtocolDay(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y-%u') date, COUNT(DISTINCT location_ip) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
-    List<VisitValue> internetProtocolWeek(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m') date, COUNT(DISTINCT location_ip) val FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
-    List<VisitValue> internetProtocolMonth(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
 
     /**
      * 获取 idsite网站 事件 在 start-end 的 小时\日\周\月 统计数据
@@ -122,13 +57,10 @@ public interface StatisticsMapper {
      */
     @Select("SELECT DATE_FORMAT(create_time,'%y%m%d%H') date, COUNT(id) num, COUNT(DISTINCT idvisitor) user FROM t_event WHERE idsite=#{idsite} AND category=#{category} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date DESC LIMIT ${skip},${limit}")
     List<EventPeriodValue> eventHour(@Param("idsite") int idsite, @Param("category") String category, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip);
-
     @Select("SELECT DATE_FORMAT(create_time,'%y%m%d') date, COUNT(id) num, COUNT(DISTINCT idvisitor) user FROM t_event WHERE idsite=#{idsite} AND category=#{category} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date DESC LIMIT ${skip},${limit}")
     List<EventPeriodValue> eventDay(@Param("idsite") int idsite, @Param("category") String category, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip);
-
     @Select("SELECT DATE_FORMAT(create_time,'%y-%u') date, COUNT(id) num, COUNT(DISTINCT idvisitor) user FROM t_event WHERE idsite=#{idsite} AND category=#{category} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date DESC LIMIT ${skip},${limit}")
     List<EventPeriodValue> eventWeek(@Param("idsite") int idsite, @Param("category") String category, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip);
-
     @Select("SELECT DATE_FORMAT(create_time,'%y%m') date, COUNT(id) num, COUNT(DISTINCT idvisitor) user FROM t_event WHERE idsite=#{idsite} AND category=#{category} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date DESC LIMIT ${skip},${limit}")
     List<EventPeriodValue> eventMonth(@Param("idsite") int idsite, @Param("category") String category, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip);
 
@@ -159,16 +91,26 @@ public interface StatisticsMapper {
      * 页面 标题|链接 排行
      *
      * @param idsite 网站ID
-     * @param start  开始时间 
-     * @param end    结束时间 
+     * @param start  开始时间
+     * @param end    结束时间
      * @param limit  分页限制
      * @param skip   分页起始
      * @return 标题排行
      */
-    @Select("SELECT idtitle pid, COUNT(id) pv, COUNT(DISTINCT idvisit) up, AVG(time_spent) ts, COUNT(DISTINCT idvisitor) uv FROM t_action WHERE idsite=#{idsite} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY idtitle ORDER BY pv DESC LIMIT ${skip},${limit}")
+    @Select("SELECT idtitle pid, COUNT(id) pv, COUNT(DISTINCT idvisit) vt, AVG(time_spent) ts, COUNT(DISTINCT idvisitor) uv FROM t_action WHERE idsite=#{idsite} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY idtitle ORDER BY pv DESC LIMIT ${skip},${limit}")
     List<PageValue> pagetitle(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT idurl pid, COUNT(id) pv, COUNT(DISTINCT idvisit) up, AVG(time_spent) ts, COUNT(DISTINCT idvisitor) uv FROM t_action WHERE idsite=#{idsite} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY idurl ORDER BY pv DESC LIMIT ${skip},${limit}")
+    @Select("SELECT idurl pid, COUNT(id) pv, COUNT(DISTINCT idvisit) vt, AVG(time_spent) ts, COUNT(DISTINCT idvisitor) uv FROM t_action WHERE idsite=#{idsite} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY idurl ORDER BY pv DESC LIMIT ${skip},${limit}")
     List<PageValue> pageurl(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
+
+    /**
+     * 统计排行总量（标题|链接 ）
+     * @param idsite 网站ID
+     * @param start  开始时间
+     * @param end    结束时间
+     * @return 数据总量
+     */
+    @Select("SELECT COUNT(id) pv, COUNT(DISTINCT idvisit) vt, AVG(time_spent) ts, COUNT(DISTINCT idvisitor) uv FROM t_action WHERE idsite=#{idsite} AND (create_time BETWEEN #{start} AND #{end})")
+    PageValue coutpage(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
 
     /**
      * 新老用户
@@ -197,29 +139,29 @@ public interface StatisticsMapper {
      * @param skip   分页起始
      * @return 数据排行
      */
-    @Select("SELECT end_brand name, COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT end_brand name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> brand(@Param("idsite") int idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT end_model name, COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT end_model name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> model(@Param("idsite") int idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT net_type name, COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT net_type name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> nettype(@Param("idsite") int idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT browser_name name, COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT browser_name name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> browser(@Param("idsite") int idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT operate_system name, COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT operate_system name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> system(@Param("idsite") int idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT app_name name, COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT app_name name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> appname(@Param("idsite") int idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT screen_resolution name, COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT screen_resolution name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> resolution(@Param("idsite") int idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT screen_depth name, COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT screen_depth name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> depth(@Param("idsite") int idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT location_lang name, COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT location_lang name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> lang(@Param("idsite") int idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT location_country name, COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT location_country name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> country(@Param("idsite") int idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT location_region name, COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT location_region name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> province(@Param("idsite") int idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT location_city name, COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT location_city name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> city(@Param("idsite") int idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
 
     /**
@@ -229,8 +171,8 @@ public interface StatisticsMapper {
      * @param end    结束时间
      * @return 数据总量
      */
-    @Select("SELECT COUNT(id) visit,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) ")
-    RankingValue coutRanking(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
+    @Select("SELECT COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=#{idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) ")
+    RankingValue coutranking(@Param("idsite") int idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
 
     /**
      * 统计 idvtor 在 idsite网站的 visit 次数

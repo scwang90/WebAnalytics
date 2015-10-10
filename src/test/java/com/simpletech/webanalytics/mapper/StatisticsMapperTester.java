@@ -1,6 +1,5 @@
 package com.simpletech.webanalytics.mapper;
 
-import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.util.JacksonUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +26,7 @@ public class StatisticsMapperTester {
 
     @Test
     public void coutRanking() throws Exception {
-        Object result = mapper.coutRanking(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
+        Object result = mapper.coutranking(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
         System.out.println(JacksonUtil.toJson(result));
     }
 
@@ -58,24 +57,6 @@ public class StatisticsMapperTester {
     @Test
     public void visit() throws Exception {
         Object result = mapper.visitDay(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
-        System.out.println(JacksonUtil.toJson(result));
-    }
-
-    @Test
-    public void pv() throws Exception {
-        Object result = mapper.pageViewDay(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
-        System.out.println(JacksonUtil.toJson(result));
-    }
-
-    @Test
-    public void uv() throws Exception {
-        Object result = mapper.uniqueVisitorDay(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
-        System.out.println(JacksonUtil.toJson(result));
-    }
-
-    @Test
-    public void ip() throws Exception {
-        Object result = mapper.internetProtocolDay(1, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
         System.out.println(JacksonUtil.toJson(result));
     }
 

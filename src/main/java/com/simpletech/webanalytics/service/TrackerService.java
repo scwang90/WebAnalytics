@@ -5,7 +5,7 @@ import com.simpletech.webanalytics.model.entity.JsEvent;
 
 /**
  * JS探针 接收服务
- * Created by Administrator on 2015/9/22.
+ * Created by 树朾 on 2015/9/22.
  */
 public interface TrackerService {
     /**

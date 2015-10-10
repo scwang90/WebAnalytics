@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * 操作系统枚举
- * Created by Administrator on 2015/9/28.
+ * Created by 树朾 on 2015/9/28.
  */
 public enum OperateSystem {
 

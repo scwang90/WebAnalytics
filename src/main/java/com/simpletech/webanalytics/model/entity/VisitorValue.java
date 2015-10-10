@@ -2,7 +2,7 @@ package com.simpletech.webanalytics.model.entity;
 
 /**
  * 访问者数据
- * Created by Administrator on 2015/9/30.
+ * Created by 树朾 on 2015/9/30.
  */
 public class VisitorValue extends PeriodValue{
 

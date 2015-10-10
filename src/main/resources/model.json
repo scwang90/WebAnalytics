@@ -1,0 +1,13 @@
+{
+  "status": true,
+  "result": [
+    {
+      "time": 1441036800000,      //时间戳   -可自定义format格式
+      "date": "150901",           //固定格式 -15年9月1日
+      "vt": 7,                    // Visit
+      "pv": 51,                   // Page View
+      "uv": 4,                    // Unique Visitor
+      "ip": 3                     // Internet Protocol
+    },...
+  ]
+}

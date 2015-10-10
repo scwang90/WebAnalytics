@@ -15,9 +15,9 @@
         empty = global.empty,
         performance = global.performance;
         jsverson = "1.0",
-        path_track_event = jsverson + "/ten",
-        path_track_pageview = jsverson + "/tpv",
-        server = "/tracker/";
+        path_track_event = "/"+jsverson + "/ten",
+        path_track_pageview = "/"+jsverson + "/tpv",
+        server = "/tracker";
 
     /**
      * 客户端探测对象（如 饼干、分辨率...）
@@ -25,7 +25,24 @@
     var detect = new Detect(global);
     var tracker = new Tracker(server,"1");
 
-    tracker.trackPageView();
+    // asynchronous tracker (or proxy)
+    if (typeof _wapaq !== 'object') {
+        _wapaq = [];
+    }
+    var applyFirst  = ['setTrackerUrl', 'setSiteId'];
+    _wapaq = applyMethodsInOrder(_wapaq, applyFirst);
+
+    // apply the queue of actions
+    for (iterator = 0; iterator < _wapaq.length; iterator++) {
+        if (_wapaq[iterator]) {
+            apply(_wapaq[iterator]);
+        }
+    }
+
+    // replace initialization array with proxy object
+    _wapaq = new TrackerProxy();
+
+    //tracker.trackPageView();
     //for(var p in detect){
     //    if(typeof(detect[p])!="function"){
     //        var val = detect[p] || empty;
@@ -35,6 +52,78 @@
     //println("uid" + " = " + tracker.getVisitor().uuid);
     //println("cookie" + " : " + document.cookie);
 
+    /************************************************************
+     * Proxy object
+     * - this allows the caller to continue push()'ing to _paq
+     *   after the Tracker has been initialized and loaded
+     ************************************************************/
+    function TrackerProxy() {
+        return {
+            push: apply
+        };
+    }
+
+    /**
+     * Applies the given methods in the given order if they are present in paq.
+     *
+     * @param {Array} paq
+     * @param {Array} methodsToApply an array containing method names in the order that they should be applied
+     *                 eg ['setSiteId', 'setTrackerUrl']
+     * @returns {Array} the modified paq array with the methods that were already applied set to undefined
+     */
+    function applyMethodsInOrder(paq, methodsToApply)
+    {
+        var appliedMethods = {};
+        var index, iterator;
+        for (index = 0; index < methodsToApply.length; index++) {
+            var methodNameToApply = methodsToApply[index];
+            appliedMethods[methodNameToApply] = 1;
+            for (iterator = 0; iterator < paq.length; iterator++) {
+                if (paq[iterator] && paq[iterator][0]) {
+                    var methodName = paq[iterator][0];
+                    if (methodNameToApply === methodName) {
+                        apply(paq[iterator]);
+                        delete paq[iterator];
+                        if (appliedMethods[methodName] > 1) {
+                            if (console !== undefined && console && console.error) {
+                                console.error('The method ' + methodName + ' is registered more than once in "paq" variable. Only the last call has an effect. Please have a look at the multiple Piwik trackers documentation: http://developer.piwik.org/guides/tracking-javascript-guide#multiple-piwik-trackers');
+                            }
+                        }
+                        appliedMethods[methodName]++;
+                    }
+                }
+            }
+        }
+        return paq;
+    }
+    /**
+     * apply wrapper
+     *
+     * @param array parameterArray An array comprising either:
+     *      [ 'methodName', optional_parameters ]
+     * or:
+     *      [ functionObject, optional_parameters ]
+     */
+    function apply() {
+        var i, f, parameterArray;
+
+        for (i = 0; i < arguments.length; i += 1) {
+            parameterArray = arguments[i];
+            f = parameterArray.shift();
+
+            if (isString(f)) {
+                tracker[f].apply(tracker, parameterArray);
+            } else {
+                f.apply(tracker, parameterArray);
+            }
+        }
+    }
+    /**
+     * Is property a string?
+     */
+    function isString(property) {
+        return typeof property === 'string' || property instanceof String;
+    }
     /**
      * 追踪器
      * @param {Object} global
@@ -200,6 +289,20 @@
                 + detect.getParam();
         }
         return {
+            /**
+             * Specify the Piwik server URL
+             * @param string trackerUrl
+             */
+            setTrackerUrl: function (trackerUrl) {
+                configTrackerUrl = trackerUrl;
+            },
+            /**
+             * Specify the site ID
+             * @param int|string siteId
+             */
+            setSiteId: function (siteId) {
+                setSiteId(siteId);
+            },
             getVisitor : function(){
                 return getValuesFromVisitorIdCookie();
             },

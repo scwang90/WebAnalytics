@@ -1,8 +1,10 @@
 package com.simpletech.webanalytics.model;
 
+import com.simpletech.webanalytics.annotations.Must;
 import com.simpletech.webanalytics.annotations.dbmodel.Column;
 import com.simpletech.webanalytics.annotations.dbmodel.Id;
 import com.simpletech.webanalytics.annotations.dbmodel.Table;
+import com.simpletech.webanalytics.model.base.ModelBase;
 
 /**
  * 数据库表t_site
@@ -10,7 +12,7 @@ import com.simpletech.webanalytics.annotations.dbmodel.Table;
  * @date 2015-09-30 18:37:16 中国标准时间
  */
 @Table("t_site")
-public class Site{
+public class Site extends ModelBase{
 
 	/**
 	 * ID主键
@@ -30,10 +32,12 @@ public class Site{
 	/**
 	 * 网站备注名称
 	 */
+	@Must("网站备注名称")
 	private String name;
 	/**
 	 * 网站域名
 	 */
+	@Must("网站域名")
 	private String domain;
 
 	public Site() {

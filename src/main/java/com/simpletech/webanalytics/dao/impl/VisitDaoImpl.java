@@ -5,11 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.simpletech.webanalytics.mapper.StatisticsMapper;
-import com.simpletech.webanalytics.model.constant.Period;
 import com.simpletech.webanalytics.model.constant.RankingType;
 import com.simpletech.webanalytics.model.entity.RankingValue;
 import com.simpletech.webanalytics.model.entity.VisitValue;
 import com.simpletech.webanalytics.model.entity.VisitorValue;
+import com.simpletech.webanalytics.util.AfStringUtil;
 import com.webanalytics.useragent.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -71,65 +71,8 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao {
         return mapper.visitMonth(idsite, start, end);
     }
 
-    @Override
-    public List<VisitValue> pageViewHour(int idsite, Date start, Date end) throws Exception {
-        return mapper.pageViewHour(idsite, start, end);
-    }
 
-    @Override
-    public List<VisitValue> pageViewDay(int idsite, Date start, Date end) throws Exception {
-        return mapper.pageViewDay(idsite, start, end);
-    }
 
-    @Override
-    public List<VisitValue> pageViewWeek(int idsite, Date start, Date end) throws Exception {
-        return mapper.pageViewWeek(idsite, start, end);
-    }
-
-    @Override
-    public List<VisitValue> pageViewMonth(int idsite, Date start, Date end) throws Exception {
-        return mapper.pageViewMonth(idsite, start, end);
-    }
-
-    @Override
-    public List<VisitValue> uniqueVisitorHour(int idsite, Date start, Date end) throws Exception {
-        return mapper.uniqueVisitorHour(idsite, start, end);
-    }
-
-    @Override
-    public List<VisitValue> uniqueVisitorDay(int idsite, Date start, Date end) throws Exception {
-        return mapper.uniqueVisitorDay(idsite, start, end);
-    }
-
-    @Override
-    public List<VisitValue> uniqueVisitorWeek(int idsite, Date start, Date end) throws Exception {
-        return mapper.uniqueVisitorWeek(idsite, start, end);
-    }
-
-    @Override
-    public List<VisitValue> uniqueVisitorMonth(int idsite, Date start, Date end) throws Exception {
-        return mapper.uniqueVisitorMonth(idsite, start, end);
-    }
-
-    @Override
-    public List<VisitValue> internetProtocolHour(int idsite, Date start, Date end) throws Exception {
-        return mapper.internetProtocolHour(idsite, start, end);
-    }
-
-    @Override
-    public List<VisitValue> internetProtocolDay(int idsite, Date start, Date end) throws Exception {
-        return mapper.internetProtocolDay(idsite, start, end);
-    }
-
-    @Override
-    public List<VisitValue> internetProtocolWeek(int idsite, Date start, Date end) throws Exception {
-        return mapper.internetProtocolWeek(idsite, start, end);
-    }
-
-    @Override
-    public List<VisitValue> internetProtocolMonth(int idsite, Date start, Date end) throws Exception {
-        return mapper.internetProtocolMonth(idsite, start, end);
-    }
 
     @Override
     public List<VisitorValue> visitorHour(int idsite, Date start, Date end) throws Exception {
@@ -153,7 +96,7 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao {
 
     @Override
     public List<RankingValue> brand(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
-        RankingValue count = mapper.coutRanking(idsite, start, end);
+        RankingValue count = mapper.coutranking(idsite, start, end);
         List<RankingValue> list = mapper.brand(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             Brand venum = Brand.parserAcronym(value.getName());
@@ -162,27 +105,33 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao {
             value.setRuv(1f * value.getUv() / count.getUv());
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
-            value.setRvisit(1f * value.getVisit() / count.getVisit());
+            value.setRvt(1f * value.getVt() / count.getVt());
         }
         return list;
     }
 
     @Override
     public List<RankingValue> model(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
-        RankingValue count = mapper.coutRanking(idsite, start, end);
+        RankingValue count = mapper.coutranking(idsite, start, end);
         List<RankingValue> list = mapper.model(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
+            if (AfStringUtil.isEmpty(value.getName())){
+                value.setName(Brand.Unknown.name());
+                value.setRemark(Brand.Unknown.getRemark());
+            } else {
+                value.setRemark("");
+            }
             value.setRuv(1f * value.getUv() / count.getUv());
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
-            value.setRvisit(1f * value.getVisit() / count.getVisit());
+            value.setRvt(1f * value.getVt() / count.getVt());
         }
         return list;
     }
 
     @Override
     public List<RankingValue> nettype(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
-        RankingValue count = mapper.coutRanking(idsite, start, end);
+        RankingValue count = mapper.coutranking(idsite, start, end);
         List<RankingValue> list = mapper.nettype(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             Nettype venum = Nettype.parserAcronym(value.getName());
@@ -191,14 +140,14 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao {
             value.setRuv(1f * value.getUv() / count.getUv());
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
-            value.setRvisit(1f * value.getVisit() / count.getVisit());
+            value.setRvt(1f * value.getVt() / count.getVt());
         }
         return list;
     }
 
     @Override
     public List<RankingValue> browser(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
-        RankingValue count = mapper.coutRanking(idsite, start, end);
+        RankingValue count = mapper.coutranking(idsite, start, end);
         List<RankingValue> list = mapper.browser(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             Browser venum = Browser.parserAcronym(value.getName());
@@ -207,14 +156,14 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao {
             value.setRuv(1f * value.getUv() / count.getUv());
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
-            value.setRvisit(1f * value.getVisit() / count.getVisit());
+            value.setRvt(1f * value.getVt() / count.getVt());
         }
         return list;
     }
 
     @Override
     public List<RankingValue> system(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
-        RankingValue count = mapper.coutRanking(idsite, start, end);
+        RankingValue count = mapper.coutranking(idsite, start, end);
         List<RankingValue> list = mapper.system(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             OperateSystem venum = OperateSystem.parserAcronym(value.getName());
@@ -223,14 +172,14 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao {
             value.setRuv(1f * value.getUv() / count.getUv());
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
-            value.setRvisit(1f * value.getVisit() / count.getVisit());
+            value.setRvt(1f * value.getVt() / count.getVt());
         }
         return list;
     }
 
     @Override
     public List<RankingValue> appname(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
-        RankingValue count = mapper.coutRanking(idsite, start, end);
+        RankingValue count = mapper.coutranking(idsite, start, end);
         List<RankingValue> list = mapper.appname(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             Application venum = Application.parserAcronym(value.getName());
@@ -239,85 +188,121 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao {
             value.setRuv(1f * value.getUv() / count.getUv());
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
-            value.setRvisit(1f * value.getVisit() / count.getVisit());
+            value.setRvt(1f * value.getVt() / count.getVt());
         }
         return list;
     }
 
     @Override
     public List<RankingValue> resolution(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
-        RankingValue count = mapper.coutRanking(idsite, start, end);
+        RankingValue count = mapper.coutranking(idsite, start, end);
         List<RankingValue> list = mapper.resolution(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
+            if (AfStringUtil.isEmpty(value.getName())){
+                value.setName(Brand.Unknown.name());
+                value.setRemark(Brand.Unknown.getRemark());
+            } else {
+                value.setRemark("");
+            }
             value.setRuv(1f * value.getUv() / count.getUv());
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
-            value.setRvisit(1f * value.getVisit() / count.getVisit());
+            value.setRvt(1f * value.getVt() / count.getVt());
         }
         return list;
     }
 
     @Override
     public List<RankingValue> depth(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
-        RankingValue count = mapper.coutRanking(idsite, start, end);
+        RankingValue count = mapper.coutranking(idsite, start, end);
         List<RankingValue> list = mapper.depth(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
+            if (AfStringUtil.isEmpty(value.getName())){
+                value.setName(Brand.Unknown.name());
+                value.setRemark(Brand.Unknown.getRemark());
+            } else {
+                value.setRemark("");
+            }
             value.setRuv(1f * value.getUv() / count.getUv());
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
-            value.setRvisit(1f * value.getVisit() / count.getVisit());
+            value.setRvt(1f * value.getVt() / count.getVt());
         }
         return list;
     }
 
     @Override
     public List<RankingValue> lang(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
-        RankingValue count = mapper.coutRanking(idsite, start, end);
+        RankingValue count = mapper.coutranking(idsite, start, end);
         List<RankingValue> list = mapper.lang(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
+            if (AfStringUtil.isEmpty(value.getName())){
+                value.setName(Brand.Unknown.name());
+                value.setRemark(Brand.Unknown.getRemark());
+            } else {
+                value.setRemark("");
+            }
             value.setRuv(1f * value.getUv() / count.getUv());
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
-            value.setRvisit(1f * value.getVisit() / count.getVisit());
+            value.setRvt(1f * value.getVt() / count.getVt());
         }
         return list;
     }
 
     @Override
     public List<RankingValue> country(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
-        RankingValue count = mapper.coutRanking(idsite, start, end);
+        RankingValue count = mapper.coutranking(idsite, start, end);
         List<RankingValue> list = mapper.country(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
+            if (AfStringUtil.isEmpty(value.getName())){
+                value.setName(Brand.Unknown.name());
+                value.setRemark(Brand.Unknown.getRemark());
+            } else {
+                value.setRemark("");
+            }
             value.setRuv(1f * value.getUv() / count.getUv());
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
-            value.setRvisit(1f * value.getVisit() / count.getVisit());
+            value.setRvt(1f * value.getVt() / count.getVt());
         }
         return list;
     }
 
     @Override
     public List<RankingValue> province(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
-        RankingValue count = mapper.coutRanking(idsite, start, end);
+        RankingValue count = mapper.coutranking(idsite, start, end);
         List<RankingValue> list = mapper.province(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
+            if (AfStringUtil.isEmpty(value.getName())){
+                value.setName(Brand.Unknown.name());
+                value.setRemark(Brand.Unknown.getRemark());
+            } else {
+                value.setRemark("");
+            }
             value.setRuv(1f * value.getUv() / count.getUv());
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
-            value.setRvisit(1f * value.getVisit() / count.getVisit());
+            value.setRvt(1f * value.getVt() / count.getVt());
         }
         return list;
     }
 
     @Override
     public List<RankingValue> city(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
-        RankingValue count = mapper.coutRanking(idsite, start, end);
+        RankingValue count = mapper.coutranking(idsite, start, end);
         List<RankingValue> list = mapper.city(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
+            if (AfStringUtil.isEmpty(value.getName())){
+                value.setName(Brand.Unknown.name());
+                value.setRemark(Brand.Unknown.getRemark());
+            } else {
+                value.setRemark("");
+            }
             value.setRuv(1f * value.getUv() / count.getUv());
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
-            value.setRvisit(1f * value.getVisit() / count.getVisit());
+            value.setRvt(1f * value.getVt() / count.getVt());
         }
         return list;
     }

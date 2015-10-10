@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 必须参数标记
- * Created by Administrator on 2015/9/25.
+ * 蹇呴』鍙傛暟鏍囪
+ * Created by 鏍戞溇 on 2015/9/25.
  */
 @Target( { ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
