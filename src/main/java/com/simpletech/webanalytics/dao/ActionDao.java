@@ -1,42 +1,58 @@
 package com.simpletech.webanalytics.dao;
 
+import java.util.List;
+
 import com.simpletech.webanalytics.dao.base.BaseDao;
 import com.simpletech.webanalytics.model.Action;
-import com.simpletech.webanalytics.model.entity.PageValue;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * 数据库表t_action的Dao接口
- *
  * @author 树朾
- * @date 2015-09-21 17:03:53 中国标准时间
+ * @date 2015-10-12 15:00:31 中国标准时间
  */
-public interface ActionDao extends BaseDao<Action> {
+public interface ActionDao extends BaseDao<Action>{
 
-    /**
-     * 页面标题排行
-     *
-     * @param idsite 网站ID
-     * @param start  开始时间
-     * @param end    结束时间
-     * @param limit  分页限制
-     * @param skip   分页起始
-     * @return 标题排行
-     */
-    List<PageValue> pagetitle(int idsite, Date start, Date end, int limit, int skip) throws Exception;
-
-    /**
-     * 页面链接排行
-     *
-     * @param idsite 网站ID
-     * @param start  开始时间
-     * @param end    结束时间
-     * @param limit  分页限制
-     * @param skip   分页起始
-     * @return 链接排行
-     */
-    List<PageValue> pageurl(int idsite, Date start, Date end, int limit, int skip) throws Exception;
+	/**
+	 * 插入一条新数据
+	 * @param model 添加的数据
+	 * @return 改变行数
+	 */
+	int insert(Action model) throws Exception;
+	/**
+	 * 根据ID删除
+	 * @param id 主键ID
+	 * @return 改变行数
+	 */
+	int delete(Object id) throws Exception;
+	/**
+	 * 更新一条数据
+	 * @param model 需要更新数据
+	 * @return 改变行数
+	 */
+	int update(Action model) throws Exception;
+	/**
+	 * 统计全部出数据
+	 * @return 全部数据量
+	 */
+	int countAll() throws Exception;
+	/**
+	 * 根据ID获取
+	 * @param id 主键ID
+	 * @return 数据对象 or null
+	 */
+	Action findById(Object id) throws Exception;
+	/**
+	 * 获取全部数据
+	 * @return 全部所有数据
+	 */
+	List<Action> findAll() throws Exception;
+	/**
+	 * 分页查询数据
+	 * @param limit 分页最大值
+	 * @param start 开始编号
+	 * @return 分页列表数据
+	 */
+	List<Action> findByPage(int limit, int start) throws Exception;
+	
 
 }

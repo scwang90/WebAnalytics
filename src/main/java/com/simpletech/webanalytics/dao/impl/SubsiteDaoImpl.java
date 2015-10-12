@@ -5,24 +5,24 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.simpletech.webanalytics.dao.base.BaseDaoImpl;
-import com.simpletech.webanalytics.dao.SiteDao;
-import com.simpletech.webanalytics.model.Site;
+import com.simpletech.webanalytics.dao.SubsiteDao;
+import com.simpletech.webanalytics.model.Subsite;
 
 /**
- * 数据库表t_site的Dao实现
+ * 数据库表t_subsite的Dao实现
  * @author 树朾
  * @date 2015-10-12 15:00:31 中国标准时间
  */
 @Repository
-public class SiteDaoImpl extends BaseDaoImpl<Site> implements SiteDao{
+public class SubsiteDaoImpl extends BaseDaoImpl<Subsite> implements SubsiteDao{
 
 	@Override
-	public int insert(Site t) throws Exception {
+	public int insert(Subsite t) throws Exception {
 		return super.insert(t);
 	}
 
 	@Override
-	public int update(Site t) throws Exception {
+	public int update(Subsite t) throws Exception {
 		return super.update(t);
 	}
 
@@ -37,17 +37,17 @@ public class SiteDaoImpl extends BaseDaoImpl<Site> implements SiteDao{
 	}
 
 	@Override
-	public Site findById(Object id) throws Exception {
+	public Subsite findById(Object id) throws Exception {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<Site> findAll() throws Exception {
+	public List<Subsite> findAll() throws Exception {
 		return super.findAll();
 	}
 
 	@Override
-	public List<Site> findByPage(int limit, int start) throws Exception {
+	public List<Subsite> findByPage(int limit, int start) throws Exception {
 		return super.findByPage(limit, start);
 	}
 }

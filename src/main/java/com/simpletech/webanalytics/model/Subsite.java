@@ -6,12 +6,12 @@ import com.simpletech.webanalytics.annotations.dbmodel.Table;
 import com.simpletech.webanalytics.model.base.ModelBase;
 
 /**
- * 数据库表t_url
+ * 数据库表t_subsite
  * @author 树朾
  * @date 2015-10-12 14:47:44 中国标准时间
  */
-@Table("t_url")
-public class Url extends ModelBase{
+@Table("t_subsite")
+public class Subsite extends ModelBase{
 
 	/**
 	 * ID主键
@@ -23,9 +23,13 @@ public class Url extends ModelBase{
 	 */
 	private Integer idsite;
 	/**
-	 * 子站ID
+	 * 子站名称标识
 	 */
-	private String idsubsite;
+	private String name;
+	/**
+	 * 备注
+	 */
+	private String remark;
 	/**
 	 * 创建时间
 	 */
@@ -36,16 +40,8 @@ public class Url extends ModelBase{
 	 */
 	@Column("update_time")
 	private java.util.Date updateTime;
-	/**
-	 * 哈希值
-	 */
-	private Integer hash;
-	/**
-	 * url 值
-	 */
-	private String url;
 
-	public Url() {
+	public Subsite() {
 	}
 	
 	public String getId(){
@@ -64,12 +60,20 @@ public class Url extends ModelBase{
 		this.idsite = idsite;
 	}
 	
-	public String getIdsubsite(){
-		return this.idsubsite;
+	public String getName(){
+		return this.name;
 	}
 
-	public void setIdsubsite(String idsubsite) {
-		this.idsubsite = idsubsite;
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getRemark(){
+		return this.remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	
 	public java.util.Date getCreateTime(){
@@ -86,22 +90,6 @@ public class Url extends ModelBase{
 
 	public void setUpdateTime(java.util.Date updateTime) {
 		this.updateTime = updateTime;
-	}
-	
-	public Integer getHash(){
-		return this.hash;
-	}
-
-	public void setHash(Integer hash) {
-		this.hash = hash;
-	}
-	
-	public String getUrl(){
-		return this.url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
 	}
 	
 }

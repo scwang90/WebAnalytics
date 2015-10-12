@@ -2,25 +2,89 @@ package com.simpletech.webanalytics.service.impl;
 
 import com.simpletech.webanalytics.dao.EventDao;
 import com.simpletech.webanalytics.model.Event;
-import com.simpletech.webanalytics.model.Site;
-import com.simpletech.webanalytics.model.entity.JsEvent;
+import com.simpletech.webanalytics.model.base.ModelBase;
 import com.simpletech.webanalytics.service.EventService;
+import com.simpletech.webanalytics.util.Page;
+import com.simpletech.webanalytics.util.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 数据库表t_event的Service接实现
  * @author 树朾
- * @date 2015-09-21 17:03:53 中国标准时间
+ * @date 2015-10-12 15:00:31 中国标准时间
  */
 @Service
 public class EventServiceImpl extends BaseServiceImpl<Event> implements EventService{
 
 	@Autowired
 	EventDao dao;
+	
+	@Override
+	public int insert(Event model) throws Exception{
+		if (ModelBase.class.isInstance(model)) {
+			ModelBase.class.cast(model).check();
+		}
+		checkNullID(model);
+		return dao.insert(model);
+	}
+	
+	@Override
+	public int update(Event model) throws Exception {
+		Event old = findById(getModelID(model));
+		if (old == null) {
+			throw new ServiceException("请求更新记录不存在或已经被删除！");
+		}
+		model = checkNullField(old, model);
+		return dao.update(model);
+	}
 
 	@Override
-	public void trackerEvent(Site site, JsEvent jsevent) throws Exception {
-		dao.insert(jsevent.buildEvent(site.getId()));
+	public int delete(Object id) throws Exception {
+		return dao.delete(id);
+	}
+
+	@Override
+	public Event findById(Object id) throws Exception{
+		return dao.findById(id);
+	}
+
+	@Override
+	public List<Event> findAll() throws Exception{
+		return dao.findAll();
+	}
+
+	@Override
+	public int delete(String id) throws Exception{
+		return dao.delete(id);
+	}
+
+	@Override
+	public List<Event> findByPage(int limit, int start) throws Exception {
+		return dao.findByPage(limit,start);
+	}
+
+	@Override
+	public Event findById(String id) throws Exception {
+		return dao.findById(id);
+	}
+	
+	@Override
+	public Page<Event> listByPage(int pageSize, int pageNo) throws Exception{
+		int limit = pageSize; 
+		int start = pageNo*pageSize;
+		int totalRecord = dao.countAll();
+		int totalPage = 1 + (totalRecord - 1) / pageSize;
+		
+		List<Event> list = dao.findByPage(limit, start);
+		
+		return new Page<Event>(pageNo,pageSize,totalPage,totalRecord,list){};
+	}
+
+	@Override
+	public int countAll() throws Exception {
+		return dao.countAll();
 	}
 }

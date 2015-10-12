@@ -1,20 +1,55 @@
 package com.simpletech.webanalytics.service;
 
+import java.util.List;
+
 import com.simpletech.webanalytics.model.Event;
-import com.simpletech.webanalytics.model.Site;
-import com.simpletech.webanalytics.model.entity.JsEvent;
 
 /**
  * 数据库表t_event的Service接口层
  * @author 树朾
- * @date 2015-09-21 17:03:53 中国标准时间
+ * @date 2015-10-12 15:00:31 中国标准时间
  */
 public interface EventService extends BaseService<Event>{
 
 	/**
-	 * JS探针事件处理
-	 * @param site 网站ID
-	 * @param event JS接收事件对象
+	 * 插入一条新数据
+	 * @param model 添加的数据
+	 * @return 改变行数
 	 */
-	void trackerEvent(Site site, JsEvent event) throws Exception;
+	int insert(Event model) throws Exception;
+	/**
+	 * 根据ID删除
+	 * @param id 主键ID
+	 */
+	int delete(Object id) throws Exception;
+	/**
+	 * 更新一条数据
+	 * @param model 需要更新数据
+	 * @return 改变行数
+	 */
+	int update(Event model) throws Exception;
+	/**
+	 * 统计全部出数据
+	 * @return 全部数据量
+	 */
+	int countAll() throws Exception;
+	/**
+	 * 根据ID获取
+	 * @param id 主键ID
+	 * @return 数据对象 or null
+	 */
+	Event findById(Object id) throws Exception;
+	/**
+	 * 获取全部数据
+	 * @return 全部所有数据
+	 */
+	List<Event> findAll() throws Exception;
+	/**
+	 * 分页查询数据
+	 * @param limit 分页最大值
+	 * @param start 开始编号
+	 * @return 分页列表数据
+	 */
+	List<Event> findByPage(int limit, int start) throws Exception;
+	
 }

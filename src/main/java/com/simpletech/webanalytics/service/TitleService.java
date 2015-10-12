@@ -3,22 +3,53 @@ package com.simpletech.webanalytics.service;
 import java.util.List;
 
 import com.simpletech.webanalytics.model.Title;
-import com.simpletech.webanalytics.model.Url;
 
 /**
  * 数据库表t_title的Service接口层
  * @author 树朾
- * @date 2015-09-21 17:03:53 中国标准时间
+ * @date 2015-10-12 15:00:31 中国标准时间
  */
 public interface TitleService extends BaseService<Title>{
 
 	/**
-	 * 根据 idsite 获取 title 的对象(如果不存在则添加并返回)
-	 * @param idsite
-	 * @param title
-	 * @return 返回有效的 Title 对象
-	 * @throws Exception
+	 * 插入一条新数据
+	 * @param model 添加的数据
+	 * @return 改变行数
 	 */
-	Title getTitle(int idsite, String title) throws Exception;
-
+	int insert(Title model) throws Exception;
+	/**
+	 * 根据ID删除
+	 * @param id 主键ID
+	 */
+	int delete(Object id) throws Exception;
+	/**
+	 * 更新一条数据
+	 * @param model 需要更新数据
+	 * @return 改变行数
+	 */
+	int update(Title model) throws Exception;
+	/**
+	 * 统计全部出数据
+	 * @return 全部数据量
+	 */
+	int countAll() throws Exception;
+	/**
+	 * 根据ID获取
+	 * @param id 主键ID
+	 * @return 数据对象 or null
+	 */
+	Title findById(Object id) throws Exception;
+	/**
+	 * 获取全部数据
+	 * @return 全部所有数据
+	 */
+	List<Title> findAll() throws Exception;
+	/**
+	 * 分页查询数据
+	 * @param limit 分页最大值
+	 * @param start 开始编号
+	 * @return 分页列表数据
+	 */
+	List<Title> findByPage(int limit, int start) throws Exception;
+	
 }

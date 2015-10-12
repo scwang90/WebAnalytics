@@ -39,7 +39,7 @@ public class VisitMapperTester {
 	@Test
 	public void formatsystem() throws Exception {
 		HashMap<String,Object> map = new HashMap<>();
-		List<Visit> result = mapper.findByPropertyName("", "operate_system", "");
+		List<Visit> result = mapper.findByPropertyName("", "operate_system", "WD7");
 		for (Visit visit : result) {
 			Object o = map.get(visit.getIdvisitor());
 			map.put(visit.getIdvisitor(), Integer.valueOf(o == null ? 0 : (int) o) + visit.getCountVisits());

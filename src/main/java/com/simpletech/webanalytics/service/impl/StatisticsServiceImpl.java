@@ -22,38 +22,28 @@ import java.util.List;
 public class StatisticsServiceImpl implements StatisticsService {
 
     @Autowired
-    SiteService siteService;
-    @Autowired
-    VisitDao visitDao;
-    @Autowired
-    EventDao eventDao;
-    @Autowired
-    ActionDao actionDao;
-    @Autowired
-    TitleDao titleDao;
-    @Autowired
-    UrlDao urlDao;
+    StatisticsDao dao;
 
     @Override
-    public List<VisitValue> visit(int idsite, Period period, Date start, Date end) throws Exception {
+    public List<VisitValue> visit(String idsite, Period period, Date start, Date end) throws Exception {
         switch (period) {
             case hour:
-                return visitDao.visitHour(idsite, start, end);
+                return dao.visitHour(idsite, start, end);
             case day:
-                return visitDao.visitDay(idsite, start, end);
+                return dao.visitDay(idsite, start, end);
             case week:
-                return visitDao.visitWeek(idsite, start, end);
+                return dao.visitWeek(idsite, start, end);
             case month:
-                return visitDao.visitMonth(idsite, start, end);
+                return dao.visitMonth(idsite, start, end);
         }
         return new ArrayList<>();
     }
 
     @Override
-    public List<EventNameValue> event(int idsite, Date start, Date end, int limit, int skip) throws Exception {
-        Long visit = visitDao.countVisit(idsite, start, end);
-        Long users = visitDao.countUsers(idsite, start, end);
-        List<EventNameValue> events = eventDao.event(idsite, start, end, limit, skip);
+    public List<EventNameValue> event(String idsite, Date start, Date end, int limit, int skip) throws Exception {
+        Long visit = dao.countVisit(idsite, start, end);
+        Long users = dao.countUsers(idsite, start, end);
+        List<EventNameValue> events = dao.event(idsite, start, end, limit, skip);
         for (EventNameValue value : events) {
             value.setRn(value.getNum() * 1f / visit);
             value.setRu(value.getUser() * 1f / users);
@@ -62,24 +52,24 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<EventPeriodValue> event(int idsite, String category, Period period, Date start, Date end, int limit, int skip) throws Exception {
+    public List<EventPeriodValue> event(String idsite, String category, Period period, Date start, Date end, int limit, int skip) throws Exception {
         List<EventPeriodValue> events = new ArrayList<>();
         switch (period) {
             case hour:
-                events = eventDao.eventHour(idsite, category, start, end, limit, skip);
+                events = dao.eventHour(idsite, category, start, end, limit, skip);
                 break;
             case day:
-                events = eventDao.eventDay(idsite, category, start, end, limit, skip);
+                events = dao.eventDay(idsite, category, start, end, limit, skip);
                 break;
             case week:
-                events = eventDao.eventWeek(idsite, category, start, end, limit, skip);
+                events = dao.eventWeek(idsite, category, start, end, limit, skip);
                 break;
             case month:
-                events = eventDao.eventMonth(idsite, category, start, end, limit, skip);
+                events = dao.eventMonth(idsite, category, start, end, limit, skip);
                 break;
         }
-        Long visit = visitDao.countVisit(idsite, start, end);
-        Long users = visitDao.countUsers(idsite, start, end);
+        Long visit = dao.countVisit(idsite, start, end);
+        Long users = dao.countUsers(idsite, start, end);
         for (EventPeriodValue value : events) {
             value.setRn(value.getNum() * 1f / visit);
             value.setRu(value.getUser() * 1f / users);
@@ -88,34 +78,34 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<PageValue> pagetitle(int idsite, Date start, Date end, int limit, int skip) throws Exception {
-        List<PageValue> pagetitle = actionDao.pagetitle(idsite, start, end, limit, skip);
-        pagetitle = titleDao.fullName(pagetitle);
+    public List<PageValue> pagetitle(String idsite, Date start, Date end, int limit, int skip) throws Exception {
+        List<PageValue> pagetitle = dao.pagetitle(idsite, start, end, limit, skip);
+        pagetitle = dao.fullTitleName(pagetitle);
         return pagetitle;
     }
 
     @Override
-    public List<PageValue> pageurl(int idsite, Date start, Date end, int limit, int skip) throws Exception {
-        List<PageValue> pageurl = actionDao.pageurl(idsite, start, end, limit, skip);
-        pageurl = urlDao.fullName(pageurl);
+    public List<PageValue> pageurl(String idsite, Date start, Date end, int limit, int skip) throws Exception {
+        List<PageValue> pageurl = dao.pageurl(idsite, start, end, limit, skip);
+        pageurl = dao.fullUrlName(pageurl);
         return pageurl;
     }
 
     @Override
-    public List<VisitorValue> visitor(int idsite, Period period, Date start, Date end) throws Exception {
+    public List<VisitorValue> visitor(String idsite, Period period, Date start, Date end) throws Exception {
         List<VisitorValue> list = new ArrayList<>();
         switch (period) {
             case hour:
-                list = visitDao.visitorHour(idsite, start, end);
+                list = dao.visitorHour(idsite, start, end);
                 break;
             case day:
-                list = visitDao.visitorDay(idsite, start, end);
+                list = dao.visitorDay(idsite, start, end);
                 break;
             case week:
-                list = visitDao.visitorWeek(idsite, start, end);
+                list = dao.visitorWeek(idsite, start, end);
                 break;
             case month:
-                list = visitDao.visitorMonth(idsite, start, end);
+                list = dao.visitorMonth(idsite, start, end);
                 break;
         }
         for (VisitorValue value : list) {
@@ -127,32 +117,32 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<RankingValue> ranking(int idsite, Ranking ranking, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> ranking(String idsite, Ranking ranking, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception {
         switch (ranking) {
             case appname:
-                return visitDao.appname(idsite, ranktype, start, end, limit, skip);
+                return dao.appname(idsite, ranktype, start, end, limit, skip);
             case brand:
-                return visitDao.brand(idsite, ranktype, start, end, limit, skip);
+                return dao.brand(idsite, ranktype, start, end, limit, skip);
             case browser:
-                return visitDao.browser(idsite, ranktype, start, end, limit, skip);
+                return dao.browser(idsite, ranktype, start, end, limit, skip);
             case city:
-                return visitDao.city(idsite, ranktype, start, end, limit, skip);
+                return dao.city(idsite, ranktype, start, end, limit, skip);
             case country:
-                return visitDao.country(idsite, ranktype, start, end, limit, skip);
+                return dao.country(idsite, ranktype, start, end, limit, skip);
             case depth:
-                return visitDao.depth(idsite, ranktype, start, end, limit, skip);
+                return dao.depth(idsite, ranktype, start, end, limit, skip);
             case lang:
-                return visitDao.lang(idsite, ranktype, start, end, limit, skip);
+                return dao.lang(idsite, ranktype, start, end, limit, skip);
             case model:
-                return visitDao.model(idsite, ranktype, start, end, limit, skip);
+                return dao.model(idsite, ranktype, start, end, limit, skip);
             case nettype:
-                return visitDao.nettype(idsite, ranktype, start, end, limit, skip);
+                return dao.nettype(idsite, ranktype, start, end, limit, skip);
             case province:
-                return visitDao.province(idsite, ranktype, start, end, limit, skip);
+                return dao.province(idsite, ranktype, start, end, limit, skip);
             case resolution:
-                return visitDao.resolution(idsite, ranktype, start, end, limit, skip);
+                return dao.resolution(idsite, ranktype, start, end, limit, skip);
             case system:
-                return visitDao.system(idsite, ranktype, start, end, limit, skip);
+                return dao.system(idsite, ranktype, start, end, limit, skip);
         }
         return new ArrayList<>();
     }

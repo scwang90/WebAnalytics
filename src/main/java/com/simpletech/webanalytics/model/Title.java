@@ -3,14 +3,15 @@ package com.simpletech.webanalytics.model;
 import com.simpletech.webanalytics.annotations.dbmodel.Column;
 import com.simpletech.webanalytics.annotations.dbmodel.Id;
 import com.simpletech.webanalytics.annotations.dbmodel.Table;
+import com.simpletech.webanalytics.model.base.ModelBase;
 
 /**
  * 数据库表t_title
  * @author 树朾
- * @date 2015-09-30 18:37:16 中国标准时间
+ * @date 2015-10-12 14:47:44 中国标准时间
  */
 @Table("t_title")
-public class Title{
+public class Title extends ModelBase{
 
 	/**
 	 * ID主键
@@ -21,6 +22,10 @@ public class Title{
 	 * 网站ID
 	 */
 	private Integer idsite;
+	/**
+	 * 子站ID
+	 */
+	private String idsubsite;
 	/**
 	 * 创建时间
 	 */
@@ -57,6 +62,14 @@ public class Title{
 
 	public void setIdsite(Integer idsite) {
 		this.idsite = idsite;
+	}
+	
+	public String getIdsubsite(){
+		return this.idsubsite;
+	}
+
+	public void setIdsubsite(String idsubsite) {
+		this.idsubsite = idsubsite;
 	}
 	
 	public java.util.Date getCreateTime(){

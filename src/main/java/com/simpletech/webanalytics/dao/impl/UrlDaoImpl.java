@@ -1,58 +1,54 @@
 package com.simpletech.webanalytics.dao.impl;
 
-import com.simpletech.webanalytics.dao.UrlDao;
-import com.simpletech.webanalytics.dao.base.BaseDaoImpl;
-import com.simpletech.webanalytics.model.Url;
-import com.simpletech.webanalytics.model.Url;
-import com.simpletech.webanalytics.model.entity.PageValue;
-import com.simpletech.webanalytics.util.AfStringUtil;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import com.simpletech.webanalytics.dao.base.BaseDaoImpl;
+import com.simpletech.webanalytics.dao.UrlDao;
+import com.simpletech.webanalytics.model.Url;
 
 /**
  * 数据库表t_url的Dao实现
  * @author 树朾
- * @date 2015-09-21 17:03:53 中国标准时间
+ * @date 2015-10-12 15:00:31 中国标准时间
  */
 @Repository
 public class UrlDaoImpl extends BaseDaoImpl<Url> implements UrlDao{
 
 	@Override
-	public Url getUrl(int idsite, String _url) throws Exception {
-		for (Url url : super.findByPropertyName("hash",_url.hashCode())){
-			if (idsite == url.getIdsite()){
-				return url;
-			}
-		}
-		return null;
+	public int insert(Url t) throws Exception {
+		return super.insert(t);
 	}
 
 	@Override
-	public List<PageValue> fullName(List<PageValue> pagetitle) throws Exception {
-		if (pagetitle.size() > 0){
-			String where = "WHERE id IN(%s)";
-			StringBuffer builder = new StringBuffer();
-			for (PageValue pagevalue: pagetitle){
-				builder.append(",'");
-				builder.append(pagevalue.getPid());
-				builder.append("'");
-			}
-			List<Url> titles = findWhere(String.format(where, builder.substring(1)));
-			Map<String,Url> map = new LinkedHashMap<>();
-			for (Url url : titles) {
-				map.put(url.getId(),url);
-			}
-			for (PageValue pagevalue: pagetitle){
-				Url url = map.get(pagevalue.getPid());
-				if (url != null) {
-					pagevalue.setName(url.getUrl());
-				}
-			}
-		}
-		return pagetitle;
+	public int update(Url t) throws Exception {
+		return super.update(t);
+	}
+
+	@Override
+	public int delete(Object id) throws Exception {
+		return super.delete(id);
+	}
+
+	@Override
+	public int countAll() throws Exception {
+		return super.countAll();
+	}
+
+	@Override
+	public Url findById(Object id) throws Exception {
+		return super.findById(id);
+	}
+
+	@Override
+	public List<Url> findAll() throws Exception {
+		return super.findAll();
+	}
+
+	@Override
+	public List<Url> findByPage(int limit, int start) throws Exception {
+		return super.findByPage(limit, start);
 	}
 }
 

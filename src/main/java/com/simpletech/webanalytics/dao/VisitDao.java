@@ -1,115 +1,58 @@
 package com.simpletech.webanalytics.dao;
 
+import java.util.List;
+
 import com.simpletech.webanalytics.dao.base.BaseDao;
 import com.simpletech.webanalytics.model.Visit;
-import com.simpletech.webanalytics.model.constant.Period;
-import com.simpletech.webanalytics.model.constant.RankingType;
-import com.simpletech.webanalytics.model.entity.RankingValue;
-import com.simpletech.webanalytics.model.entity.VisitValue;
-import com.simpletech.webanalytics.model.entity.VisitorValue;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * 数据库表t_visit的Dao接口
  * @author 树朾
- * @date 2015-09-21 17:03:53 中国标准时间
+ * @date 2015-10-12 15:00:31 中国标准时间
  */
 public interface VisitDao extends BaseDao<Visit>{
 
 	/**
-	 * 获取 idsite网站 的 Visit
-	 * @param idsite 网站ID
-	 * @param idvisitor 访问者
-	 * @return Visit
+	 * 插入一条新数据
+	 * @param model 添加的数据
+	 * @return 改变行数
 	 */
-	Visit getVisit(int idsite, String idvisitor) throws Exception;
-
+	int insert(Visit model) throws Exception;
 	/**
-	 * 获取 idsite网站 访问者30分钟内的 Visit
-	 * @param idsite 网站ID
-	 * @param idvisitor 访问者
-	 * @return Visit
+	 * 根据ID删除
+	 * @param id 主键ID
+	 * @return 改变行数
 	 */
-	Visit getVisitHalfHour(int idsite, String idvisitor) throws Exception;
-
+	int delete(Object id) throws Exception;
 	/**
-	 * 获取 idsite网站 start-end 的 [小时\日\周\月] [Visit|PV|UV|IP]
-	 * @param idsite 网站ID
-	 * @param start 开始时间
-	 * @param end 结束时间
+	 * 更新一条数据
+	 * @param model 需要更新数据
+	 * @return 改变行数
 	 */
-	List<VisitValue> visitHour(int idsite, Date start, Date end) throws Exception;
-	List<VisitValue> visitDay(int idsite, Date start, Date end) throws Exception;
-	List<VisitValue> visitWeek(int idsite, Date start, Date end) throws Exception;
-	List<VisitValue> visitMonth(int idsite, Date start, Date end) throws Exception;
-
+	int update(Visit model) throws Exception;
 	/**
-	 * 新老用户
-	 *
-	 * @param idsite 网站ID
-	 * @param start  开始时间
-	 * @param end    结束时间
-	 * @return 新老用户
+	 * 统计全部出数据
+	 * @return 全部数据量
 	 */
-	List<VisitorValue> visitorHour(int idsite, Date start, Date end) throws Exception;
-	List<VisitorValue> visitorDay(int idsite, Date start, Date end) throws Exception;
-	List<VisitorValue> visitorWeek(int idsite, Date start, Date end) throws Exception;
-	List<VisitorValue> visitorMonth(int idsite, Date start, Date end) throws Exception;
-
+	int countAll() throws Exception;
 	/**
-	 * 客户端排行
-	 *  设备品牌、设备型号、网络类型、浏览器、操作系统、APP、分辨率、颜色深度、语言、国家、省份、城市
-	 * @param idsite 网站ID
-	 * @param rankingtype 排序类型 按 visit|uv|ip|pv
-	 * @param start  开始时间
-	 * @param end    结束时间
-	 * @param limit  分页限制
-	 * @param skip   分页起始
-	 * @return 客户端设备品牌排行
+	 * 根据ID获取
+	 * @param id 主键ID
+	 * @return 数据对象 or null
 	 */
-	List<RankingValue> brand(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
-	List<RankingValue> model(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
-	List<RankingValue> nettype(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
-	List<RankingValue> browser(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
-	List<RankingValue> system(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
-	List<RankingValue> appname(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
-	List<RankingValue> resolution(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
-	List<RankingValue> depth(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
-	List<RankingValue> lang(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
-	List<RankingValue> country(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
-	List<RankingValue> province(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
-	List<RankingValue> city(int idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception;
-
+	Visit findById(Object id) throws Exception;
 	/**
-	 * 统计 idsite网站 在 start-end 的 总 Visit
-	 *
-	 * @param idsite 网站ID
-	 * @param start 开始时间
-	 * @param end 结束时间
-	 * @return 统计值
+	 * 获取全部数据
+	 * @return 全部所有数据
 	 */
-	Long countVisit(int idsite, Date start, Date end) throws Exception;
-
+	List<Visit> findAll() throws Exception;
 	/**
-	 * 统计 idsite网站 在 start-end 的 总 用户（排重）
-	 *
-	 * @param idsite 网站ID
-	 * @param start 开始时间
-	 * @param end 结束时间
-	 * @return 统计值
+	 * 分页查询数据
+	 * @param limit 分页最大值
+	 * @param start 开始编号
+	 * @return 分页列表数据
 	 */
-	Long countUsers(int idsite, Date start, Date end) throws Exception;
+	List<Visit> findByPage(int limit, int start) throws Exception;
+	
 
-	/**
-	 * 判断是否已经存在  访问者 idvtor
-	 *
-	 * @param idsite 网站ID
-	 * @param idvtor 访问者ID
-	 * @return 存在true
-	 */
-	boolean existVisitor(int idsite, String idvtor) throws Exception;
 }

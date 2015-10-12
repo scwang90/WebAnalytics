@@ -1,13 +1,17 @@
 package com.simpletech.webanalytics.service.impl;
 
+import com.simpletech.webanalytics.dao.TrackerDao;
 import com.simpletech.webanalytics.model.entity.JsDetect;
 import com.simpletech.webanalytics.model.entity.JsEvent;
 import com.simpletech.webanalytics.model.*;
 import com.simpletech.webanalytics.service.*;
+import com.simpletech.webanalytics.util.AfStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * JS探针 接收服务
@@ -17,64 +21,74 @@ import java.util.Date;
 public class TrackerServiceImpl implements TrackerService{
 
     @Autowired
-    SiteService siteService;
-    @Autowired
-    EventService eventService;
-    @Autowired
-    VisitService visitService;
-    @Autowired
-    TitleService titleService;
-    @Autowired
-    UrlService urlService;
-    @Autowired
-    ActionService actionService;
+    TrackerDao dao;
 
-    public void trackerPageView(int idsite, JsDetect detect) throws Exception{
-        Site site = siteService.findById(idsite);
+    public void trackerPageView(int siteId, JsDetect detect) throws Exception{
+        Site site = dao.findSiteById(siteId);
         if (site != null){
-            Url url = urlService.getUrl(idsite, detect.getUrl());
-            Title title = titleService.getTitle(idsite, detect.getTitle());
-            Visit visit = visitService.getVisitHalfHour(idsite, detect, url, title);
+            String idsubsite = getIdSubSite(site,detect.getUrl());
+
+            Url url = dao.getUrl(siteId, idsubsite, detect.getUrl());
+            Title title = dao.getTitle(siteId, idsubsite, detect.getTitle());
+            Visit visit = dao.getVisitHalfHour(siteId, idsubsite, detect, url, title);
             visit.setIdurlExit(url.getId());
             visit.setIdtitleExit(title.getId());
             visit.setCountVisits(visit.getCountVisits() + 1);
-            visitService.update(visit);
+            dao.updateVisit(idsubsite, visit);
             Action action = new Action();
-            action.setIdsite(idsite);
+            action.setIdsite(siteId);
             action.setIdvisit(visit.getId());
             action.setServerTime(new Date());
             action.setIdurl(url.getId());
             action.setIdtitle(title.getId());
             action.setTimeSpent(detect.getGtms());
             action.setIdvisitor(detect.getIdvtor());
-            actionService.insert(action);
+            dao.insertAction(idsubsite, action);
         }
     }
 
     @Override
-    public void trackerEvent(int idsite, JsEvent event) throws Exception {
-        Site site = siteService.findById(idsite);
+    public void trackerEvent(int siteId, JsEvent event) throws Exception {
+        Site site = dao.findSiteById(siteId);
         if (site != null){
-            Url url = urlService.getUrl(idsite, event.getUrl());
-            Title title = titleService.getTitle(idsite, event.getTitle());
-            Visit visit = visitService.getVisitHalfHour(idsite, event, url, title);
+            String idsubsite = getIdSubSite(site,event.getUrl());
+
+            Url url = dao.getUrl(siteId, idsubsite, event.getUrl());
+            Title title = dao.getTitle(siteId, idsubsite, event.getTitle());
+            Visit visit = dao.getVisitHalfHour(siteId, idsubsite, event, url, title);
             if (visit.getCountVisits() == 0){
                 visit.setIdurlExit(url.getId());
                 visit.setIdtitleExit(title.getId());
                 visit.setCountVisits(visit.getCountVisits() + 1);
                 Action action = new Action();
-                action.setIdsite(idsite);
+                action.setIdsite(siteId);
                 action.setIdvisit(visit.getId());
                 action.setServerTime(new Date());
                 action.setIdurl(url.getId());
                 action.setIdtitle(title.getId());
                 action.setTimeSpent(0);
                 action.setIdvisitor(event.getIdvtor());
-                actionService.insert(action);
+                dao.insertAction(idsubsite, action);
             }
-            visit.setCountEvents(visit.getCountEvents()+1);
-            visitService.update(visit);
-            eventService.trackerEvent(site,event);
+            visit.setCountEvents(visit.getCountEvents() + 1);
+            dao.updateVisit(idsubsite, visit);
+            dao.insertEvent(idsubsite, event.buildEvent(site.getId()));
         }
+    }
+
+    private String getIdSubSite(Site site, String url) {
+        String idsubsite = "";
+        if (AfStringUtil.isNotEmpty(site.getRegex()) && url != null) {
+            Pattern pattern = Pattern.compile(site.getRegex(), Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(url);
+            if (matcher.find()) {
+                int index = 0;
+                while ((idsubsite == null || idsubsite.trim().length() == 0) && index++ < matcher.groupCount()) {
+                    idsubsite = matcher.group(index);
+                }
+                idsubsite = (idsubsite == null) ? "" : idsubsite;
+            }
+        }
+        return idsubsite;
     }
 }

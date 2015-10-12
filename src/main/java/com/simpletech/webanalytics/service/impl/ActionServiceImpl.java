@@ -1,6 +1,5 @@
 package com.simpletech.webanalytics.service.impl;
 
-
 import com.simpletech.webanalytics.dao.ActionDao;
 import com.simpletech.webanalytics.model.Action;
 import com.simpletech.webanalytics.model.base.ModelBase;
@@ -15,7 +14,7 @@ import java.util.List;
 /**
  * 数据库表t_action的Service接实现
  * @author 树朾
- * @date 2015-09-21 17:03:53 中国标准时间
+ * @date 2015-10-12 15:00:31 中国标准时间
  */
 @Service
 public class ActionServiceImpl extends BaseServiceImpl<Action> implements ActionService{
@@ -25,14 +24,15 @@ public class ActionServiceImpl extends BaseServiceImpl<Action> implements Action
 	
 	@Override
 	public int insert(Action model) throws Exception{
-		// TODO Auto-generated method stub
+		if (ModelBase.class.isInstance(model)) {
+			ModelBase.class.cast(model).check();
+		}
 		checkNullID(model);
 		return dao.insert(model);
 	}
 	
 	@Override
 	public int update(Action model) throws Exception {
-		// TODO Auto-generated method stub
 		Action old = findById(getModelID(model));
 		if (old == null) {
 			throw new ServiceException("请求更新记录不存在或已经被删除！");
@@ -43,43 +43,36 @@ public class ActionServiceImpl extends BaseServiceImpl<Action> implements Action
 
 	@Override
 	public int delete(Object id) throws Exception {
-		// TODO Auto-generated method stub
 		return dao.delete(id);
 	}
 
 	@Override
 	public Action findById(Object id) throws Exception{
-		// TODO Auto-generated method stub
 		return dao.findById(id);
 	}
 
 	@Override
 	public List<Action> findAll() throws Exception{
-		// TODO Auto-generated method stub
 		return dao.findAll();
 	}
 
 	@Override
 	public int delete(String id) throws Exception{
-		// TODO Auto-generated method stub
 		return dao.delete(id);
 	}
 
 	@Override
 	public List<Action> findByPage(int limit, int start) throws Exception {
-		// TODO Auto-generated method stub
 		return dao.findByPage(limit,start);
 	}
 
 	@Override
 	public Action findById(String id) throws Exception {
-		// TODO Auto-generated method stub
 		return dao.findById(id);
 	}
 	
 	@Override
 	public Page<Action> listByPage(int pageSize, int pageNo) throws Exception{
-		// TODO Auto-generated method stub
 		int limit = pageSize; 
 		int start = pageNo*pageSize;
 		int totalRecord = dao.countAll();
@@ -92,7 +85,6 @@ public class ActionServiceImpl extends BaseServiceImpl<Action> implements Action
 
 	@Override
 	public int countAll() throws Exception {
-		// TODO Auto-generated method stub
 		return dao.countAll();
 	}
 }

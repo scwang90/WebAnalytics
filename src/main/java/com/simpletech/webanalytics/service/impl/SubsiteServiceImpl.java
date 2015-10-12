@@ -1,9 +1,9 @@
 package com.simpletech.webanalytics.service.impl;
 
-import com.simpletech.webanalytics.dao.UrlDao;
-import com.simpletech.webanalytics.model.Url;
+import com.simpletech.webanalytics.dao.SubsiteDao;
+import com.simpletech.webanalytics.model.Subsite;
 import com.simpletech.webanalytics.model.base.ModelBase;
-import com.simpletech.webanalytics.service.UrlService;
+import com.simpletech.webanalytics.service.SubsiteService;
 import com.simpletech.webanalytics.util.Page;
 import com.simpletech.webanalytics.util.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +12,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 数据库表t_url的Service接实现
+ * 数据库表t_subsite的Service接实现
  * @author 树朾
  * @date 2015-10-12 15:00:31 中国标准时间
  */
 @Service
-public class UrlServiceImpl extends BaseServiceImpl<Url> implements UrlService{
+public class SubsiteServiceImpl extends BaseServiceImpl<Subsite> implements SubsiteService{
 
 	@Autowired
-	UrlDao dao;
+	SubsiteDao dao;
 	
 	@Override
-	public int insert(Url model) throws Exception{
+	public int insert(Subsite model) throws Exception{
 		if (ModelBase.class.isInstance(model)) {
 			ModelBase.class.cast(model).check();
 		}
@@ -32,8 +32,8 @@ public class UrlServiceImpl extends BaseServiceImpl<Url> implements UrlService{
 	}
 	
 	@Override
-	public int update(Url model) throws Exception {
-		Url old = findById(getModelID(model));
+	public int update(Subsite model) throws Exception {
+		Subsite old = findById(getModelID(model));
 		if (old == null) {
 			throw new ServiceException("请求更新记录不存在或已经被删除！");
 		}
@@ -47,12 +47,12 @@ public class UrlServiceImpl extends BaseServiceImpl<Url> implements UrlService{
 	}
 
 	@Override
-	public Url findById(Object id) throws Exception{
+	public Subsite findById(Object id) throws Exception{
 		return dao.findById(id);
 	}
 
 	@Override
-	public List<Url> findAll() throws Exception{
+	public List<Subsite> findAll() throws Exception{
 		return dao.findAll();
 	}
 
@@ -62,25 +62,25 @@ public class UrlServiceImpl extends BaseServiceImpl<Url> implements UrlService{
 	}
 
 	@Override
-	public List<Url> findByPage(int limit, int start) throws Exception {
+	public List<Subsite> findByPage(int limit, int start) throws Exception {
 		return dao.findByPage(limit,start);
 	}
 
 	@Override
-	public Url findById(String id) throws Exception {
+	public Subsite findById(String id) throws Exception {
 		return dao.findById(id);
 	}
 	
 	@Override
-	public Page<Url> listByPage(int pageSize, int pageNo) throws Exception{
+	public Page<Subsite> listByPage(int pageSize, int pageNo) throws Exception{
 		int limit = pageSize; 
 		int start = pageNo*pageSize;
 		int totalRecord = dao.countAll();
 		int totalPage = 1 + (totalRecord - 1) / pageSize;
 		
-		List<Url> list = dao.findByPage(limit, start);
+		List<Subsite> list = dao.findByPage(limit, start);
 		
-		return new Page<Url>(pageNo,pageSize,totalPage,totalRecord,list){};
+		return new Page<Subsite>(pageNo,pageSize,totalPage,totalRecord,list){};
 	}
 
 	@Override

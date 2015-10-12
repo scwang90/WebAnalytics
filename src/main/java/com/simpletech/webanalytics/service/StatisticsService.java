@@ -25,7 +25,7 @@ public interface StatisticsService {
      * @param end    结束时间
      * @return event 统计数据
      */
-    List<VisitValue> visit(int idsite, Period period, Date start, Date end) throws Exception;
+    List<VisitValue> visit(String idsite, Period period, Date start, Date end) throws Exception;
 
     /**
      * event 统计数据获取API
@@ -38,7 +38,7 @@ public interface StatisticsService {
      * @param skip   分页起始
      * @return event统计数据
      */
-    List<EventNameValue> event(int idsite, Date start, Date end, int limit, int skip) throws Exception;
+    List<EventNameValue> event(String idsite, Date start, Date end, int limit, int skip) throws Exception;
 
     /**
      * 指定 名称name event 统计数据获取API
@@ -53,42 +53,42 @@ public interface StatisticsService {
      * @param period 截断周期
      * @return event统计数据
      */
-    List<EventPeriodValue> event(int idsite, String name, Period period, Date start, Date end, int limit, int skip) throws Exception;
+    List<EventPeriodValue> event(String idsite, String name, Period period, Date start, Date end, int limit, int skip) throws Exception;
 
     /**
      * 页面标题排行
      *
-     * @param siteId 网站ID
+     * @param idsite 网站ID
      * @param start  开始时间
      * @param end    结束时间
      * @param limit  分页限制
      * @param skip   分页起始
      * @return 标题排行
      */
-    List<PageValue> pagetitle(int siteId, Date start, Date end, int limit, int skip) throws Exception;
+    List<PageValue> pagetitle(String idsite, Date start, Date end, int limit, int skip) throws Exception;
 
     /**
      * 页面链接排行
      *
-     * @param siteId 网站ID
+     * @param idsite 网站ID
      * @param start  开始时间
      * @param end    结束时间
      * @param limit  分页限制
      * @param skip   分页起始
      * @return 链接排行
      */
-    List<PageValue> pageurl(int siteId, Date start, Date end, int limit, int skip) throws Exception;
+    List<PageValue> pageurl(String idsite, Date start, Date end, int limit, int skip) throws Exception;
 
     /**
      * 新老用户
      *
-     * @param siteId 网站ID
+     * @param idsite 网站ID
      * @param period 时段周期 [时|日|周|月]
      * @param start  开始时间
      * @param end    结束时间
      * @return 新老用户
      */
-    List<VisitorValue> visitor(int siteId, Period period, Date start, Date end) throws Exception;
+    List<VisitorValue> visitor(String idsite, Period period, Date start, Date end) throws Exception;
 
     /**
      * 数据排行
@@ -96,12 +96,12 @@ public interface StatisticsService {
      *
      * @param ranking  排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city
      * @param ranktype 排序类型 按 visit|uv|ip|pv
-     * @param siteId   网站ID
+     * @param idsite   网站ID
      * @param start    开始时间
      * @param end      结束时间
      * @param limit    分页限制
      * @param skip     分页起始
      * @return 排行数据
      */
-    List<RankingValue> ranking(int siteId, Ranking ranking, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception;
+    List<RankingValue> ranking(String idsite, Ranking ranking, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception;
 }

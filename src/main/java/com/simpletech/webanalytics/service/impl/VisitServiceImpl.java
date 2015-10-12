@@ -1,53 +1,90 @@
 package com.simpletech.webanalytics.service.impl;
 
-
-import com.simpletech.webanalytics.model.entity.JsDetect;
-import com.simpletech.webanalytics.model.Title;
-import com.simpletech.webanalytics.model.Url;
+import com.simpletech.webanalytics.dao.VisitDao;
+import com.simpletech.webanalytics.model.Visit;
+import com.simpletech.webanalytics.model.base.ModelBase;
+import com.simpletech.webanalytics.service.VisitService;
+import com.simpletech.webanalytics.util.Page;
+import com.simpletech.webanalytics.util.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.simpletech.webanalytics.dao.VisitDao;
-import com.simpletech.webanalytics.model.Visit;
-import com.simpletech.webanalytics.service.VisitService;
+import java.util.List;
 
 /**
  * 数据库表t_visit的Service接实现
  * @author 树朾
- * @date 2015-09-21 17:03:53 中国标准时间
+ * @date 2015-10-12 15:00:31 中国标准时间
  */
 @Service
 public class VisitServiceImpl extends BaseServiceImpl<Visit> implements VisitService{
 
 	@Autowired
 	VisitDao dao;
-
+	
 	@Override
-	public Visit getVisitHalfHour(int idsite, JsDetect detect, Url url, Title title) throws Exception {
-		Visit visit = dao.getVisitHalfHour(idsite, detect.getIdvtor());
-		if (visit == null){
-			visit = detect.build(idsite);
-			visit.setIdurlEntry(url.getId());
-			visit.setIdtitleEntry(title.getId());
-			visit.setIdurlExit(url.getId());
-			visit.setIdtitleExit(title.getId());
-			visit.setNewUser(!dao.existVisitor(idsite, detect.getIdvtor()));
-			dao.insert(visit);
+	public int insert(Visit model) throws Exception{
+		if (ModelBase.class.isInstance(model)) {
+			ModelBase.class.cast(model).check();
 		}
-		return visit;
+		checkNullID(model);
+		return dao.insert(model);
+	}
+	
+	@Override
+	public int update(Visit model) throws Exception {
+		Visit old = findById(getModelID(model));
+		if (old == null) {
+			throw new ServiceException("请求更新记录不存在或已经被删除！");
+		}
+		model = checkNullField(old, model);
+		return dao.update(model);
 	}
 
 	@Override
-	public Visit getVisit(int idsite, JsDetect detect, Url url, Title title) throws Exception {
-		Visit visit = dao.getVisit(idsite, detect.getIdvtor());
-		if (visit == null){
-			visit = detect.build(idsite);
-			visit.setIdurlEntry(url.getId());
-			visit.setIdtitleEntry(title.getId());
-			visit.setIdurlExit(url.getId());
-			visit.setIdtitleExit(title.getId());
-			dao.insert(visit);
-		}
-		return visit;
+	public int delete(Object id) throws Exception {
+		return dao.delete(id);
+	}
+
+	@Override
+	public Visit findById(Object id) throws Exception{
+		return dao.findById(id);
+	}
+
+	@Override
+	public List<Visit> findAll() throws Exception{
+		return dao.findAll();
+	}
+
+	@Override
+	public int delete(String id) throws Exception{
+		return dao.delete(id);
+	}
+
+	@Override
+	public List<Visit> findByPage(int limit, int start) throws Exception {
+		return dao.findByPage(limit,start);
+	}
+
+	@Override
+	public Visit findById(String id) throws Exception {
+		return dao.findById(id);
+	}
+	
+	@Override
+	public Page<Visit> listByPage(int pageSize, int pageNo) throws Exception{
+		int limit = pageSize; 
+		int start = pageNo*pageSize;
+		int totalRecord = dao.countAll();
+		int totalPage = 1 + (totalRecord - 1) / pageSize;
+		
+		List<Visit> list = dao.findByPage(limit, start);
+		
+		return new Page<Visit>(pageNo,pageSize,totalPage,totalRecord,list){};
+	}
+
+	@Override
+	public int countAll() throws Exception {
+		return dao.countAll();
 	}
 }

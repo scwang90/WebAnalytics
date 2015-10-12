@@ -1,6 +1,5 @@
 package com.simpletech.webanalytics.controller;
 
-import com.simpletech.webanalytics.model.constant.Norm;
 import com.simpletech.webanalytics.model.constant.Period;
 import com.simpletech.webanalytics.model.constant.Ranking;
 import com.simpletech.webanalytics.model.constant.RankingType;
@@ -9,7 +8,7 @@ import com.simpletech.webanalytics.model.entity.VisitValue;
 import com.simpletech.webanalytics.model.entity.VisitorValue;
 import com.simpletech.webanalytics.service.StatisticsService;
 import com.simpletech.webanalytics.util.AfReflecter;
-import com.simpletech.webanalytics.util.ServiceException;
+import com.simpletech.webanalytics.util.AfStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -52,10 +51,11 @@ public class StatisticsController {
      * @return 排行数据
      */
     @RequestMapping("ranking/site/{siteId:\\d+}/{ranking:brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city}/{ranktype:vt|uv|ip|pv}/{limit:\\d+}/{skip:\\d+}")
-    public Object ranking(@PathVariable int siteId, @PathVariable Ranking ranking, @PathVariable RankingType ranktype, @PathVariable int limit, @PathVariable int skip, Integer offset, Period span, Date start, Date end) throws Exception {
+    public Object ranking(@PathVariable int siteId, @PathVariable Ranking ranking, @PathVariable RankingType ranktype, @PathVariable int limit, @PathVariable int skip, String subsite, Integer offset, Period span, Date start, Date end) throws Exception {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
-        return service.ranking(siteId, ranking, ranktype, start, end, limit, skip);
+        String idsite = getIdSite(siteId, subsite);
+        return service.ranking(idsite, ranking, ranktype, start, end, limit, skip);
     }
 
     /**
@@ -70,10 +70,11 @@ public class StatisticsController {
      * @return 新老用户
      */
     @RequestMapping("visitor/site/{siteId:\\d+}/{period:hour|day|week|month}")
-    public Object visitor(@PathVariable int siteId, @PathVariable Period period, Integer offset, Period span, Date start, Date end) throws Exception {
+    public Object visitor(@PathVariable int siteId, @PathVariable Period period, String subsite, Integer offset, Period span, Date start, Date end) throws Exception {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
-        List<VisitorValue> list = service.visitor(siteId, period, start, end);
+        String idsite = getIdSite(siteId, subsite);
+        List<VisitorValue> list = service.visitor(idsite, period, start, end);
         list = fulldata(list, period.getFormat(), period.getField(), start, end, VisitorValue.class);
         return list;
     }
@@ -91,10 +92,11 @@ public class StatisticsController {
      * @return 标题排行
      */
     @RequestMapping("pagetitle/site/{siteId:\\d+}/{limit:\\d+}/{skip:\\d+}")
-    public Object pagetitle(@PathVariable int siteId, @PathVariable int limit, @PathVariable int skip, Integer offset, Period span, Date start, Date end) throws Exception {
+    public Object pagetitle(@PathVariable int siteId, @PathVariable int limit, @PathVariable int skip, String subsite, Integer offset, Period span, Date start, Date end) throws Exception {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
-        return service.pagetitle(siteId, start, end, limit, skip);
+        String idsite = getIdSite(siteId, subsite);
+        return service.pagetitle(idsite, start, end, limit, skip);
     }
 
 
@@ -111,10 +113,11 @@ public class StatisticsController {
      * @return 链接排行
      */
     @RequestMapping("pageurl/site/{siteId:\\d+}/{limit:\\d+}/{skip:\\d+}")
-    public Object pageurl(@PathVariable int siteId, @PathVariable int limit, @PathVariable int skip, Integer offset, Period span, Date start, Date end) throws Exception {
+    public Object pageurl(@PathVariable int siteId, @PathVariable int limit, @PathVariable int skip, String subsite, Integer offset, Period span, Date start, Date end) throws Exception {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
-        return service.pageurl(siteId, start, end, limit, skip);
+        String idsite = getIdSite(siteId, subsite);
+        return service.pageurl(idsite, start, end, limit, skip);
     }
 
     /**
@@ -131,10 +134,11 @@ public class StatisticsController {
      * @return PV统计数据 {status:[true|false],data:[{time,date,num,rn,user,ru},...]}
      */
     @RequestMapping("event/site/{siteId:\\d+}/{name}/{period:hour|day|week|month}/{limit:\\d+}/{skip:\\d+}")
-    public Object event(@PathVariable int siteId, @PathVariable String name, @PathVariable Period period, @PathVariable int limit, @PathVariable int skip, Integer offset, Period span, Date start, Date end) throws Exception {
+    public Object event(@PathVariable int siteId, @PathVariable String name, @PathVariable Period period, @PathVariable int limit, @PathVariable int skip, String subsite, Integer offset, Period span, Date start, Date end) throws Exception {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
-        return service.event(siteId, name, period, start, end, limit, skip);
+        String idsite = getIdSite(siteId, subsite);
+        return service.event(idsite, name, period, start, end, limit, skip);
     }
 
 
@@ -151,10 +155,11 @@ public class StatisticsController {
      * @return PV统计数据 {status:[true|false],data:[{name,num,rn,user,ru},...]}
      */
     @RequestMapping("event/site/{siteId:\\d+}/{limit:\\d+}/{skip:\\d+}")
-    public Object event(@PathVariable int siteId, @PathVariable int limit, @PathVariable int skip, Integer offset, Period span, Date start, Date end) throws Exception {
+    public Object event(@PathVariable int siteId, @PathVariable int limit, @PathVariable int skip, String subsite, Integer offset, Period span, Date start, Date end) throws Exception {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
-        return service.event(siteId, start, end, limit, skip);
+        String idsite = getIdSite(siteId, subsite);
+        return service.event(idsite, start, end, limit, skip);
     }
 
     /**
@@ -169,10 +174,11 @@ public class StatisticsController {
      * @return event统计数据
      */
     @RequestMapping("visit/site/{siteId:\\d+}/{period:hour|day|week|month}")
-    public Object visit(@PathVariable int siteId, @PathVariable Period period, Integer offset, Period span, Date start, Date end) throws Exception {
+    public Object visit(@PathVariable int siteId, @PathVariable Period period, String subsite, Integer offset, Period span, Date start, Date end) throws Exception {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
-        List<VisitValue> list = service.visit(siteId, period, start, end);
+        String idsite = getIdSite(siteId, subsite);
+        List<VisitValue> list = service.visit(idsite, period, start, end);
         list = fulldata(list, period.getFormat(), period.getField(), start, end, VisitValue.class);
         return list;
     }
@@ -216,7 +222,7 @@ public class StatisticsController {
             return calendar.getTime();
         }
         if (end == null) {
-            return timeEnd(new Date(),Period.year,1000);
+            return timeEnd(new Date(), Period.year, 1000);
         }
         return end;
     }
@@ -267,4 +273,17 @@ public class StatisticsController {
         return map;
     }
 
+    /**
+     * 把 int siteId 转成 string idsite
+     * @param siteId 网站ID
+     * @param subsite 子项目
+     * @return idsite
+     */
+    private String getIdSite(int siteId, String subsite) {
+        if (AfStringUtil.isNotEmpty(subsite)){
+            String format = "%d AND idsubsite='%s'";
+            return String.format(format,siteId, subsite);
+        }
+        return String.valueOf(siteId);
+    }
 }

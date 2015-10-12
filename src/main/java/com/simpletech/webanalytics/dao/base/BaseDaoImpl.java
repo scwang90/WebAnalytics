@@ -38,16 +38,18 @@ public class BaseDaoImpl<T> extends BaseDaoMybatisMYSQLImpl<T> implements BaseDa
 
 	/**
 	 * 检查ID字段是否为空，否则设置一个新ID
-	 * @param model
+	 * @param model 数据model
 	 * @throws Exception
 	 */
 	protected void checkNullID(T model) throws Exception {
 		Class<?> clazz = model.getClass();
 		Field field = Interpreter.getIdField(clazz);
-		field.setAccessible(true);
-		Object id = field.get(model);
-		if(id == null || id.toString().trim().length() == 0){
-			field.set(model, UUID.randomUUID().toString());
+		if (field != null) {
+			field.setAccessible(true);
+			Object id = field.get(model);
+			if(id == null || id.toString().trim().length() == 0){
+				field.set(model, UUID.randomUUID().toString());
+			}
 		}
 	}
 	

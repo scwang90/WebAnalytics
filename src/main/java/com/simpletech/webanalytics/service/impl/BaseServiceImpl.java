@@ -18,7 +18,7 @@ import java.util.UUID;
  * 通用Service层实现基类
  * @param <T>
  * @author 树朾
- * @date 2015-09-21 17:03:53 中国标准时间
+ * @date 2015-10-12 15:00:31 中国标准时间
  */
 public class BaseServiceImpl<T> implements BaseService<T>{
 
@@ -28,13 +28,11 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	protected Class<T> clazz;
 	
 	public BaseServiceImpl() {
-		// TODO Auto-generated constructor stub
 		this.clazz = AfReflecter.getActualTypeArgument(this, BaseServiceImpl.class, 0);
 	}
 	
 	@Override
 	public int insert(T model) throws Exception{
-		// TODO Auto-generated method stub
 		if (model instanceof ModelBase) {
 			((ModelBase) model).check();
 		}
@@ -44,7 +42,6 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	
 	@Override
 	public int update(T model) throws Exception {
-		// TODO Auto-generated method stub
 		T old = findById(getModelID(model));
 		if (old == null) {
 			throw new ServiceException("请求更新记录不存在或已经被删除！");
@@ -55,43 +52,36 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 
 	@Override
 	public int delete(Object id) throws Exception {
-		// TODO Auto-generated method stub
 		return baseDao.delete(id);
 	}
 
 	@Override
 	public T findById(Object id) throws Exception{
-		// TODO Auto-generated method stub
 		return baseDao.findById(id);
 	}
 
 	@Override
 	public List<T> findAll() throws Exception{
-		// TODO Auto-generated method stub
 		return baseDao.findAll();
 	}
 
 	@Override
 	public int delete(String id) throws Exception{
-		// TODO Auto-generated method stub
 		return baseDao.delete(id);
 	}
 
 	@Override
 	public List<T> findByPage(int limit, int start) throws Exception {
-		// TODO Auto-generated method stub
 		return baseDao.findByPage(limit,start);
 	}
 
 	@Override
 	public T findById(String id) throws Exception {
-		// TODO Auto-generated method stub
 		return baseDao.findById(id);
 	}
 	
 	@Override
 	public Page<T> listByPage(int pageSize, int pageNo) throws Exception{
-		// TODO Auto-generated method stub
 		int limit = pageSize; 
 		int start = pageNo*pageSize;
 		int totalRecord = baseDao.countAll();
@@ -104,31 +94,30 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 
 	@Override
 	public int countAll() throws Exception {
-		// TODO Auto-generated method stub
 		return baseDao.countAll();
 	}
 	/**
 	 * 检查ID字段是否为空，否则设置一个新ID
-	 * @param model
-	 * @throws Exception
+	 * @param model 数据model
 	 */
 	protected void checkNullID(T model) throws Exception {
 		Class<?> clazz = model.getClass();
 		Field field = Interpreter.getIdField(clazz);
-		field.setAccessible(true);
-		Object id = field.get(model);
-		if(id == null || id.toString().trim().length() == 0){
-			field.set(model, UUID.randomUUID().toString());
+		if (field != null) {
+			field.setAccessible(true);
+			Object id = field.get(model);
+			if(id == null || id.toString().trim().length() == 0){
+				field.set(model, UUID.randomUUID().toString());
+			}
 		}
 	}
 	/**
 	 * 检测非空字段
-	 * @param old
-	 * @param model
+	 * @param old 老数据
+	 * @param model 新数据
 	 */
 	@SuppressWarnings("unchecked")
 	protected T checkNullField(T old, T model) {
-		// TODO Auto-generated method stub
 		try {
 			Class<?> clazz = model.getClass();
 			old = (T) JacksonUtil.toObject(JacksonUtil.toJson(old), clazz);
@@ -140,22 +129,21 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
-			
+
 		}
 		return old;
 	}
 	/**
 	 * 获取ID字段
-	 * @param model
-	 * @throws Exception 
-	 * @throws IllegalArgumentException 
-	 * @throws Exception
+	 * @param model 数据model
 	 */
 	protected Object getModelID(T model) throws Exception {
 		Class<?> clazz = model.getClass();
 		Field field = Interpreter.getIdField(clazz);
-		field.setAccessible(true);
-		return field.get(model);
+		if (field != null) {
+			field.setAccessible(true);
+			return field.get(model);
+		}
+		return null;
 	}
 }

@@ -96,7 +96,7 @@ public class JsDetect {
         this.model = useragent.getBrand().getModel();
         this.browser = useragent.getBrowser().getAcronym();
         this.version = useragent.getBrowser().getVersion();
-        this.platform = useragent.getDevice().getAcronym();
+        this.platform = useragent.getOperateSystem().getVersion();
         this.operateSystem = useragent.getOperateSystem().getAcronym();
         this.engine = useragent.getBrowserEngine().getAcronym();
         this.engineVersion = useragent.getBrowserEngine().getVersion();
@@ -129,8 +129,8 @@ public class JsDetect {
         visit.setVisitServertime(new Date());
         visit.setVisitLocaltime(new Date(this.getVisits()));
         visit.setNewUser(this.isIdn());
-        visit.setOperateSystem(this.getPlatform());
-        visit.setOperateVersion(this.getOperateSystem());
+        visit.setOperateSystem(this.getOperateSystem());
+        visit.setOperateVersion(this.getPlatform());
         visit.setScreenDepth(this.getColor());
         visit.setScreenResolution(this.getScreen());
         visit.setUrlReferer(this.getRefer());
