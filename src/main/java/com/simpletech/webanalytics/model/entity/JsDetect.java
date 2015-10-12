@@ -72,6 +72,7 @@ public class JsDetect {
     private String netType;         //网络类型
     private String endType;         //终端类型
     private String useragent;       //源 useragent
+    private String appname;         //App 源
 
     /**
      * 检测是否满足必须参数
@@ -94,6 +95,7 @@ public class JsDetect {
 
         this.brand = useragent.getBrand().getAcronym();
         this.model = useragent.getBrand().getModel();
+        this.appname = useragent.getApplication().getAcronym();
         this.browser = useragent.getBrowser().getAcronym();
         this.version = useragent.getBrowser().getVersion();
         this.platform = useragent.getOperateSystem().getVersion();
@@ -143,6 +145,7 @@ public class JsDetect {
         visit.setEndType(this.getEndType());
         visit.setNetType(this.getNetType());
         visit.setUseragent(this.getUseragent());
+        visit.setAppName(this.getAppname());
         visit.setCountEvents(0);
         visit.setVisitTotaltime(0);
         visit.setIdurl(null);
@@ -412,5 +415,13 @@ public class JsDetect {
 
     public void setUseragent(String useragent) {
         this.useragent = useragent;
+    }
+
+    public String getAppname() {
+        return appname;
+    }
+
+    public void setAppname(String appname) {
+        this.appname = appname;
     }
 }
