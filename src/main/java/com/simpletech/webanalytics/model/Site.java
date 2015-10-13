@@ -1,5 +1,6 @@
 package com.simpletech.webanalytics.model;
 
+import com.simpletech.webanalytics.annotations.Must;
 import com.simpletech.webanalytics.annotations.dbmodel.Column;
 import com.simpletech.webanalytics.annotations.dbmodel.Id;
 import com.simpletech.webanalytics.annotations.dbmodel.Table;
@@ -31,10 +32,12 @@ public class Site extends ModelBase{
 	/**
 	 * 网站备注名称
 	 */
+	@Must("网站备注名称")
 	private String name;
 	/**
 	 * 网站域名
 	 */
+	@Must("网站域名")
 	private String domain;
 	/**
 	 * 子站正则表达式

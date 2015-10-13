@@ -1,11 +1,13 @@
 package com.simpletech.webanalytics.model.base;
 
 import com.simpletech.webanalytics.annotations.Must;
+import com.simpletech.webanalytics.annotations.dbmodel.interpreter.Interpreter;
 import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.AfStringUtil;
 import com.simpletech.webanalytics.util.ServiceException;
 
 import java.lang.reflect.Field;
+import java.util.UUID;
 
 /**
  * model 基类
@@ -17,12 +19,39 @@ public class ModelBase {
      * 检测是否满足必须参数
      */
     public void check() throws Exception{
-        Field[] fields = AfReflecter.getFieldAnnotation(this.getClass(), Must.class);
+        check(this);
+    }
+
+    public static void check(Object model) throws Exception{
+        Field[] fields = AfReflecter.getFieldAnnotation(model.getClass(), Must.class);
         for (Field field:fields){
             String name = field.getName() + ":" + field.getAnnotation(Must.class).value();
-            Object val = AfReflecter.getMemberNoException(this, field.getName());
+            Object val = AfReflecter.getMemberNoException(model, field.getName());
             if (val == null || AfStringUtil.isEmpty(val.toString())){
                 throw new ServiceException("缺少参数["+name+"]");
+            }
+        }
+    }
+
+    /**
+     * 检查ID字段是否为空，否则设置一个新ID
+     */
+    public void fillNullID() throws Exception {
+        fillNullID(this);
+    }
+
+    /**
+     * 检查ID字段是否为空，否则设置一个新ID
+     * @param model 数据model
+     */
+    public static void fillNullID(Object model) throws Exception {
+        Class<?> clazz = model.getClass();
+        Field field = Interpreter.getIdField(clazz);
+        if (field != null && field.getType().equals(String.class)) {
+            field.setAccessible(true);
+            Object id = field.get(model);
+            if(id == null || id.toString().trim().length() == 0){
+                field.set(model, UUID.randomUUID().toString());
             }
         }
     }

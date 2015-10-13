@@ -23,10 +23,13 @@ public class TrackerServiceImpl implements TrackerService{
     @Autowired
     TrackerDao dao;
 
+
+
     public void trackerPageView(int siteId, JsDetect detect) throws Exception{
         Site site = dao.findSiteById(siteId);
         if (site != null){
             String idsubsite = getIdSubSite(site,detect.getUrl());
+            dao.getSubSite(siteId, idsubsite);
 
             Url url = dao.getUrl(siteId, idsubsite, detect.getUrl());
             Title title = dao.getTitle(siteId, idsubsite, detect.getTitle());
@@ -52,6 +55,7 @@ public class TrackerServiceImpl implements TrackerService{
         Site site = dao.findSiteById(siteId);
         if (site != null){
             String idsubsite = getIdSubSite(site,event.getUrl());
+            dao.getSubSite(siteId, idsubsite);
 
             Url url = dao.getUrl(siteId, idsubsite, event.getUrl());
             Title title = dao.getTitle(siteId, idsubsite, event.getTitle());
@@ -86,7 +90,7 @@ public class TrackerServiceImpl implements TrackerService{
                 while ((idsubsite == null || idsubsite.trim().length() == 0) && index++ < matcher.groupCount()) {
                     idsubsite = matcher.group(index);
                 }
-                idsubsite = (idsubsite == null) ? "" : idsubsite;
+                idsubsite = (AfStringUtil.isEmpty(idsubsite)) ? "" : idsubsite;
             }
         }
         return idsubsite;

@@ -108,7 +108,12 @@ public class StatisticsServiceImpl implements StatisticsService {
                 list = dao.visitorMonth(idsite, start, end);
                 break;
         }
+        //判断是否是主站
+        boolean isSubSite = !idsite.matches("\\d+");
         for (VisitorValue value : list) {
+            if (isSubSite){
+                value.setNv(value.getSubnv());
+            }
             value.setOv(value.getUv() - value.getNv());
             value.setNr(1f * value.getNv() / value.getUv());
             value.setOr(1f * value.getOv() / value.getUv());

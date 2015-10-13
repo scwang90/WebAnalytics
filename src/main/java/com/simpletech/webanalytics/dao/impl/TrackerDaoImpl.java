@@ -6,6 +6,7 @@ import com.simpletech.webanalytics.mapper.TrackerMapper;
 import com.simpletech.webanalytics.model.*;
 import com.simpletech.webanalytics.model.entity.JsDetect;
 import com.simpletech.webanalytics.util.AfReflecter;
+import com.simpletech.webanalytics.util.AfStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,7 +35,7 @@ public class TrackerDaoImpl implements TrackerDao {
             _url.setIdsite(siteId);
             _url.setUrl(url);
             _url.setHash(url.hashCode());
-            checkNullID(_url);
+            _url.fillNullID();
             _url.setIdsubsite(idsubsite);
             AfReflecter.setMemberNoException(_url, "createTime", new Date());
             AfReflecter.setMemberNoException(_url, "updateTime", new Date());
@@ -51,7 +52,7 @@ public class TrackerDaoImpl implements TrackerDao {
             _title.setIdsite(siteId);
             _title.setTitle(title);
             _title.setHash(title.hashCode());
-            checkNullID(_title);
+            _title.fillNullID();
             _title.setIdsubsite(idsubsite);
             AfReflecter.setMemberNoException(_title, "createTime", new Date());
             AfReflecter.setMemberNoException(_title, "updateTime", new Date());
@@ -60,7 +61,22 @@ public class TrackerDaoImpl implements TrackerDao {
         return _title;
     }
 
-//    @Override
+    @Override
+    public Subsite getSubSite(int siteId, String idsubsite) throws Exception {
+        Subsite subSite = mapper.getSubSite(siteId, idsubsite);
+        if (subSite == null && AfStringUtil.isNotEmpty(idsubsite)) {
+            subSite = new Subsite();
+            subSite.setIdsite(siteId);
+            subSite.setName(idsubsite);
+            subSite.fillNullID();
+            AfReflecter.setMemberNoException(subSite, "createTime", new Date());
+            AfReflecter.setMemberNoException(subSite, "updateTime", new Date());
+            mapper.insertSubSite(subSite);
+        }
+        return subSite;
+    }
+
+    //    @Override
 //    public Visit getVisit(int siteId, String idsubsite, JsDetect detect, Url url, Title title) throws Exception {
 //        Visit visit = mapper.getVisit(siteId, detect.getIdvtor());
 //        if (visit == null) {
@@ -69,7 +85,7 @@ public class TrackerDaoImpl implements TrackerDao {
 //            visit.setIdtitleEntry(title.getId());
 //            visit.setIdurlExit(url.getId());
 //            visit.setIdtitleExit(title.getId());
-//            checkNullID(visit);
+//            visit.fillNullID();
 //            visit.setIdsubsite(idsubsite);
 //            AfReflecter.setMemberNoException(visit, "createTime", new Date());
 //            AfReflecter.setMemberNoException(visit, "updateTime", new Date());
@@ -78,9 +94,23 @@ public class TrackerDaoImpl implements TrackerDao {
 //        return visit;
 //    }
 
+    /**
+     * 把 int siteId 转成 string idsite
+     * @param siteId 网站ID
+     * @param subsite 子项目
+     * @return idsite
+     */
+    private String getIdSite(int siteId, String subsite) {
+        if (AfStringUtil.isNotEmpty(subsite)){
+            String format = "%d AND idsubsite='%s'";
+            return String.format(format,siteId, subsite);
+        }
+        return String.valueOf(siteId);
+    }
+
     @Override
     public Visit getVisitHalfHour(int siteId, String idsubsite, JsDetect detect, Url url, Title title) throws Exception {
-        Visit visit = mapper.getVisitHalfHour(siteId, detect.getIdvtor());
+        Visit visit = mapper.getVisitHalfHour(getIdSite(siteId, idsubsite), detect.getIdvtor());
         if (visit == null) {
             visit = detect.build(siteId);
             visit.setIdurlEntry(url.getId());
@@ -88,7 +118,8 @@ public class TrackerDaoImpl implements TrackerDao {
             visit.setIdurlExit(url.getId());
             visit.setIdtitleExit(title.getId());
             visit.setNewUser(!mapper.existVisitor(siteId, detect.getIdvtor()));
-            checkNullID(visit);
+            visit.setNewSubUser(AfStringUtil.isEmpty(idsubsite)?visit.getNewUser():!mapper.existSubVisitor(siteId, idsubsite, detect.getIdvtor()));
+            visit.fillNullID();
             visit.setIdsubsite(idsubsite);
             AfReflecter.setMemberNoException(visit, "createTime", new Date());
             AfReflecter.setMemberNoException(visit, "updateTime", new Date());
@@ -111,7 +142,7 @@ public class TrackerDaoImpl implements TrackerDao {
 
     @Override
     public void insertAction(String idsubsite, Action action) throws Exception {
-        checkNullID(action);
+        action.fillNullID();
         action.setIdsubsite(idsubsite);
         AfReflecter.setMemberNoException(action, "createTime", new Date());
         AfReflecter.setMemberNoException(action, "updateTime", new Date());
@@ -120,28 +151,12 @@ public class TrackerDaoImpl implements TrackerDao {
 
     @Override
     public void insertEvent(String idsubsite, Event event) throws Exception {
-        checkNullID(event);
+        event.fillNullID();
         event.setIdsubsite(idsubsite);
         AfReflecter.setMemberNoException(event, "createTime", new Date());
         AfReflecter.setMemberNoException(event, "updateTime", new Date());
         mapper.insertEvent(event);
     }
 
-    /**
-     * 检查ID字段是否为空，否则设置一个新ID
-     * @param model
-     * @throws Exception
-     */
-    protected void checkNullID(Object model) throws Exception {
-        Class<?> clazz = model.getClass();
-        Field field = Interpreter.getIdField(clazz);
-        if (field != null) {
-            field.setAccessible(true);
-            Object id = field.get(model);
-            if(id == null || id.toString().trim().length() == 0){
-                field.set(model, UUID.randomUUID().toString());
-            }
-        }
-    }
 }
 

@@ -32,7 +32,7 @@ public class TeackerMapperTester {
 
     @Test
     public void getVisitHalfHour() throws Exception {
-        Object result = mapper.getVisitHalfHour(1, "idvtor");
+        Object result = mapper.getVisitHalfHour("1", "idvtor");
         System.out.println(JacksonUtil.toJson(result));
     }
 

@@ -22,14 +22,14 @@ public class ManagerControllerTester {
 
     @Test
     public void sitelist() throws Exception {
-        Object result = managerController.sitelist(100, 0);
+        Object result = managerController.siteList(100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void siteadd() throws Exception {
         Site model = new Site();
-        Object result = managerController.siteadd(model);
+        Object result = managerController.siteAdd(model);
         System.out.println(JacksonUtil.toJson(result));
     }
 

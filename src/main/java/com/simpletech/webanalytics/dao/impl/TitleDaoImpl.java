@@ -11,7 +11,7 @@ import com.simpletech.webanalytics.model.Title;
 /**
  * 数据库表t_title的Dao实现
  * @author 树朾
- * @date 2015-10-12 15:00:31 中国标准时间
+ * @date 2015-10-13 10:15:55 中国标准时间
  */
 @Repository
 public class TitleDaoImpl extends BaseDaoImpl<Title> implements TitleDao{

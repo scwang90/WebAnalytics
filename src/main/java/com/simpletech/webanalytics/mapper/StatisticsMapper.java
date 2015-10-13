@@ -126,13 +126,13 @@ public interface StatisticsMapper {
      * @param end    结束时间
      * @return 新老用户
      */
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d%H') date,SUM(new_user) nv, COUNT(DISTINCT idvisitor) uv FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
+    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d%H') date,SUM(new_user) nv,SUM(new_sub_user) subnv, COUNT(DISTINCT idvisitor) uv FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
     List<VisitorValue> visitorHour(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d') date,SUM(new_user) nv, COUNT(DISTINCT idvisitor) uv FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
+    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m%d') date,SUM(new_user) nv,SUM(new_sub_user) subnv, COUNT(DISTINCT idvisitor) uv FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
     List<VisitorValue> visitorDay(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y-%u') date,SUM(new_user) nv, COUNT(DISTINCT idvisitor) uv FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
+    @Select("SELECT DATE_FORMAT(visit_servertime,'%y-%u') date,SUM(new_user) nv,SUM(new_sub_user) subnv, COUNT(DISTINCT idvisitor) uv FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
     List<VisitorValue> visitorWeek(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
-    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m') date,SUM(new_user) nv, COUNT(DISTINCT idvisitor) uv FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
+    @Select("SELECT DATE_FORMAT(visit_servertime,'%y%m') date,SUM(new_user) nv,SUM(new_sub_user) subnv, COUNT(DISTINCT idvisitor) uv FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY date ORDER BY date ")
     List<VisitorValue> visitorMonth(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
 
     /**

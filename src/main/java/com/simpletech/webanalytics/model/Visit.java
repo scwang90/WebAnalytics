@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_visit
  * @author 树朾
- * @date 2015-10-12 14:47:44 中国标准时间
+ * @date 2015-10-13 09:23:02 中国标准时间
  */
 @Table("t_visit")
 public class Visit extends ModelBase{
@@ -41,6 +41,11 @@ public class Visit extends ModelBase{
 	 */
 	@Column("new_user")
 	private Boolean newUser;
+	/**
+	 * 子站是否新用户
+	 */
+	@Column("new_sub_user")
+	private Boolean newSubUser;
 	/**
 	 * 访问者ID
 	 */
@@ -237,6 +242,14 @@ public class Visit extends ModelBase{
 
 	public void setNewUser(Boolean newUser) {
 		this.newUser = newUser;
+	}
+	
+	public Boolean getNewSubUser(){
+		return this.newSubUser;
+	}
+
+	public void setNewSubUser(Boolean newSubUser) {
+		this.newSubUser = newSubUser;
 	}
 	
 	public String getIdvisitor(){

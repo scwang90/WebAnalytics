@@ -1,11 +1,10 @@
 package com.simpletech.webanalytics.dao.base;
 
-import java.lang.reflect.Field;
-import java.util.Date;
-import java.util.UUID;
-
-import com.simpletech.webanalytics.annotations.dbmodel.interpreter.Interpreter;
+import com.simpletech.webanalytics.model.base.ModelBase;
 import com.simpletech.webanalytics.util.AfReflecter;
+
+import java.util.Date;
+
 
 /**
  * 通用Dao实现基类
@@ -16,14 +15,12 @@ import com.simpletech.webanalytics.util.AfReflecter;
 public class BaseDaoImpl<T> extends BaseDaoMybatisMYSQLImpl<T> implements BaseDao<T>{
 
 	public BaseDaoImpl() {
-		// TODO Auto-generated constructor stub
 		order = "ORDER BY create_time DESC";
 	}
 	
 	@Override
 	public int insert(T t) throws Exception {
-		// TODO Auto-generated method stub
-		checkNullID(t);
+		ModelBase.fillNullID(t);
 		AfReflecter.setMemberNoException(t, "createTime", new Date());
 		AfReflecter.setMemberNoException(t, "updateTime", new Date());
 		return super.insert(t);
@@ -31,26 +28,8 @@ public class BaseDaoImpl<T> extends BaseDaoMybatisMYSQLImpl<T> implements BaseDa
 	
 	@Override
 	public int update(T t) throws Exception {
-		// TODO Auto-generated method stub
 		AfReflecter.setMemberNoException(t, "updateTime", new Date());
 		return super.update(t);
 	}
 
-	/**
-	 * 检查ID字段是否为空，否则设置一个新ID
-	 * @param model 数据model
-	 * @throws Exception
-	 */
-	protected void checkNullID(T model) throws Exception {
-		Class<?> clazz = model.getClass();
-		Field field = Interpreter.getIdField(clazz);
-		if (field != null) {
-			field.setAccessible(true);
-			Object id = field.get(model);
-			if(id == null || id.toString().trim().length() == 0){
-				field.set(model, UUID.randomUUID().toString());
-			}
-		}
-	}
-	
 }

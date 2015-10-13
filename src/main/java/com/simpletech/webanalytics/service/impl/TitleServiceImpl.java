@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 数据库表t_title的Service接实现
  * @author 树朾
- * @date 2015-10-12 15:00:31 中国标准时间
+ * @date 2015-10-13 10:15:55 中国标准时间
  */
 @Service
 public class TitleServiceImpl extends BaseServiceImpl<Title> implements TitleService{
@@ -24,10 +24,8 @@ public class TitleServiceImpl extends BaseServiceImpl<Title> implements TitleSer
 	
 	@Override
 	public int insert(Title model) throws Exception{
-		if (ModelBase.class.isInstance(model)) {
-			ModelBase.class.cast(model).check();
-		}
-		checkNullID(model);
+		ModelBase.check(model);
+		ModelBase.fillNullID(model);
 		return dao.insert(model);
 	}
 	
