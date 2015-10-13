@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 管理API
@@ -52,6 +55,27 @@ public class ManagerController extends BaseController {
     @RequestMapping("site/update")
     public Object siteUpdate(@RequestBody Site site) throws Exception {
         return service.updateSite(site);
+    }
+
+    @Intent("获取探针代码")
+    @RequestMapping("site/tracker/{siteId:\\d+}")
+    public Object siteTracker(HttpServletRequest request,@PathVariable int siteId) throws Exception{
+        Matcher matcher = Pattern.compile("//(.+/)api/manage", Pattern.CASE_INSENSITIVE).matcher(request.getRequestURL());
+        matcher.find();
+        String temp = "<!-- WebAnalytics -->\n" +
+                "<script type=\"text/javascript\">\n" +
+                "    var _wapaq = _wapaq || [];\n" +
+                "    _wapaq.push(['trackPageView']);\n" +
+                "    (function() {\n" +
+                "        var u=\"//${domain}\";\n" +
+                "        _wapaq.push(['setTrackerUrl', u+'tracker']);\n" +
+                "        _wapaq.push(['setSiteId', ${siteId}]);\n" +
+                "        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n" +
+                "        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'js/ds.js'; s.parentNode.insertBefore(g,s);\n" +
+                "    })();\n" +
+                "</script>\n" +
+                "<!-- End WebAnalytics Code -->";
+        return temp.replace("${siteId}", "" + siteId).replace("${domain}",matcher.group(1));
     }
 
 }

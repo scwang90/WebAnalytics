@@ -15,8 +15,14 @@ public class BrandFormat {
 
     @Test
     public void parser(){
-        String useragent = "Mozilla/5.0 (Linux; U; Android 4.4.2; zh-cn; MI 3 Build/KOT49H) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/5.4 TBS/025468 Mobile Safari/533.1 QQJSSDK/1.3  Qzone/V1_AND_QZ_5.8.1_288_YYB_D QZONEJSSDK/5.7";
-        System.out.println(Pattern.compile("(\\bmi ?\\S*|\\bhm ?\\S*)",Pattern.CASE_INSENSITIVE).matcher(useragent).find());
+        String useragent = "Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; Lumia 630 Dual SIM)";
+        Matcher matcher = Pattern.compile("nokia;\\s*(\\S+\\s*\\S+)", Pattern.CASE_INSENSITIVE).matcher(useragent);
+        if (matcher.find()){
+            System.out.println("find");
+            System.out.println(matcher.group(1));
+        } else {
+            System.out.println("not find");
+        }
         System.out.println(Brand.parser(useragent).getRemark());
         System.out.println(Brand.parser(useragent).getModel());
     }

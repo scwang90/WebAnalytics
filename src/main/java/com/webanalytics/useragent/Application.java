@@ -17,7 +17,7 @@ public enum Application {
     Weibo1("weibo", "WB", "新浪微博", "(weibo)"),
     Computer("computer", "PC", "电脑", "windows nt|wow"),
 
-    Unknown("unknown", "UN", "未知", "");
+    Unknown("unknown", "UN", "手机浏览器", "");
 
     private final Pattern pattern;
     private final String name;

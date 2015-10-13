@@ -13,12 +13,12 @@ public class BrowserFormat {
 
     @Test
     public void parser(){
-        String useragent = "Mozilla/5.0 (Mobile; Windows Phone 8.1; Android 4.0; ARM; Trident/7.0; Touch; rv:11.0; IEMobile/11.0; NOKIA; Nokia 520) like iPhone OS 7_0_3 Mac OS X AppleWebKit/537 (KHTML, like Gecko) Mobile Safari/537";
+        String useragent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36 SE 2.X MetaSr 1.0";
         Pattern pattern = Pattern.compile("iemobile/([\\w\\.\\-]+)|windows phone[ /]?([\\w\\.\\-]+)?",Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(useragent);
         System.out.println(matcher.find());
-        System.out.println(matcher.group());
-        System.out.println(matcher.group(1));
+//        System.out.println(matcher.group());
+//        System.out.println(matcher.group(1));
         System.out.println(Browser.parser(useragent).getRemark());
         System.out.println(Browser.parser(useragent).getVersion());
     }

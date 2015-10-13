@@ -24,10 +24,10 @@ public enum OperateSystem {
     WinCE("winCE", "WDCE", "Windows CE", "windows ce (\\S+)"),
     WinMobile("winMobile", "WDMB", "Windows Mobile", "windows mobile (\\S+)"),
 
-    MacOs("macos", "MAC", "Mac OS X", "mac os x (\\S+)"),
+    MacOs("macos", "MAC", "Mac OS X", "mac os x ([\\w\\.\\-]+)"),
     Android("android", "AND", "Android", "android (\\S+)"),
-    Ipad("ipad", "IPA", "iPad OS", "iPad.*os (\\S+)"),
-    Iphone("iphone", "IPH", "iPhone OS", "iPhone.*os (\\S+)"),
+    Ipad("ipad", "IPA", "iPad OS", "ipad.*os (\\S+)"),
+    Iphone("iphone", "IPH", "iPhone OS", "iphone\\s+os (\\S+)"),
     Linux("linux", "LIN", "Linux", "linux"),
     Wii("wii", "WII", "Wii", "wii"),
     Ps3("ps3", "PS3", "PS3", "playstation 3"),

@@ -25,6 +25,36 @@ public class StatisticsMapperTester {
     StatisticsMapper mapper;
 
     @Test
+    public void nettype() throws Exception {
+        Object result = mapper.nettype("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
+    public void browser() throws Exception {
+        Object result = mapper.browser("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
+    public void system() throws Exception {
+        Object result = mapper.system("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
+    public void model() throws Exception {
+        Object result = mapper.model("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
+    public void brand() throws Exception {
+        Object result = mapper.brand("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
     public void coutRanking() throws Exception {
         Object result = mapper.coutranking("1", monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
         System.out.println(JacksonUtil.toJson(result));

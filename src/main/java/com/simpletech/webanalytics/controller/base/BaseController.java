@@ -1,10 +1,9 @@
 package com.simpletech.webanalytics.controller.base;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.simpletech.webanalytics.util.AfReflecter;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;

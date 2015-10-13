@@ -168,7 +168,7 @@
          * Sets the Visitor ID cookie
          */
         function setVisitorIdCookie(visitorIdCookieValues) {
-            if(!configTrackerSiteId) {
+            if(!global.isDefined(configTrackerSiteId)) {//if(!configTrackerSiteId) {
                 // when called before Site ID was set
                 return;
             }

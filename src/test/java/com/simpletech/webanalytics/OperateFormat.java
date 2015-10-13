@@ -6,13 +6,14 @@ import org.junit.Test;
 import java.util.regex.Pattern;
 
 /**
+ * 操作系统测试
  * Created by SCWANG on 2015-09-27.
  */
 public class OperateFormat {
 
     @Test
     public void parser(){
-        String useragent = "Mozilla/5.0 (iPad; CPU OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12H143 IPadQQ/5.4.0.127 QQ/5.4.0.127";
+        String useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
         System.out.println(Pattern.compile("\\bmi\\b|xiaomi",Pattern.CASE_INSENSITIVE).matcher(useragent).find());
         System.out.println(OperateSystem.parser(useragent).getRemark());
         System.out.println(OperateSystem.parser(useragent).getVersion());

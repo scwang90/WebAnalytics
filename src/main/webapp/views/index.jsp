@@ -72,17 +72,19 @@ APPV:<%=useragent.getApplication().getVersion()%><br>
 
 </body>
 <%--<script src="/js/ds.js"></script>--%>
+<!-- WebAnalytics -->
 <script type="text/javascript">
     var _wapaq = _wapaq || [];
     _wapaq.push(['trackPageView']);
     (function() {
-        var u="/";
+        var u="";
         _wapaq.push(['setTrackerUrl', u+'tracker']);
-        _wapaq.push(['setSiteId', 1]);
+        _wapaq.push(['setSiteId', 0]);
         var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
         g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'js/ds.js'; s.parentNode.insertBefore(g,s);
     })();
 </script>
+<!-- End WebAnalytics Code -->
 <!-- Piwik -->
 <%--<script type="text/javascript">
     var _paq = _paq || [];

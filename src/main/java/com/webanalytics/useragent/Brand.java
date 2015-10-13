@@ -37,8 +37,8 @@ public enum Brand {
 
     Smartisan("smartisan","SM","锤子","\\b(sm\\S*) build\\b"),
 
-    Nokia("nokia","NK","诺基亚","(nokia\\s*[\\w\\.\\-]+)"),
-    Nokia1("nokia","NK","诺基亚","(symbian)"),
+    Nokia("nokia","NK","诺基亚","nokia;\\s*(\\S+\\s*\\S+)|(nokia\\s*\\S+)"),
+    Nokia1("nokia","NK","诺基亚","(symbian|nokia)"),
 
     Apple("apple","AP","苹果","(iphone)|(ipad)|\\b(mac)\\b"),
     Apple1("apple","AP","苹果","(apple)\\b|\\b(ios)\\b"),
