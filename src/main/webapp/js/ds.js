@@ -322,16 +322,24 @@
     function Detect() {
         this.java = (function () {return navigator.javaEnabled && navigator.javaEnabled();})();
         this.cookie = (function () {return navigator.cookieEnabled == true;})();
-        this.screen = (function () {return screen ? screen.width + 'x' + screen.height : empty;})();
         this.color = (function () {return screen ? screen.colorDepth : empty;})();
         this.cset = (function () {return document ? document.characterSet : empty;})();
         this.lang = (function () {return navigator ? navigator.language : empty;})();
-        this.refer = (function () {
-                var referrer = document ? (document.referrer) : empty;
-                return referrer == location.href ? empty : referrer;
-            })();
         this.url = (function () {return location ? location.href : empty;})();
         this.title = (function () {return document ? document.title : empty;})();
+        this.screen = (function () {
+            if(screen) {
+                if((screen.width < 1000 || screen.height < 1000) && window.devicePixelRatio){
+                    return screen.width*window.devicePixelRatio + 'x' + screen.height*window.devicePixelRatio;
+                }
+                return screen.width + 'x' + screen.height;
+            }
+            return empty;
+        })();
+        this.refer = (function () {
+            var referrer = document ? (document.referrer) : empty;
+            return referrer == location.href ? empty : referrer;
+        })();
         this.getParam = function(){
             var param = "";
             for(var p in this){
