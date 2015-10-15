@@ -3,7 +3,7 @@ package com.simpletech.webanalytics.controller.base;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.simpletech.webanalytics.annotations.Intent;
-import com.simpletech.webanalytics.service.BaseService;
+import com.simpletech.webanalytics.service.base.BaseService;
 
 /**
  * Controller 层通用处理事务基类

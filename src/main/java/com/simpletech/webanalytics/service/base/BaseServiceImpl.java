@@ -1,9 +1,8 @@
-package com.simpletech.webanalytics.service.impl;
+package com.simpletech.webanalytics.service.base;
 
 import com.simpletech.webanalytics.annotations.dbmodel.interpreter.Interpreter;
 import com.simpletech.webanalytics.dao.base.BaseDao;
 import com.simpletech.webanalytics.model.base.ModelBase;
-import com.simpletech.webanalytics.service.BaseService;
 import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.JacksonUtil;
 import com.simpletech.webanalytics.util.Page;
@@ -12,13 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * 通用Service层实现基类
  * @param <T>
  * @author 树朾
- * @date 2015-10-13 10:15:55 中国标准时间
+ * @date 2015-10-15 12:18:28 中国标准时间
  */
 public class BaseServiceImpl<T> implements BaseService<T>{
 

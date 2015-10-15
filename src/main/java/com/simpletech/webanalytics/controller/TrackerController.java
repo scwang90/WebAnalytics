@@ -1,7 +1,10 @@
 package com.simpletech.webanalytics.controller;
 
+import com.simpletech.webanalytics.model.ShareUser;
 import com.simpletech.webanalytics.model.entity.JsDetect;
 import com.simpletech.webanalytics.model.entity.JsEvent;
+import com.simpletech.webanalytics.model.entity.JsUser;
+import com.simpletech.webanalytics.service.TrackShareService;
 import com.simpletech.webanalytics.service.TrackerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,8 +29,8 @@ public class TrackerController {
     /**
      * piwik监听测试
      *
-     * @param request
-     * @param response
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
      * @throws Exception
      */
     @RequestMapping("tracker")
@@ -81,6 +84,21 @@ public class TrackerController {
         event.check();
         event.bind(request, response);
         service.trackerEvent(idsite, event);
+        request.getRequestDispatcher("/images/pixel.jpg").forward(request, response);
+    }
+
+    /**
+     * JS探针用户信息
+     *
+     * @param idsite 网站ID
+     * @param user  事件接收对象
+     * @throws Exception
+     */
+    @RequestMapping("1.0/tur")
+    public void tur(HttpServletRequest request, HttpServletResponse response, int idsite, JsUser user) throws Exception {
+        user.check();
+        user.bind(request, response);
+        service.trackerUser(idsite, user);
         request.getRequestDispatcher("/images/pixel.jpg").forward(request, response);
     }
 }

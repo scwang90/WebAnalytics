@@ -4,6 +4,7 @@ import com.simpletech.webanalytics.dao.TitleDao;
 import com.simpletech.webanalytics.model.Title;
 import com.simpletech.webanalytics.model.base.ModelBase;
 import com.simpletech.webanalytics.service.TitleService;
+import com.simpletech.webanalytics.service.base.BaseServiceImpl;
 import com.simpletech.webanalytics.util.Page;
 import com.simpletech.webanalytics.util.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * 数据库表t_title的Service接实现
  * @author 树朾
- * @date 2015-10-13 10:15:55 中国标准时间
+ * @date 2015-10-15 12:18:28 中国标准时间
  */
 @Service
 public class TitleServiceImpl extends BaseServiceImpl<Title> implements TitleService{

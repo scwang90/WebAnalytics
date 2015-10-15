@@ -4,6 +4,7 @@ import com.simpletech.webanalytics.dao.TrackerDao;
 import com.simpletech.webanalytics.model.entity.JsDetect;
 import com.simpletech.webanalytics.model.entity.JsEvent;
 import com.simpletech.webanalytics.model.*;
+import com.simpletech.webanalytics.model.entity.JsUser;
 import com.simpletech.webanalytics.service.*;
 import com.simpletech.webanalytics.util.AfStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +19,22 @@ import java.util.regex.Pattern;
  * Created by 树朾 on 2015/9/22.
  */
 @Service
-public class TrackerServiceImpl implements TrackerService{
+public class TrackerServiceImpl implements TrackerService {
 
     @Autowired
     TrackerDao dao;
+    @Autowired
+    TrackShareService trackShareService;
 
 
-
-    public void trackerPageView(int siteId, JsDetect detect) throws Exception{
+    public void trackerPageView(int siteId, JsDetect detect) throws Exception {
         Site site = dao.findSiteById(siteId);
-        if (site != null){
-            String idsubsite = getIdSubSite(site,detect.getUrl());
+        if (site != null) {
+            String idsubsite = getIdSubSite(site, detect.getUrl());
             dao.getSubSite(siteId, idsubsite);
 
             Url url = dao.getUrl(siteId, idsubsite, detect.getUrl());
+            trackShareService.trackerShare(siteId, idsubsite, detect, url);
             Title title = dao.getTitle(siteId, idsubsite, detect.getTitle());
             Visit visit = dao.getVisitHalfHour(siteId, idsubsite, detect, url, title);
             visit.setIdurlExit(url.getId());
@@ -53,14 +56,14 @@ public class TrackerServiceImpl implements TrackerService{
     @Override
     public void trackerEvent(int siteId, JsEvent event) throws Exception {
         Site site = dao.findSiteById(siteId);
-        if (site != null){
-            String idsubsite = getIdSubSite(site,event.getUrl());
+        if (site != null) {
+            String idsubsite = getIdSubSite(site, event.getUrl());
             dao.getSubSite(siteId, idsubsite);
 
             Url url = dao.getUrl(siteId, idsubsite, event.getUrl());
             Title title = dao.getTitle(siteId, idsubsite, event.getTitle());
             Visit visit = dao.getVisitHalfHour(siteId, idsubsite, event, url, title);
-            if (visit.getCountVisits() == 0){
+            if (visit.getCountVisits() == 0) {
                 visit.setIdurlExit(url.getId());
                 visit.setIdtitleExit(title.getId());
                 visit.setCountVisits(visit.getCountVisits() + 1);
@@ -77,6 +80,16 @@ public class TrackerServiceImpl implements TrackerService{
             visit.setCountEvents(visit.getCountEvents() + 1);
             dao.updateVisit(idsubsite, visit);
             dao.insertEvent(idsubsite, event.buildEvent(site.getId()));
+        }
+    }
+
+    @Override
+    public void trackerUser(int siteId, JsUser user) throws Exception {
+        Site site = dao.findSiteById(siteId);
+        if (site != null) {
+            String idsubsite = getIdSubSite(site, user.getUrl());
+            user.setIdsubsite(idsubsite);
+            trackShareService.addOrUpdateUser(user);
         }
     }
 

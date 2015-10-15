@@ -2,6 +2,7 @@ package com.simpletech.webanalytics.service;
 
 import com.simpletech.webanalytics.model.entity.JsDetect;
 import com.simpletech.webanalytics.model.entity.JsEvent;
+import com.simpletech.webanalytics.model.entity.JsUser;
 
 /**
  * JS探针 接收服务
@@ -24,4 +25,12 @@ public interface TrackerService {
      * @throws Exception
      */
     void trackerPageView(int siteId, JsDetect detect) throws Exception;
+
+    /**
+     * JS探针用户信息
+     *
+     * @param siteId 网站ID
+     * @param user  事件接收对象
+     */
+    void trackerUser(int siteId, JsUser user) throws Exception;
 }

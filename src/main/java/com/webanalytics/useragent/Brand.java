@@ -18,24 +18,24 @@ public enum Brand {
     Asus("asus","AS","华硕","asus"),
     Onda("onda","OA","昂达","onda"),
     Woxter("woxter","WT","Woxter","woxter"),
-    Huawei("huawei","HW","华为","huawei"),
     Dell("dell","DL","戴尔","dell"),
     Archos("archos","AH","爱可视","archos"),
 
-    Samsung("samsung","SS","三星","(EK-G\\S*)"),
+    Samsung("samsung","SS","三星","\\b(gt-.+) build|(EK-G\\S*)|samsung[ -]?([\\w\\-]+)"),
     Samsung1("samsung","SS","三星","(samsung)"),
 
-    Motorola("motorola","MT","摩托罗拉","\\b(mot\\S*|mb\\S*|xoom\\S*) build"),
+    Motorola("motorola","MT","摩托罗拉","\\b(mot.*|mb.*|xoom.*) build"),
     Motorola1("motorola","MT","摩托罗拉","(motorola)"),
 
     //htc|lg|samsung|sonyericsson|sony|asus|onda|woxter|huawei|dell|archos|motorola
 
-    Vivo("vivo","VIVO","Vivo","\\b(vivo\\S*) build"),
+    Vivo("vivo","VIVO","Vivo","\\b(vivo.+) build\\b"),
+    ZTE("ZTE","ZTE","中兴","\\b(zte.+) build\\b"),
 
-    XiaoMi("xiaomi","XM","小米","\\b(mi ?\\S*|hm ?\\S*) build"),
+    XiaoMi("xiaomi","XM","小米","\\b(mi .+|hm .+) build\\b"),
     XiaoMi1("xiaomi","XM","小米","(xiaomi|miui)"),
 
-    Smartisan("smartisan","SM","锤子","\\b(sm\\S*) build\\b"),
+    Smartisan("smartisan","SM","锤子","\\b(sm.+) build\\b"),
 
     Nokia("nokia","NK","诺基亚","nokia;\\s*(\\S+\\s*\\S+)|(nokia\\s*\\S+)"),
     Nokia1("nokia","NK","诺基亚","(symbian|nokia)"),
@@ -43,10 +43,13 @@ public enum Brand {
     Apple("apple","AP","苹果","(iphone)|(ipad)|\\b(mac)\\b"),
     Apple1("apple","AP","苹果","(apple)\\b|\\b(ios)\\b"),
 
-    Meizu("meizu","MZ","魅族","\\b(m\\S*) build\\b"),
-    Computer("computer","PC","电脑","windows nt|wow"),
+    Meizu("meizu","MZ","魅族","\\b(m.+) build\\b"),
 
-    Unknown("unknown","UN","未知","\\b(\\S*) build\\b");
+    Huawei("huawei","HW","华为","\\b(h.+) build\\b"),
+
+
+    Unknown("unknown","UN","未知","\\b(\\S*) build\\b|android"),
+    Computer("computer","PC","电脑","windows nt|\\bwow\\b|linux");
 
     private final String name;
     private final String remark;

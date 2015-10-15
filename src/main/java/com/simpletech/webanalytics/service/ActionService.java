@@ -3,13 +3,14 @@ package com.simpletech.webanalytics.service;
 import java.util.List;
 
 import com.simpletech.webanalytics.model.Action;
+import com.simpletech.webanalytics.service.base.BaseService;
 
 /**
  * 数据库表t_action的Service接口层
  * @author 树朾
- * @date 2015-10-12 15:00:31 中国标准时间
+ * @date 2015-10-15 12:18:28 中国标准时间
  */
-public interface ActionService extends BaseService<Action>{
+public interface ActionService extends BaseService<Action> {
 
 	/**
 	 * 插入一条新数据

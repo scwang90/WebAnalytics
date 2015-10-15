@@ -27,8 +27,10 @@
     String ipAddr = IPCatcherUtil.getIpAddr(request);
     IP.load(application.getRealPath("/WEB-INF/classes/17monipdb.dat"));
 %>
-<h1>通告</h1>
-<p>根据9.16日发布的测试版本，修复分辨率识别和浏览器识别，重新发布测试</p>
+<h1>测试改变链接</h1>
+<%--<button onclick="location.href = ''+_wapaq.push(['linkChange', location.href]);">点击测试</button>--%>
+<button onclick="location.href = WADS.linkChange(location.href);">点击测试</button>
+<button onclick="location.href = remArg(location.href,['wa_share_vtor','wa_share_time']);">点击删除</button>
 <br>
 
 <div>
@@ -77,7 +79,7 @@ APPV:<%=useragent.getApplication().getVersion()%><br>
     var _wapaq = _wapaq || [];
     _wapaq.push(['trackPageView']);
     (function() {
-        var u="";
+        var u="/";
         _wapaq.push(['setTrackerUrl', u+'tracker']);
         _wapaq.push(['setSiteId', 0]);
         var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
@@ -100,30 +102,35 @@ APPV:<%=useragent.getApplication().getVersion()%><br>
 </script>--%>
 <!-- End Piwik Code -->
 <script>
-    function send(){
-        var image = new Image(1, 1);
-        var src = "//127.0.0.1:8080/1.0/ds.png?rand="+Math.random();
-        for(var p in Detect){
-            if(typeof(Detect[p])=="function"){
-                src += "&" + p + "=" + Detect[p]();
-            }else{
-                src += "&" + p + "=" + Detect[p];
+    function remArg(url, names) {
+        var urls = url.split("?"),source="",idtag = "";
+        if(url.length > 1){
+            source = urls[0];
+            url = urls[1];
+        }
+        urls = url.split("#");
+        if(url.length > 1){
+            url = urls[0];
+            idtag = "#" + urls[1];
+        }
+        var args = url.split("&");
+        var nargs = [];
+        for (var arg in args) {
+            var find = false;
+            for (var name in names) {
+                if (args[arg].indexOf(names[name]) == 0) {
+                    find = true;
+                    break;
+                }
+            }
+            if (!find) {
+                nargs.push(args[arg]);
             }
         }
-        image.src = src;
-        image.onload = function(){
-            image.onload = null;
-            clear();
-            for(var p in Detect){
-                var val = Global.empty;
-                if(typeof(Detect[p])=="function"){
-                    val = Detect[p]();
-                }else{
-                    val = Detect[p];
-                }
-                println(p+"->"+val)
-            }
-        };
+        if (source != "" && nargs.length > 0) {
+            source = source + "?";
+        }
+        return source + nargs.join("&") + idtag;
     }
     function clear() {
         document.getElementById("jsdata").innerHTML = "";

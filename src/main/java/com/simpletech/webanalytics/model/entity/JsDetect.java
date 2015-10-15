@@ -37,14 +37,14 @@ public class JsDetect {
     @Must("访问者本次次访问时间")
     private Long visits;    //(必需) 访问者本次次访问时间
     private Long lastts;    //(按需) 访问者上一次访问时间
-    @Must("页面加载时间")
-    private Integer gtms;   //(必需) 页面加载时间
 
     /**
      * 数据收集相关
      */
     @Must("当前页面的完整URL")
     private String url;     //(必需) 当前页面的完整URL
+    @Must("页面加载时间")
+    private Integer gtms;   //(必需) 页面加载时间
     private String title;   //(推荐) 当前页面的标题
     private String screen;  //(推荐) 屏幕分辨率
     private String color;   //(可选) 颜色深度
@@ -53,6 +53,13 @@ public class JsDetect {
     private String cset;    //(推荐) 浏览器编码
     private String lang;    //(推荐) 客户端语言
     private String refer;   //(推荐) 上一页面url
+
+    /**
+     * 分享传播
+     */
+    private String fromvid;  // 分享者ID 16个字符的十六进制字符串
+    private Long fromvts;    // 分享者分享时间
+
 
     /**
      * 服务器获取数据
@@ -423,5 +430,24 @@ public class JsDetect {
 
     public void setAppname(String appname) {
         this.appname = appname;
+    }
+
+    public String getFromvid() {
+        return fromvid;
+    }
+
+    public void setFromvid(String fromvid) {
+        this.fromvid = fromvid;
+    }
+
+    public Long getFromvts() {
+        if (fromvid == null) {
+            return 0l;
+        }
+        return fromvts;
+    }
+
+    public void setFromvts(Long fromvts) {
+        this.fromvts = fromvts;
     }
 }

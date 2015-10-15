@@ -1,6 +1,5 @@
 package com.simpletech.webanalytics.dao.impl;
 
-import com.simpletech.webanalytics.annotations.dbmodel.interpreter.Interpreter;
 import com.simpletech.webanalytics.dao.TrackerDao;
 import com.simpletech.webanalytics.mapper.TrackerMapper;
 import com.simpletech.webanalytics.model.*;
@@ -10,9 +9,7 @@ import com.simpletech.webanalytics.util.AfStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.lang.reflect.Field;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * js探针 的Dao实现
@@ -68,6 +65,7 @@ public class TrackerDaoImpl implements TrackerDao {
             subSite = new Subsite();
             subSite.setIdsite(siteId);
             subSite.setName(idsubsite);
+            subSite.setRemark("");
             subSite.fillNullID();
             AfReflecter.setMemberNoException(subSite, "createTime", new Date());
             AfReflecter.setMemberNoException(subSite, "updateTime", new Date());
@@ -96,14 +94,15 @@ public class TrackerDaoImpl implements TrackerDao {
 
     /**
      * 把 int siteId 转成 string idsite
-     * @param siteId 网站ID
+     *
+     * @param siteId  网站ID
      * @param subsite 子项目
      * @return idsite
      */
     private String getIdSite(int siteId, String subsite) {
-        if (AfStringUtil.isNotEmpty(subsite)){
+        if (AfStringUtil.isNotEmpty(subsite)) {
             String format = "%d AND idsubsite='%s'";
-            return String.format(format,siteId, subsite);
+            return String.format(format, siteId, subsite);
         }
         return String.valueOf(siteId);
     }
@@ -118,7 +117,7 @@ public class TrackerDaoImpl implements TrackerDao {
             visit.setIdurlExit(url.getId());
             visit.setIdtitleExit(title.getId());
             visit.setNewUser(!mapper.existVisitor(siteId, detect.getIdvtor()));
-            visit.setNewSubUser(AfStringUtil.isEmpty(idsubsite)?visit.getNewUser():!mapper.existSubVisitor(siteId, idsubsite, detect.getIdvtor()));
+            visit.setNewSubUser(AfStringUtil.isEmpty(idsubsite) ? visit.getNewUser() : !mapper.existSubVisitor(siteId, idsubsite, detect.getIdvtor()));
             visit.fillNullID();
             visit.setIdsubsite(idsubsite);
             AfReflecter.setMemberNoException(visit, "createTime", new Date());

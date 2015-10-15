@@ -123,16 +123,8 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>*.xml</include>
+                    <include>*.dat</include>
                     <include>*.properties</include>
-                    <include>*.xls</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources/parser</directory>
-                <includes>
-                    <include>*.xml</include>
-                    <include>*.properties</include>
-                    <include>*.xls</include>
                 </includes>
             </resource>
         </resources>

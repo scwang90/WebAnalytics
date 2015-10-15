@@ -1,122 +1,123 @@
+/*
 (function() {
-    var e = 60 * 30;
-    var n = function(e) {
-        var n = new RegExp("(^|&)" + e + "=([^&]*)(&|$)");
-        var t = window.location.search.substr(1).match(n);
-        if (t != null) return unescape(t[2]);
-        return null
-    };
-    var t = function(e) {
-        if (!e) return "";
-        if (e.indexOf("://") != -1) e = e.substr(e.indexOf("://") + 3);
-        var n = ["com", "net", "org", "gov", "edu", "mil", "biz", "name", "info", "mobi", "pro", "travel", "museum", "int", "areo", "post", "rec", "im", "cn"];
-        var t = e.split(".");
-        if (t.length <= 1) return e;
-        if (!isNaN(t[t.length - 1])) return e;
-        var r = 0;
-        while (r < n.length && n[r] != t[t.length - 1]) r++;
-        if (r != n.length) return t[t.length - 2] + "." + t[t.length - 1];
-        else {
-            r = 0;
-            while (r < n.length && n[r] != t[t.length - 2]) r++;
-            if (r == n.length) return t[t.length - 2] + "." + t[t.length - 1];
-            else return t[t.length - 3] + "." + t[t.length - 2] + "." + t[t.length - 1]
-        }
-    };
-    var r = {
-        get: function(e) {
-            var n = document.cookie.match(new RegExp("(^| )" + e + "=([^;]*)(;|$)"));
-            if (n != null) return unescape(n[2]);
-            return null
-        },
-        add: function(e, n, r) {
-            var i = e + "=" + n;
-            if (r != 0) {
-                var o = new Date;
-                var a = r * 1e3;
-                o.setTime(o.getTime() + a);
-                i += "; expires=" + o.toGMTString()
-            }
-            var s = t(location.hostname);
-            if (s != "") {
-                i += "; domain=" + s
-            }
-            i += ";path=/";
-            document.cookie = i
-        }
-    };
-    var i = function() {
-        if (sessionStorage) {
-            return sessionStorage
-        } else {
-            var n = {
-                setItem: function(n, t) {
-                    r.add(n, t, e)
-                },
-                getItem: function(e) {
-                    return r.get(e)
-                }
-            };
-            return n
-        }
-    } ();
-    var o = function() {
-        var e = location.href;
-        if (e.indexOf("DSCKID") != -1) {
-            var t = n("DSCKID");
-            var r = n("DSTIMESTAMP");
-            i.setItem("REFER_DSCKID", t);
-            i.setItem("REFER_DSTIMESTAMP", r)
-        }
-        if (e.indexOf("from") != -1) {
-            var o = n("from");
-            var a = {
-                singlemessage: 1,
-                groupmessage: 2,
-                timeline: 3
-            };
-            if (a[o] == undefined) {
-                i.setItem("DS_FROM_TYPE", 0)
-            } else {
-                i.setItem("DS_FROM_TYPE", a[o])
-            }
-        }
-        if (document.referrer.indexOf("mp.weixin.qq.com") != -1) {
-            i.setItem("DS_FROM_TYPE", 4)
-        }
-    };
-    var a = function() {
-        var e = "";
-        try {
-            e = document.getElementById("DS_PRE_JS").src.split("?")[1].split("=")[1]
-        } catch(n) {
-            console.log("please read DataStory api doc")
-        }
-        var t = document.createElement("script");
-        t.src = document.location.protocol + "//tongji.datastory.com.cn/ds.js?dsTid=" + e;
-        var r = document.getElementsByTagName("script")[0];
-        r.parentNode.insertBefore(t, r)
-    };
-    var s = function() {
-        try {
-            if (window.DS == undefined) window.DS = {};
-            DS.ready = function(e) {
-                var n = function() {
-                    if (DS.linkChange == undefined || DS.sendRepost == undefined) {
-                        setTimeout(n, 500)
-                    } else {
-                        try {
-                            e()
-                        } catch(t) {}
-                    }
-                };
-                n()
-            };
-            o();
-            a()
-        } catch(e) {}
-    };
-    s()
+	var e = 60 * 30;
+	var n = function(e) {
+		var n = new RegExp("(^|&)" + e + "=([^&]*)(&|$)");
+		var t = window.location.search.substr(1).match(n);
+		if (t != null) return unescape(t[2]);
+		return null
+	};
+	var t = function(e) {
+		if (!e) return "";
+		if (e.indexOf("://") != -1) e = e.substr(e.indexOf("://") + 3);
+		var n = ["com", "net", "org", "gov", "edu", "mil", "biz", "name", "info", "mobi", "pro", "travel", "museum", "int", "areo", "post", "rec", "im", "cn"];
+		var t = e.split(".");
+		if (t.length <= 1) return e;
+		if (!isNaN(t[t.length - 1])) return e;
+		var r = 0;
+		while (r < n.length && n[r] != t[t.length - 1]) r++;
+		if (r != n.length) return t[t.length - 2] + "." + t[t.length - 1];
+		else {
+			r = 0;
+			while (r < n.length && n[r] != t[t.length - 2]) r++;
+			if (r == n.length) return t[t.length - 2] + "." + t[t.length - 1];
+			else return t[t.length - 3] + "." + t[t.length - 2] + "." + t[t.length - 1]
+		}
+	};
+	var r = {
+		get: function(e) {
+			var n = document.cookie.match(new RegExp("(^| )" + e + "=([^;]*)(;|$)"));
+			if (n != null) return unescape(n[2]);
+			return null
+		},
+		add: function(e, n, r) {
+			var i = e + "=" + n;
+			if (r != 0) {
+				var o = new Date;
+				var a = r * 1e3;
+				o.setTime(o.getTime() + a);
+				i += "; expires=" + o.toGMTString()
+			}
+			var s = t(location.hostname);
+			if (s != "") {
+				i += "; domain=" + s
+			}
+			i += ";path=/";
+			document.cookie = i
+		}
+	};
+	var i = function() {
+		if (sessionStorage) {
+			return sessionStorage
+		} else {
+			var n = {
+				setItem: function(n, t) {
+					r.add(n, t, e)
+				},
+				getItem: function(e) {
+					return r.get(e)
+				}
+			};
+			return n
+		}
+	} ();
+	var o = function() {
+		var e = location.href;
+		if (e.indexOf("DSCKID") != -1) {
+			var t = n("DSCKID");
+			var r = n("DSTIMESTAMP");
+			i.setItem("REFER_DSCKID", t);
+			i.setItem("REFER_DSTIMESTAMP", r)
+		}
+		if (e.indexOf("from") != -1) {
+			var o = n("from");
+			var a = {
+				singlemessage: 1,
+				groupmessage: 2,
+				timeline: 3
+			};
+			if (a[o] == undefined) {
+				i.setItem("DS_FROM_TYPE", 0)
+			} else {
+				i.setItem("DS_FROM_TYPE", a[o])
+			}
+		}
+		if (document.referrer.indexOf("mp.weixin.qq.com") != -1) {
+			i.setItem("DS_FROM_TYPE", 4)
+		}
+	};
+	var a = function() {
+		var e = "";
+		try {
+			e = document.getElementById("DS_PRE_JS").src.split("?")[1].split("=")[1]
+		} catch(n) {
+			console.log("please read DataStory api doc")
+		}
+		var t = document.createElement("script");
+		t.src = document.location.protocol + "//tongji.datastory.com.cn/ds.js?dsTid=" + e;
+		var r = document.getElementsByTagName("script")[0];
+		r.parentNode.insertBefore(t, r)
+	};
+	var s = function() {
+		try {
+			if (window.DS == undefined) window.DS = {};
+			DS.ready = function(e) {
+				var n = function() {
+					if (DS.linkChange == undefined || DS.sendRepost == undefined) {
+						setTimeout(n, 500)
+					} else {
+						try {
+							e()
+						} catch(t) {}
+					}
+				};
+				n()
+			};
+			o();
+			a()
+		} catch(e) {}
+	};
+	s()
 })();
 
 (function() {
@@ -413,3 +414,4 @@
 	};
 	E()
 })();
+*/

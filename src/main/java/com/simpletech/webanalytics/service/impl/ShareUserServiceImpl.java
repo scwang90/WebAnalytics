@@ -1,9 +1,9 @@
 package com.simpletech.webanalytics.service.impl;
 
-import com.simpletech.webanalytics.dao.ActionDao;
-import com.simpletech.webanalytics.model.Action;
+import com.simpletech.webanalytics.dao.ShareUserDao;
+import com.simpletech.webanalytics.model.ShareUser;
 import com.simpletech.webanalytics.model.base.ModelBase;
-import com.simpletech.webanalytics.service.ActionService;
+import com.simpletech.webanalytics.service.ShareUserService;
 import com.simpletech.webanalytics.service.base.BaseServiceImpl;
 import com.simpletech.webanalytics.util.Page;
 import com.simpletech.webanalytics.util.ServiceException;
@@ -13,26 +13,26 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 数据库表t_action的Service接实现
+ * 数据库表t_share_user的Service接实现
  * @author 树朾
  * @date 2015-10-15 12:18:28 中国标准时间
  */
 @Service
-public class ActionServiceImpl extends BaseServiceImpl<Action> implements ActionService{
+public class ShareUserServiceImpl extends BaseServiceImpl<ShareUser> implements ShareUserService{
 
 	@Autowired
-	ActionDao dao;
+	ShareUserDao dao;
 	
 	@Override
-	public int insert(Action model) throws Exception{
+	public int insert(ShareUser model) throws Exception{
 		ModelBase.check(model);
 		ModelBase.fillNullID(model);
 		return dao.insert(model);
 	}
 	
 	@Override
-	public int update(Action model) throws Exception {
-		Action old = findById(getModelID(model));
+	public int update(ShareUser model) throws Exception {
+		ShareUser old = findById(getModelID(model));
 		if (old == null) {
 			throw new ServiceException("请求更新记录不存在或已经被删除！");
 		}
@@ -46,12 +46,12 @@ public class ActionServiceImpl extends BaseServiceImpl<Action> implements Action
 	}
 
 	@Override
-	public Action findById(Object id) throws Exception{
+	public ShareUser findById(Object id) throws Exception{
 		return dao.findById(id);
 	}
 
 	@Override
-	public List<Action> findAll() throws Exception{
+	public List<ShareUser> findAll() throws Exception{
 		return dao.findAll();
 	}
 
@@ -61,25 +61,25 @@ public class ActionServiceImpl extends BaseServiceImpl<Action> implements Action
 	}
 
 	@Override
-	public List<Action> findByPage(int limit, int start) throws Exception {
+	public List<ShareUser> findByPage(int limit, int start) throws Exception {
 		return dao.findByPage(limit,start);
 	}
 
 	@Override
-	public Action findById(String id) throws Exception {
+	public ShareUser findById(String id) throws Exception {
 		return dao.findById(id);
 	}
 	
 	@Override
-	public Page<Action> listByPage(int pageSize, int pageNo) throws Exception{
+	public Page<ShareUser> listByPage(int pageSize, int pageNo) throws Exception{
 		int limit = pageSize; 
 		int start = pageNo*pageSize;
 		int totalRecord = dao.countAll();
 		int totalPage = 1 + (totalRecord - 1) / pageSize;
 		
-		List<Action> list = dao.findByPage(limit, start);
+		List<ShareUser> list = dao.findByPage(limit, start);
 		
-		return new Page<Action>(pageNo,pageSize,totalPage,totalRecord,list){};
+		return new Page<ShareUser>(pageNo,pageSize,totalPage,totalRecord,list){};
 	}
 
 	@Override

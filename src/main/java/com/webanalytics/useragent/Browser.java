@@ -16,9 +16,11 @@ public enum Browser {
     TXWeibo("txmicroblog", "TXWB", "腾讯微博", "txmicroblog[/ ]?(\\S+)"),
     MQQBrowser("mqqbrowser", "MQQB", "QQ浏览器手机版", "mqqbrowser/(\\S+)"),
     QQBrowser("qqbrowser", "QQB", "QQ浏览器", "qqbrowser/(\\S+)"),
+    UCBrowser("ucbrowser", "UC", "UC浏览器", "ucbrowser/([\\d\\-\\.]+)"),
 
-    Xiaomi("xiaomi", "XM", "小米浏览器", "xiaomi\\w*/(\\S+)"),
     Miui("miui", "MU", "MIUI浏览器", "miui\\w*/(\\S+)"),
+    Xiaomi("xiaomi", "XM", "小米浏览器", "xiaomi\\w*/(\\S+)"),
+
     Edge("edge", "EDGE", "微软 Edge", "\\bedge[ /]?(\\S*)"),
     Opera("opera", "OPR", "欧鹏浏览器", "opera[ /]?(\\S*)|opr[ /]?(\\S*)"),
     Firefox("firefox", "FFOX", "火狐浏览器", "firefox/(\\S*)"),

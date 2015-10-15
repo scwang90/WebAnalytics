@@ -44,14 +44,14 @@ public class VisitMapperTester {
         HashMap<String, Object> map = new HashMap<>();
 //        List<Visit> result = mapper.findByPropertyName("", "operate_system", "MB");
 //        List<Visit> result = mapper.findByPropertyName("", "operate_version", "WDP");
-        List<Visit> result = mapper.findWhere("", "WHERE operate_version like 'MAC'");
+        List<Visit> result = mapper.findWhere("", "WHERE operate_version like '%;'");
         for (Visit visit : result) {
             String agent = visit.getUseragent();
             OperateSystem system = OperateSystem.parser(agent);
             System.out.println(system.getRemark() + " - " + system.getVersion() + " - " + agent);
-            visit.setOperateSystem(system.getAcronym());
-            visit.setOperateVersion(system.getVersion());
-            mapper.update(visit);
+//            visit.setOperateSystem(system.getAcronym());
+//            visit.setOperateVersion(system.getVersion());
+//            mapper.update(visit);
 //            Object o = map.get(visit.getIdvisitor());
 //            map.put(visit.getIdvisitor(), Integer.valueOf(o == null ? 0 : (int) o) + visit.getCountVisits());
         }
@@ -85,8 +85,8 @@ public class VisitMapperTester {
     @Test
     public void formatappname() throws Exception {
         HashMap<String, Object> map = new HashMap<>();
-//		List<Visit> result = mapper.findByPropertyName("","app_name","null");
-        List<Visit> result = mapper.findWhere("", "WHERE app_name is null");
+		List<Visit> result = mapper.findByPropertyName("", "app_name", "null");
+//        List<Visit> result = mapper.findWhere("", "WHERE app_name is null");
         for (Visit visit : result) {
             String agent = visit.getUseragent();
             Application application = Application.parser(agent);
@@ -125,30 +125,30 @@ public class VisitMapperTester {
 
     @Test
     public void formatbrand() throws Exception {
-        List<Visit> result = mapper.findByPropertyName("", "end_brand", "PC");
-//        List<Visit> result = mapper.findWhere("", "WHERE end_brand is null");
+        List<Visit> result = mapper.findByPropertyName("", "end_brand", "SS");
+//        List<Visit> result = mapper.findWhere("", "WHERE end_brand = 'UN' AND end_type='MB'");
         for (Visit visit : result) {
             String agent = visit.getUseragent();
             Brand brand = Brand.parser(agent);
             System.out.println(brand.getRemark() + " - " + brand.getModel() + " - " + agent);
-//            if (AfStringUtil.isNotEmpty(brand.getModel())){
-//                visit.setEndModel(brand.getModel());
-//                visit.setEndBrand(brand.getAcronym());
-//                mapper.update(visit);
-//            }
+            if (AfStringUtil.isNotEmpty(brand.getModel())){
+                visit.setEndModel(brand.getModel());
+                visit.setEndBrand(brand.getAcronym());
+                mapper.update(visit);
+            }
         }
 //		System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void formatbrowser() throws Exception {
-//        List<Visit> result = mapper.findByPropertyName("", "browser_name", "PC");
+        List<Visit> result = mapper.findByPropertyName("", "browser_name", "XM");
 //        List<Visit> result = mapper.findWhere("", "WHERE browser_name is null");
-        List<Visit> result = mapper.findWhere("", "WHERE browser_version like '%)'");
+//        List<Visit> result = mapper.findWhere("", "WHERE browser_name like '%;'");
         for (Visit visit : result) {
             String agent = visit.getUseragent();
             Browser browser = Browser.parser(agent);
-            System.out.println(browser.getRemark() + " - " + browser.getVersion() + " - " + agent);
+            System.out.println(browser.getRemark() + " - " + browser.getVersion() + " - " + agent + "-" + visit.getBrowserVersion());
             visit.setBrowserName(browser.getAcronym());
             visit.setBrowserVersion(browser.getVersion());
             mapper.update(visit);

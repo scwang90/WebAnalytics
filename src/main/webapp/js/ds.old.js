@@ -1,15 +1,11 @@
-(function () {
-    /**
-     * 定义常量
-     */
-    var REFER_VISITORID = "wa_share_vtor";
-    var REFER_TIMESTAMP = "wa_share_time";
+
+(function() {
     /**
      * 创建全局工具对象。
      * @param win {Window} 窗口对象。
      * @param doc {Document} 文档对象。
      */
-    var global = new Global(window, window.document),
+    var global = new Global(window,window.document),
         screen = global.screen,
         location = global.location,
         navigator = global.navigator,
@@ -19,25 +15,21 @@
         empty = global.empty,
         performance = global.performance,
         jsverson = "1.0",
-        server = "/tracker",
-        path_track_event = "/" + jsverson + "/ten",
-        path_track_pageview = "/" + jsverson + "/tpv",
-        path_track_userinfo = "/" + jsverson + "/tur";
+        path_track_event = "/"+jsverson + "/ten",
+        path_track_pageview = "/"+jsverson + "/tpv",
+        server = "/tracker";
 
     /**
      * 客户端探测对象（如 饼干、分辨率...）
      */
     var detect = new Detect(global);
-    var tracker = new Tracker(server, "1");
-    window.WADS = {
-        linkChange:tracker.linkChange
-    };
+    var tracker = new Tracker(server,"1");
 
     // asynchronous tracker (or proxy)
     if (typeof _wapaq !== 'object') {
         _wapaq = [];
     }
-    var applyFirst = ['setTrackerUrl', 'setSiteId'];
+    var applyFirst  = ['setTrackerUrl', 'setSiteId'];
     _wapaq = applyMethodsInOrder(_wapaq, applyFirst);
 
     // apply the queue of actions
@@ -79,7 +71,8 @@
      *                 eg ['setSiteId', 'setTrackerUrl']
      * @returns {Array} the modified paq array with the methods that were already applied set to undefined
      */
-    function applyMethodsInOrder(paq, methodsToApply) {
+    function applyMethodsInOrder(paq, methodsToApply)
+    {
         var appliedMethods = {};
         var index, iterator;
         for (index = 0; index < methodsToApply.length; index++) {
@@ -103,7 +96,6 @@
         }
         return paq;
     }
-
     /**
      * apply wrapper
      *
@@ -120,26 +112,24 @@
             f = parameterArray.shift();
 
             if (isString(f)) {
-                return tracker[f].apply(tracker, parameterArray);
+                tracker[f].apply(tracker, parameterArray);
             } else {
-                return f.apply(tracker, parameterArray);
+                f.apply(tracker, parameterArray);
             }
         }
     }
-
     /**
      * Is property a string?
      */
     function isString(property) {
         return typeof property === 'string' || property instanceof String;
     }
-
     /**
      * 追踪器
      * @param {Object} global
      * @param {Object} detect
      */
-    function Tracker(trackerUrl, siteId) {
+    function Tracker (trackerUrl, siteId) {
         var
         // Life of the visitor cookie (in milliseconds)
             configVisitorCookieTimeout = 33955200000, // 13 months (365 days + 28days)
@@ -151,7 +141,7 @@
         var cookie = global.cookie;
         var hash = global.hash.sha1;
 
-        if (global.isDefined(siteId)) {
+        if (global.isDefined(siteId)){
             setSiteId(configTrackerSiteId);
         }
 
@@ -159,7 +149,6 @@
             configTrackerSiteId = siteId;
             setVisitorIdCookie();
         }
-
         /*
          * Get cookie name with prefix and domain hash
          */
@@ -168,32 +157,28 @@
             // will attempt to discover first party cookies. eg. See the PHP Client method getVisitorId()
             return "_wa_" + baseName + '.' + configTrackerSiteId;
         }
-
-        function setTrackerCookie(name, value, expire) {
-            return cookie.setCookie(getCookieName(name), value, expire);
+        function setTrackerCookie(name, value, expire){
+            return cookie.setCookie(getCookieName(name),value,expire);
         }
-
-        function getTrackerCookie(name) {
+        function getTrackerCookie(name){
             return cookie.getCookie(getCookieName(name));
         }
-
-        function delTrackerCookie(name) {
+        function delTrackerCookie(name){
             return cookie.delCookie(getCookieName(name));
         }
-
         /*
          * Sets the Visitor ID cookie
          */
         function setVisitorIdCookie(visitorIdCookieValues) {
-            if (!global.isDefined(configTrackerSiteId)) {//if(!configTrackerSiteId) {
+            if(!global.isDefined(configTrackerSiteId)) {//if(!configTrackerSiteId) {
                 // when called before Site ID was set
                 return;
             }
 
             var now = new Date(),
-                nowTs = Math.round(now.getTime());
+                nowTs = Math.round(now.getTime() / 1000);
 
-            if (!global.isDefined(visitorIdCookieValues)) {
+            if(!global.isDefined(visitorIdCookieValues)) {
                 visitorIdCookieValues = getValuesFromVisitorIdCookie();
             }
 
@@ -203,19 +188,17 @@
                 nowTs + '.' +
                 visitorIdCookieValues.lastVisitTs;
 
-            setTrackerCookie("id", cookieValue, getRemainingVisitorCookieTimeout());
+            setTrackerCookie("id",cookieValue,getRemainingVisitorCookieTimeout());
         }
-
         function getRemainingVisitorCookieTimeout() {
             var now = new Date(),
                 nowTs = now.getTime(),
                 cookieCreatedTs = getValuesFromVisitorIdCookie().createTs;
 
             var createTs = parseInt(cookieCreatedTs, 10);
-            var originalTimeout = (createTs) + configVisitorCookieTimeout - nowTs;
+            var originalTimeout = (createTs * 1000) + configVisitorCookieTimeout - nowTs;
             return originalTimeout;
         }
-
         /*
          * 生成一个 伪-唯一ID 来标记当前用户
          * 16 位十六进制  = 64 比特
@@ -234,7 +217,7 @@
          */
         function loadVisitorIdCookie() {
             var now = new Date(),
-                nowTs = Math.round(now.getTime()),
+                nowTs = Math.round(now.getTime() / 1000),
                 id = getTrackerCookie('id'),
                 cookieValue,
                 uuid;
@@ -286,27 +269,27 @@
                 lastVisitTs: lastVisitTs,
             };
         }
-
         /**
-         *
+        *
          private String idvtor;  //(必需) 访问者ID 16个字符的十六进制字符串
          private boolean idn;    //(推荐) 是否新的访问者
          private Integer idvc;   //(必需) 访问者当前访问的次数
          private Long idts;      //(推荐) 访问者本次次访问时间
          private Long lasts;     //(可选) 访问者上一次访问时间
-         * */
-        function getPageviewParam() {
+        * */
+        function getPageviewParam(){
             var visitor = getValuesFromVisitorIdCookie();
-            return "idsite=" + configTrackerSiteId
-                + "&idvtor=" + visitor.uuid
-                + "&idn=" + visitor.newVisitor
-                + "&idvc=" + visitor.visitCount
-                + "&idts=" + visitor.createTs
-                + "&visits=" + Math.round(new Date().getTime())
-                + "&lastts=" + visitor.lastVisitTs
+            return "idsite="+configTrackerSiteId
+                + "&idvtor="+visitor.uuid
+                + "&idn="+visitor.newVisitor
+                + "&idvc="+visitor.visitCount
+                + "&idts="+visitor.createTs
+                + "&visits="+Math.round(new Date().getTime() / 1000)
+                + "&lastts="+visitor.lastVisitTs
+                + "&gtms="+((performance && performance.timing
+                && performance.timing.requestStart && performance.timing.responseEnd)?(performance.timing.responseEnd - performance.timing.requestStart):1000)
                 + detect.getParam();
         }
-
         return {
             /**
              * Specify the Piwik server URL
@@ -322,103 +305,34 @@
             setSiteId: function (siteId) {
                 setSiteId(siteId);
             },
-            getVisitor: function () {
+            getVisitor : function(){
                 return getValuesFromVisitorIdCookie();
             },
-            trackPageView: function () {
+            trackPageView : function () {
                 var url = configTrackerUrl + path_track_pageview;
-                global.ajax.send(url, (getPageviewParam()));
+                global.ajax.send(url,(getPageviewParam()));
             },
-            trackEvent: function (category, action, name, value) {
+            trackEvent : function (category, action, name, value) {
                 var url = configTrackerUrl + path_track_event;
-                global.ajax.send(url, detect.getParam());
+                global.ajax.send(url,detect.getParam());
             },
-            linkChange: function (url) {
-                var old = url;
-                try {
-                    var idtag = "",
-                        visitor = getValuesFromVisitorIdCookie(),
-                        visitorId = visitor.uuid,
-                        timestampId = Math.round(new Date().getTime());
-                    if (url.indexOf("#") != -1) {
-                        idtag = url.split("#")[1];
-                        url = url.split("#")[0];
-                    }
-                    if (url.indexOf(REFER_VISITORID) != -1) {
-                        url = url.replace(new RegExp(REFER_VISITORID + "=[\\w]+"), REFER_VISITORID + "=" + visitorId);
-                    } else {
-                        url = global.url.putArg(url, REFER_VISITORID, visitorId)
-                    }
-                    if (url.indexOf(REFER_TIMESTAMP) != -1) {
-                        url = url.replace(new RegExp(REFER_TIMESTAMP + "=[\\w]+"), REFER_TIMESTAMP + "=" + timestampId);
-                    } else {
-                        url = global.url.putArg(url, REFER_TIMESTAMP, timestampId)
-                    }
-                    if (idtag != "")url += "#" + idtag;
-                    return url
-                } catch (i) {
-                    return old
-                }
-            },
-            sendAuthUserInfo: function (user, appid) {
-                if (user == undefined || user == null)return;
-                var visitor = getValuesFromVisitorIdCookie(),
-                    visitorId = visitor.uuid,
-                    param = ("url=" + encodeURIComponent(detect.url) +
-                    + "&idvtor=" + visitorId +
-                    + "&idsite=" + configTrackerSiteId +
-                    + "&openid=" + user.openid +
-                    + "&nickname=" + encodeURIComponent(encodeURIComponent(user.nickname)) +
-                    + "&sex=" + user.sex +
-                    + "&province=" + encodeURIComponent(encodeURIComponent(user.province)) +
-                    + "&city=" + encodeURIComponent(encodeURIComponent(user.city)) +
-                    + "&country=" + encodeURIComponent(encodeURIComponent(user.country)) +
-                    + "&headimgurl=" + user.headimgurl +
-                    + "&privilege=" + (user.privilege ? user.privilege.join(",") : "") +
-                    + "&unionid=" + user.unionid +
-                    + "&appid=" + appid);
-                var url = configTrackerUrl + path_track_userinfo;
-                global.ajax.send(url, param);
-            }
         };
     }
-
     /**
      * 客户端探测对象（如 饼干、分辨率...）
      */
     function Detect() {
-        var _this = this;
         this.java = (function () {return navigator.javaEnabled && navigator.javaEnabled();})();
         this.cookie = (function () {return navigator.cookieEnabled == true;})();
         this.color = (function () {return screen ? screen.colorDepth : empty;})();
         this.cset = (function () {return document ? document.characterSet : empty;})();
         this.lang = (function () {return navigator ? navigator.language : empty;})();
-        this.fromvid = global.url.getArg(REFER_VISITORID, "");
-        this.fromvts = global.url.getArg(REFER_TIMESTAMP, Math.round(new Date().getTime()));
-        this.title = (function () {
-            if  (document) {
-                var title = document.title;
-                title = title && title.text ? title.text : title;
-                if (!isString(title)) {
-                    var tmp = documentAlias.getElementsByTagName('title');
-                    if (tmp && global.isDefined(tmp[0])) {
-                        title = tmp[0].text;
-                    }
-                }
-                return title;
-            }
-            return empty;
-        })();
-        this.url = (function () {
-            if (location && location.href) {
-                return global.url.remArg(location.href,[REFER_VISITORID,REFER_TIMESTAMP,'from'])
-            }
-            return empty;
-        })();
+        this.url = (function () {return location ? location.href : empty;})();
+        this.title = (function () {return document ? document.title : empty;})();
         this.screen = (function () {
-            if (screen) {
-                if ((screen.width < 1000 || screen.height < 1000) && window.devicePixelRatio) {
-                    return screen.width * window.devicePixelRatio + 'x' + screen.height * window.devicePixelRatio;
+            if(screen) {
+                if((screen.width < 1000 || screen.height < 1000) && window.devicePixelRatio){
+                    return screen.width*window.devicePixelRatio + 'x' + screen.height*window.devicePixelRatio;
                 }
                 return screen.width + 'x' + screen.height;
             }
@@ -426,33 +340,24 @@
         })();
         this.refer = (function () {
             var referrer = document ? (document.referrer) : empty;
-            return (referrer == location.href || _this.url == referrer) ? empty : referrer;
+            return referrer == location.href ? empty : referrer;
         })();
-        this.gtms = (function(){
-            if (performance && performance.timing
-                && performance.timing.requestStart && performance.timing.responseEnd){
-                return performance.timing.responseEnd - performance.timing.requestStart;
-            }
-            return 1000;
-        })();
-        this.getParam = function () {
+        this.getParam = function(){
             var param = "";
-            for (var p in this) {
-                if (typeof(detect[p]) != "function") {
-                    param += "&" + p + "=" + ((global.isDefined(detect[p])) ? detect[p] : empty);
+            for(var p in this){
+                if (typeof(detect[p])!="function") {
+                    param += "&" + p + "="+((global.isDefined(detect[p]))?detect[p]:empty);
                 }
             }
             return param;
         };
     }
-
     /**
      * 全局工具对象。
      * @param win {Window} 窗口对象。
      * @param doc {Document} 文档对象。
      */
     function Global(win, doc) {
-        var _this = this;
         this.window = win;
         this.document = doc;
         this.navigator = win.navigator;
@@ -465,13 +370,13 @@
         /*
          * Is property defined?
          */
-        this.isDefined = function (property) {
+        this.isDefined = function(property) {
             // workaround https://github.com/douglascrockford/JSLint/commit/24f63ada2f9d7ad65afc90e6d949f631935c2480
             var propertyType = typeof property;
             return propertyType !== 'undefined';
         }
         this.cookie = {
-            setCookie: function (name, value, expire, path, domain, secure) {
+            setCookie : function(name, value, expire, path, domain, secure) {
                 var expiryDate;
                 // relative time to expire in milliseconds
                 if (expire) {
@@ -484,79 +389,18 @@
                     (domain ? ';domain=' + domain : '') +
                     (secure ? ';secure' : '');
             },
-            getCookie: function (name) {
+            getCookie : function(name) {
                 var pattern = new RegExp('(^|;)[ ]*' + name + '=([^;]*)'),
                     match = pattern.exec(document.cookie);
-                return match ? decode(match[2]) : 0;
+                return match  ? decode(match[2]) : 0;
             },
-            delCookie: function (name) {
+            delCookie : function(name) {
                 var exp = new Date();
                 exp.setTime(exp.getTime() - 1);
                 var cval = getCookie(name);
                 if (cval != null)
                     document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
             },
-        };
-        this.storage = {
-            setItem: function (name, value) {
-                sessionStorage && sessionStorage.setItem(name, value);
-                _this.cookie.setCookie(name, value)
-            },
-            getItem: function (name) {
-                if (sessionStorage) {
-                    return sessionStorage.getItem(name)
-                } else {
-                    return _this.cookie.getCookie(name)
-                }
-            }
-        };
-        this.url = {
-            putArg: function (url, name, value) {
-                if (value == undefined || value == null) {
-                    value = "";
-                }
-                if (url.indexOf("?") != -1 || url.indexOf("=") != -1) {
-                    return url + "&" + name + "=" + value;
-                } else {
-                    return url + "?" + name + "=" + value;
-                }
-            },
-            getArg: function (name, def) {
-                var n = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-                var t = window.location.search.substr(1).match(n);
-                if (t != null)return unescape(t[2]);
-                return def;
-            },
-            remArg : function (url, names) {
-                var urls = url.split("?"),source="",idtag = "";
-                if(urls.length > 1){
-                    source = urls[0];
-                    url = urls[1];
-                }
-                urls = url.split("#");
-                if(urls.length > 1){
-                    url = urls[0];
-                    idtag = "#" + urls[1];
-                }
-                var args = url.split("&");
-                var nargs = [];
-                for (var arg in args) {
-                    var find = false;
-                    for (var name in names) {
-                        if (args[arg].indexOf(names[name]) == 0) {
-                            find = true;
-                            break;
-                        }
-                    }
-                    if (!find) {
-                        nargs.push(args[arg]);
-                    }
-                }
-                if (source != "" && nargs.length > 0) {
-                    source = source + "?";
-                }
-                return source + nargs.join("&") + idtag;
-            }
         };
         this.ajax = {
             /**
@@ -567,12 +411,12 @@
              * @param callback {Function} 回调函数。
              * @param _ioo {Boolean} 是否忽略参数长度溢出错误
              */
-            send: function (url, param, mark, callback, _ioo) {
-                if (param.length <= 2036 || _ioo) {
-                    this.sendByImage(url, param, callback);
-                } else {
+            send : function(url, param, mark, callback, _ioo){
+                if(param.length <= 2036 || _ioo){
+                    this.sendByImage(url,param, callback);
+                }else{
                     mark = mark || "auto";
-                    this.sendByImage(url, "&mark=" + mark + "&err=len&max=2036&len=" + param.length, callback);
+                    this.sendByImage(url,"&mark=" + mark + "&err=len&max=2036&len=" + param.length, callback);
                 }
             },
             /**
@@ -580,16 +424,16 @@
              * @param src {String} 组装完毕的图片的地址。
              * @param callback {Function} 回调函数。
              */
-            sendByImage: function (src, param, callback) {
+            sendByImage : function(src, param, callback){
                 var image = new Image(1, 1);
-                if (param[0] == '?') {
+                if(param[0] == '?'){
                     param[0] = '&';
                 }
-                if (param[0] != '&') {
+                if(param[0] != '&'){
                     param = '&' + param;
                 }
                 image.src = src + "?rand=" + String(Math.random()).slice(2, 8) + param;
-                image.onload = function () {
+                image.onload = function(){
                     image.onload = null;
                     (callback && callback());
                 };
@@ -599,7 +443,7 @@
             /************************************************************
              * sha1
              ************************************************************/
-            sha1: function (str) {
+            sha1 : function (str) {
                 var
                     rotate_left = function (n, s) {
                         return (n << s) | (n >>> (32 - s));
@@ -730,6 +574,23 @@
             /************************************************************
              * end sha1
              ************************************************************/
+        };
+        /**
+         * 处理网页来源页面的URL地址。
+         * @return {String} 处理过的URL地址。
+         */
+        this.processSource = function (source) {
+            if (!source) {
+                return source;
+            }
+            source = source.replace(/\n|\r/g, " ");
+            for (var i = 0, len = source[_length]; i < len; ++i) {
+                var charCode = source.charCodeAt(i) & 255;
+                if (charCode == 10 || charCode == 13) {
+                    source = source[_substring](0, i) + "?" + source[_substring](i + 1);
+                }
+            }
+            return source;
         };
     }
 })();
