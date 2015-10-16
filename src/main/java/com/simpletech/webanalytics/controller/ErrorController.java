@@ -5,12 +5,9 @@ import com.simpletech.webanalytics.model.entity.PeriodValue;
 import com.simpletech.webanalytics.service.ErrorService;
 import com.simpletech.webanalytics.util.AfReflecter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -22,12 +19,6 @@ import java.util.*;
 public class ErrorController {
     @Autowired
     ErrorService service;
-
-//    @InitBinder
-//    public void initBinder(ServletRequestDataBinder binder) throws Exception {
-//        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyyMMddHHmmss"), true));
-//    }
-
 
     /**
      *  获取失败数据API http://[ip|域名][:端口]/api/error/[ranktype]/[limit]/[skip]
