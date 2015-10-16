@@ -33,7 +33,7 @@ public class TrackShareServiceImpl implements TrackShareService {
             if (!idVisitor.equals(idFromtor)) {
                 ShareUser formtor = dao.getShareUser(siteId, idsubsite, idFromtor);
                 //获取上一个点（不存在则添加）
-                SharePoint lpoint = dao.getSharePoint(siteId, idsubsite, url.getId(), idFromtor);
+                SharePoint lpoint = dao.getSharePoint(siteId, idsubsite, url.getId(), idFromtor, detect.getFromvts());
                 //获取本次分享点
                 SharePoint tpoint = dao.getSharePoint(siteId, idsubsite, url.getId(), idFromtor, idVisitor);
                 if (tpoint == null) {
@@ -57,9 +57,10 @@ public class TrackShareServiceImpl implements TrackShareService {
     }
 
     @Override
-    public void addOrUpdateUser(ShareUser user) throws Exception {
+    public void addOrUpdateUser(int siteId, ShareUser user) throws Exception {
         ShareUser old = dao.getShareUser(user.getIdsite(), user.getIdvisitor());
         if (old == null) {
+            user.setIdsite(siteId);
             dao.insertShareUser(user);
         } else {
             dao.updateShareUser(checkNullField(old, user));

@@ -37,9 +37,10 @@ public interface TrackShareDao {
      * @param idsubsite 子站ID
      * @param idurl     页面ID
      * @param idfromtor 分享者ID
+     * @param fromts    时间分享时间
      * @return 返回有效的 SharePoint 对象
      */
-    SharePoint getSharePoint(int siteId, String idsubsite, String idurl, String idfromtor) throws Exception;
+    SharePoint getSharePoint(int siteId, String idsubsite, String idurl, String idfromtor, long fromts) throws Exception;
 
     /**
      * 获取本次分享点 (如果不存在则添加)
@@ -55,24 +56,28 @@ public interface TrackShareDao {
 
     /**
      * 添加分享点
+     *
      * @param point SharePoint
      */
     int insertSharePoint(SharePoint point) throws Exception;
 
     /**
      * 更新分享点
+     *
      * @param tpoint SharePoint
      */
     int updateSharePoint(SharePoint tpoint) throws Exception;
 
     /**
      * 添加分用户
+     *
      * @param user ShareUser
      */
     int insertShareUser(ShareUser user) throws Exception;
 
     /**
      * 更新分用户
+     *
      * @param user ShareUser
      */
     int updateShareUser(ShareUser user) throws Exception;

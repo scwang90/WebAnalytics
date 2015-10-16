@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_visit
  * @author 树朾
- * @date 2015-10-13 09:23:02 中国标准时间
+ * @date 2015-10-16 10:38:40 中国标准时间
  */
 @Table("t_visit")
 public class Visit extends ModelBase{
@@ -37,12 +37,12 @@ public class Visit extends ModelBase{
 	@Column("update_time")
 	private java.util.Date updateTime;
 	/**
-	 * 是否新用户
+	 * 是否老用户
 	 */
 	@Column("new_user")
 	private Boolean newUser;
 	/**
-	 * 子站是否新用户
+	 * 是否子站新用户
 	 */
 	@Column("new_sub_user")
 	private Boolean newSubUser;
@@ -162,6 +162,11 @@ public class Visit extends ModelBase{
 	 */
 	@Column("location_city")
 	private String locationCity;
+	/**
+	 * 定位比较
+	 */
+	@Column("location_compared")
+	private Boolean locationCompared;
 	/**
 	 * 终端设备型号
 	 */
@@ -442,6 +447,14 @@ public class Visit extends ModelBase{
 
 	public void setLocationCity(String locationCity) {
 		this.locationCity = locationCity;
+	}
+	
+	public Boolean getLocationCompared(){
+		return this.locationCompared;
+	}
+
+	public void setLocationCompared(Boolean locationCompared) {
+		this.locationCompared = locationCompared;
 	}
 	
 	public String getEndModel(){

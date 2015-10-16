@@ -44,7 +44,7 @@ public class TrackShareDaoImpl implements TrackShareDao {
     }
 
     @Override
-    public SharePoint getSharePoint(int siteId, String idsubsite, String idurl, String idfromtor) throws Exception {
+    public SharePoint getSharePoint(int siteId, String idsubsite, String idurl, String idfromtor, long fromts) throws Exception {
         SharePoint point = mapper.getSharePoint(siteId, idurl, idfromtor);
         if (point == null) {
             point = new SharePoint();
@@ -53,7 +53,7 @@ public class TrackShareDaoImpl implements TrackShareDao {
             point.setIdvisitor(idfromtor);//创建上一个分享点
             point.fillNullID();
             point.setIdsubsite(idsubsite);
-            point.setShareTime(new Date());
+            point.setShareTime(new Date(fromts));
             point.setCountPv(1);
             AfReflecter.setMemberNoException(point, "createTime", new Date());
             AfReflecter.setMemberNoException(point, "updateTime", new Date());

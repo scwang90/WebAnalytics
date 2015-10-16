@@ -24,5 +24,5 @@ public interface TrackShareService {
      * 添加或更新 user
      * @param user JsUser
      */
-    void addOrUpdateUser(ShareUser user) throws Exception;
+    void addOrUpdateUser(int siteId, ShareUser user) throws Exception;
 }

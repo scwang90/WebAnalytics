@@ -89,7 +89,7 @@ public class TrackerServiceImpl implements TrackerService {
         if (site != null) {
             String idsubsite = getIdSubSite(site, user.getUrl());
             user.setIdsubsite(idsubsite);
-            trackShareService.addOrUpdateUser(user);
+            trackShareService.addOrUpdateUser(siteId, user);
         }
     }
 
