@@ -1,5 +1,6 @@
 package com.simpletech.webanalytics.dao;
 
+import com.simpletech.webanalytics.model.SharePoint;
 import com.simpletech.webanalytics.model.constant.RankingType;
 import com.simpletech.webanalytics.model.entity.*;
 
@@ -147,4 +148,14 @@ public interface StatisticsDao {
 	List<EventPeriodValue> eventDay(String idsite, String category, Date start, Date end, int limit, int skip) throws Exception;
 	List<EventPeriodValue> eventHour(String idsite, String category, Date start, Date end, int limit, int skip) throws Exception;
 
+	/**
+	 * 分享传播点列表
+	 *
+	 * @param idsite   网站ID
+	 * @param urlId    页面ID
+	 * @param start    开始时间
+	 * @param end      结束时间
+	 * @return 分享传播点列表
+	 */
+	List<SharePoint> sharePoint(String idsite, String urlId, Date start, Date end) throws Exception;
 }

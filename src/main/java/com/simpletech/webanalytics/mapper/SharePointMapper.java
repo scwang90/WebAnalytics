@@ -15,7 +15,7 @@ import com.simpletech.webanalytics.dao.base.BaseDaoMybatisMYSQLImpl.MybatisMulti
 /**
  * 数据库表t_share_point的mapper接口
  * @author 树朾
- * @date 2015-10-15 18:13:55 中国标准时间
+ * @date 2015-10-16 13:22:29 中国标准时间
  */
 public interface SharePointMapper extends MybatisMultiDao<SharePoint>{
 
@@ -24,7 +24,7 @@ public interface SharePointMapper extends MybatisMultiDao<SharePoint>{
 	 * @param model 添加的数据
 	 * @return 改变的行数
 	 */
-	@Insert("INSERT INTO t_share_point ( id , idsite , idsubsite , idvisitor , idurl , idrefer , count_pv , share_time , create_time , update_time ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{idvisitor} , #{idurl} , #{idrefer} , #{countPv} , #{shareTime} , #{createTime} , #{updateTime} )")
+	@Insert("INSERT INTO t_share_point ( id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv , share_span , share_time , create_time , update_time ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{idurl} , #{idvisitor} , #{idrefervisitor} , #{countPv} , #{shareSpan} , #{shareTime} , #{createTime} , #{updateTime} )")
 	int insert(SharePoint model) throws Exception;
 	/**
 	 * 根据ID删除
@@ -38,7 +38,7 @@ public interface SharePointMapper extends MybatisMultiDao<SharePoint>{
 	 * @param model 更新的数据
 	 * @return 改变的行数
 	 */
-	@Update("UPDATE t_share_point SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , idvisitor=#{idvisitor} , idurl=#{idurl} , idrefer=#{idrefer} , count_pv=#{countPv} , share_time=#{shareTime} , create_time=#{createTime} , update_time=#{updateTime} WHERE id=#{id} ")
+	@Update("UPDATE t_share_point SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , idurl=#{idurl} , idvisitor=#{idvisitor} , idrefervisitor=#{idrefervisitor} , count_pv=#{countPv} , share_span=#{shareSpan} , share_time=#{shareTime} , create_time=#{createTime} , update_time=#{updateTime} WHERE id=#{id} ")
 	int update(SharePoint model) throws Exception;
 	/**
 	 * 统计全部出数据
@@ -51,13 +51,13 @@ public interface SharePointMapper extends MybatisMultiDao<SharePoint>{
 	 * @param id 主键ID
 	 * @return null 或者 主键等于id的数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefer , count_pv countPv , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point WHERE id=#{id}")
+	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point WHERE id=#{id}")
 	SharePoint findById(@Param("id") Object id) throws Exception;
 	/**
 	 * 获取全部数据
 	 * @return 全部数据列表
 	 */
-	@Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefer , count_pv countPv , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point ${order}")
+	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point ${order}")
 	List<SharePoint> findAll(@Param("order") String order) throws Exception;
 	/**
 	 * 分页查询数据
@@ -65,7 +65,7 @@ public interface SharePointMapper extends MybatisMultiDao<SharePoint>{
 	 * @param start 起始返回
 	 * @return 分页列表数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefer , count_pv countPv , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point ${order} LIMIT ${start},${limit}")
+	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point ${order} LIMIT ${start},${limit}")
 	List<SharePoint> findByPage(@Param("order") String order, @Param("limit") int limit, @Param("start") int start) throws Exception;
 	/**
 	 * 选择性删除
@@ -102,7 +102,7 @@ public interface SharePointMapper extends MybatisMultiDao<SharePoint>{
 	 * @param where SQL条件语句
 	 * @return 符合条件的列表数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefer , count_pv countPv , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point ${where} ${order}")
+	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point ${where} ${order}")
 	List<SharePoint> findWhere(@Param("order") String order, @Param("where") String where) throws Exception;
 	/**
 	 * 选择性分页查询
@@ -111,7 +111,7 @@ public interface SharePointMapper extends MybatisMultiDao<SharePoint>{
 	 * @param start 起始返回
 	 * @return 符合条件的列表数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefer , count_pv countPv , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point ${where} ${order} LIMIT ${start},${limit}")
+	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point ${where} ${order} LIMIT ${start},${limit}")
 	List<SharePoint> findWhereByPage(@Param("order") String order, @Param("where") String where, @Param("limit") int limit, @Param("start") int start) throws Exception;
 	/**
 	 * 根据属性查询
@@ -119,6 +119,6 @@ public interface SharePointMapper extends MybatisMultiDao<SharePoint>{
 	 * @param value 值
 	 * @return 返回符合条件的数据列表
 	 */
-	@Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefer , count_pv countPv , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point WHERE ${propertyName}=#{value} ${order}")
+	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point WHERE ${propertyName}=#{value} ${order}")
 	List<SharePoint> findByPropertyName(@Param("order") String order, @Param("propertyName") String propertyName, @Param("value") Object value) throws Exception;
 }

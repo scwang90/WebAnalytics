@@ -1,18 +1,18 @@
 package com.simpletech.webanalytics.service.impl;
 
 import com.simpletech.webanalytics.dao.*;
+import com.simpletech.webanalytics.model.SharePoint;
 import com.simpletech.webanalytics.model.constant.Period;
 import com.simpletech.webanalytics.model.constant.Ranking;
 import com.simpletech.webanalytics.model.constant.RankingType;
 import com.simpletech.webanalytics.model.entity.*;
 import com.simpletech.webanalytics.service.SiteService;
 import com.simpletech.webanalytics.service.StatisticsService;
+import com.simpletech.webanalytics.util.AfStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 统计API Service 实现
@@ -111,7 +111,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         //判断是否是主站
         boolean isSubSite = !idsite.matches("\\d+");
         for (VisitorValue value : list) {
-            if (isSubSite){
+            if (isSubSite) {
                 value.setNv(value.getSubnv());
             }
             value.setOv(value.getUv() - value.getNv());
@@ -152,4 +152,66 @@ public class StatisticsServiceImpl implements StatisticsService {
         return new ArrayList<>();
     }
 
+    @Override
+    public Object sharemap(String idsite, String urlId, Date start, Date end) throws Exception {
+        List<SharePoint> list = dao.sharePoint(idsite, urlId, start, end);
+        List<Map<String, Object>> lines = new ArrayList<>();
+        List<Map<String, Object>> points = new ArrayList<>();
+        Map<String, Map<String, Object>> mpoints = new HashMap<>();
+        //点排重
+        for (SharePoint sharePoint : list) {
+            Map<String, Object> point = mpoints.get(sharePoint.getIdvisitor());
+            if (point == null) {
+                point = new HashMap<>();
+                point.put("Id", sharePoint.getIdvisitor());
+                point.put("pv", sharePoint.getCountPv());
+                //判断点类型 class 0 起始点 2 叶子点
+                point.put("cl", 2 );
+                mpoints.put(sharePoint.getIdvisitor(), point);
+            } else {
+                point.put("pv", (Integer) point.get("pv") + sharePoint.getCountPv());
+                //判断点类型 class 0 起始点 2 叶子点
+                if (Integer.valueOf(0).equals(point.get("cl"))) {
+                    point.put("cl", 2 );
+                }
+            }
+        }
+        //生成线
+        for (SharePoint sharePoint : list) {
+            //判断有前一节点并且前一节点存在才生成线
+            if (AfStringUtil.isNotEmpty(sharePoint.getIdrefervisitor())) {
+                Map<String, Object> line = new HashMap<>();
+                line.put("sId", sharePoint.getIdrefervisitor());
+                line.put("eId", sharePoint.getIdvisitor());
+                line.put("sts", sharePoint.getShareSpan());
+                lines.add(line);
+
+                Map<String, Object> point = mpoints.get(sharePoint.getIdrefervisitor());
+                if (point != null) {
+                    //改变叶子节点为中间节点
+                    //判断点类型 class 0 起始点 2 叶子点 1 中间节点
+                    point.put("cl", 1);
+                }
+            }
+        }
+        //生成起始点
+        for (SharePoint sharePoint : list) {
+            Map<String, Object> point = mpoints.get(sharePoint.getIdrefervisitor());
+            if (point == null) {
+                point = new HashMap<>();
+                point.put("Id", sharePoint.getIdrefervisitor());
+                point.put("pv", 1);
+                //判断点类型 class 0 起始点 2 叶子点
+                point.put("cl", 0);
+                mpoints.put(sharePoint.getIdvisitor(), point);
+            }
+        }
+        for (Map.Entry<String, Map<String, Object>> entry : mpoints.entrySet()) {
+            points.add(entry.getValue());
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("lines", lines);
+        map.put("lines", points);
+        return map;
+    }
 }

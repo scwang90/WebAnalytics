@@ -19,16 +19,16 @@ public interface TrackShareMapper {
     @Insert("INSERT INTO t_share_user ( id , idsite , idsubsite , idvisitor , openid , unionid , nickname , headimgurl , sex , province , city , country , privilege , create_time , update_time ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{idvisitor} , #{openid} , #{unionid} , #{nickname} , #{headimgurl} , #{sex} , #{province} , #{city} , #{country} , #{privilege} , #{createTime} , #{updateTime} )")
     int insertShareUser(ShareUser user) throws Exception;
 
-    @Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefer , count_pv countPv , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point WHERE idsite=#{siteId} AND idurl=#{idurl} AND idvisitor=#{idvisitor}")
-    SharePoint getSharePoint(@Param("siteId") int siteId, @Param("idurl") String idurl, @Param("idvisitor") String idvisitor) throws Exception;
+//    @Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point WHERE idsite=#{siteId} AND idurl=#{idurl} AND idvisitor=#{idvisitor}")
+//    SharePoint getSharePoint(@Param("siteId") int siteId, @Param("idurl") String idurl, @Param("idvisitor") String idvisitor) throws Exception;
 
-    @Insert("INSERT INTO t_share_point ( id , idsite , idsubsite , idvisitor , idurl , idrefer , count_pv , share_time , create_time , update_time ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{idvisitor} , #{idurl} , #{idrefer} , #{countPv} , #{shareTime} , #{createTime} , #{updateTime} )")
+    @Insert("INSERT INTO t_share_point ( id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv , share_span , share_time , create_time , update_time ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{idurl} , #{idvisitor} , #{idrefervisitor} , #{countPv} , #{shareSpan} , #{shareTime} , #{createTime} , #{updateTime} )")
     int insertSharePoint(SharePoint point) throws Exception;
 
-    @Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefer , count_pv countPv , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point WHERE idsite=#{siteId} AND idurl=#{idurl} AND idvisitor=#{idvisitor} AND idrefer=#{idfromtor}")
+    @Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point WHERE idsite=#{siteId} AND idurl=#{idurl} AND idvisitor=#{idvisitor} AND idrefervisitor=#{idfromtor}")
     SharePoint getSharePoint(@Param("siteId") int siteId, @Param("idurl") String idurl, @Param("idfromtor") String idfromtor, @Param("idvisitor") String idvisitor) throws Exception;
 
-    @Update("UPDATE t_share_point SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , idvisitor=#{idvisitor} , idurl=#{idurl} , idrefer=#{idrefer} , count_pv=#{countPv} , share_time=#{shareTime} , create_time=#{createTime} , update_time=#{updateTime} WHERE id=#{id} ")
+    @Update("UPDATE t_share_point SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , idurl=#{idurl} , idvisitor=#{idvisitor} , idrefervisitor=#{idrefervisitor} , count_pv=#{countPv} , share_span=#{shareSpan} , share_time=#{shareTime} , create_time=#{createTime} , update_time=#{updateTime} WHERE id=#{id} ")
     int updateSharePoint(SharePoint point) throws Exception;
 
     @Update("UPDATE t_share_user SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , idvisitor=#{idvisitor} , openid=#{openid} , unionid=#{unionid} , nickname=#{nickname} , headimgurl=#{headimgurl} , sex=#{sex} , province=#{province} , city=#{city} , country=#{country} , privilege=#{privilege} , create_time=#{createTime} , update_time=#{updateTime} WHERE id=#{id} ")

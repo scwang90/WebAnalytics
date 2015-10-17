@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_share_point
  * @author 树朾
- * @date 2015-10-15 18:13:55 中国标准时间
+ * @date 2015-10-16 13:22:29 中国标准时间
  */
 @Table("t_share_point")
 public class SharePoint extends ModelBase{
@@ -27,22 +27,27 @@ public class SharePoint extends ModelBase{
 	 */
 	private String idsubsite;
 	/**
-	 * 访问者ID
-	 */
-	private String idvisitor;
-	/**
 	 * 页面ID
 	 */
 	private String idurl;
 	/**
-	 * 上个一点ID
+	 * 访问者ID
 	 */
-	private String idrefer;
+	private String idvisitor;
+	/**
+	 * 上个一访问者ID
+	 */
+	private String idrefervisitor;
 	/**
 	 * 点击量
 	 */
 	@Column("count_pv")
 	private Integer countPv;
+	/**
+	 * 分享时间差
+	 */
+	@Column("share_span")
+	private Long shareSpan;
 	/**
 	 * 分享时间
 	 */
@@ -61,7 +66,7 @@ public class SharePoint extends ModelBase{
 
 	public SharePoint() {
 	}
-	
+
 	public String getId(){
 		return this.id;
 	}
@@ -69,7 +74,7 @@ public class SharePoint extends ModelBase{
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public Integer getIdsite(){
 		return this.idsite;
 	}
@@ -77,7 +82,7 @@ public class SharePoint extends ModelBase{
 	public void setIdsite(Integer idsite) {
 		this.idsite = idsite;
 	}
-	
+
 	public String getIdsubsite(){
 		return this.idsubsite;
 	}
@@ -85,15 +90,7 @@ public class SharePoint extends ModelBase{
 	public void setIdsubsite(String idsubsite) {
 		this.idsubsite = idsubsite;
 	}
-	
-	public String getIdvisitor(){
-		return this.idvisitor;
-	}
 
-	public void setIdvisitor(String idvisitor) {
-		this.idvisitor = idvisitor;
-	}
-	
 	public String getIdurl(){
 		return this.idurl;
 	}
@@ -101,15 +98,23 @@ public class SharePoint extends ModelBase{
 	public void setIdurl(String idurl) {
 		this.idurl = idurl;
 	}
-	
-	public String getIdrefer(){
-		return this.idrefer;
+
+	public String getIdvisitor(){
+		return this.idvisitor;
 	}
 
-	public void setIdrefer(String idrefer) {
-		this.idrefer = idrefer;
+	public void setIdvisitor(String idvisitor) {
+		this.idvisitor = idvisitor;
 	}
-	
+
+	public String getIdrefervisitor(){
+		return this.idrefervisitor;
+	}
+
+	public void setIdrefervisitor(String idrefervisitor) {
+		this.idrefervisitor = idrefervisitor;
+	}
+
 	public Integer getCountPv(){
 		return this.countPv;
 	}
@@ -117,7 +122,15 @@ public class SharePoint extends ModelBase{
 	public void setCountPv(Integer countPv) {
 		this.countPv = countPv;
 	}
-	
+
+	public Long getShareSpan(){
+		return this.shareSpan;
+	}
+
+	public void setShareSpan(Long shareSpan) {
+		this.shareSpan = shareSpan;
+	}
+
 	public java.util.Date getShareTime(){
 		return this.shareTime;
 	}
@@ -125,7 +138,7 @@ public class SharePoint extends ModelBase{
 	public void setShareTime(java.util.Date shareTime) {
 		this.shareTime = shareTime;
 	}
-	
+
 	public java.util.Date getCreateTime(){
 		return this.createTime;
 	}
@@ -133,7 +146,7 @@ public class SharePoint extends ModelBase{
 	public void setCreateTime(java.util.Date createTime) {
 		this.createTime = createTime;
 	}
-	
+
 	public java.util.Date getUpdateTime(){
 		return this.updateTime;
 	}
@@ -141,5 +154,5 @@ public class SharePoint extends ModelBase{
 	public void setUpdateTime(java.util.Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	
+
 }

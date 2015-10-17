@@ -1,5 +1,6 @@
 package com.simpletech.webanalytics.mapper;
 
+import com.simpletech.webanalytics.model.SharePoint;
 import com.simpletech.webanalytics.model.Title;
 import com.simpletech.webanalytics.model.Url;
 import com.simpletech.webanalytics.model.entity.*;
@@ -181,12 +182,14 @@ public interface StatisticsMapper {
     RankingValue coutranking(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
 
     /**
-     * 统计 idvtor 在 idsite网站的 visit 次数
+     * 分享传播点列表
      *
-     * @param idsite 网站ID
-     * @param idvtor 访问者ID
-     * @return 统计数
+     * @param idsite   网站ID
+     * @param urlId    页面ID
+     * @param start    开始时间
+     * @param end      结束时间
+     * @return 分享传播点列表
      */
-    @Select("SELECT COUNT(id) FROM t_visit WHERE idsite=${idsite} AND idvisitor=#{idvtor}")
-    boolean countVisitor(@Param("idsite") String idsite,@Param("idvtor")  String idvtor) throws Exception;
+    @Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefervisitor , count_pv countPv , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_point WHERE idsite=${idsite} AND idurl=#{urlId} AND (create_time BETWEEN #{start} AND #{end}) ")
+    List<SharePoint> sharePoint(@Param("idsite") String idsite, @Param("urlId") String urlId, @Param("start") Date start, @Param("end") Date end) throws Exception;
 }

@@ -33,17 +33,18 @@ public class TrackShareServiceImpl implements TrackShareService {
             if (!idVisitor.equals(idFromtor)) {
                 ShareUser formtor = dao.getShareUser(siteId, idsubsite, idFromtor);
                 //获取上一个点（不存在则添加）
-                SharePoint lpoint = dao.getSharePoint(siteId, idsubsite, url.getId(), idFromtor, detect.getFromvts());
+//                SharePoint lpoint = dao.getSharePoint(siteId, idsubsite, url.getId(), idFromtor, detect.getFromvts());
                 //获取本次分享点
                 SharePoint tpoint = dao.getSharePoint(siteId, idsubsite, url.getId(), idFromtor, idVisitor);
                 if (tpoint == null) {
                     tpoint = new SharePoint();
                     tpoint.setIdsite(siteId);
-                    tpoint.setIdrefer(lpoint.getId());
+                    tpoint.setIdrefervisitor(idFromtor);
                     tpoint.setIdvisitor(idVisitor);//创建上一个分享点
                     tpoint.fillNullID();
                     tpoint.setIdsubsite(idsubsite);
                     tpoint.setShareTime(new Date());
+                    tpoint.setShareSpan(Math.abs(new Date().getTime() - detect.getFromvts()));
                     tpoint.setCountPv(1);
                     AfReflecter.setMemberNoException(tpoint, "createTime", new Date());
                     AfReflecter.setMemberNoException(tpoint, "updateTime", new Date());

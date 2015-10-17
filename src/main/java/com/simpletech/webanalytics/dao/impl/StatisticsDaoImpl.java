@@ -2,6 +2,7 @@ package com.simpletech.webanalytics.dao.impl;
 
 import com.simpletech.webanalytics.dao.StatisticsDao;
 import com.simpletech.webanalytics.mapper.StatisticsMapper;
+import com.simpletech.webanalytics.model.SharePoint;
 import com.simpletech.webanalytics.model.Title;
 import com.simpletech.webanalytics.model.Url;
 import com.simpletech.webanalytics.model.constant.RankingType;
@@ -388,6 +389,11 @@ public class StatisticsDaoImpl implements StatisticsDao {
     @Override
     public List<EventPeriodValue> eventHour(String idsite, String category, Date start, Date end, int limit, int skip) throws Exception {
         return mapper.eventHour(idsite, category, start, end, limit, skip);
+    }
+
+    @Override
+    public List<SharePoint> sharePoint(String idsite, String urlId, Date start, Date end) throws Exception {
+        return mapper.sharePoint(idsite, urlId, start, end);
     }
 }
 
