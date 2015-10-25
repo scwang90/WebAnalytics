@@ -1,13 +1,12 @@
 package com.simpletech.webanalytics.aspect;
 
-import static java.lang.System.out;
-
+import com.simpletech.webanalytics.util.JacksonUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 
-import com.simpletech.webanalytics.util.JacksonUtil;
-
 import javax.servlet.http.HttpServletRequest;
+
+import static java.lang.System.out;
 
 /**
  * 日志处理切面
@@ -72,6 +71,7 @@ public class LoggingAspect {
 			out.print(point.getSignature().getName()+"-throwed-ex-");
 			out.print(ex.getMessage()+"-"+ex.getClass().getSimpleName());
 			out.println();
+			ex.printStackTrace(out);
 		}
 	}
 

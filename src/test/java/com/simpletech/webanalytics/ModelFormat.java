@@ -13,8 +13,8 @@ public class ModelFormat {
 
     @Test
     public void parser(){
-        String useragent = "Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaN97-1/20.0.019; Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebKit/525 (KHTML, like Gecko) BrowserNG/7.1.18124";
-        Matcher matcher = Pattern.compile("\\b(m[\\w\\-\\. ]*) build\\b", Pattern.CASE_INSENSITIVE).matcher(useragent);
+        String useragent = "Mozilla/5.0 (Linux; U; Android 4.3; zh-cn; R6007 Build/JLS36C) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 OppoBrowser/3.6.0 Mobile Safari/534.30";
+        Matcher matcher = Pattern.compile("\\b([\\w\\-\\. ]+) build/", Pattern.CASE_INSENSITIVE).matcher(useragent);
         if (matcher.find()){
             System.out.println(true);
             System.out.println(matcher.group(1));

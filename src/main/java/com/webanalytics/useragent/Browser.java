@@ -16,6 +16,7 @@ public enum Browser {
     TXWeibo("txmicroblog", "TXWB", "腾讯微博", "txmicroblog[/ ]?(\\S+)"),
     MQQBrowser("mqqbrowser", "MQQB", "QQ浏览器手机版", "mqqbrowser/(\\S+)"),
     QQBrowser("qqbrowser", "QQB", "QQ浏览器", "qqbrowser/(\\S+)"),
+    OppoBrowser("oppobrowser", "OPPO", "OPPO 浏览器", "oppobrowser/(\\S+)"),
     UCBrowser("ucbrowser", "UC", "UC浏览器", "ucbrowser/([\\d\\-\\.]+)"),
 
     Miui("miui", "MU", "MIUI浏览器", "miui\\w*/(\\S+)"),
@@ -46,8 +47,8 @@ public enum Browser {
     HttpClient("httpclient", "APHC", "HttpClient", "apache.httpclient/(\\S+)"),
     Yammer("yammer", "YAME", "Yammer", "Yammer[ /]+(\\S+)"),
     BlackBerry("blackberry", "BLBE", "BlackBerry", "blackberry/(\\S+)"),
-    Chrome("chrome", "CHO", "谷歌浏览器", "chrome/(\\S*)"),
-    Safari("safari", "SF", "苹果 Safari", "safari/(\\S*)"),
+    Chrome("chrome", "CHO", "谷歌浏览器", "chrome/(\\S+)"),
+    Safari("safari", "SF", "苹果 Safari", "safari/(\\S+)"),
 
     Unknown("unknown", "UN", "未知", "");
 
@@ -55,24 +56,60 @@ public enum Browser {
     private final String name;
     private final String acronym;
     private final String remark;
-    private String version;
+
+    public static class Model{
+        private Browser value;
+        private String deputy;
+        public Model(Browser value,String deputy){
+            this.value = value;
+            this.deputy = deputy;
+        }
+        public String getName() {
+            return value.name;
+        }
+        public String getRemark() {
+            return value.remark;
+        }
+        public Pattern getPattern() {
+            return value.pattern;
+        }
+        public String getAcronym() {
+            return value.acronym;
+        }
+        public String getVersion() {
+            return deputy;
+        }
+    }
 
     Browser(String name, String acronym, String remark, String pattern) {
-        this.version = "";
         this.name = name;
         this.remark = remark;
         this.acronym = acronym;
         this.pattern = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
     }
 
-    public static Browser parser(String useragent) {
-        for (Browser browser : values()) {
-            if (browser.matches(useragent)) {
-                return browser;
+    public Pattern getPattern() {
+        return pattern;
+    }
+    public String getName() {
+        return name;
+    }
+    public String getRemark() {
+        return remark;
+    }
+    public String getAcronym() {
+        return acronym;
+    }
+
+    public static Model parser(String useragent) {
+        Model model;
+        for (Browser value : values()) {
+            model = value.matches(useragent);
+            if (model != null) {
+                return model;
             }
         }
-        Browser.Unknown.version = "";
-        return Browser.Unknown;
+        return new Model(Browser.Unknown, "");
     }
 
     public static Browser parserAcronym(String acronym) {
@@ -81,41 +118,22 @@ public enum Browser {
                 return browser;
             }
         }
-        Browser.Unknown.version = "";
         return Browser.Unknown;
     }
 
-    private boolean matches(String useragent) {
+    private Model matches(String useragent) {
+        String deputy = null;
         Matcher matcher = pattern.matcher(useragent);
         if (matcher.find()) {
             int index = 0;
-            while ((version == null || version.trim().length() == 0) && index++ < matcher.groupCount()) {
-                version = matcher.group(index);
+            while ((deputy == null || deputy.trim().length() == 0) && index++ < matcher.groupCount()) {
+                deputy = matcher.group(index);
             }
-            version = (version == null) ? "" : version;
-            return true;
+            deputy = (deputy == null) ? "" : deputy;
+            return new Model(this, deputy);
         }
-        return false;
+        return null;
     }
 
-    public Pattern getPattern() {
-        return pattern;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public String getAcronym() {
-        return acronym;
-    }
 }
 

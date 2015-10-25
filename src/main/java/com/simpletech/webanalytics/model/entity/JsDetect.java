@@ -1,14 +1,17 @@
 package com.simpletech.webanalytics.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ipmapping.IP;
 import com.ipmapping.IPCatcherUtil;
-import com.kumkee.userAgent.UserAgent;
-import com.kumkee.userAgent.UserAgentParser;
 import com.simpletech.webanalytics.annotations.Must;
 import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.AfStringUtil;
 import com.simpletech.webanalytics.util.ServiceException;
+import com.webanalytics.useragent.UserAgent;
+import com.webanalytics.useragent.UserAgentParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -81,39 +84,32 @@ public class JsDetect {
     private String useragent;       //源 useragent
     private String appname;         //App 源
 
-    /**
-     * 检测是否满足必须参数
-     */
-    public void check() throws Exception{
-        Field[] fields = AfReflecter.getFieldAnnotation(this.getClass(), Must.class);
-        for (Field field:fields){
-            String name = field.getName() + ":" + field.getAnnotation(Must.class).value();
-            Object val = AfReflecter.getMemberNoException(this, field.getName());
-            if (val == null || AfStringUtil.isEmpty(val.toString())){
-                throw new ServiceException("缺少参数["+name+"]");
-            }
-        }
-    }
 
-    public void bind(HttpServletRequest request, HttpServletResponse response) {
+    @JsonIgnore
+    HttpServletRequest request;
+
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
+
         String agent = request.getHeader("user-agent");
         UserAgentParser userAgentParser = new UserAgentParser();
         UserAgent useragent = userAgentParser.parse(agent);
 
-        this.brand = useragent.getBrand().getAcronym();
-        this.model = useragent.getBrand().getModel();
-        this.appname = useragent.getApplication().getAcronym();
-        this.browser = useragent.getBrowser().getAcronym();
-        this.version = useragent.getBrowser().getVersion();
-        this.platform = useragent.getOperateSystem().getVersion();
-        this.operateSystem = useragent.getOperateSystem().getAcronym();
-        this.engine = useragent.getBrowserEngine().getAcronym();
-        this.engineVersion = useragent.getBrowserEngine().getVersion();
-        this.netType = useragent.getNetType().getAcronym();
-        this.endType = useragent.getDevice().getAcronym();
-        this.remoteAddr = request.getRemoteAddr();
+        this.setBrand(useragent.getBrand().getAcronym());
+        this.setModel(useragent.getBrand().getModel());
+        this.setAppname(useragent.getApplication().getAcronym());
+        this.setBrowser(useragent.getBrowser().getAcronym());
+        this.setVersion(useragent.getBrowser().getVersion());
+        this.setPlatform(useragent.getOperateSystem().getVersion());
+        this.setOperateSystem(useragent.getOperateSystem().getAcronym());
+        this.setEngine(useragent.getBrowserEngine().getAcronym());
+        this.setEngineVersion(useragent.getBrowserEngine().getVersion());
+        this.setNetType(useragent.getNetType().getAcronym());
+        this.setEndType(useragent.getPlatform().getAcronym());
+        this.setRemoteAddr(request.getRemoteAddr());
+        this.setUseragent(agent);
+
         this.remoteAddr = IPCatcherUtil.getIpAddr(request);
-        this.useragent = agent;
 
         try {
             ServletContext application = request.getSession().getServletContext();
@@ -122,8 +118,39 @@ public class JsDetect {
             this.country = addrs[0];
             this.region = addrs[1];
             this.city = addrs[2];
+
+            if ("lost".equals(refer)){
+                setRefer(refer + "-" + request.getQueryString());
+            }
         } catch (Throwable e) {
 
+        }
+    }
+
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    /**
+     * 检测是否满足必须参数
+     */
+    public void check() throws Exception {
+        Field[] fields = AfReflecter.getFieldAnnotation(this.getClass(), Must.class);
+        for (Field field:fields){
+            String name = field.getName() + ":" + field.getAnnotation(Must.class).value();
+            Object val = AfReflecter.getMemberNoException(this, field.getName());
+            if (val == null || AfStringUtil.isEmpty(val.toString())){
+                refer = "lost";
+                gtms = 1000;
+                new ServiceException("缺少参数["+name+"] url="+url).printStackTrace(System.err);
+                //throw new ServiceException("缺少参数["+name+"]");
+            }
+        }
+    }
+
+    public void bind(HttpServletRequest request, HttpServletResponse response) {
+        if (this.request == null) {
+            setRequest(request);
         }
     }
 
@@ -230,6 +257,9 @@ public class JsDetect {
     }
 
     public void setUrl(String url) {
+        if (url != null && url.length() > 255) {
+            url = url.substring(0, 255);
+        }
         this.url = url;
     }
 
@@ -245,6 +275,9 @@ public class JsDetect {
                 e.printStackTrace();
             }
         }
+        if (title.length() > 127) {
+            title = title.substring(0,127);
+        }
         this.title = title;
     }
 
@@ -253,6 +286,9 @@ public class JsDetect {
     }
 
     public void setScreen(String screen) {
+        if (screen != null && screen.length() > 15) {
+            screen = screen.substring(0, 15);
+        }
         this.screen = screen;
     }
 
@@ -285,6 +321,9 @@ public class JsDetect {
     }
 
     public void setCset(String cset) {
+        if (cset != null && cset.length() > 9) {
+            cset = cset.substring(0, 9);
+        }
         this.cset = cset;
     }
 
@@ -293,6 +332,9 @@ public class JsDetect {
     }
 
     public void setLang(String lang) {
+        if (lang != null && lang.length() > 9) {
+            lang = lang.substring(0, 9);
+        }
         this.lang = lang;
     }
 
@@ -301,6 +343,9 @@ public class JsDetect {
     }
 
     public void setRefer(String refer) {
+        if (refer != null && refer.length() > 255) {
+            refer = refer.substring(0, 255);
+        }
         this.refer = refer;
     }
 
@@ -317,6 +362,9 @@ public class JsDetect {
     }
 
     public void setVersion(String version) {
+        if (version != null && version.length() > 31) {
+            version = version.substring(0, 31);
+        }
         this.version = version;
     }
 
@@ -357,6 +405,9 @@ public class JsDetect {
     }
 
     public void setRemoteAddr(String remoteAddr) {
+        if (remoteAddr != null && remoteAddr.length() > 15) {
+            remoteAddr = remoteAddr.substring(0, 15);
+        }
         this.remoteAddr = remoteAddr;
     }
 
@@ -365,6 +416,9 @@ public class JsDetect {
     }
 
     public void setModel(String model) {
+        if (model != null && model.length() > 31) {
+            model = model.substring(0, 31);
+        }
         this.model = model;
     }
 
@@ -381,6 +435,9 @@ public class JsDetect {
     }
 
     public void setCity(String city) {
+        if (city != null && city.length() > 31) {
+            city = city.substring(0, 31);
+        }
         this.city = city;
     }
 
@@ -389,6 +446,9 @@ public class JsDetect {
     }
 
     public void setCountry(String country) {
+        if (country != null && country.length() > 15) {
+            country = country.substring(0, 15);
+        }
         this.country = country;
     }
 
@@ -397,6 +457,9 @@ public class JsDetect {
     }
 
     public void setRegion(String region) {
+        if (region != null && region.length() > 31) {
+            region = region.substring(0, 31);
+        }
         this.region = region;
     }
 
@@ -421,6 +484,9 @@ public class JsDetect {
     }
 
     public void setUseragent(String useragent) {
+        if (useragent != null && useragent.length() > 255) {
+            useragent = useragent.substring(0, 255);
+        }
         this.useragent = useragent;
     }
 

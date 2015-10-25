@@ -23,30 +23,30 @@ public enum Platform {
     private final String acronym;
     private final String remark;
 
+    public static class Model{
+        private Platform value;
+        public Model(Platform value){
+            this.value = value;
+        }
+        public String getName() {
+            return value.name;
+        }
+        public String getRemark() {
+            return value.remark;
+        }
+        public Pattern getPattern() {
+            return value.pattern;
+        }
+        public String getAcronym() {
+            return value.acronym;
+        }
+    }
+
     Platform(String name, String acronym, String remark, String pattern){
         this.name = name;
         this.remark = remark;
         this.acronym = acronym;
         this.pattern = Pattern.compile(pattern,Pattern.CASE_INSENSITIVE);
-    }
-
-    public static Platform parser(String useragent){
-        for (Platform platform :values()){
-            Matcher matcher = platform.pattern.matcher(useragent);
-            if (matcher.find()){
-                return platform;
-            }
-        }
-        return Platform.Unknown;
-    }
-
-    public static Platform parserAcronym(String acronym) {
-        for (Platform platform : values()) {
-            if (platform.acronym.equals(acronym)) {
-                return platform;
-            }
-        }
-        return Platform.Unknown;
     }
 
     public Pattern getPattern() {
@@ -60,6 +60,34 @@ public enum Platform {
     }
     public String getAcronym() {
         return acronym;
+    }
+
+    public static Model parser(String useragent){
+        Model model;
+        for (Platform value : values()) {
+            model = value.matches(useragent);
+            if (model != null) {
+                return model;
+            }
+        }
+        return new Model(Platform.Unknown);
+    }
+
+    private Model matches(String useragent) {
+        Matcher matcher = pattern.matcher(useragent);
+        if (matcher.find()) {
+            return new Model(this);
+        }
+        return null;
+    }
+
+    public static Platform parserAcronym(String acronym) {
+        for (Platform platform : values()) {
+            if (platform.acronym.equals(acronym)) {
+                return platform;
+            }
+        }
+        return Platform.Unknown;
     }
 
 }

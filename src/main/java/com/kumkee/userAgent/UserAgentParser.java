@@ -19,15 +19,6 @@ public class UserAgentParser
 		userAgent.setOs(this.OS(useragent));
 		userAgent.setPlatform(this.platform(useragent));
 		userAgent.setMobile(Platform.mobilePlatforms.contains(userAgent.getPlatform()) || userAgent.getBrowseer().equalsIgnoreCase(Browseer.PSP));
-		Brand brand = Brand.parser(useragent);
-		userAgent.setModel(brand.getModel());
-		userAgent.setBrand(brand);
-		userAgent.setNetType(Nettype.parser(useragent));
-		userAgent.setDevice(com.webanalytics.useragent.Platform.parser(useragent));
-		userAgent.setApplication(Application.parser(useragent));
-		userAgent.setOperateSystem(OperateSystem.parser(useragent));
-		userAgent.setBrowser(Browser.parser(useragent));
-		userAgent.setBrowserEngine(BrowserEngine.parser(useragent));
 		return userAgent;
 	}
 

@@ -5,12 +5,18 @@
   Time: 14:55
   To change this template use File | Settings | File Templates.
 --%>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://"
+            + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.kumkee.userAgent.UserAgentParser" %>
-<%@ page import="com.kumkee.userAgent.UserAgent" %>
 <%@ page import="com.ipmapping.IPCatcherUtil" %>
 <%@ page import="com.ipmapping.IP" %>
 <%@ page import="java.util.Arrays" %>
+<%@ page import="com.webanalytics.useragent.UserAgentParser" %>
+<%@ page import="com.webanalytics.useragent.UserAgent" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -41,24 +47,17 @@
 <h1>jsp获取客户端信息</h1>
 APP:<%=useragent.getApplication().getRemark()%><br>
 APPV:<%=useragent.getApplication().getVersion()%><br>
-平台:<%=useragent.getDevice().getRemark()%><br>
+平台:<%=useragent.getPlatform().getRemark()%><br>
 品牌:<%=useragent.getBrand().getRemark()%><br>
 型号:<%=useragent.getBrand().getModel()%><br>
-新浏览器:<%=useragent.getBrowser().getRemark()%><br>
-新浏览器版本:<%=useragent.getBrowser().getVersion()%><br>
-新浏览器引擎:<%=useragent.getBrowserEngine().getRemark()%><br>
-新浏引擎版本:<%=useragent.getBrowserEngine().getVersion()%><br>
-新操作系统:<%=useragent.getOperateSystem().getRemark()%><br>
-新系统版本:<%=useragent.getOperateSystem().getVersion()%><br>
+浏览器:<%=useragent.getBrowser().getRemark()%><br>
+浏览器版本:<%=useragent.getBrowser().getVersion()%><br>
+浏览器引擎:<%=useragent.getBrowserEngine().getRemark()%><br>
+浏引擎版本:<%=useragent.getBrowserEngine().getVersion()%><br>
+操作系统:<%=useragent.getOperateSystem().getRemark()%><br>
+系统版本:<%=useragent.getOperateSystem().getVersion()%><br>
 网络类型:<%=useragent.getNetType().getRemark()%><br>
 网络类型V:<%=useragent.getNetType().getValue()%><br>
-<br>
-老浏览器:<%=useragent.getBrowseer()%><br>
-老浏览器版本:<%=useragent.getVersion()%><br>
-老平台:<%=useragent.getPlatform()%><br>
-老操作系统:<%=useragent.getOs()%><br>
-老引擎:<%=useragent.getEngine()%><br>
-老引擎版本:<%=useragent.getEngineVersion()%><br>
 <br>
 客户端IP:<%=request.getRemoteAddr()%>,<%=ipAddr%> &nbsp;（注：这是外网IP）<br>
 地址信息:<%=Arrays.toString(IP.find(ipAddr))%><br>
@@ -79,7 +78,7 @@ APPV:<%=useragent.getApplication().getVersion()%><br>
     var _wapaq = _wapaq || [];
     _wapaq.push(['trackPageView']);
     (function() {
-        var u="/";
+        var u='<%=basePath%>';
         _wapaq.push(['setTrackerUrl', u+'tracker']);
         _wapaq.push(['setSiteId', 0]);
         var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];

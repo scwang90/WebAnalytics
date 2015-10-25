@@ -23,24 +23,60 @@ public enum Application {
     private final String name;
     private final String remark;
     private final String acronym;
-    private String version;
+
+    public static class Model{
+        private Application value;
+        private String deputy;
+        public Model(Application value,String deputy){
+            this.value = value;
+            this.deputy = deputy;
+        }
+        public String getName() {
+            return value.name;
+        }
+        public String getRemark() {
+            return value.remark;
+        }
+        public Pattern getPattern() {
+            return value.pattern;
+        }
+        public String getAcronym() {
+            return value.acronym;
+        }
+        public String getVersion() {
+            return deputy;
+        }
+    }
 
     Application(String name, String acronym, String remark, String pattern) {
-        this.version = "";
         this.name = name;
         this.remark = remark;
         this.acronym = acronym;
         this.pattern = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
     }
 
-    public static Application parser(String useragent) {
-        for (Application app : values()) {
-            if (app.matches(useragent)) {
-                return app;
+    public Pattern getPattern() {
+        return pattern;
+    }
+    public String getName() {
+        return name;
+    }
+    public String getRemark() {
+        return remark;
+    }
+    public String getAcronym() {
+        return acronym;
+    }
+
+    public static Model parser(String useragent) {
+        Model model;
+        for (Application value : values()) {
+            model = value.matches(useragent);
+            if (model != null) {
+                return model;
             }
         }
-        Application.Unknown.version = "";
-        return Application.Unknown;
+        return new Model(Application.Unknown, "");
     }
 
     public static Application parserAcronym(String acronym) {
@@ -49,43 +85,23 @@ public enum Application {
                 return app;
             }
         }
-        Application.Unknown.version = "";
         return Application.Unknown;
     }
 
-    private boolean matches(String useragent) {
+    private Model matches(String useragent) {
         if (this.equals(Computer) && Platform.parser(useragent).equals(Platform.Computer)) {
-            return true;
+            return new Model(this,"");
         }
+        String deputy = null;
         Matcher matcher = pattern.matcher(useragent);
         if (matcher.find()) {
             int index = 0;
-            while ((version == null || version.trim().length() == 0) && index++ < matcher.groupCount()) {
-                version = matcher.group(index);
+            while ((deputy == null || deputy.trim().length() == 0) && index++ < matcher.groupCount()) {
+                deputy = matcher.group(index);
             }
-            version = (version == null) ? "" : version;
-            return true;
+            deputy = (deputy == null) ? "" : deputy;
+            return new Model(this, deputy);
         }
-        return false;
-    }
-
-    public Pattern getPattern() {
-        return pattern;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public String getAcronym() {
-        return acronym;
+        return null;
     }
 }

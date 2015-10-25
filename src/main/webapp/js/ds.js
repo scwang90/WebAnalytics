@@ -27,10 +27,10 @@
     /**
      * 客户端探测对象（如 饼干、分辨率...）
      */
-    var detect = new Detect(global);
     var tracker = new Tracker(server, "1");
+    var detect = new Detect(global);
     window.WADS = {
-        linkChange:tracker.linkChange
+        linkChange: tracker.linkChange
     };
 
     // asynchronous tracker (or proxy)
@@ -146,7 +146,9 @@
         // Tracker URL
             configTrackerUrl = trackerUrl || '',
         // Site ID
-            configTrackerSiteId = siteId || '';
+            configTrackerSiteId = siteId || '',
+
+            configDiscardHashTag = false;
 
         var cookie = global.cookie;
         var hash = global.hash.sha1;
@@ -158,6 +160,14 @@
         function setSiteId(siteId) {
             configTrackerSiteId = siteId;
             setVisitorIdCookie();
+        }
+
+        function setDiscardHashTag(config){
+            configDiscardHashTag = config;
+        }
+
+        function getDiscardHashTag(){
+            return configDiscardHashTag;
         }
 
         /*
@@ -322,6 +332,12 @@
             setSiteId: function (siteId) {
                 setSiteId(siteId);
             },
+            setDiscardHashTag : function (config){
+                setDiscardHashTag(config);
+            },
+            getDiscardHashTag : function (){
+                return getDiscardHashTag();
+            },
             getVisitor: function () {
                 return getValuesFromVisitorIdCookie();
             },
@@ -364,19 +380,7 @@
                 if (user == undefined || user == null)return;
                 var visitor = getValuesFromVisitorIdCookie(),
                     visitorId = visitor.uuid,
-                    param = ("url=" + encodeURIComponent(detect.url) +
-                    + "&idvtor=" + visitorId +
-                    + "&idsite=" + configTrackerSiteId +
-                    + "&openid=" + user.openid +
-                    + "&nickname=" + encodeURIComponent(encodeURIComponent(user.nickname)) +
-                    + "&sex=" + user.sex +
-                    + "&province=" + encodeURIComponent(encodeURIComponent(user.province)) +
-                    + "&city=" + encodeURIComponent(encodeURIComponent(user.city)) +
-                    + "&country=" + encodeURIComponent(encodeURIComponent(user.country)) +
-                    + "&headimgurl=" + user.headimgurl +
-                    + "&privilege=" + (user.privilege ? user.privilege.join(",") : "") +
-                    + "&unionid=" + user.unionid +
-                    + "&appid=" + appid);
+                    param = ("url=" + encodeURIComponent(detect.url) + +"&idvtor=" + visitorId + +"&idsite=" + configTrackerSiteId + +"&openid=" + user.openid + +"&nickname=" + encodeURIComponent(encodeURIComponent(user.nickname)) + +"&sex=" + user.sex + +"&province=" + encodeURIComponent(encodeURIComponent(user.province)) + +"&city=" + encodeURIComponent(encodeURIComponent(user.city)) + +"&country=" + encodeURIComponent(encodeURIComponent(user.country)) + +"&headimgurl=" + user.headimgurl + +"&privilege=" + (user.privilege ? user.privilege.join(",") : "") + +"&unionid=" + user.unionid + +"&appid=" + appid);
                 var url = configTrackerUrl + path_track_userinfo;
                 global.ajax.send(url, param);
             }
@@ -385,18 +389,47 @@
 
     /**
      * 客户端探测对象（如 饼干、分辨率...）
+     * rand=601128
+     * &idsite=2
+     * &idvtor=8be47625d3ce98f0
+     * &idn=0
+     * &idvc=0
+     * &idts=1445397766661
+     * &visits=1445397766674
+     * &lastts=
+     *
+     * &java=false
+     * &cookie=true
+     * &color=24
+     * &cset=UTF-8
+     * &lang=zh-CN
+     * &fromvid=
+     * &fromvts=1445397766568
+     * &title=%E8%B4%B5%E5%B7%9E%E7%9C%81%E7%9B%B4%E6%9C%BA%E5%85%B3%E2%80%9C%E6%A6%9C%E6%A0%B7%E9%9D%92%E5%B9%B4%C2%B7%E7%AC%AC%E4%B8%80%E4%B9%A6%E8%AE%B0%E2%80%9D%E5%BE%AE%E4%BF%A1%E6%8A%95%E7%A5%A8
+     * &url=http://112.124.118.30:8080/dcvote/wx/index.jsp?isappinstalled=0,org.apache.catalina.connector.ResponseFacade@ca1f21a
+     *
      */
     function Detect() {
         var _this = this;
-        this.java = (function () {return navigator.javaEnabled && navigator.javaEnabled();})();
-        this.cookie = (function () {return navigator.cookieEnabled == true;})();
-        this.color = (function () {return screen ? screen.colorDepth : empty;})();
-        this.cset = (function () {return document ? document.characterSet : empty;})();
-        this.lang = (function () {return navigator ? navigator.language : empty;})();
+        this.java = (function () {
+            return navigator.javaEnabled && navigator.javaEnabled();
+        })();
+        this.cookie = (function () {
+            return navigator.cookieEnabled == true;
+        })();
+        this.color = (function () {
+            return screen ? screen.colorDepth : empty;
+        })();
+        this.cset = (function () {
+            return document ? document.characterSet : empty;
+        })();
+        this.lang = (function () {
+            return navigator ? navigator.language : empty;
+        })();
         this.fromvid = global.url.getArg(REFER_VISITORID, "");
         this.fromvts = global.url.getArg(REFER_TIMESTAMP, Math.round(new Date().getTime()));
         this.title = (function () {
-            if  (document) {
+            if (document) {
                 var title = document.title;
                 title = title && title.text ? title.text : title;
                 if (!isString(title)) {
@@ -409,18 +442,21 @@
             }
             return empty;
         })();
+        this.gtms = (function () {
+            if (performance && performance.timing
+                && performance.timing.requestStart && performance.timing.responseEnd) {
+                return performance.timing.responseEnd - performance.timing.requestStart;
+            }
+            return 1000;
+        })();
         this.url = (function () {
             if (location && location.href) {
-                return global.url.remArg(location.href,[REFER_VISITORID,REFER_TIMESTAMP,'from'])
-            }
-            return empty;
-        })();
-        this.screen = (function () {
-            if (screen) {
-                if ((screen.width < 1000 || screen.height < 1000) && window.devicePixelRatio) {
-                    return screen.width * window.devicePixelRatio + 'x' + screen.height * window.devicePixelRatio;
+                var url = location.href;
+                if (tracker.getDiscardHashTag()) {
+                    var targetPattern = new RegExp('#.*');
+                    url = url.replace(targetPattern, '');
                 }
-                return screen.width + 'x' + screen.height;
+                return global.url.remArg(url, [REFER_VISITORID, REFER_TIMESTAMP])
             }
             return empty;
         })();
@@ -428,22 +464,59 @@
             var referrer = document ? (document.referrer) : empty;
             return (referrer == location.href || _this.url == referrer) ? empty : referrer;
         })();
-        this.gtms = (function(){
-            if (performance && performance.timing
-                && performance.timing.requestStart && performance.timing.responseEnd){
-                return performance.timing.responseEnd - performance.timing.requestStart;
-            }
-            return 1000;
-        })();
-        this.getParam = function () {
-            var param = "";
-            for (var p in this) {
-                if (typeof(detect[p]) != "function") {
-                    param += "&" + p + "=" + ((global.isDefined(detect[p])) ? detect[p] : empty);
+        this.screen = (function () {
+            if (screen) {
+                if ((screen.width < 1000 || screen.height < 1000) && window.devicePixelRatio) {
+                    return Math.round(screen.width * window.devicePixelRatio) + 'x' + Math.round(screen.height * window.devicePixelRatio);
                 }
+                return Math.round(screen.width) + 'x' + Math.round(screen.height);
             }
-            return param;
+            return empty;
+        })();
+        /**
+         * lost-
+         * &rand=322690
+         * &idsite=2
+         * &idvtor=1def74766ca0ddf1
+         * &idn=1
+         * &idvc=0
+         * &idts=1445417788039
+         * &visits=1445417788040
+         * &lastts=
+         *
+         * &java=false
+         * &cookie=false
+         * &color=0
+         * &cset=UTF-8
+         * &lang=zh-CN
+         * &fromvid=
+         * &fromvts=1445417788034
+         * &title=%E8%B4%B5%E5%B7%9E%E7%9C%81%E7%9B%B4%E6%9C%BA%E5%85%B
+         * @returns {string}
+         */
+        //alert("screen = " + this.screen);
+        this.getParam = function () {
+            return "&java=" + detect.java +
+            "&cookie=" + detect.cookie +
+            "&color=" + detect.color +
+            "&cset=" + detect.cset +
+            "&lang=" + detect.lang +
+            "&fromvid=" + detect.fromvid +
+            "&fromvts=" + detect.fromvts +
+            "&refer=" + detect.refer +
+            "&screen=" + detect.screen +
+            "&gtms=" + detect.gtms +
+            "&title=" + global.encode(detect.title) +
+            "&url=" + global.encode(detect.url);
+            //var param = "";
+            //for (var p in detect) {
+            //    if (typeof(detect[p]) != "function") {
+            //        param += "&" + p + "=" + ((global.isDefined(detect[p])) ? detect[p] : empty);
+            //    }
+            //}
+            //return param;
         };
+        //alert("getParam = " + this.getParam);
     }
 
     /**
@@ -527,14 +600,14 @@
                 if (t != null)return unescape(t[2]);
                 return def;
             },
-            remArg : function (url, names) {
-                var urls = url.split("?"),source="",idtag = "";
-                if(urls.length > 1){
+            remArg: function (url, names) {
+                var urls = url.split("?"), source = "", idtag = "";
+                if (urls.length > 1) {
                     source = urls[0];
                     url = urls[1];
                 }
                 urls = url.split("#");
-                if(urls.length > 1){
+                if (urls.length > 1) {
                     url = urls[0];
                     idtag = "#" + urls[1];
                 }

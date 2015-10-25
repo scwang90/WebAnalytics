@@ -2,54 +2,67 @@ package com.webanalytics.useragent;
 
 public class UserAgent {
 
-	private Brand brand;
-	private Browser browser;
-	private Nettype netType;
-	private Platform platform;
-	private Application application;
-	private OperateSystem operateSystem;
-	private BrowserEngine browserEngine;
+	private Brand.Model brand;
+	private Browser.Model browser;
+	private Nettype.Model netType;
+	private Platform.Model platform;
+	private Application.Model application;
+	private OperateSystem.Model operateSystem;
+	private BrowserEngine.Model browserEngine;
 
-	public void setBrand(Brand brand) {
-		this.brand = brand;
-	}
-	public Brand getBrand() {
+	public Brand.Model getBrand() {
 		return brand;
 	}
-	public void setNetType(Nettype netType) {
-		this.netType = netType;
+
+	public void setBrand(Brand.Model brand) {
+		this.brand = brand;
 	}
-	public Nettype getNetType() {
-		return netType;
-	}
-	public void setPlatform(Platform platform) {
-		this.platform = platform;
-	}
-	public Platform getPlatform() {
-		return platform;
-	}
-	public void setApplication(Application application) {
-		this.application = application;
-	}
-	public Application getApplication() {
-		return application;
-	}
-	public void setOperateSystem(OperateSystem operateSystem) {
-		this.operateSystem = operateSystem;
-	}
-	public OperateSystem getOperateSystem() {
-		return operateSystem;
-	}
-	public void setBrowser(Browser browser) {
-		this.browser = browser;
-	}
-	public Browser getBrowser() {
+
+	public Browser.Model getBrowser() {
 		return browser;
 	}
-	public void setBrowserEngine(BrowserEngine browserEngine) {
-		this.browserEngine = browserEngine;
+
+	public void setBrowser(Browser.Model browser) {
+		this.browser = browser;
 	}
-	public BrowserEngine getBrowserEngine() {
+
+	public Nettype.Model getNetType() {
+		return netType;
+	}
+
+	public void setNetType(Nettype.Model netType) {
+		this.netType = netType;
+	}
+
+	public Platform.Model getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(Platform.Model platform) {
+		this.platform = platform;
+	}
+
+	public Application.Model getApplication() {
+		return application;
+	}
+
+	public void setApplication(Application.Model application) {
+		this.application = application;
+	}
+
+	public OperateSystem.Model getOperateSystem() {
+		return operateSystem;
+	}
+
+	public void setOperateSystem(OperateSystem.Model operateSystem) {
+		this.operateSystem = operateSystem;
+	}
+
+	public BrowserEngine.Model getBrowserEngine() {
 		return browserEngine;
+	}
+
+	public void setBrowserEngine(BrowserEngine.Model browserEngine) {
+		this.browserEngine = browserEngine;
 	}
 }

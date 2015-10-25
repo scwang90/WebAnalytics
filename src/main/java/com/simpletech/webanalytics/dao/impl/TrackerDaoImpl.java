@@ -23,9 +23,8 @@ public class TrackerDaoImpl implements TrackerDao {
     @Autowired
     TrackerMapper mapper;
 
-
     @Override
-    public Url getUrl(int siteId, String idsubsite, String url) throws Exception {
+    public synchronized Url getUrl(int siteId, String idsubsite, String url) throws Exception {
         Url _url = mapper.getUrl(siteId, url.hashCode());
         if (_url == null) {
             _url = new Url();
@@ -42,7 +41,7 @@ public class TrackerDaoImpl implements TrackerDao {
     }
 
     @Override
-    public Title getTitle(int siteId, String idsubsite, String title) throws Exception {
+    public synchronized Title getTitle(int siteId, String idsubsite, String title) throws Exception {
         Title _title = mapper.getTitle(siteId, title.hashCode());
         if (_title == null) {
             _title = new Title();
@@ -59,7 +58,7 @@ public class TrackerDaoImpl implements TrackerDao {
     }
 
     @Override
-    public Subsite getSubSite(int siteId, String idsubsite) throws Exception {
+    public synchronized Subsite getSubSite(int siteId, String idsubsite) throws Exception {
         Subsite subSite = mapper.getSubSite(siteId, idsubsite);
         if (subSite == null && AfStringUtil.isNotEmpty(idsubsite)) {
             subSite = new Subsite();

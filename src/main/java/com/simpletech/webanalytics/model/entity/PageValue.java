@@ -1,14 +1,12 @@
 package com.simpletech.webanalytics.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  * 页面排行统计值
  * Created by 树朾 on 2015/9/29.
  */
 public class PageValue {
 
-    @JsonIgnore
+//    @JsonIgnore
     private String pid;             //标题数据库ID（用于查询点击页面详情）
     private String name;            //页面标题
 

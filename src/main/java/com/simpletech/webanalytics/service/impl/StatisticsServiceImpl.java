@@ -1,7 +1,8 @@
 package com.simpletech.webanalytics.service.impl;
 
 import com.simpletech.webanalytics.dao.*;
-import com.simpletech.webanalytics.model.SharePoint;
+import com.simpletech.webanalytics.model.ShareLinePoint;
+import com.simpletech.webanalytics.model.ShareStartPoint;
 import com.simpletech.webanalytics.model.constant.Period;
 import com.simpletech.webanalytics.model.constant.Ranking;
 import com.simpletech.webanalytics.model.constant.RankingType;
@@ -78,15 +79,15 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<PageValue> pagetitle(String idsite, Date start, Date end, int limit, int skip) throws Exception {
-        List<PageValue> pagetitle = dao.pagetitle(idsite, start, end, limit, skip);
+    public List<PageValue> pagetitle(String idsite, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception {
+        List<PageValue> pagetitle = dao.pagetitle(idsite, ranktype, start, end, limit, skip);
         pagetitle = dao.fullTitleName(pagetitle);
         return pagetitle;
     }
 
     @Override
-    public List<PageValue> pageurl(String idsite, Date start, Date end, int limit, int skip) throws Exception {
-        List<PageValue> pageurl = dao.pageurl(idsite, start, end, limit, skip);
+    public List<PageValue> pageurl(String idsite, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception {
+        List<PageValue> pageurl = dao.pageurl(idsite, ranktype, start, end, limit, skip);
         pageurl = dao.fullUrlName(pageurl);
         return pageurl;
     }
@@ -132,6 +133,8 @@ public class StatisticsServiceImpl implements StatisticsService {
                 return dao.browser(idsite, ranktype, start, end, limit, skip);
             case city:
                 return dao.city(idsite, ranktype, start, end, limit, skip);
+            case ip:
+                return dao.ip(idsite, ranktype, start, end, limit, skip);
             case country:
                 return dao.country(idsite, ranktype, start, end, limit, skip);
             case depth:
@@ -153,65 +156,108 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public Object sharemap(String idsite, String urlId, Date start, Date end) throws Exception {
-        List<SharePoint> list = dao.sharePoint(idsite, urlId, start, end);
-        List<Map<String, Object>> lines = new ArrayList<>();
-        List<Map<String, Object>> points = new ArrayList<>();
-        Map<String, Map<String, Object>> mpoints = new HashMap<>();
+    public List<RankingValue> pageRanking(String idsite, String idurl, Ranking ranking, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception {
+        switch (ranking) {
+            case appname:
+                return dao.pageAppname(idsite, idurl, ranktype, start, end, limit, skip);
+            case brand:
+                return dao.pageBrand(idsite, idurl, ranktype, start, end, limit, skip);
+            case browser:
+                return dao.pageBrowser(idsite, idurl, ranktype, start, end, limit, skip);
+            case city:
+                return dao.pageCity(idsite, idurl, ranktype, start, end, limit, skip);
+            case ip:
+                return dao.pageIp(idsite, idurl, ranktype, start, end, limit, skip);
+            case country:
+                return dao.pageCountry(idsite, idurl, ranktype, start, end, limit, skip);
+            case depth:
+                return dao.pageDepth(idsite, idurl, ranktype, start, end, limit, skip);
+            case lang:
+                return dao.pageLang(idsite, idurl, ranktype, start, end, limit, skip);
+            case model:
+                return dao.pageModel(idsite, idurl, ranktype, start, end, limit, skip);
+            case nettype:
+                return dao.pageNettype(idsite, idurl, ranktype, start, end, limit, skip);
+            case province:
+                return dao.pageProvince(idsite, idurl, ranktype, start, end, limit, skip);
+            case resolution:
+                return dao.pageResolution(idsite, idurl, ranktype, start, end, limit, skip);
+            case system:
+                return dao.pageSystem(idsite, idurl, ranktype, start, end, limit, skip);
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Map<String,Object> sharemap(String idsite, String urlId, Date start, Date end) throws Exception {
+        List<ShareLinePoint> list = dao.sharePoint(idsite, urlId, start, end);
+        List<MapLineValue> lines = new ArrayList<>();
+        List<MapPointValue> points = new ArrayList<>();
+        Map<String, MapPointValue> mpoints = new HashMap<>();
         //点排重
-        for (SharePoint sharePoint : list) {
-            Map<String, Object> point = mpoints.get(sharePoint.getIdvisitor());
+        for (ShareLinePoint sharePoint : list) {
+            MapPointValue point = mpoints.get(sharePoint.getIdvisitor());
             if (point == null) {
-                point = new HashMap<>();
-                point.put("Id", sharePoint.getIdvisitor());
-                point.put("pv", sharePoint.getCountPv());
-                //判断点类型 class 0 起始点 2 叶子点
-                point.put("cl", 2 );
+                point = new MapPointValue();
+                point.setId(sharePoint.getIdvisitor());
+                point.setPv(sharePoint.getCountPv());
+                point.setMk("用户" + (mpoints.size() + 1));
+                point.setCl(2);//判断点类型 class 0 起始点 2 叶子点
                 mpoints.put(sharePoint.getIdvisitor(), point);
             } else {
-                point.put("pv", (Integer) point.get("pv") + sharePoint.getCountPv());
-                //判断点类型 class 0 起始点 2 叶子点
-                if (Integer.valueOf(0).equals(point.get("cl"))) {
-                    point.put("cl", 2 );
-                }
+                point.setPv(point.getPv() + sharePoint.getCountPv());
             }
         }
         //生成线
-        for (SharePoint sharePoint : list) {
+        for (ShareLinePoint sharePoint : list) {
             //判断有前一节点并且前一节点存在才生成线
             if (AfStringUtil.isNotEmpty(sharePoint.getIdrefervisitor())) {
-                Map<String, Object> line = new HashMap<>();
-                line.put("sId", sharePoint.getIdrefervisitor());
-                line.put("eId", sharePoint.getIdvisitor());
-                line.put("sts", sharePoint.getShareSpan());
+                MapLineValue line = new MapLineValue();
+                line.setsId(sharePoint.getIdrefervisitor());
+                line.seteId(sharePoint.getIdvisitor());
+                line.setSts(sharePoint.getShareSpan());
                 lines.add(line);
 
-                Map<String, Object> point = mpoints.get(sharePoint.getIdrefervisitor());
-                if (point != null) {
+                MapPointValue referpoint = mpoints.get(sharePoint.getIdrefervisitor());
+                if (referpoint != null) {
                     //改变叶子节点为中间节点
                     //判断点类型 class 0 起始点 2 叶子点 1 中间节点
-                    point.put("cl", 1);
+                    referpoint.setCl(1);
                 }
             }
         }
         //生成起始点
-        for (SharePoint sharePoint : list) {
-            Map<String, Object> point = mpoints.get(sharePoint.getIdrefervisitor());
+        for (ShareLinePoint sharePoint : list) {
+            MapPointValue point = mpoints.get(sharePoint.getIdrefervisitor());
             if (point == null) {
-                point = new HashMap<>();
-                point.put("Id", sharePoint.getIdrefervisitor());
-                point.put("pv", 1);
-                //判断点类型 class 0 起始点 2 叶子点
-                point.put("cl", 0);
-                mpoints.put(sharePoint.getIdvisitor(), point);
+                point = new MapPointValue();
+                point.setId(sharePoint.getIdrefervisitor());
+                point.setPv(1);
+                point.setMk("用户" + (mpoints.size() + 1));
+                point.setCl(0);//判断点类型 class 0 起始点 2 叶子点
+
+                mpoints.put(sharePoint.getIdrefervisitor(), point);
             }
         }
-        for (Map.Entry<String, Map<String, Object>> entry : mpoints.entrySet()) {
+        List<ShareStartPoint> startPoints = dao.getShareStartPoint(idsite, urlId, start, end);
+        for (ShareStartPoint startPoint : startPoints) {
+            MapPointValue point = mpoints.get(startPoint.getIdvisitor());
+            if (point == null) {
+                point.setCl(0);//判断点类型 class 0 起始点 2 叶子点
+            }
+        }
+        for (Map.Entry<String, MapPointValue> entry : mpoints.entrySet()) {
             points.add(entry.getValue());
         }
+        dao.fullNickName(points);
         Map<String, Object> map = new HashMap<>();
         map.put("lines", lines);
-        map.put("lines", points);
+        map.put("points", points);
         return map;
+    }
+
+    @Override
+    public List<PageRankingValue> shareRanking(String idsite, Date start, Date end) throws Exception {
+        return dao.shareRanking(idsite, start, end);
     }
 }

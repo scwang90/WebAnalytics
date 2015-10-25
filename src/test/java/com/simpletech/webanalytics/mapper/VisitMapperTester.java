@@ -42,12 +42,12 @@ public class VisitMapperTester {
     @Test
     public void formatsystem() throws Exception {
         HashMap<String, Object> map = new HashMap<>();
-//        List<Visit> result = mapper.findByPropertyName("", "operate_system", "MB");
+        List<Visit> result = mapper.findByPropertyName("", "operate_system", "UN");
 //        List<Visit> result = mapper.findByPropertyName("", "operate_version", "WDP");
-        List<Visit> result = mapper.findWhere("", "WHERE operate_version like '%;'");
+//        List<Visit> result = mapper.findWhere("", "WHERE operate_version like '%;'");
         for (Visit visit : result) {
             String agent = visit.getUseragent();
-            OperateSystem system = OperateSystem.parser(agent);
+            OperateSystem.Model system = OperateSystem.parser(agent);
             System.out.println(system.getRemark() + " - " + system.getVersion() + " - " + agent);
 //            visit.setOperateSystem(system.getAcronym());
 //            visit.setOperateVersion(system.getVersion());
@@ -67,17 +67,16 @@ public class VisitMapperTester {
 
     @Test
     public void formatnettype() throws Exception {
-        List<Visit> result = mapper.findByPropertyName("", "net_type", "G3");
-//        List<Visit> result = mapper.findWhere("", "WHERE net_type is null");
+//        List<Visit> result = mapper.findByPropertyName("", "net_type", "G3");
+        List<Visit> result = mapper.findWhere("", "WHERE (net_type is null OR net_type='' OR net_type='UN') AND useragent LIKE '%nettype%' ");
         for (Visit visit : result) {
             String agent = visit.getUseragent();
-            Nettype nettype = Nettype.parser(agent);
+            Nettype.Model nettype = Nettype.parser(agent);
             System.out.println(nettype.getRemark() + " - " + nettype.getValue() + " - " + agent);
-//            if (AfStringUtil.isNotEmpty(brand.getModel())){
-//                visit.setEndModel(brand.getModel());
-//                visit.setEndBrand(brand.getAcronym());
-//                mapper.update(visit);
-//            }
+            if (!nettype.getNettype().equals(Nettype.Unknown)) {
+                visit.setNetType(nettype.getAcronym());
+                mapper.update(visit);
+            }
         }
 //		System.out.println(JacksonUtil.toJson(result));
     }
@@ -85,11 +84,11 @@ public class VisitMapperTester {
     @Test
     public void formatappname() throws Exception {
         HashMap<String, Object> map = new HashMap<>();
-		List<Visit> result = mapper.findByPropertyName("", "app_name", "null");
-//        List<Visit> result = mapper.findWhere("", "WHERE app_name is null");
+//		List<Visit> result = mapper.findByPropertyName("", "app_name", "null");
+        List<Visit> result = mapper.findWhere("", "WHERE app_name = 'UN'");
         for (Visit visit : result) {
             String agent = visit.getUseragent();
-            Application application = Application.parser(agent);
+            Application.Model application = Application.parser(agent);
             System.out.println(application.getRemark() + " - " + application.getVersion() + " - " + agent);
 //            visit.setAppName(application.getAcronym());
 //            mapper.update(visit);
@@ -108,13 +107,13 @@ public class VisitMapperTester {
 
     @Test
     public void formatmodel() throws Exception {
-        List<Visit> result = mapper.findByPropertyName("", "end_model", "");
-//        List<Visit> result = mapper.findWhere("", "WHERE end_model is null");
+//        List<Visit> result = mapper.findByPropertyName("", "end_model", "");
+        List<Visit> result = mapper.findWhere("", "WHERE (end_model is null OR end_model='' OR end_model='UN') AND useragent like '%build%'");
         for (Visit visit : result) {
             String agent = visit.getUseragent();
-            Brand brand = Brand.parser(agent);
+            Brand.Model brand = Brand.parser(agent);
             System.out.println(brand.getRemark() + " - " + brand.getModel() + " - " + agent);
-            if (AfStringUtil.isNotEmpty(brand.getModel())){
+            if (AfStringUtil.isNotEmpty(brand.getModel())) {
                 visit.setEndModel(brand.getModel());
                 visit.setEndBrand(brand.getAcronym());
                 mapper.update(visit);
@@ -125,13 +124,16 @@ public class VisitMapperTester {
 
     @Test
     public void formatbrand() throws Exception {
-        List<Visit> result = mapper.findByPropertyName("", "end_brand", "SS");
-//        List<Visit> result = mapper.findWhere("", "WHERE end_brand = 'UN' AND end_type='MB'");
+//        List<Visit> result = mapper.findByPropertyName("", "end_brand", "SS");
+        List<Visit> result = mapper.findWhere("", "WHERE end_brand = 'UN'");
         for (Visit visit : result) {
             String agent = visit.getUseragent();
-            Brand brand = Brand.parser(agent);
-            System.out.println(brand.getRemark() + " - " + brand.getModel() + " - " + agent);
-            if (AfStringUtil.isNotEmpty(brand.getModel())){
+            Brand.Model brand = Brand.parser(agent);
+            if (brand.getValue().equals(Brand.Unknown))
+                System.err.println(brand.getRemark() + " - " + brand.getModel() + " - " + agent);
+            else
+                System.out.println(brand.getRemark() + " - " + brand.getModel() + " - " + agent);
+            if (AfStringUtil.isNotEmpty(brand.getModel()) || brand.getValue().equals(Brand.Computer)){
                 visit.setEndModel(brand.getModel());
                 visit.setEndBrand(brand.getAcronym());
                 mapper.update(visit);
@@ -142,12 +144,12 @@ public class VisitMapperTester {
 
     @Test
     public void formatbrowser() throws Exception {
-        List<Visit> result = mapper.findByPropertyName("", "browser_name", "XM");
+//        List<Visit> result = mapper.findByPropertyName("", "browser_name", "UN");
 //        List<Visit> result = mapper.findWhere("", "WHERE browser_name is null");
-//        List<Visit> result = mapper.findWhere("", "WHERE browser_name like '%;'");
+        List<Visit> result = mapper.findWhere("", "WHERE useragent like '%oppo%'");
         for (Visit visit : result) {
             String agent = visit.getUseragent();
-            Browser browser = Browser.parser(agent);
+            Browser.Model browser = Browser.parser(agent);
             System.out.println(browser.getRemark() + " - " + browser.getVersion() + " - " + agent + "-" + visit.getBrowserVersion());
             visit.setBrowserName(browser.getAcronym());
             visit.setBrowserVersion(browser.getVersion());

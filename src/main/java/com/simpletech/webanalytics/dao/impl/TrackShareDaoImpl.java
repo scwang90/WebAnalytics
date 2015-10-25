@@ -2,9 +2,13 @@ package com.simpletech.webanalytics.dao.impl;
 
 import com.simpletech.webanalytics.dao.TrackShareDao;
 import com.simpletech.webanalytics.mapper.TrackShareMapper;
-import com.simpletech.webanalytics.model.SharePoint;
+import com.simpletech.webanalytics.model.ShareLinePoint;
+import com.simpletech.webanalytics.model.ShareStartPoint;
 import com.simpletech.webanalytics.model.ShareUser;
+import com.simpletech.webanalytics.model.base.ModelBase;
+import com.simpletech.webanalytics.model.entity.JsDetect;
 import com.simpletech.webanalytics.util.AfReflecter;
+import com.webanalytics.useragent.Browser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +32,7 @@ public class TrackShareDaoImpl implements TrackShareDao {
     }
 
     @Override
-    public ShareUser getShareUser(int siteId, String idsubsite, String idvisitor) throws Exception {
+    public ShareUser getShareUser(int siteId, String idsubsite, String idvisitor, JsDetect detect) throws Exception {
         ShareUser user = mapper.getShareUser(siteId, idvisitor);
         if (user == null) {
             user = new ShareUser();
@@ -36,6 +40,7 @@ public class TrackShareDaoImpl implements TrackShareDao {
             user.setIdvisitor(idvisitor);
             user.fillNullID();
             user.setIdsubsite(idsubsite);
+            user.setNickname(Browser.parserAcronym(detect.getBrowser()).getRemark() + " - " + detect.getVersion());
             AfReflecter.setMemberNoException(user, "createTime", new Date());
             AfReflecter.setMemberNoException(user, "updateTime", new Date());
             mapper.insertShareUser(user);
@@ -44,10 +49,10 @@ public class TrackShareDaoImpl implements TrackShareDao {
     }
 
 //    @Override
-//    public SharePoint getSharePoint(int siteId, String idsubsite, String idurl, String idfromtor, long fromts) throws Exception {
-//        SharePoint point = mapper.getSharePoint(siteId, idurl, idfromtor);
+//    public ShareLinePoint getShareLinePoint(int siteId, String idsubsite, String idurl, String idfromtor, long fromts) throws Exception {
+//        ShareLinePoint point = mapper.getShareLinePoint(siteId, idurl, idfromtor);
 //        if (point == null) {
-//            point = new SharePoint();
+//            point = new ShareLinePoint();
 //            point.setIdsite(siteId);
 //            point.setIdrefervisitor("");
 //            point.setIdvisitor(idfromtor);//创建上一个分享点
@@ -57,24 +62,24 @@ public class TrackShareDaoImpl implements TrackShareDao {
 //            point.setCountPv(1);
 //            AfReflecter.setMemberNoException(point, "createTime", new Date());
 //            AfReflecter.setMemberNoException(point, "updateTime", new Date());
-//            mapper.insertSharePoint(point);
+//            mapper.insertShareLinePoint(point);
 //        }
 //        return point;
 //    }
 
     @Override
-    public SharePoint getSharePoint(int siteId, String idsubsite, String idurl, String idfromtor, String idvisitor) throws Exception {
-        return mapper.getSharePoint(siteId, idurl, idfromtor, idvisitor);
+    public ShareLinePoint getShareLinePoint(int siteId, String idsubsite, String idurl, String idfromtor, String idvisitor) throws Exception {
+        return mapper.getShareLinePoint(siteId, idurl, idfromtor, idvisitor);
     }
 
     @Override
-    public int insertSharePoint(SharePoint point) throws Exception {
-        return mapper.insertSharePoint(point);
+    public int insertShareLinePoint(ShareLinePoint point) throws Exception {
+        return mapper.insertShareLinePoint(point);
     }
 
     @Override
-    public int updateSharePoint(SharePoint tpoint) throws Exception {
-        return mapper.updateSharePoint(tpoint);
+    public int updateShareLinePoint(ShareLinePoint tpoint) throws Exception {
+        return mapper.updateShareLinePoint(tpoint);
     }
 
     @Override
@@ -85,6 +90,22 @@ public class TrackShareDaoImpl implements TrackShareDao {
     @Override
     public int updateShareUser(ShareUser user) throws Exception {
         return mapper.updateShareUser(user);
+    }
+
+    @Override
+    public boolean makeSureStartPoint(int siteId, String idsubsite, String idurl, String idfromtor) throws Exception {
+        if (mapper.isStartPoint(siteId, idurl, idfromtor) == 0 && mapper.existStartPoint(siteId, idurl, idfromtor) == 0){
+            ShareStartPoint point = new ShareStartPoint();
+            point.fillNullID();
+            point.setIdurl(idurl);
+            point.setIdsite(siteId);
+            point.setIdvisitor(idfromtor);
+            point.setIdsubsite(idsubsite);
+            point.setUpdateTime(new Date());
+            point.setCreateTime(new Date());
+            return mapper.insertShareStartPoint(point) > 0;
+        }
+        return false;
     }
 }
 

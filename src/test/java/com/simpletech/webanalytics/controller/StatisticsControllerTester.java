@@ -5,6 +5,7 @@ import com.simpletech.webanalytics.aspect.LoggingAspect;
 import com.simpletech.webanalytics.mapper.VisitMapper;
 import com.simpletech.webanalytics.model.constant.Norm;
 import com.simpletech.webanalytics.model.constant.Period;
+import com.simpletech.webanalytics.model.constant.RankingType;
 import com.simpletech.webanalytics.util.JacksonUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,10 +17,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.text.SimpleDateFormat;
 
 /**
- * StatisticsController ������
+ * StatisticsController 测试类
  *
- * @author ���b
- * @date 2015-09-21 17:03:53 �й���׼ʱ��
+ * @author 树朾
+ * @date 2015-09-21 17:03:53 中国标准时间
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-*.xml")
@@ -48,13 +49,13 @@ public class StatisticsControllerTester {
 
     @Test
     public void pagetitle() throws Exception {
-        Object result = controller.pagetitle(1, 100, 0, null, 0, Period.month, null, null);
+        Object result = controller.pagetitle(1, RankingType.pv, 100, 0, null, 0, Period.month, null, null);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void pageurl() throws Exception {
-        Object result = controller.pageurl(1, 100, 0, null, 0, Period.month, null, null);
+        Object result = controller.pageurl(1, RankingType.pv, 100, 0, null, 0, Period.month, null, null);
         System.out.println(JacksonUtil.toJson(result));
     }
 

@@ -44,24 +44,60 @@ public enum OperateSystem {
     private final String name;
     private final String remark;
     private final String acronym;
-    private String version;
+
+    public static class Model{
+        private OperateSystem value;
+        private String deputy;
+        public Model(OperateSystem value,String deputy){
+            this.value = value;
+            this.deputy = deputy;
+        }
+        public String getName() {
+            return value.name;
+        }
+        public String getRemark() {
+            return value.remark;
+        }
+        public Pattern getPattern() {
+            return value.pattern;
+        }
+        public String getAcronym() {
+            return value.acronym;
+        }
+        public String getVersion() {
+            return deputy;
+        }
+    }
 
     OperateSystem(String name, String acronym, String remark, String pattern) {
-        this.version = "";
         this.name = name;
         this.remark = remark;
         this.acronym = acronym;
         this.pattern = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
     }
 
-    public static OperateSystem parser(String useragent) {
-        for (OperateSystem op : values()) {
-            if (op.matches(useragent)) {
-                return op;
+    public Pattern getPattern() {
+        return pattern;
+    }
+    public String getName() {
+        return name;
+    }
+    public String getRemark() {
+        return remark;
+    }
+    public String getAcronym() {
+        return acronym;
+    }
+
+    public static Model parser(String useragent) {
+        Model model;
+        for (OperateSystem value : values()) {
+            model = value.matches(useragent);
+            if (model != null) {
+                return model;
             }
         }
-        OperateSystem.Unknown.version = "";
-        return OperateSystem.Unknown;
+        return new Model(OperateSystem.Unknown, "");
     }
 
     public static OperateSystem parserAcronym(String acronym) {
@@ -70,45 +106,26 @@ public enum OperateSystem {
                 return op;
             }
         }
-        OperateSystem.Unknown.version = "";
         return OperateSystem.Unknown;
     }
 
-    private boolean matches(String useragent) {
+    private Model matches(String useragent) {
+        String deputy = null;
         Matcher matcher = pattern.matcher(useragent);
         if (matcher.find()) {
             int index = 0;
-            while ((version == null || version.trim().length() == 0) && index++ < matcher.groupCount()) {
-                version = matcher.group(index);
+            while ((deputy == null || deputy.trim().length() == 0) && index++ < matcher.groupCount()) {
+                deputy = matcher.group(index);
             }
-            version = (version == null) ? "" : version;
-            if (version == null || version.trim().length() == 0) {
+            deputy = (deputy == null) ? "" : deputy;
+            if (deputy.trim().length() == 0) {
                 if (remark.startsWith("Windows")) {
-                    version = remark.substring(remark.indexOf(" ") + 1);
+                    deputy = remark.substring(remark.indexOf(" ") + 1);
                 }
             }
-            return true;
+            return new Model(this, deputy);
         }
-        return false;
+        return null;
     }
 
-    public Pattern getPattern() {
-        return pattern;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public String getAcronym() {
-        return acronym;
-    }
 }

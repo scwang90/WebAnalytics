@@ -1,7 +1,7 @@
 package com.simpletech.webanalytics.service.impl;
 
 import com.simpletech.webanalytics.dao.TrackShareDao;
-import com.simpletech.webanalytics.model.SharePoint;
+import com.simpletech.webanalytics.model.ShareLinePoint;
 import com.simpletech.webanalytics.model.ShareUser;
 import com.simpletech.webanalytics.model.Url;
 import com.simpletech.webanalytics.model.entity.JsDetect;
@@ -31,27 +31,33 @@ public class TrackShareServiceImpl implements TrackShareService {
             String idVisitor = detect.getIdvtor();
             String idFromtor = detect.getFromvid();
             if (!idVisitor.equals(idFromtor)) {
-                ShareUser formtor = dao.getShareUser(siteId, idsubsite, idFromtor);
+                ShareUser formtor = dao.getShareUser(siteId, idsubsite, idVisitor, detect);
                 //获取上一个点（不存在则添加）
-//                SharePoint lpoint = dao.getSharePoint(siteId, idsubsite, url.getId(), idFromtor, detect.getFromvts());
+//                ShareLinePoint lpoint = dao.getShareLinePoint(siteId, idsubsite, url.getId(), idFromtor, detect.getFromvts());
+                //判断并产生起始点
+                dao.makeSureStartPoint(siteId, idsubsite, url.getId(), idFromtor);
                 //获取本次分享点
-                SharePoint tpoint = dao.getSharePoint(siteId, idsubsite, url.getId(), idFromtor, idVisitor);
+                ShareLinePoint tpoint = dao.getShareLinePoint(siteId, idsubsite, url.getId(), idFromtor, idVisitor);
                 if (tpoint == null) {
-                    tpoint = new SharePoint();
-                    tpoint.setIdsite(siteId);
-                    tpoint.setIdrefervisitor(idFromtor);
-                    tpoint.setIdvisitor(idVisitor);//创建上一个分享点
-                    tpoint.fillNullID();
-                    tpoint.setIdsubsite(idsubsite);
-                    tpoint.setShareTime(new Date());
-                    tpoint.setShareSpan(Math.abs(new Date().getTime() - detect.getFromvts()));
-                    tpoint.setCountPv(1);
-                    AfReflecter.setMemberNoException(tpoint, "createTime", new Date());
-                    AfReflecter.setMemberNoException(tpoint, "updateTime", new Date());
-                    dao.insertSharePoint(tpoint);
+                    //忽略反向线
+                    if (dao.getShareLinePoint(siteId, idsubsite, url.getId(), idVisitor, idFromtor) == null) {
+                        tpoint = new ShareLinePoint();
+                        tpoint.setIdsite(siteId);
+                        tpoint.setIdrefervisitor(idFromtor);
+                        tpoint.setIdvisitor(idVisitor);//创建上一个分享点
+                        tpoint.fillNullID();
+                        tpoint.setIdsubsite(idsubsite);
+                        tpoint.setIdurl(url.getId());
+                        tpoint.setShareTime(new Date());
+                        tpoint.setShareSpan(Math.abs(new Date().getTime() - detect.getFromvts()));
+                        tpoint.setCountPv(1);
+                        AfReflecter.setMemberNoException(tpoint, "createTime", new Date());
+                        AfReflecter.setMemberNoException(tpoint, "updateTime", new Date());
+                        dao.insertShareLinePoint(tpoint);
+                    }
                 } else {
                     tpoint.setCountPv(1 + tpoint.getCountPv());
-                    dao.updateSharePoint(tpoint);
+                    dao.updateShareLinePoint(tpoint);
                 }
             }
         }

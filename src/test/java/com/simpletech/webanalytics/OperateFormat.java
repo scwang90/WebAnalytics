@@ -13,7 +13,7 @@ public class OperateFormat {
 
     @Test
     public void parser(){
-        String useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+        String useragent = "Mozilla/5.0 (iPhone; CPU iPhone OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12H143 MicroMessenger/6.2.6 NetType/WIFI Language/zh_CN";
         System.out.println(Pattern.compile("\\bmi\\b|xiaomi",Pattern.CASE_INSENSITIVE).matcher(useragent).find());
         System.out.println(OperateSystem.parser(useragent).getRemark());
         System.out.println(OperateSystem.parser(useragent).getVersion());

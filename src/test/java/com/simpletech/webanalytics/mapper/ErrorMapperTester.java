@@ -1,6 +1,8 @@
 package com.simpletech.webanalytics.mapper;
 
+import com.simpletech.webanalytics.aspect.LoggingAspect;
 import com.simpletech.webanalytics.util.JacksonUtil;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,24 +25,29 @@ public class ErrorMapperTester {
 	@Autowired
 	ErrorMapper mapper;
 
+	@Before
+	public void setUp() {
+		LoggingAspect.log = false;
+	}
+
 	@Test
 	public void brand() throws Exception {
 
 		Object result = mapper.brand(100, 0);//查询出ua,ip,brand
-		System.out.println(JacksonUtil.toJson(result));
+		System.out.println(JacksonUtil.toJson(result).replace("{","\n{"));
 
 	}
 
 	@Test
 	public void model() throws Exception {
 		Object result = mapper.model(100, 0);
-		System.out.println(JacksonUtil.toJson(result));
+		System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
 	}
 
 	@Test
 	public void browser() throws Exception{
 		Object result = mapper.browser(100, 0);
-		System.out.println(JacksonUtil.toJson(result));
+		System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
 	}
 
 	@Test
@@ -52,7 +59,7 @@ public class ErrorMapperTester {
 	@Test
 	public void nettype() throws Exception {
 		Object result = mapper.nettype(100, 0);
-		System.out.println(JacksonUtil.toJson(result));
+		System.out.println(JacksonUtil.toJson(result).replace("{","\n{"));
 	}
 
 	@Test

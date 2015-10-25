@@ -14,16 +14,13 @@
 
     <dependencies>
 
+        <!--yaml文件解析-->
         <dependency>
-            <groupId>eu.bitwalker</groupId>
-            <artifactId>UserAgentUtils</artifactId>
-            <version>1.17</version>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.16</version>
         </dependency>
-        <dependency>
-            <groupId>nl.bitwalker</groupId>
-            <artifactId>UserAgentUtils</artifactId>
-            <version>1.2.4</version>
-        </dependency>
+
 
         <!-- JDBC -->
         <dependency>

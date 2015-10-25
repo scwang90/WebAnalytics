@@ -34,7 +34,6 @@ public class TrackerServiceImpl implements TrackerService {
             dao.getSubSite(siteId, idsubsite);
 
             Url url = dao.getUrl(siteId, idsubsite, detect.getUrl());
-            trackShareService.trackerShare(siteId, idsubsite, detect, url);
             Title title = dao.getTitle(siteId, idsubsite, detect.getTitle());
             Visit visit = dao.getVisitHalfHour(siteId, idsubsite, detect, url, title);
             visit.setIdurlExit(url.getId());
@@ -50,6 +49,8 @@ public class TrackerServiceImpl implements TrackerService {
             action.setTimeSpent(detect.getGtms());
             action.setIdvisitor(detect.getIdvtor());
             dao.insertAction(idsubsite, action);
+
+            trackShareService.trackerShare(siteId, idsubsite, detect, url);
         }
     }
 

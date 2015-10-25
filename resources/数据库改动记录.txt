@@ -1,0 +1,21 @@
+t_visit
+
+删除列 idurl
+删除列 idtitle
+
+重命名 app_name -> end_app
+
+添加列 sp_java
+添加列 sp_cookie
+
+t_url
+
+添加列 hash_title
+
+t_action
+
+添加列 ref_id_url
+添加列 ref_id_title
+添加列 ref_time_spend
+
+重命名 time_spent -> end_app

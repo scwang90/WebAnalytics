@@ -6,18 +6,10 @@ package com.simpletech.webanalytics.model.entity;
  */
 public class ErrorValue {
 
-    private String uerAgent;    //userAgent
     private String ip;          //外网IP
     private String name;        //错误名称:brand、model……
     private String remark;      //备注
-
-    public String getUerAgent() {
-        return uerAgent;
-    }
-
-    public void setUerAgent(String uerAgent) {
-        this.uerAgent = uerAgent;
-    }
+    private String uerAgent;    //userAgent
 
     public String getIp() {
         return ip;
@@ -41,5 +33,13 @@ public class ErrorValue {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getUerAgent() {
+        return uerAgent;
+    }
+
+    public void setUerAgent(String uerAgent) {
+        this.uerAgent = uerAgent;
     }
 }
