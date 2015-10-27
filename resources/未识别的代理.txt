@@ -1,0 +1,2 @@
+SAMSUNG-GT-S6818_TD/1.0 Android/4.1.2 Release/02.03.2013 Browser/ApplelWebkit/534.30
+Mozilla/5.0 (Linux; U; Android 4.1.2; zh-cn; YL-Coolpad_5930/4.1.025.130125.5930;540*960;CTC/2.0) CoolpadWebkit/534.30
