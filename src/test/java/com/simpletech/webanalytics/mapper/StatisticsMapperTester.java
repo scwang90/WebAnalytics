@@ -25,6 +25,18 @@ public class StatisticsMapperTester {
     StatisticsMapper mapper;
 
     @Test
+    public void entryUrls() throws Exception {
+        Object result = mapper.entryUrls("1", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"));
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
+    public void exitUrls() throws Exception {
+        Object result = mapper.exitUrls("1", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"));
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
     public void nettype() throws Exception {
         Object result = mapper.nettype("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));

@@ -1,5 +1,6 @@
 package com.simpletech.webanalytics.controller;
 
+import com.simpletech.webanalytics.model.constant.EnterClose;
 import com.simpletech.webanalytics.model.constant.Period;
 import com.simpletech.webanalytics.model.constant.Ranking;
 import com.simpletech.webanalytics.model.constant.RankingType;
@@ -9,6 +10,7 @@ import com.simpletech.webanalytics.model.entity.VisitorValue;
 import com.simpletech.webanalytics.service.StatisticsService;
 import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.AfStringUtil;
+import com.simpletech.webanalytics.util.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -35,14 +37,33 @@ public class StatisticsController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyyMMddHHmmss"), true));
     }
 
+
     /**
-     * 页面分享排行
+     * [入口|出口]页面
      *
-     * @param siteId   网站ID
-     * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span     跨度 [day|week|month|year]
-     * @param start    开始时间 ("yyyyMMddHHmmss")
-     * @param end      结束时间 ("yyyyMMddHHmmss")
+     * @param siteId 网站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return  [入口|出口]页面
+     */
+    @RequestMapping("enterclose/site/{siteId:\\d+}/{type:entry|exit}")
+    public Object enterclose(@PathVariable int siteId, EnterClose type, String subsite, Integer offset, Period span, Date start, Date end) throws Exception {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.enterclose(idsite, type, start, end);
+    }
+
+    /**
+     * 进入
+     *
+     * @param siteId 网站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
      * @return 页面分享排行
      */
     @RequestMapping("shareranking/site/{siteId:\\d+}")
@@ -56,12 +77,12 @@ public class StatisticsController {
     /**
      * 分享传播图点线列表
      *
-     * @param siteId   网站ID
-     * @param urlId    页面ID
-     * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span     跨度 [day|week|month|year]
-     * @param start    开始时间 ("yyyyMMddHHmmss")
-     * @param end      结束时间 ("yyyyMMddHHmmss")
+     * @param siteId 网站ID
+     * @param urlId  页面ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
      * @return 分享图点线列表
      */
     @RequestMapping("sharemap/site/{siteId:\\d+}/page/{urlId}")
@@ -124,8 +145,8 @@ public class StatisticsController {
      *
      * @param siteId 网站ID
      * @param period 时段周期 [时|日|周|月]
-     * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span     跨度 [day|week|month|year]
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
      * @param end    结束时间 ("yyyyMMddHHmmss")
      * @return 新老用户
@@ -135,6 +156,7 @@ public class StatisticsController {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
         String idsite = getIdSite(siteId, subsite);
+        this.doCheckPeriod(period, start, end);
         List<VisitorValue> list = service.visitor(idsite, period, start, end);
         list = fulldata(list, period.getFormat(), period.getField(), start, end, VisitorValue.class);
         return list;
@@ -144,8 +166,8 @@ public class StatisticsController {
      * 页面标题排行
      *
      * @param siteId 网站ID
-     * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span     跨度 [day|week|month|year]
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
      * @param end    结束时间 ("yyyyMMddHHmmss")
      * @param limit  分页限制
@@ -165,8 +187,8 @@ public class StatisticsController {
      * 页面链接排行
      *
      * @param siteId 网站ID
-     * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span     跨度 [day|week|month|year]
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
      * @param end    结束时间 ("yyyyMMddHHmmss")
      * @param limit  分页限制
@@ -182,12 +204,13 @@ public class StatisticsController {
     }
 
     /**
-     * 自定义时段 event 统计数据获取API
+     * event 统计数据获取API
      *
      * @param siteId 网站ID
      * @param name   事件名称
-     * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span     跨度 [day|week|month|year]
+     * @param period 时段周期 [时|日|周|月]
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
      * @param end    结束时间 ("yyyyMMddHHmmss")
      * @param limit  分页限制
@@ -199,16 +222,17 @@ public class StatisticsController {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
         String idsite = getIdSite(siteId, subsite);
+        this.doCheckPeriod(period, start, end);
         return service.event(idsite, name, period, start, end, limit, skip);
     }
 
 
     /**
-     * 自定义时段 event 统计数据获取API
+     * event 统计数据获取API
      *
      * @param siteId 网站ID
-     * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span     跨度 [day|week|month|year]
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
      * @param end    结束时间 ("yyyyMMddHHmmss")
      * @param limit  分页限制
@@ -228,8 +252,8 @@ public class StatisticsController {
      *
      * @param siteId 网站ID
      * @param period 时段周期 [时|日|周|月]
-     * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span     跨度 [day|week|month|year]
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
      * @param end    结束时间 ("yyyyMMddHHmmss")
      * @return event统计数据
@@ -238,10 +262,29 @@ public class StatisticsController {
     public Object visit(@PathVariable int siteId, @PathVariable Period period, String subsite, Integer offset, Period span, Date start, Date end) throws Exception {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
+        this.doCheckPeriod(period, start, end);
         String idsite = getIdSite(siteId, subsite);
         List<VisitValue> list = service.visit(idsite, period, start, end);
         list = fulldata(list, period.getFormat(), period.getField(), start, end, VisitValue.class);
         return list;
+    }
+
+    /**
+     * 检测时间分段合理性
+     * @param period 时段周期 [时|日|周|月]
+     * @param start  开始时间
+     * @param end    结束时间
+     */
+    private void doCheckPeriod(Period period, Date start, Date end) throws ServiceException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(start);
+        int count = 0;
+        while (calendar.getTime().before(end)) {
+            count++;
+        }
+        if (count > 200) {
+            throw new ServiceException("数据量偏大，请调整时间跨度再试！");
+        }
     }
 
     /**
@@ -336,14 +379,15 @@ public class StatisticsController {
 
     /**
      * 把 int siteId 转成 string idsite
-     * @param siteId 网站ID
+     *
+     * @param siteId  网站ID
      * @param subsite 子项目
      * @return idsite
      */
     private String getIdSite(int siteId, String subsite) {
-        if (AfStringUtil.isNotEmpty(subsite)){
+        if (AfStringUtil.isNotEmpty(subsite)) {
             String format = "%d AND idsubsite='%s'";
-            return String.format(format,siteId, subsite);
+            return String.format(format, siteId, subsite);
         }
         return String.valueOf(siteId);
     }

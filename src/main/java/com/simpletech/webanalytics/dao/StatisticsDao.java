@@ -216,4 +216,22 @@ public interface StatisticsDao {
 	 * @return 起始点列表
 	 */
 	List<ShareStartPoint>  getShareStartPoint(String idsite, String urlId, Date start, Date end) throws Exception;
+
+	/**
+	 * 获取入口页面列表
+	 * @param idsite   网站ID
+	 * @param start    开始时间
+	 * @param end      结束时间
+	 * @return 获取入口页面列表
+	 */
+	List<EnterCloseValue> entryUrls(String idsite, Date start, Date end) throws Exception;
+
+	/**
+	 * 获取出口页面列表
+	 * @param idsite   网站ID
+	 * @param start    开始时间
+	 * @param end      结束时间
+	 * @return 获取出口页面列表
+	 */
+	List<EnterCloseValue> exitUrls(String idsite, Date start, Date end) throws Exception;
 }

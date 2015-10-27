@@ -15,6 +15,15 @@ import java.util.List;
 public interface StatisticsMapper {
 
     /**
+     * Piwik SQL
+     *
+     * [Visit|PV|UV|IP]
+     * SELECT COUNT(idvisit) vt,COUNT(DISTINCT idvisitor) uv,SUM(`visit_total_actions`) pv,COUNT(DISTINCT location_ip) ip FROM `t_log_visit` WHERE idsite=2 AND DATE_FORMAT(`visit_first_action_time`,'%y%m%d')=DATE_FORMAT(NOW(),'%y%m%d')
+     *
+     * 入口页|退出页
+     * SELECT visit_exit_idaction_url,t_log_action.name FROM `t_log_visit` LEFT JOIN t_log_action ON t_log_visit.visit_exit_idaction_url=t_log_action.idaction WHERE idsite=2 AND DATE_FORMAT(`visit_first_action_time`,'%y%m%d')=DATE_FORMAT(NOW(),'%y%m%d') GROUP BY visit_exit_idaction_url
+     */
+    /**
      * 获取 idsite网站 start-end 的 [小时\日\周\月] [Visit|PV|UV|IP]
      *
      * @param idsite 网站ID
@@ -274,4 +283,27 @@ public interface StatisticsMapper {
      */
     @Select("SELECT id , idsite , idsubsite , idurl , idvisitor , create_time createTime , update_time updateTime FROM t_share_start_point WHERE idsite=${idsite} AND idurl=#{urlId} AND (create_time BETWEEN #{start} AND #{end}) ")
     List<ShareStartPoint> getShareStartPoint(@Param("idsite") String idsite, @Param("urlId") String urlId, @Param("start") Date start, @Param("end") Date end) throws Exception;
+
+    /**
+     * 获取入口页面列表
+     * Piwik SQL
+     * SELECT visit_exit_idaction_url,t_log_action.name FROM `t_log_visit` LEFT JOIN t_log_action ON t_log_visit.visit_exit_idaction_url=t_log_action.idaction WHERE idsite=2 AND DATE_FORMAT(`visit_first_action_time`,'%y%m%d')=DATE_FORMAT(NOW(),'%y%m%d') GROUP BY visit_exit_idaction_url
+     * @param idsite   网站ID
+     * @param start    开始时间
+     * @param end      结束时间
+     * @return 获取入口页面列表
+     */
+    @Select("SELECT t_url.url name,COUNT(t_visit.id) num FROM t_visit LEFT JOIN t_url ON t_visit.idurl_entry=t_url.id WHERE t_visit.idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY idurl_entry ORDER BY num DESC")
+//    @Select("SELECT t_url.url name,t.num FROM t_url RIGHT JOIN (SELECT idurl_entry,COUNT(id) num FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY idurl_entry ORDER BY num DESC) as t ON t.idurl_entry=t_url.id")
+    List<EnterCloseValue> entryUrls(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
+
+    /**
+     * 获取出口页面列表
+     * @param idsite   网站ID
+     * @param start    开始时间
+     * @param end      结束时间
+     * @return 获取出口页面列表
+     */
+    @Select("SELECT t_url.url name,COUNT(t_visit.id) num FROM t_visit LEFT JOIN t_url ON t_visit.idurl_exit=t_url.id WHERE t_visit.idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY idurl_exit ORDER BY num DESC")
+    List<EnterCloseValue> exitUrls(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
 }

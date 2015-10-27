@@ -87,18 +87,19 @@ APPV:<%=useragent.getApplication().getVersion()%><br>
 </script>
 <!-- End WebAnalytics Code -->
 <!-- Piwik -->
-<%--<script type="text/javascript">
+<script type="text/javascript">
     var _paq = _paq || [];
     _paq.push(['trackPageView']);
     _paq.push(['enableLinkTracking']);
     (function() {
-        var u="//118.118.118.6:8080/tracker/";
-        _paq.push(['setTrackerUrl', u+'tracker']);
-        _paq.push(['setSiteId', 2222222]);
+        var u="//222.85.149.5:22345/piwik/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', 4]);
         var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.type='text/javascript'; g.async=true; g.defer=true; g.src='/js/piwik.js'; s.parentNode.insertBefore(g,s);
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
     })();
-</script>--%>
+</script>
+<noscript><p><img src="//222.85.149.5:22345/piwik/piwik.php?idsite=4" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
 <script>
     function remArg(url, names) {

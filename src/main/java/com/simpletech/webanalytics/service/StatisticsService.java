@@ -1,5 +1,6 @@
 package com.simpletech.webanalytics.service;
 
+import com.simpletech.webanalytics.model.constant.EnterClose;
 import com.simpletech.webanalytics.model.constant.Period;
 import com.simpletech.webanalytics.model.constant.Ranking;
 import com.simpletech.webanalytics.model.constant.RankingType;
@@ -143,4 +144,14 @@ public interface StatisticsService {
      * @return 页面分享排行
      */
     List<PageRankingValue> shareRanking(String idsite, Date start, Date end) throws Exception;
+
+    /**
+     * [入口|出口]页面
+     *
+     * @param idsite 网站ID
+     * @param start  开始时间
+     * @param end    结束时间
+     * @return  [入口|出口]页面
+     */
+    List<EnterCloseValue> enterclose(String idsite, EnterClose type, Date start, Date end) throws Exception;
 }

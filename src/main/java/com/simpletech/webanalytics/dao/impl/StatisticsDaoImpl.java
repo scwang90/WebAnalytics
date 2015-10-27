@@ -88,7 +88,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.coutRanking(idsite, start, end);
         List<RankingValue> list = mapper.model(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -171,7 +171,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.coutRanking(idsite, start, end);
         List<RankingValue> list = mapper.resolution(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -190,7 +190,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.coutRanking(idsite, start, end);
         List<RankingValue> list = mapper.depth(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -209,7 +209,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.coutRanking(idsite, start, end);
         List<RankingValue> list = mapper.lang(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -228,7 +228,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.coutRanking(idsite, start, end);
         List<RankingValue> list = mapper.country(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -247,7 +247,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.coutRanking(idsite, start, end);
         List<RankingValue> list = mapper.province(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -266,7 +266,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.coutRanking(idsite, start, end);
         List<RankingValue> list = mapper.city(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -285,7 +285,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.coutRanking(idsite, start, end);
         List<RankingValue> list = mapper.ip(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -320,7 +320,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.pageCoutRanking(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageModel(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -403,7 +403,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.pageCoutRanking(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageResolution(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -422,7 +422,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.pageCoutRanking(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageDepth(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -441,7 +441,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.pageCoutRanking(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageLang(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -460,7 +460,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.pageCoutRanking(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageCountry(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -479,7 +479,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.pageCoutRanking(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageProvince(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -498,7 +498,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.pageCoutRanking(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageCity(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -517,7 +517,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
         RankingValue count = mapper.pageCoutRanking(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageIp(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
-            if (AfStringUtil.isEmpty(value.getName())){
+            if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
                 value.setRemark(Brand.Unknown.getRemark());
             } else {
@@ -555,20 +555,20 @@ public class StatisticsDaoImpl implements StatisticsDao {
 
     @Override
     public List<PageValue> fullTitleName(List<PageValue> pagetitle) throws Exception {
-        if (pagetitle.size() > 0){
+        if (pagetitle.size() > 0) {
             String where = "WHERE id IN(%s)";
             StringBuffer builder = new StringBuffer();
-            for (PageValue pagevalue: pagetitle){
+            for (PageValue pagevalue : pagetitle) {
                 builder.append(",'");
                 builder.append(pagevalue.getPid());
                 builder.append("'");
             }
-            List<Title> titles = mapper.findTitleWhere("",String.format(where, builder.substring(1)));
-            Map<String,Title> map = new LinkedHashMap<>();
+            List<Title> titles = mapper.findTitleWhere("", String.format(where, builder.substring(1)));
+            Map<String, Title> map = new LinkedHashMap<>();
             for (Title title : titles) {
-                map.put(title.getId(),title);
+                map.put(title.getId(), title);
             }
-            for (PageValue pagevalue: pagetitle){
+            for (PageValue pagevalue : pagetitle) {
                 Title title = map.get(pagevalue.getPid());
                 if (title != null) {
                     pagevalue.setName(title.getTitle());
@@ -592,20 +592,20 @@ public class StatisticsDaoImpl implements StatisticsDao {
 
     @Override
     public List<PageValue> fullUrlName(List<PageValue> pageurl) throws Exception {
-        if (pageurl.size() > 0){
+        if (pageurl.size() > 0) {
             String where = "WHERE id IN(%s)";
             StringBuffer builder = new StringBuffer();
-            for (PageValue pagevalue: pageurl){
+            for (PageValue pagevalue : pageurl) {
                 builder.append(",'");
                 builder.append(pagevalue.getPid());
                 builder.append("'");
             }
-            List<Url> urls = mapper.findUrlWhere("",String.format(where, builder.substring(1)));
-            Map<String,Url> map = new LinkedHashMap<>();
+            List<Url> urls = mapper.findUrlWhere("", String.format(where, builder.substring(1)));
+            Map<String, Url> map = new LinkedHashMap<>();
             for (Url url : urls) {
-                map.put(url.getId(),url);
+                map.put(url.getId(), url);
             }
-            for (PageValue pagevalue: pageurl){
+            for (PageValue pagevalue : pageurl) {
                 Url url = map.get(pagevalue.getPid());
                 if (url != null) {
                     pagevalue.setName(url.getUrl());
@@ -617,20 +617,20 @@ public class StatisticsDaoImpl implements StatisticsDao {
 
     @Override
     public List<MapPointValue> fullNickName(List<MapPointValue> points) throws Exception {
-        if (points.size() > 0){
+        if (points.size() > 0) {
             String where = "WHERE idvisitor IN(%s)";
             StringBuffer builder = new StringBuffer();
-            for (MapPointValue point : points){
+            for (MapPointValue point : points) {
                 builder.append(",'");
                 builder.append(point.getId());
                 builder.append("'");
             }
             List<ShareUser> users = mapper.findShareUserWhere("", String.format(where, builder.substring(1)));
-            Map<String,ShareUser> map = new LinkedHashMap<>();
+            Map<String, ShareUser> map = new LinkedHashMap<>();
             for (ShareUser user : users) {
                 map.put(user.getIdvisitor(), user);
             }
-            for (MapPointValue point: points){
+            for (MapPointValue point : points) {
                 ShareUser user = map.get(point.getId());
                 if (user != null) {
                     point.setMk(user.getNickname());
@@ -678,6 +678,16 @@ public class StatisticsDaoImpl implements StatisticsDao {
     @Override
     public List<ShareStartPoint> getShareStartPoint(String idsite, String urlId, Date start, Date end) throws Exception {
         return mapper.getShareStartPoint(idsite, urlId, start, end);
+    }
+
+    @Override
+    public List<EnterCloseValue> entryUrls(String idsite, Date start, Date end) throws Exception {
+        return mapper.entryUrls(idsite, start, end);
+    }
+
+    @Override
+    public List<EnterCloseValue> exitUrls(String idsite, Date start, Date end) throws Exception {
+        return mapper.exitUrls(idsite, start, end);
     }
 }
 

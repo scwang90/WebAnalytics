@@ -3,6 +3,7 @@ package com.simpletech.webanalytics.service.impl;
 import com.simpletech.webanalytics.dao.*;
 import com.simpletech.webanalytics.model.ShareLinePoint;
 import com.simpletech.webanalytics.model.ShareStartPoint;
+import com.simpletech.webanalytics.model.constant.EnterClose;
 import com.simpletech.webanalytics.model.constant.Period;
 import com.simpletech.webanalytics.model.constant.Ranking;
 import com.simpletech.webanalytics.model.constant.RankingType;
@@ -259,5 +260,16 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public List<PageRankingValue> shareRanking(String idsite, Date start, Date end) throws Exception {
         return dao.shareRanking(idsite, start, end);
+    }
+
+    @Override
+    public List<EnterCloseValue> enterclose(String idsite, EnterClose type, Date start, Date end) throws Exception {
+        switch (type) {
+            case entry:
+                return dao.entryUrls(idsite,start,end);
+            case exit:
+                return dao.exitUrls(idsite,start,end);
+        }
+        return new ArrayList<>();
     }
 }
