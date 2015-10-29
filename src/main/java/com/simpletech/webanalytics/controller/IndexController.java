@@ -1,6 +1,7 @@
 package com.simpletech.webanalytics.controller;
 
 import com.simpletech.webanalytics.model.entity.JsDetect;
+import com.simpletech.webanalytics.model.entity.Spant;
 import com.simpletech.webanalytics.service.StatisticsService;
 import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.JacksonUtil;
@@ -9,10 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Date;
@@ -26,12 +29,28 @@ import java.util.Map;
 @Controller
 public class IndexController {
 
-    @RequestMapping("2.0/ds.png")
-    public void ds2_0(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    @XmlRootElement
+    public static class SpantEx extends Spant {
+        public String name = "Spant";
+        private Object value = "132";
+        public Object getValue() {
+            return value;
+        }
+        public void setValue(Object value) {
+            this.value = value;
+        }
     }
 
-    //    @ResponseBody
+    @ResponseBody
+    @RequestMapping("xml/{skip:\\d*}")
+    public Spant xml(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+        SpantEx spant = new SpantEx();
+        spant.setStart(new Date());
+        spant.setEnd(new Date());
+        model.addAttribute("spant", spant);
+        return spant;
+    }
+
     @RequestMapping("1.0/ds.png")
     public void ds1_0(HttpServletRequest request, HttpServletResponse response, JsDetect detect) throws ServletException, IOException {
         detect.bind(request, response);
@@ -66,10 +85,10 @@ public class IndexController {
     StatisticsService service;
 
     @RequestMapping("sharemap/site/{siteId:\\d+}/{urlId}")
-    public String sharemap(@PathVariable int siteId,@PathVariable String urlId,Model model) throws Exception {
-        Map<String,Object> root = (Map<String,Object>)service.sharemap(String.valueOf(siteId),urlId,new Date(-30136435200000l),new Date(33008486400000l));
-        model.addAttribute("lines", JacksonUtil.toJson(root.get("lines")).replace("sts", "weight").replace("sId","source").replace("eId","target"));
-        model.addAttribute("points", JacksonUtil.toJson(root.get("points")).replace("id", "name").replace("cl","category").replace("pv","value").replace("mk","label"));
+    public String sharemap(@PathVariable int siteId, @PathVariable String urlId, Model model) throws Exception {
+        Map<String, Object> root = (Map<String, Object>) service.sharemap(String.valueOf(siteId), urlId, new Date(-30136435200000l), new Date(33008486400000l));
+        model.addAttribute("lines", JacksonUtil.toJson(root.get("lines")).replace("sts", "weight").replace("sId", "source").replace("eId", "target"));
+        model.addAttribute("points", JacksonUtil.toJson(root.get("points")).replace("id", "name").replace("cl", "category").replace("pv", "value").replace("mk", "label"));
         return "sharemap";
     }
 

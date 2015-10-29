@@ -31,7 +31,8 @@ public class LoggingAspect {
 						out.print(JacksonUtil.toJson(object)+",");
 					} catch (Throwable e) {
 						if (object instanceof HttpServletRequest) {
-							out.print(((HttpServletRequest) object).getQueryString()+",");
+							HttpServletRequest request = (HttpServletRequest) object;
+							out.print("{"+request.getQueryString()+","+JacksonUtil.toJson(request.getCookies())+"},");
 						} else {
 							out.print(object+",");
 						}

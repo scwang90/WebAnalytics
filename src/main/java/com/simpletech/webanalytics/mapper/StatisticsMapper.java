@@ -107,9 +107,9 @@ public interface StatisticsMapper {
      * @param skip   分页起始
      * @return 标题排行
      */
-    @Select("SELECT idtitle pid, COUNT(id) pv, COUNT(DISTINCT idvisit) vt, AVG(time_spent) ts, COUNT(DISTINCT idvisitor) uv FROM t_action WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY idtitle ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT idtitle pid, COUNT(id) pv, COUNT(DISTINCT idvisit) vt, AVG(time_loaded) ts, COUNT(DISTINCT idvisitor) uv FROM t_action WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY idtitle ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<PageValue> pagetitle(@Param("idsite") String idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT idurl pid, COUNT(id) pv, COUNT(DISTINCT idvisit) vt, AVG(time_spent) ts, COUNT(DISTINCT idvisitor) uv FROM t_action WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY idurl ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT idurl pid, COUNT(id) pv, COUNT(DISTINCT idvisit) vt, AVG(time_loaded) ts, COUNT(DISTINCT idvisitor) uv FROM t_action WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY idurl ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<PageValue> pageurl(@Param("idsite") String idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
     @Select("SELECT id , idsite , create_time createTime , update_time updateTime , hash , title FROM t_title ${where} ${order}")
     List<Title> findTitleWhere(@Param("order") String order, @Param("where") String where) throws Exception;
@@ -123,7 +123,7 @@ public interface StatisticsMapper {
      * @param end    结束时间
      * @return 数据总量
      */
-    @Select("SELECT COUNT(id) pv, COUNT(DISTINCT idvisit) vt, AVG(time_spent) ts, COUNT(DISTINCT idvisitor) uv FROM t_action WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end})")
+    @Select("SELECT COUNT(id) pv, COUNT(DISTINCT idvisit) vt, AVG(time_loaded) ts, COUNT(DISTINCT idvisitor) uv FROM t_action WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end})")
     PageValue coutpage(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
 
     /**
@@ -163,7 +163,7 @@ public interface StatisticsMapper {
     List<RankingValue> browser(@Param("idsite") String idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
     @Select("SELECT operate_system name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> system(@Param("idsite") String idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT app_name name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT end_app name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> appname(@Param("idsite") String idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
     @Select("SELECT screen_resolution name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> resolution(@Param("idsite") String idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
@@ -213,7 +213,7 @@ public interface StatisticsMapper {
     List<RankingValue> pageBrowser(@Param("idsite") String idsite, @Param("idurl") String idurl, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
     @Select("SELECT operate_system name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit RIGHT JOIN (SELECT idvisit FROM t_action WHERE idurl = #{idurl} AND (server_time BETWEEN #{start} AND #{end}) GROUP BY idvisit) t ON t_visit.id=t.idvisit GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> pageSystem(@Param("idsite") String idsite, @Param("idurl") String idurl, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
-    @Select("SELECT app_name name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit RIGHT JOIN (SELECT idvisit FROM t_action WHERE idurl = #{idurl} AND (server_time BETWEEN #{start} AND #{end}) GROUP BY idvisit) t ON t_visit.id=t.idvisit GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
+    @Select("SELECT end_app name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit RIGHT JOIN (SELECT idvisit FROM t_action WHERE idurl = #{idurl} AND (server_time BETWEEN #{start} AND #{end}) GROUP BY idvisit) t ON t_visit.id=t.idvisit GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> pageAppname(@Param("idsite") String idsite, @Param("idurl") String idurl, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;
     @Select("SELECT screen_resolution name, COUNT(id) vt,COUNT(DISTINCT idvisitor) uv, COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv FROM t_visit RIGHT JOIN (SELECT idvisit FROM t_action WHERE idurl = #{idurl} AND (server_time BETWEEN #{start} AND #{end}) GROUP BY idvisit) t ON t_visit.id=t.idvisit GROUP BY name ORDER BY ${type} DESC LIMIT ${skip},${limit}")
     List<RankingValue> pageResolution(@Param("idsite") String idsite, @Param("idurl") String idurl, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip) throws Exception;

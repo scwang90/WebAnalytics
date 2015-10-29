@@ -7,6 +7,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 时间跳跃测试
@@ -15,6 +17,19 @@ import java.util.*;
 public class DateSkip {
 
     private static DateFormat full = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
+    static Pattern patternPiwikCookie = Pattern.compile("(\\w+)\\.",Pattern.CASE_INSENSITIVE);
+
+    @Test
+    public void patternPiwikCookie() throws ParseException {
+        Matcher matcher = patternPiwikCookie.matcher("5096af1759bd3e5e.1446019398.1.1446021228.1446019398.");
+        if (matcher.find()) {
+            System.out.println(matcher.group(1));
+        } else {
+            System.out.println("fail");
+        }
+    }
 
     @Test
     public void dateskip() throws ParseException {

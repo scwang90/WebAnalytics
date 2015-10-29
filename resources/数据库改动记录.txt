@@ -6,18 +6,18 @@ t_visit
 
 添加列 sp_java
 添加列 sp_cookie
-添加咧 time_last_action
+添加咧 action_last_time
 
 添加索引 idsite,idsubsite,idvisitor,visit_servertime
 
 t_url
 
 添加列 hash_title
-添加索引 create_time,hash
+添加索引 idsite,idsubsite,create_time,hash
 
 t_title
 
-添加索引 create_time,hash
+添加索引 idsite,idsubsite,create_time,hash
 
 t_action
 
@@ -25,6 +25,6 @@ t_action
 添加列 ref_id_title
 添加列 ref_time_spent
 
-添加索引 create_time,idurl
+添加索引 idsite,idsubsite,create_time,idurl
 
 重命名 time_spent -> time_loaded

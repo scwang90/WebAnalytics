@@ -6,7 +6,10 @@ import com.simpletech.webanalytics.model.entity.JsEvent;
 import com.simpletech.webanalytics.model.*;
 import com.simpletech.webanalytics.model.entity.JsUser;
 import com.simpletech.webanalytics.service.*;
+import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.AfStringUtil;
+import com.simpletech.webanalytics.util.LruCache;
+import com.simpletech.webanalytics.util.SynchronizedLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,18 +30,70 @@ public class TrackerServiceImpl implements TrackerService {
     TrackShareService trackShareService;
 
 
+    private static SynchronizedLock<String> actionLocks = new SynchronizedLock<>(10000);
+
+    @Override
+    public void trackPageView(int siteId, JsDetect detect) throws Exception {
+        Site site = dao.findSiteById(siteId);
+        if (site != null) {
+            String idsubsite = getIdSubSite(site, detect.getUrl());
+            dao.getSubSite(siteId, idsubsite);
+
+            Url url = dao.getUrl(siteId, idsubsite, detect.getUrl(), detect.getTitle());
+            Title title = dao.getTitle(siteId, idsubsite, detect.getTitle());
+
+            synchronized (actionLocks.getLock(siteId + detect.getIdvtor())) {
+                Action naction = new Action();
+                naction.setIdsite(siteId);
+                naction.setServerTime(new Date());
+                naction.setIdurl(url.getId());
+                naction.setIdtitle(title.getId());
+                naction.setTimeLoaded(detect.getGtms());
+                naction.setIdvisitor(detect.getIdvtor());
+                naction.setRefTimeSpent(0);
+
+                Action action = dao.getActionHalfHour(siteId, idsubsite, detect, url, title);
+                if (action != null) {
+                    dao.updateVisitPageView(action.getIdvisit(), url.getId(), title.getId());
+                    naction.setIdvisit(action.getIdvisit());
+                    naction.setRefIdUrl(action.getIdurl());
+                    naction.setRefIdTitle(action.getIdtitle());
+                    naction.setRefTimeSpent((int)(new Date().getTime()-action.getCreateTime().getTime()));
+                } else {
+                    naction.setIdvisit(dao.newVisit(siteId, idsubsite, detect, url, title));
+                }
+
+                dao.insertAction(idsubsite, naction);
+            }
+
+            trackShareService.trackerShare(siteId, idsubsite, detect, url);
+        }
+    }
+
+
+    @Override
+    public void trackEvent(int siteId, JsEvent event) throws Exception {
+        Site site = dao.findSiteById(siteId);
+        if (site != null) {
+            String idsubsite = getIdSubSite(site, event.getUrl());
+            dao.insertEvent(idsubsite, event.buildEvent(site.getId()));
+            dao.updateVisitEvent(siteId, idsubsite, event.getIdvtor());
+        }
+    }
+
     public void trackerPageView(int siteId, JsDetect detect) throws Exception {
         Site site = dao.findSiteById(siteId);
         if (site != null) {
             String idsubsite = getIdSubSite(site, detect.getUrl());
             dao.getSubSite(siteId, idsubsite);
 
-            Url url = dao.getUrl(siteId, idsubsite, detect.getUrl());
+            Url url = dao.getUrl(siteId, idsubsite, detect.getUrl(), detect.getTitle());
             Title title = dao.getTitle(siteId, idsubsite, detect.getTitle());
             Visit visit = dao.getVisitHalfHour(siteId, idsubsite, detect, url, title);
             visit.setIdurlExit(url.getId());
             visit.setIdtitleExit(title.getId());
             visit.setCountVisits(visit.getCountVisits() + 1);
+            visit.setActionLastTime(new Date());
             dao.updateVisit(idsubsite, visit);
             Action action = new Action();
             action.setIdsite(siteId);
@@ -46,7 +101,7 @@ public class TrackerServiceImpl implements TrackerService {
             action.setServerTime(new Date());
             action.setIdurl(url.getId());
             action.setIdtitle(title.getId());
-            action.setTimeSpent(detect.getGtms());
+            action.setTimeLoaded(detect.getGtms());
             action.setIdvisitor(detect.getIdvtor());
             dao.insertAction(idsubsite, action);
 
@@ -54,14 +109,13 @@ public class TrackerServiceImpl implements TrackerService {
         }
     }
 
-    @Override
     public void trackerEvent(int siteId, JsEvent event) throws Exception {
         Site site = dao.findSiteById(siteId);
         if (site != null) {
             String idsubsite = getIdSubSite(site, event.getUrl());
             dao.getSubSite(siteId, idsubsite);
 
-            Url url = dao.getUrl(siteId, idsubsite, event.getUrl());
+            Url url = dao.getUrl(siteId, idsubsite, event.getUrl(), event.getTitle());
             Title title = dao.getTitle(siteId, idsubsite, event.getTitle());
             Visit visit = dao.getVisitHalfHour(siteId, idsubsite, event, url, title);
             if (visit.getCountVisits() == 0) {
@@ -74,7 +128,7 @@ public class TrackerServiceImpl implements TrackerService {
                 action.setServerTime(new Date());
                 action.setIdurl(url.getId());
                 action.setIdtitle(title.getId());
-                action.setTimeSpent(0);
+                action.setTimeLoaded(0);
                 action.setIdvisitor(event.getIdvtor());
                 dao.insertAction(idsubsite, action);
             }
@@ -94,10 +148,17 @@ public class TrackerServiceImpl implements TrackerService {
         }
     }
 
+    static LruCache<String, Pattern> cachePattern = new LruCache<>(10);
+
     private String getIdSubSite(Site site, String url) {
         String idsubsite = "";
         if (AfStringUtil.isNotEmpty(site.getRegex()) && url != null) {
-            Pattern pattern = Pattern.compile(site.getRegex(), Pattern.CASE_INSENSITIVE);
+            String cacheKey = site.getRegex();
+            Pattern pattern = cachePattern.get(cacheKey);
+            if (pattern == null) {
+                pattern = Pattern.compile(site.getRegex(), Pattern.CASE_INSENSITIVE);
+                cachePattern.put(cacheKey, pattern);
+            }
             Matcher matcher = pattern.matcher(url);
             if (matcher.find()) {
                 int index = 0;

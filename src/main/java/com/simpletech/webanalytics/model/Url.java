@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_url
  * @author 树朾
- * @date 2015-10-12 14:47:44 中国标准时间
+ * @date 2015-10-28 14:33:37 中国标准时间
  */
 @Table("t_url")
 public class Url extends ModelBase{
@@ -40,6 +40,11 @@ public class Url extends ModelBase{
 	 * 哈希值
 	 */
 	private Integer hash;
+	/**
+	 * 标题哈希值
+	 */
+	@Column("hash_title")
+	private Integer hashTitle;
 	/**
 	 * url 值
 	 */
@@ -94,6 +99,14 @@ public class Url extends ModelBase{
 
 	public void setHash(Integer hash) {
 		this.hash = hash;
+	}
+	
+	public Integer getHashTitle(){
+		return this.hashTitle;
+	}
+
+	public void setHashTitle(Integer hashTitle) {
+		this.hashTitle = hashTitle;
 	}
 	
 	public String getUrl(){

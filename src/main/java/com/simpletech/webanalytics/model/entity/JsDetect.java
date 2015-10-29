@@ -14,11 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * JS探针发送的数据格式+服务器获取数据
@@ -88,8 +91,22 @@ public class JsDetect {
     @JsonIgnore
     HttpServletRequest request;
 
+    static Pattern patternPiwikCookie = Pattern.compile("(\\w+)\\.",Pattern.CASE_INSENSITIVE);
+
     public void setRequest(HttpServletRequest request) {
         this.request = request;
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().startsWith("_pk_id")) {
+                    Matcher matcher = patternPiwikCookie.matcher(cookie.getValue());
+                    if (matcher.find()) {
+                        this.setRefer(matcher.group(1));
+                    }
+                }
+            }
+        }
 
         String agent = request.getHeader("user-agent");
         UserAgentParser userAgentParser = new UserAgentParser();
@@ -123,7 +140,7 @@ public class JsDetect {
                 setRefer(refer + "-" + request.getQueryString());
             }
         } catch (Throwable e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -179,7 +196,9 @@ public class JsDetect {
         visit.setEndType(this.getEndType());
         visit.setNetType(this.getNetType());
         visit.setUseragent(this.getUseragent());
-        visit.setAppName(this.getAppname());
+        visit.setEndApp(this.getAppname());
+        visit.setSpCookie(this.getCookie());
+        visit.setSpJava(this.getJava());
         visit.setCountEvents(0);
         visit.setVisitTotaltime(0);
         visit.setIdurl(null);
@@ -249,6 +268,10 @@ public class JsDetect {
     }
 
     public void setGtms(Integer gtms) {
+        if (gtms < 0) {
+            gtms = 10;
+            new ServiceException("页面加载时间范围错误 gtms="+gtms).printStackTrace(System.err);
+        }
         this.gtms = gtms;
     }
 

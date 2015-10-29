@@ -70,6 +70,7 @@ public class ManagerController extends BaseController {
                 "        var u=\"//${domain}\";\n" +
                 "        _wapaq.push(['setTrackerUrl', u+'tracker']);\n" +
                 "        _wapaq.push(['setSiteId', ${siteId}]);\n" +
+                "        _wapaq.push(['setDiscardUrlParams', true]);\n" +
                 "        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n" +
                 "        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'js/ds.js'; s.parentNode.insertBefore(g,s);\n" +
                 "    })();\n" +

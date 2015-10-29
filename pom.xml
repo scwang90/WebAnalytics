@@ -14,6 +14,13 @@
 
     <dependencies>
 
+        <!-- xml解析 -->
+        <!--<dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.7</version>
+        </dependency>-->
+
         <!--yaml文件解析-->
         <dependency>
             <groupId>org.yaml</groupId>

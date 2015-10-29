@@ -1,10 +1,8 @@
 package com.simpletech.webanalytics.controller;
 
-import com.simpletech.webanalytics.model.ShareUser;
 import com.simpletech.webanalytics.model.entity.JsDetect;
 import com.simpletech.webanalytics.model.entity.JsEvent;
 import com.simpletech.webanalytics.model.entity.JsUser;
-import com.simpletech.webanalytics.service.TrackShareService;
 import com.simpletech.webanalytics.service.TrackerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -68,7 +66,7 @@ public class TrackerController {
     public void ptv(HttpServletRequest request, HttpServletResponse response, int idsite, JsDetect detect) throws Exception {
         detect.check();
         detect.bind(request, response);
-        service.trackerPageView(idsite, detect);
+        service.trackPageView(idsite, detect);
         request.getRequestDispatcher("/images/pixel.jpg").forward(request, response);
     }
 
@@ -83,7 +81,7 @@ public class TrackerController {
     public void ten(HttpServletRequest request, HttpServletResponse response, int idsite, JsEvent event) throws Exception {
         event.check();
         event.bind(request, response);
-        service.trackerEvent(idsite, event);
+        service.trackEvent(idsite, event);
         request.getRequestDispatcher("/images/pixel.jpg").forward(request, response);
     }
 

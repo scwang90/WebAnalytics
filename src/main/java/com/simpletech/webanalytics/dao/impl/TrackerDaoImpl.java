@@ -27,10 +27,10 @@ public class TrackerDaoImpl implements TrackerDao {
 
     private static SynchronizedLock<String> urlLocks = new SynchronizedLock<>(10000);
 
-    private static LruCache<String,Url> urlLruCache = new LruCache<>(1000);
+    private static LruCache<String, Url> urlLruCache = new LruCache<>(1000);
 
     @Override
-    public synchronized Url getUrl(int siteId, String idsubsite, String url) throws Exception {
+    public synchronized Url getUrl(int siteId, String idsubsite, String url, String title) throws Exception {
         String cacheKey = "" + siteId + url.hashCode();
         Url _url_ = urlLruCache.get(cacheKey);
         if (_url_ != null) {
@@ -45,18 +45,19 @@ public class TrackerDaoImpl implements TrackerDao {
                 _url.setHash(url.hashCode());
                 _url.fillNullID();
                 _url.setIdsubsite(idsubsite);
+                _url.setHashTitle(title.hashCode());
                 AfReflecter.setMemberNoException(_url, "createTime", new Date());
                 AfReflecter.setMemberNoException(_url, "updateTime", new Date());
                 mapper.insertUrl(_url);
             }
-            urlLruCache.put(cacheKey,_url);
+            urlLruCache.put(cacheKey, _url);
             return _url;
         }
     }
 
     private static SynchronizedLock<String> titleLocks = new SynchronizedLock<>(10000);
 
-    private static LruCache<String,Title> titleLruCache = new LruCache<>(1000);
+    private static LruCache<String, Title> titleLruCache = new LruCache<>(1000);
 
     @Override
     public synchronized Title getTitle(int siteId, String idsubsite, String title) throws Exception {
@@ -78,14 +79,14 @@ public class TrackerDaoImpl implements TrackerDao {
                 AfReflecter.setMemberNoException(_title, "updateTime", new Date());
                 mapper.insertTitle(_title);
             }
-            titleLruCache.put(cacheKey,_title);
+            titleLruCache.put(cacheKey, _title);
             return _title;
         }
     }
 
     private static SynchronizedLock<String> subsiteLocks = new SynchronizedLock<>(10000);
 
-    private static LruCache<String,Subsite> subsiteLruCache = new LruCache<>(10000);
+    private static LruCache<String, Subsite> subsiteLruCache = new LruCache<>(10000);
 
     @Override
     public synchronized Subsite getSubSite(int siteId, String idsubsite) throws Exception {
@@ -106,28 +107,12 @@ public class TrackerDaoImpl implements TrackerDao {
                 AfReflecter.setMemberNoException(subSite, "updateTime", new Date());
                 mapper.insertSubSite(subSite);
             }
-            subsiteLruCache.put(cacheKey, subSite);
+            if (subSite != null) {
+                subsiteLruCache.put(cacheKey, subSite);
+            }
             return subSite;
         }
     }
-
-    //    @Override
-//    public Visit getVisit(int siteId, String idsubsite, JsDetect detect, Url url, Title title) throws Exception {
-//        Visit visit = mapper.getVisit(siteId, detect.getIdvtor());
-//        if (visit == null) {
-//            visit = detect.build(siteId);
-//            visit.setIdurlEntry(url.getId());
-//            visit.setIdtitleEntry(title.getId());
-//            visit.setIdurlExit(url.getId());
-//            visit.setIdtitleExit(title.getId());
-//            visit.fillNullID();
-//            visit.setIdsubsite(idsubsite);
-//            AfReflecter.setMemberNoException(visit, "createTime", new Date());
-//            AfReflecter.setMemberNoException(visit, "updateTime", new Date());
-//            mapper.insertVisit(visit);
-//        }
-//        return visit;
-//    }
 
     /**
      * 把 int siteId 转成 string idsite
@@ -142,6 +127,11 @@ public class TrackerDaoImpl implements TrackerDao {
             return String.format(format, siteId, subsite);
         }
         return String.valueOf(siteId);
+    }
+
+    @Override
+    public Visit getVisitById(String idvisit) throws Exception {
+        return mapper.getVisitById(idvisit);
     }
 
     private static SynchronizedLock<String> visitLocks = new SynchronizedLock<>(10000);
@@ -166,6 +156,11 @@ public class TrackerDaoImpl implements TrackerDao {
             }
             return visit;
         }
+    }
+
+    @Override
+    public Action getActionHalfHour(int siteId, String idsubsite, JsDetect detect, Url url, Title title) throws Exception {
+        return mapper.getActionHalfHour(getIdSite(siteId, idsubsite), detect.getIdvtor());
     }
 
     @Override
@@ -198,5 +193,34 @@ public class TrackerDaoImpl implements TrackerDao {
         mapper.insertEvent(event);
     }
 
+    @Override
+    public int updateVisitEvent(int siteId, String idsubsite, String idvtor) throws Exception {
+        return mapper.updateVisitEvent(getIdSite(siteId, idsubsite), idvtor);
+    }
+
+    @Override
+    public int updateVisitPageView(String idvisit, String idurlExit, String idtitleExit) throws Exception {
+        return mapper.updateVisitPageView(idvisit, idurlExit, idtitleExit);
+    }
+
+    @Override
+    public String newVisit(int siteId, String idsubsite, JsDetect detect, Url url, Title title) throws Exception {
+        Visit visit = detect.build(siteId);
+        visit.setIdurlEntry(url.getId());
+        visit.setIdtitleEntry(title.getId());
+        visit.setIdurlExit(url.getId());
+        visit.setIdtitleExit(title.getId());
+        visit.setNewUser(!mapper.existVisitor(siteId, detect.getIdvtor()));
+        visit.setNewSubUser(AfStringUtil.isEmpty(idsubsite) ? visit.getNewUser() : !mapper.existSubVisitor(siteId, idsubsite, detect.getIdvtor()));
+        visit.fillNullID();
+        visit.setIdsubsite(idsubsite);
+        visit.setActionLastTime(new Date());
+        visit.setCountVisits(1);
+        visit.setCountEvents(0);
+        AfReflecter.setMemberNoException(visit, "createTime", new Date());
+        AfReflecter.setMemberNoException(visit, "updateTime", new Date());
+        mapper.insertVisit(visit);
+        return visit.getId();
+    }
 }
 

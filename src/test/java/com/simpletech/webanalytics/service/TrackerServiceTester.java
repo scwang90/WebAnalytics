@@ -34,7 +34,7 @@ public class TrackerServiceTester {
         event.setIdvc(1);
         event.setRefer("");
         event.check();
-        service.trackerEvent(2,event);
+        service.trackEvent(2, event);
     }
 
 }

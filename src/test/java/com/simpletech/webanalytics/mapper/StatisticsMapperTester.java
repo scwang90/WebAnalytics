@@ -1,6 +1,8 @@
 package com.simpletech.webanalytics.mapper;
 
+import com.simpletech.webanalytics.aspect.LoggingAspect;
 import com.simpletech.webanalytics.util.JacksonUtil;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,11 @@ public class StatisticsMapperTester {
 
     @Autowired
     StatisticsMapper mapper;
+
+    @Before
+    public void setUp() {
+        LoggingAspect.log = false;
+    }
 
     @Test
     public void entryUrls() throws Exception {
@@ -104,13 +111,13 @@ public class StatisticsMapperTester {
 
     @Test
     public void visit() throws Exception {
-        Object result = mapper.visitDay("1", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"));
-        System.out.println(JacksonUtil.toJson(result));
+        Object result = mapper.visitDay("0", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"));
+        System.out.println(JacksonUtil.toJson(result).replace("{","\n{"));
     }
 
     @Test
     public void pageurl() throws Exception {
-        Object result = mapper.pageurl("0", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        Object result = mapper.pageurl("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 

@@ -1,6 +1,5 @@
 package com.simpletech.webanalytics.model;
 
-import com.simpletech.webanalytics.annotations.Must;
 import com.simpletech.webanalytics.annotations.dbmodel.Column;
 import com.simpletech.webanalytics.annotations.dbmodel.Id;
 import com.simpletech.webanalytics.annotations.dbmodel.Table;
@@ -9,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_share_user
  * @author 树朾
- * @date 2015-10-15 11:32:44 中国标准时间
+ * @date 2015-10-28 14:33:37 中国标准时间
  */
 @Table("t_share_user")
 public class ShareUser extends ModelBase{
@@ -22,7 +21,6 @@ public class ShareUser extends ModelBase{
 	/**
 	 * 网站ID
 	 */
-	@Must("网站ID")
 	private Integer idsite;
 	/**
 	 * 子站ID
@@ -31,7 +29,6 @@ public class ShareUser extends ModelBase{
 	/**
 	 * 访问者ID（cookie）
 	 */
-	@Must("访问者ID")
 	private String idvisitor;
 	/**
 	 * 微信用户openid

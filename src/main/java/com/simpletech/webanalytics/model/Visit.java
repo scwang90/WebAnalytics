@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_visit
  * @author 树朾
- * @date 2015-10-16 10:38:40 中国标准时间
+ * @date 2015-10-28 14:33:37 中国标准时间
  */
 @Table("t_visit")
 public class Visit extends ModelBase{
@@ -123,11 +123,6 @@ public class Visit extends ModelBase{
 	@Column("browser_version")
 	private String browserVersion;
 	/**
-	 * 打开页面的App
-	 */
-	@Column("app_name")
-	private String appName;
-	/**
 	 * 屏幕分辨率
 	 */
 	@Column("screen_resolution")
@@ -137,6 +132,16 @@ public class Visit extends ModelBase{
 	 */
 	@Column("screen_depth")
 	private String screenDepth;
+	/**
+	 * 是否支持java
+	 */
+	@Column("sp_java")
+	private Boolean spJava;
+	/**
+	 * 是否支持Cookie
+	 */
+	@Column("sp_cookie")
+	private Boolean spCookie;
 	/**
 	 * 外网IP地址
 	 */
@@ -168,6 +173,11 @@ public class Visit extends ModelBase{
 	@Column("location_compared")
 	private Boolean locationCompared;
 	/**
+	 * 打开页面的App
+	 */
+	@Column("end_app")
+	private String endApp;
+	/**
 	 * 终端设备型号
 	 */
 	@Column("end_model")
@@ -192,6 +202,11 @@ public class Visit extends ModelBase{
 	 */
 	@Column("count_visits")
 	private Integer countVisits;
+	/**
+	 * 最后一次PV时间
+	 */
+	@Column("action_last_time")
+	private java.util.Date actionLastTime;
 	/**
 	 * 这次访问的事件总数
 	 */
@@ -385,14 +400,6 @@ public class Visit extends ModelBase{
 		this.browserVersion = browserVersion;
 	}
 	
-	public String getAppName(){
-		return this.appName;
-	}
-
-	public void setAppName(String appName) {
-		this.appName = appName;
-	}
-	
 	public String getScreenResolution(){
 		return this.screenResolution;
 	}
@@ -407,6 +414,22 @@ public class Visit extends ModelBase{
 
 	public void setScreenDepth(String screenDepth) {
 		this.screenDepth = screenDepth;
+	}
+	
+	public Boolean getSpJava(){
+		return this.spJava;
+	}
+
+	public void setSpJava(Boolean spJava) {
+		this.spJava = spJava;
+	}
+	
+	public Boolean getSpCookie(){
+		return this.spCookie;
+	}
+
+	public void setSpCookie(Boolean spCookie) {
+		this.spCookie = spCookie;
 	}
 	
 	public String getLocationIp(){
@@ -457,6 +480,14 @@ public class Visit extends ModelBase{
 		this.locationCompared = locationCompared;
 	}
 	
+	public String getEndApp(){
+		return this.endApp;
+	}
+
+	public void setEndApp(String endApp) {
+		this.endApp = endApp;
+	}
+	
 	public String getEndModel(){
 		return this.endModel;
 	}
@@ -495,6 +526,14 @@ public class Visit extends ModelBase{
 
 	public void setCountVisits(Integer countVisits) {
 		this.countVisits = countVisits;
+	}
+	
+	public java.util.Date getActionLastTime(){
+		return this.actionLastTime;
+	}
+
+	public void setActionLastTime(java.util.Date actionLastTime) {
+		this.actionLastTime = actionLastTime;
 	}
 	
 	public Integer getCountEvents(){

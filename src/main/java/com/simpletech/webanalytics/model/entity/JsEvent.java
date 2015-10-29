@@ -26,7 +26,7 @@ public class JsEvent extends JsDetect {
         event.setValue(this.ev);
         event.setIdsite(idsite);
         event.setIdvisitor(this.getIdvtor());
-        event.setLocalTime(new Date(this.getIdts()));
+        event.setLocalTime(new Date(this.getVisits()));
         return event;
     }
 

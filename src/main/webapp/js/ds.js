@@ -30,7 +30,8 @@
     var tracker = new Tracker(server, "1");
     var detect = new Detect(global);
     window.WADS = {
-        linkChange: tracker.linkChange
+        linkChange: tracker.linkChange,
+        trackEvent: tracker.trackEvent,
     };
 
     // asynchronous tracker (or proxy)
@@ -148,7 +149,9 @@
         // Site ID
             configTrackerSiteId = siteId || '',
 
-            configDiscardHashTag = false;
+            configDiscardHashTag = false,
+
+            configDiscardUrlParams = false;
 
         var cookie = global.cookie;
         var hash = global.hash.sha1;
@@ -166,8 +169,16 @@
             configDiscardHashTag = config;
         }
 
+        function setDiscardUrlParams(config){
+            configDiscardUrlParams = config;
+        }
+
         function getDiscardHashTag(){
             return configDiscardHashTag;
+        }
+
+        function getDiscardUrlParams(){
+            return configDiscardUrlParams;
         }
 
         /*
@@ -317,6 +328,28 @@
                 + detect.getParam();
         }
 
+        /**
+         private String ec;      //(必需) 事件类别 (如: 视频、音乐、游戏)
+         private String ea;      //(必需) 事件动作 (如: 播放、暂停、持续时间、添加播放列表,下载,点击……)
+         private String en;      //(可选) 事件名称 (如: 电影名字,歌曲名称或文件名称…)
+         private Float ev;       //(可选) 事件的值 (必须是一个浮点数或整数值(数字),而不是一个字符串)
+         * */
+        function getEventParam(category, action, name, value) {
+            var visitor = getValuesFromVisitorIdCookie();
+            return "idsite=" + configTrackerSiteId
+                + "&idvtor=" + visitor.uuid
+                + "&idn=" + visitor.newVisitor
+                + "&idvc=" + visitor.visitCount
+                + "&idts=" + visitor.createTs
+                + "&visits=" + Math.round(new Date().getTime())
+                + "&lastts=" + visitor.lastVisitTs
+                + "&ec=" + category
+                + "&ea=" + action
+                + (global.isDefined(name)?("&en=" + name):"")
+                + (global.isDefined(value)?("&ev=" + value):"")
+                + detect.getParam();
+        }
+
         return {
             /**
              * Specify the Piwik server URL
@@ -335,8 +368,14 @@
             setDiscardHashTag : function (config){
                 setDiscardHashTag(config);
             },
+            setDiscardUrlParams : function (config){
+                setDiscardUrlParams(config);
+            },
             getDiscardHashTag : function (){
                 return getDiscardHashTag();
+            },
+            getDiscardUrlParams : function (){
+                return getDiscardUrlParams();
             },
             getVisitor: function () {
                 return getValuesFromVisitorIdCookie();
@@ -347,7 +386,9 @@
             },
             trackEvent: function (category, action, name, value) {
                 var url = configTrackerUrl + path_track_event;
-                global.ajax.send(url, detect.getParam());
+                if (global.isDefined(category) && global.isDefined(action)) {
+                    global.ajax.send(url, getEventParam(category, action, name, value));
+                }
             },
             linkChange: function (url) {
                 var old = url;
@@ -443,17 +484,25 @@
             return empty;
         })();
         this.gtms = (function () {
+            var dtiming = 1000,timing = dtiming;
             if (performance && performance.timing
                 && performance.timing.requestStart && performance.timing.responseEnd) {
-                return performance.timing.responseEnd - performance.timing.requestStart;
+                timing = performance.timing.responseEnd - performance.timing.requestStart;
             }
-            return 1000;
+            if (timing < 0) {
+                timing = dtiming;
+            }
+            return timing;
         })();
         this.url = (function () {
             if (location && location.href) {
                 var url = location.href;
                 if (tracker.getDiscardHashTag()) {
                     var targetPattern = new RegExp('#.*');
+                    url = url.replace(targetPattern, '');
+                }
+                if (tracker.getDiscardUrlParams()) {
+                    var targetPattern = new RegExp('?.*');
                     url = url.replace(targetPattern, '');
                 }
                 return global.url.remArg(url, [REFER_VISITORID, REFER_TIMESTAMP])
@@ -654,18 +703,20 @@
              * @param callback {Function} 回调函数。
              */
             sendByImage: function (src, param, callback) {
-                var image = new Image(1, 1);
+                var image = new Image(1, 1),wkey = "_wa_tangram_"+Math.floor(2147483648 * Math.random()).toString(36);
                 if (param[0] == '?') {
                     param[0] = '&';
                 }
                 if (param[0] != '&') {
                     param = '&' + param;
                 }
-                image.src = src + "?rand=" + String(Math.random()).slice(2, 8) + param;
-                image.onload = function () {
-                    image.onload = null;
+                window[wkey] = image;
+                image.onload = image.onerror = image.onabort = function () {
+                    image.onload = image.onerror = image.onabort = null;
+                    image = window[wkey] = null;
                     (callback && callback());
                 };
+                image.src = src + "?rand=" + String(Math.random()).slice(2, 8) + param;
             }
         };
         this.hash = {

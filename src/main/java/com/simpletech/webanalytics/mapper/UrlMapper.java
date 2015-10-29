@@ -15,7 +15,7 @@ import com.simpletech.webanalytics.dao.base.BaseDaoMybatisMYSQLImpl.MybatisMulti
 /**
  * 数据库表t_url的mapper接口
  * @author 树朾
- * @date 2015-10-12 15:00:31 中国标准时间
+ * @date 2015-10-28 14:33:37 中国标准时间
  */
 public interface UrlMapper extends MybatisMultiDao<Url>{
 
@@ -24,7 +24,7 @@ public interface UrlMapper extends MybatisMultiDao<Url>{
 	 * @param model 添加的数据
 	 * @return 改变的行数
 	 */
-	@Insert("INSERT INTO t_url ( id , idsite , idsubsite , create_time , update_time , hash , url ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{createTime} , #{updateTime} , #{hash} , #{url} )")
+	@Insert("INSERT INTO t_url ( id , idsite , idsubsite , create_time , update_time , hash , hash_title , url ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{createTime} , #{updateTime} , #{hash} , #{hashTitle} , #{url} )")
 	int insert(Url model) throws Exception;
 	/**
 	 * 根据ID删除
@@ -38,7 +38,7 @@ public interface UrlMapper extends MybatisMultiDao<Url>{
 	 * @param model 更新的数据
 	 * @return 改变的行数
 	 */
-	@Update("UPDATE t_url SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , create_time=#{createTime} , update_time=#{updateTime} , hash=#{hash} , url=#{url} WHERE id=#{id} ")
+	@Update("UPDATE t_url SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , create_time=#{createTime} , update_time=#{updateTime} , hash=#{hash} , hash_title=#{hashTitle} , url=#{url} WHERE id=#{id} ")
 	int update(Url model) throws Exception;
 	/**
 	 * 统计全部出数据
@@ -51,13 +51,13 @@ public interface UrlMapper extends MybatisMultiDao<Url>{
 	 * @param id 主键ID
 	 * @return null 或者 主键等于id的数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , hash , url FROM t_url WHERE id=#{id}")
+	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , hash , hash_title hashTitle , url FROM t_url WHERE id=#{id}")
 	Url findById(@Param("id") Object id) throws Exception;
 	/**
 	 * 获取全部数据
 	 * @return 全部数据列表
 	 */
-	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , hash , url FROM t_url ${order}")
+	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , hash , hash_title hashTitle , url FROM t_url ${order}")
 	List<Url> findAll(@Param("order") String order) throws Exception;
 	/**
 	 * 分页查询数据
@@ -65,7 +65,7 @@ public interface UrlMapper extends MybatisMultiDao<Url>{
 	 * @param start 起始返回
 	 * @return 分页列表数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , hash , url FROM t_url ${order} LIMIT ${start},${limit}")
+	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , hash , hash_title hashTitle , url FROM t_url ${order} LIMIT ${start},${limit}")
 	List<Url> findByPage(@Param("order") String order, @Param("limit") int limit, @Param("start") int start) throws Exception;
 	/**
 	 * 选择性删除
@@ -102,7 +102,7 @@ public interface UrlMapper extends MybatisMultiDao<Url>{
 	 * @param where SQL条件语句
 	 * @return 符合条件的列表数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , hash , url FROM t_url ${where} ${order}")
+	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , hash , hash_title hashTitle , url FROM t_url ${where} ${order}")
 	List<Url> findWhere(@Param("order") String order, @Param("where") String where) throws Exception;
 	/**
 	 * 选择性分页查询
@@ -111,7 +111,7 @@ public interface UrlMapper extends MybatisMultiDao<Url>{
 	 * @param start 起始返回
 	 * @return 符合条件的列表数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , hash , url FROM t_url ${where} ${order} LIMIT ${start},${limit}")
+	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , hash , hash_title hashTitle , url FROM t_url ${where} ${order} LIMIT ${start},${limit}")
 	List<Url> findWhereByPage(@Param("order") String order, @Param("where") String where, @Param("limit") int limit, @Param("start") int start) throws Exception;
 	/**
 	 * 根据属性查询
@@ -119,6 +119,6 @@ public interface UrlMapper extends MybatisMultiDao<Url>{
 	 * @param value 值
 	 * @return 返回符合条件的数据列表
 	 */
-	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , hash , url FROM t_url WHERE ${propertyName}=#{value} ${order}")
+	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , hash , hash_title hashTitle , url FROM t_url WHERE ${propertyName}=#{value} ${order}")
 	List<Url> findByPropertyName(@Param("order") String order, @Param("propertyName") String propertyName, @Param("value") Object value) throws Exception;
 }

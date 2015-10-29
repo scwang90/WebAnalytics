@@ -10,7 +10,7 @@
     <aop:aspectj-autoproxy expose-proxy="true"/>
     
     <!-- 开启AOP切面日志 -->
-    <bean id="loggingaspect" class="com.simpletech.webanalytics.aspect.LoggingAspect"></bean>
+    <bean id="loggingaspect" class="com.simpletech.webanalytics.aspect.LoggingAspect"/>
     <aop:config>
         <!-- 切入点配置 -->
         <aop:pointcut expression="execution(* com.simpletech.webanalytics.controller.*.*(..))" id="ptc-controller"/>

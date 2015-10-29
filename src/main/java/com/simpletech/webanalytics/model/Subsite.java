@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_subsite
  * @author 树朾
- * @date 2015-10-12 14:47:44 中国标准时间
+ * @date 2015-10-28 14:33:37 中国标准时间
  */
 @Table("t_subsite")
 public class Subsite extends ModelBase{

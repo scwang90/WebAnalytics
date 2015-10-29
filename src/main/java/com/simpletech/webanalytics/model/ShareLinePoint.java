@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_share_line_point
  * @author 树朾
- * @date 2015-10-20 14:49:10 中国标准时间
+ * @date 2015-10-28 14:33:37 中国标准时间
  */
 @Table("t_share_line_point")
 public class ShareLinePoint extends ModelBase{

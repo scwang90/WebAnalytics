@@ -38,6 +38,12 @@
 <button onclick="location.href = WADS.linkChange(location.href);">点击测试</button>
 <button onclick="location.href = remArg(location.href,['wa_share_vtor','wa_share_time']);">点击删除</button>
 <br>
+<h1>测试事件触发</h1>
+<button onclick="_wapaq.push(['trackEvent','event1','test1']);">触发事件1</button>
+<button onclick="_wapaq.push(['trackEvent','event2','test2']);">触发事件2</button>
+<button onclick="_wapaq.push(['trackEvent','event3',Math.random()]);">触发事件3</button>
+<button onclick="_wapaq.push(['trackEvent','event4',Math.random()]);">触发事件4</button>
+<br>
 
 <div>
     <h1>js获取客户端信息</h1>
@@ -87,7 +93,7 @@ APPV:<%=useragent.getApplication().getVersion()%><br>
 </script>
 <!-- End WebAnalytics Code -->
 <!-- Piwik -->
-<script type="text/javascript">
+<%--<script type="text/javascript">
     var _paq = _paq || [];
     _paq.push(['trackPageView']);
     _paq.push(['enableLinkTracking']);
@@ -99,7 +105,7 @@ APPV:<%=useragent.getApplication().getVersion()%><br>
         g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
     })();
 </script>
-<noscript><p><img src="//222.85.149.5:22345/piwik/piwik.php?idsite=4" style="border:0;" alt="" /></p></noscript>
+<noscript><p><img src="//222.85.149.5:22345/piwik/piwik.php?idsite=4" style="border:0;" alt="" /></p></noscript>--%>
 <!-- End Piwik Code -->
 <script>
     function remArg(url, names) {

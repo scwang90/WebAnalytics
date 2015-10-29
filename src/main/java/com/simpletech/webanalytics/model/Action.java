@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_action
  * @author 树朾
- * @date 2015-10-12 14:47:44 中国标准时间
+ * @date 2015-10-28 14:33:37 中国标准时间
  */
 @Table("t_action")
 public class Action extends ModelBase{
@@ -19,6 +19,14 @@ public class Action extends ModelBase{
 	@Id
 	private String id;
 	/**
+	 * 网站ID
+	 */
+	private Integer idsite;
+	/**
+	 * 子站ID
+	 */
+	private String idsubsite;
+	/**
 	 * 创建时间
 	 */
 	@Column("create_time")
@@ -28,14 +36,6 @@ public class Action extends ModelBase{
 	 */
 	@Column("update_time")
 	private java.util.Date updateTime;
-	/**
-	 * 网站ID
-	 */
-	private Integer idsite;
-	/**
-	 * 子站ID
-	 */
-	private String idsubsite;
 	/**
 	 * 访客用户ID
 	 */
@@ -60,8 +60,23 @@ public class Action extends ModelBase{
 	/**
 	 * 页面加载时间
 	 */
-	@Column("time_spent")
-	private Integer timeSpent;
+	@Column("time_loaded")
+	private Integer timeLoaded;
+	/**
+	 * 上一个PV的url ID
+	 */
+	@Column("ref_id_url")
+	private String refIdUrl;
+	/**
+	 * 上一个PV的 title ID
+	 */
+	@Column("ref_id_title")
+	private String refIdTitle;
+	/**
+	 * 数据库列ref_time_spent
+	 */
+	@Column("ref_time_spent")
+	private Integer refTimeSpent;
 
 	public Action() {
 	}
@@ -72,22 +87,6 @@ public class Action extends ModelBase{
 
 	public void setId(String id) {
 		this.id = id;
-	}
-	
-	public java.util.Date getCreateTime(){
-		return this.createTime;
-	}
-
-	public void setCreateTime(java.util.Date createTime) {
-		this.createTime = createTime;
-	}
-	
-	public java.util.Date getUpdateTime(){
-		return this.updateTime;
-	}
-
-	public void setUpdateTime(java.util.Date updateTime) {
-		this.updateTime = updateTime;
 	}
 	
 	public Integer getIdsite(){
@@ -104,6 +103,22 @@ public class Action extends ModelBase{
 
 	public void setIdsubsite(String idsubsite) {
 		this.idsubsite = idsubsite;
+	}
+	
+	public java.util.Date getCreateTime(){
+		return this.createTime;
+	}
+
+	public void setCreateTime(java.util.Date createTime) {
+		this.createTime = createTime;
+	}
+	
+	public java.util.Date getUpdateTime(){
+		return this.updateTime;
+	}
+
+	public void setUpdateTime(java.util.Date updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 	public String getIdvisitor(){
@@ -146,12 +161,36 @@ public class Action extends ModelBase{
 		this.serverTime = serverTime;
 	}
 	
-	public Integer getTimeSpent(){
-		return this.timeSpent;
+	public Integer getTimeLoaded(){
+		return this.timeLoaded;
 	}
 
-	public void setTimeSpent(Integer timeSpent) {
-		this.timeSpent = timeSpent;
+	public void setTimeLoaded(Integer timeLoaded) {
+		this.timeLoaded = timeLoaded;
+	}
+	
+	public String getRefIdUrl(){
+		return this.refIdUrl;
+	}
+
+	public void setRefIdUrl(String refIdUrl) {
+		this.refIdUrl = refIdUrl;
+	}
+	
+	public String getRefIdTitle(){
+		return this.refIdTitle;
+	}
+
+	public void setRefIdTitle(String refIdTitle) {
+		this.refIdTitle = refIdTitle;
+	}
+	
+	public Integer getRefTimeSpent(){
+		return this.refTimeSpent;
+	}
+
+	public void setRefTimeSpent(Integer refTimeSpent) {
+		this.refTimeSpent = refTimeSpent;
 	}
 	
 }
