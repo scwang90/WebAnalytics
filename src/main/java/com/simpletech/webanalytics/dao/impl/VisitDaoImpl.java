@@ -50,5 +50,10 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao{
 	public List<Visit> findByPage(int limit, int start) throws Exception {
 		return super.findByPage(limit, start);
 	}
+
+	@Override
+	public int updateCompared(Visit t) throws Exception {
+		return super.updateCompared(t);
+	}
 }
 

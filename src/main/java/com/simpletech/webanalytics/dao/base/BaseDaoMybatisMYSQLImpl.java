@@ -28,7 +28,9 @@ public class BaseDaoMybatisMYSQLImpl<T> implements MultiDao<T> {
 		public int countByPropertyName(String propertyName, Object value) throws Exception ;
 		public List<T> findWhere(String order, String where) throws Exception ;
 		public List<T> findWhereByPage(String order, String where, int limit, int start) throws Exception;
-		public List<T> findByPropertyName(String order, String propertyName, Object value) throws Exception;
+		public List<T> findByPropertyName(String order, String propertyName, Object value ) throws Exception;
+		public List<T> findAllIp()throws Exception;
+		public int updateCompared(T model)throws Exception;
 	}
 
 	protected Class<T> clazz;
@@ -144,4 +146,14 @@ public class BaseDaoMybatisMYSQLImpl<T> implements MultiDao<T> {
 		return multiDao.findByPropertyName(order, propertyName, value);
 	}
 
+	@Override
+	public List<T> findAllIp()throws Exception{
+		return multiDao.findAllIp();
+	}
+
+	@Override
+	public int updateCompared(T model) throws Exception {
+		// TODO Auto-generated method stub
+		return multiDao.updateCompared(model);
+	}
 }

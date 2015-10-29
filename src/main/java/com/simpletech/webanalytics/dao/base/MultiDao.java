@@ -1,5 +1,7 @@
 package com.simpletech.webanalytics.dao.base;
 
+import com.simpletech.webanalytics.model.Visit;
+
 import java.util.List;
 
 /**
@@ -63,5 +65,20 @@ public interface MultiDao<T> extends BaseDao<T>{
 	 * @throws Exception
 	 */
 	public List<T> findByPropertyName(String propertyName, Object value) throws Exception;
+
+	/**
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public List<T> findAllIp()throws Exception;
+
+	/**
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateCompared(T model)throws Exception;
+
 
 }

@@ -63,7 +63,7 @@ public class IpLocation extends ModelBase{
 	@Column("bd_city")
 	private String bdCity;
 	/**
-	 * 数据库列bd_districk
+	 * 百度地区
 	 */
 	@Column("bd_districk")
 	private String bdDistrick;
@@ -102,6 +102,21 @@ public class IpLocation extends ModelBase{
 	 */
 	@Column("tx_province")
 	private String txProvince;
+	/**
+	 * ipip国家
+	 */
+	@Column("ipip_country")
+	private String ipipCountry;
+	/**
+	 * ipip省份
+	 */
+	@Column("ipip_province")
+	private String ipipProvince;
+	/**
+	 * ipip国家
+	 */
+	@Column("ipip_city")
+	private String ipipCity;
 	/**
 	 * 更新时间
 	 */
@@ -254,7 +269,31 @@ public class IpLocation extends ModelBase{
 	public void setTxProvince(String txProvince) {
 		this.txProvince = txProvince;
 	}
-	
+
+	public String getIpipCountry() {
+		return ipipCountry;
+	}
+
+	public void setIpipCountry(String ipipCountry) {
+		this.ipipCountry = ipipCountry;
+	}
+
+	public String getIpipProvince() {
+		return ipipProvince;
+	}
+
+	public void setIpipProvince(String ipipProvince) {
+		this.ipipProvince = ipipProvince;
+	}
+
+	public String getIpipCity() {
+		return ipipCity;
+	}
+
+	public void setIpipCity(String ipipCity) {
+		this.ipipCity = ipipCity;
+	}
+
 	public java.util.Date getUpdateTime(){
 		return this.updateTime;
 	}

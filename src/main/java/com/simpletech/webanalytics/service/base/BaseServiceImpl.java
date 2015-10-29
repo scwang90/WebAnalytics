@@ -68,7 +68,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 
 	@Override
 	public List<T> findByPage(int limit, int start) throws Exception {
-		return baseDao.findByPage(limit,start);
+		return baseDao.findByPage(limit, start);
 	}
 
 	@Override
@@ -126,5 +126,20 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 			return field.get(model);
 		}
 		return null;
+	}
+
+	@Override
+	public List<T> findAllIp() throws Exception{
+		return baseDao.findAllIp();
+	}
+
+	@Override
+	public int updateCompared(T model) throws Exception {
+		T old = findById(getModelID(model));
+		if (old == null) {
+			throw new ServiceException("请求更新记录不存在或已经被删除！");
+		}
+		model = checkNullField(old, model);
+		return baseDao.updateCompared(model);
 	}
 }

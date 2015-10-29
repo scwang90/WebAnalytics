@@ -24,4 +24,8 @@
         <servlet-name>spring</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    <!--&lt;!&ndash;添加监听器路径 &ndash;&gt;-->
+    <!--<listener>-->
+        <!--<listener-class>com.timer.StartTimerListener</listener-class>-->
+    <!--</listener>-->
 </web-app>

@@ -52,5 +52,12 @@ public interface VisitService extends BaseService<Visit> {
 	 * @return 分页列表数据
 	 */
 	List<Visit> findByPage(int limit, int start) throws Exception;
+
+	/**
+	 * 更新一条数据
+	 * @param model 需要更新数据
+	 * @return 改变行数
+	 */
+	int updateCompared(Visit model) throws Exception;
 	
 }

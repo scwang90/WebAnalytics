@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.simpletech.webanalytics.dao.base.BaseDao;
 import com.simpletech.webanalytics.model.IpLocation;
+import com.simpletech.webanalytics.model.Visit;
 
 /**
  * 数据库表t_ip_location的Dao接口
@@ -53,6 +54,12 @@ public interface IpLocationDao extends BaseDao<IpLocation>{
 	 * @return 分页列表数据
 	 */
 	List<IpLocation> findByPage(int limit, int start) throws Exception;
-	
+
+	/**
+	 * 查找t_visit中所有未被对比的IP
+	 * @return
+	 * @throws Exception
+	 */
+	List<IpLocation> findAllIp()throws Exception;
 
 }

@@ -32,17 +32,16 @@ public class IP {
 	}
 
 	public static void main(String[] args) {
-		IP.load("E:\\Workspaces\\IdeaProjects\\MicroSite\\WebAnalytics\\src\\main\\resources\\17monipdb.dat");
+		IP.load("E:\\project\\IPResource\\17monipdb.dat");
 
-		Long st = System.nanoTime();
-		for (int i = 0; i < 1000000; i++) {
-			IP.find(randomIp());
-		}
-		Long et = System.nanoTime();
-		System.out.println((et - st) / 1000 / 1000);
+//		Long st = System.nanoTime();
+//		for (int i = 0; i < 1000000; i++) {
+//			IP.find(randomIp());
+//		}
+//		Long et = System.nanoTime();
+//		System.out.println((et - st) / 1000 / 1000);
 
-		System.out.println(Arrays.toString(IP.find("195.112.173.040")));
-		System.out.println(Arrays.toString(IP.find("202.101.72.30")));
+		System.out.println(Arrays.toString(IP.find(IPCatcherUtil.getWebIp())));
 	}
 
 	public static boolean enableFileWatch = false;

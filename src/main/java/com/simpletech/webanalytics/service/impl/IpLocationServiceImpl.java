@@ -86,4 +86,9 @@ public class IpLocationServiceImpl extends BaseServiceImpl<IpLocation> implement
 	public int countAll() throws Exception {
 		return dao.countAll();
 	}
+
+	@Override
+	public List<IpLocation> findAllIp() throws Exception{
+		return dao.findAllIp();
+	}
 }

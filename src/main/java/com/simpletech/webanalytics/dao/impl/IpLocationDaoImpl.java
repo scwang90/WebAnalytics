@@ -2,6 +2,7 @@ package com.simpletech.webanalytics.dao.impl;
 
 import java.util.List;
 
+import com.simpletech.webanalytics.model.Visit;
 import org.springframework.stereotype.Repository;
 
 import com.simpletech.webanalytics.dao.base.BaseDaoImpl;
@@ -50,5 +51,11 @@ public class IpLocationDaoImpl extends BaseDaoImpl<IpLocation> implements IpLoca
 	public List<IpLocation> findByPage(int limit, int start) throws Exception {
 		return super.findByPage(limit, start);
 	}
+
+	@Override
+	public List<IpLocation> findAllIp()throws Exception{
+		return super.findAllIp();
+	}
+
 }
 

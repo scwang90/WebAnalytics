@@ -62,7 +62,7 @@ public class VisitServiceImpl extends BaseServiceImpl<Visit> implements VisitSer
 
 	@Override
 	public List<Visit> findByPage(int limit, int start) throws Exception {
-		return dao.findByPage(limit,start);
+		return dao.findByPage(limit, start);
 	}
 
 	@Override
@@ -85,5 +85,15 @@ public class VisitServiceImpl extends BaseServiceImpl<Visit> implements VisitSer
 	@Override
 	public int countAll() throws Exception {
 		return dao.countAll();
+	}
+
+	@Override
+	public int updateCompared(Visit model) throws Exception {
+		Visit old = findById(getModelID(model));
+		if (old == null) {
+			throw new ServiceException("请求更新记录不存在或已经被删除！");
+		}
+		model = checkNullField(old, model);
+		return dao.update(model);
 	}
 }

@@ -121,4 +121,12 @@ public interface VisitMapper extends MybatisMultiDao<Visit>{
 	 */
 	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , new_user newUser , new_sub_user newSubUser , idvisitor , visit_servertime visitServertime , visit_localtime visitLocaltime , visit_totaltime visitTotaltime , idurl , idtitle , idurl_entry idurlEntry , idtitle_entry idtitleEntry , idurl_exit idurlExit , idtitle_exit idtitleExit , url_referer urlReferer , useragent , operate_system operateSystem , operate_version operateVersion , browser_name browserName , browser_version browserVersion , screen_resolution screenResolution , screen_depth screenDepth , sp_java spJava , sp_cookie spCookie , location_ip locationIp , location_lang locationLang , location_country locationCountry , location_region locationRegion , location_city locationCity , location_compared locationCompared , end_app endApp , end_model endModel , end_brand endBrand , end_type endType , net_type netType , count_visits countVisits , action_last_time actionLastTime , count_events countEvents FROM t_visit WHERE ${propertyName}=#{value} ${order}")
 	List<Visit> findByPropertyName(@Param("order") String order, @Param("propertyName") String propertyName, @Param("value") Object value) throws Exception;
+
+	/**
+	 * 更新t_visit中相同ip的数据
+	 * @param model 更新的数据
+	 * @return 改变的行数
+	 */
+	@Update("UPDATE t_visit SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , create_time=#{createTime} , update_time=#{updateTime} , new_user=#{newUser} , new_sub_user=#{newSubUser} , idvisitor=#{idvisitor} , visit_servertime=#{visitServertime} , visit_localtime=#{visitLocaltime} , visit_totaltime=#{visitTotaltime} , idurl=#{idurl} , idtitle=#{idtitle} , idurl_entry=#{idurlEntry} , idtitle_entry=#{idtitleEntry} , idurl_exit=#{idurlExit} , idtitle_exit=#{idtitleExit} , url_referer=#{urlReferer} , useragent=#{useragent} , operate_system=#{operateSystem} , operate_version=#{operateVersion} , browser_name=#{browserName} , browser_version=#{browserVersion} , app_name=#{appName} , screen_resolution=#{screenResolution} , screen_depth=#{screenDepth} , location_ip=#{locationIp} , location_lang=#{locationLang} , location_country=#{locationCountry} , location_region=#{locationRegion} , location_city=#{locationCity} , location_compared=#{locationCompared} , end_model=#{endModel} , end_brand=#{endBrand} , end_type=#{endType} , net_type=#{netType} , count_visits=#{countVisits} , count_events=#{countEvents} WHERE location_ip=#{locationIp} ")
+	int updateCompared(Visit model) throws Exception;
 }

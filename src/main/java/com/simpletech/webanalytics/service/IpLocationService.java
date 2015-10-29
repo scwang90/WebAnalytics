@@ -52,5 +52,11 @@ public interface IpLocationService extends BaseService<IpLocation> {
 	 * @return 分页列表数据
 	 */
 	List<IpLocation> findByPage(int limit, int start) throws Exception;
-	
+
+	/**
+	 * 查询t_visit表中的所有不重复的、未被对比的IP
+	 * @return
+	 * @throws Exception
+	 */
+	List<IpLocation> findAllIp()throws Exception;
 }
