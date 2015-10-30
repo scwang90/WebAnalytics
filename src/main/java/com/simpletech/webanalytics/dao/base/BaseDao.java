@@ -58,18 +58,4 @@ public interface BaseDao<T> {
 	 */
 	public List<T> findByPage(int limit, int start) throws Exception;
 
-	/**
-	 * 查找所有未被对比的IP
-	 * @return
-	 * @throws Exception
-	 */
-	public List<T> findAllIp()throws Exception;
-
-	/**
-	 * 更新一条数据
-	 * @param model
-	 * @return
-	 * @throws Exception
-	 */
-	public int updateCompared(T model) throws Exception;
 }

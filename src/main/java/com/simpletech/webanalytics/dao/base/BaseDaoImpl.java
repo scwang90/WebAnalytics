@@ -32,9 +32,4 @@ public class BaseDaoImpl<T> extends BaseDaoMybatisMYSQLImpl<T> implements BaseDa
 		return super.update(t);
 	}
 
-	@Override
-	public int updateCompared(T t) throws Exception {
-		AfReflecter.setMemberNoException(t, "updateTime", new Date());
-		return super.updateCompared(t);
-	}
 }

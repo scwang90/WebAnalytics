@@ -66,19 +66,4 @@ public interface MultiDao<T> extends BaseDao<T>{
 	 */
 	public List<T> findByPropertyName(String propertyName, Object value) throws Exception;
 
-	/**
-	 *
-	 * @return
-	 * @throws Exception
-	 */
-	public List<T> findAllIp()throws Exception;
-
-	/**
-	 *
-	 * @return
-	 * @throws Exception
-	 */
-	public int updateCompared(T model)throws Exception;
-
-
 }

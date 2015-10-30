@@ -87,13 +87,13 @@ public class VisitServiceImpl extends BaseServiceImpl<Visit> implements VisitSer
 		return dao.countAll();
 	}
 
-	@Override
-	public int updateCompared(Visit model) throws Exception {
-		Visit old = findById(getModelID(model));
-		if (old == null) {
-			throw new ServiceException("请求更新记录不存在或已经被删除！");
-		}
-		model = checkNullField(old, model);
-		return dao.update(model);
-	}
+//	@Override
+//	public int updateCompared(Visit model) throws Exception {
+//		Visit old = findById(getModelID(model));
+//		if (old == null) {
+//			throw new ServiceException("请求更新记录不存在或已经被删除！");
+//		}
+//		model = checkNullField(old, model);
+//		return dao.updateCompared(model);
+//	}
 }

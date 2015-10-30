@@ -26,7 +26,7 @@ public class IpLocationDaoTester {
 	@Test
 	public void findAllIp() throws Exception {
 
-		Object result = dao.findAll();//查询出ua,ip,brand
+		Object result = dao.findAllIp();
 		System.out.println(JacksonUtil.toJson(result).replace("{","\n{"));
 	}
 
