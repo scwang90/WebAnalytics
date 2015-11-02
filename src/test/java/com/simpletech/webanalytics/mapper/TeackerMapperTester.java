@@ -24,11 +24,11 @@ public class TeackerMapperTester {
     @Autowired
     TrackerMapper mapper;
 
-//    @Test
-//    public void getVisit() throws Exception {
-//        Object result = mapper.getVisit(1, "idvtor");
-//        System.out.println(JacksonUtil.toJson(result));
-//    }
+    @Test
+    public void updateVisitEvent() throws Exception {
+        Object result = mapper.updateVisitEvent("1");
+        System.out.println(JacksonUtil.toJson(result));
+    }
 
     @Test
     public void getVisitHalfHour() throws Exception {

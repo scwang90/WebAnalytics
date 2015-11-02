@@ -1,4 +1,4 @@
-package com.simpletech.webanalytics;
+package com.simpletech.webanalytics.format;
 
 import com.simpletech.webanalytics.model.Site;
 import com.simpletech.webanalytics.util.AfStringUtil;

@@ -1,4 +1,4 @@
-package com.simpletech.webanalytics;
+package com.simpletech.webanalytics.format;
 
 import com.simpletech.webanalytics.model.constant.Period;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.simpletech.webanalytics;
+package com.simpletech.webanalytics.format;
 
 import com.webanalytics.useragent.Brand;
 import com.webanalytics.useragent.Platform;

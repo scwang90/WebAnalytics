@@ -1,4 +1,4 @@
-package com.simpletech.webanalytics;
+package com.simpletech.webanalytics.format;
 
 import org.junit.Test;
 

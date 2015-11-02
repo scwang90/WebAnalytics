@@ -1,4 +1,4 @@
-package com.simpletech.webanalytics;
+package com.simpletech.webanalytics.format;
 
 import com.webanalytics.useragent.Browser;
 import org.junit.Test;

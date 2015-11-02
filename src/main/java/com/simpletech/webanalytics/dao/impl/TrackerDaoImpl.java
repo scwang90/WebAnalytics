@@ -195,7 +195,11 @@ public class TrackerDaoImpl implements TrackerDao {
 
     @Override
     public int updateVisitEvent(int siteId, String idsubsite, String idvtor) throws Exception {
-        return mapper.updateVisitEvent(getIdSite(siteId, idsubsite), idvtor);
+        Visit visit = mapper.findLastVisit(getIdSite(siteId, idsubsite), idvtor);
+        if (visit == null) {
+            return 0;
+        }
+        return mapper.updateVisitEvent(visit.getId());
     }
 
     @Override

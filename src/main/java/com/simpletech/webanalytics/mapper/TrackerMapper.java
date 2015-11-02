@@ -132,11 +132,18 @@ public interface TrackerMapper {
      * 新的 Event 产生时更新 Visit
      *  主要是 事件数量统计
      *
-     * @param siteId    网站ID
-     * @param idvtor    访问者ID
+     * @param id    VisitID
      * @return 改变行数
      */
-    @Update("UPDATE t_visit SET update_time=NOW(), count_events=count_events+1 WHERE id=(SELECT id FROM t_visit WHERE idsite=${siteId} AND idvisitor=#{idvtor} limit 0,1) ")
-    int updateVisitEvent(@Param("siteId") String siteId, @Param("idvtor") String idvtor) throws Exception;
+    @Update("UPDATE t_visit SET update_time=NOW(), count_events=count_events+1 WHERE id=#{id} ")
+    int updateVisitEvent(@Param("id") String id) throws Exception;
 
+    /**
+     * 获取最新的 Visit
+     * @param siteId    网站ID
+     * @param idvtor    访问者ID
+     * @return Visit or null
+     */
+    @Select("SELECT id FROM t_visit WHERE idsite=${siteId} AND idvisitor=#{idvtor} ORDER BY create_time DESC limit 0,1 ")
+    Visit findLastVisit(@Param("siteId") String siteId, @Param("idvtor") String idvtor) throws Exception;
 }
