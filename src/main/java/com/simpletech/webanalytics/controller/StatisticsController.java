@@ -278,12 +278,12 @@ public class StatisticsController {
     private void doCheckPeriod(Period period, Date start, Date end) throws ServiceException {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(start);
-        int count = 0;
+        int count = 0,max = 200;
         while (calendar.getTime().before(end)) {
-            count++;
-        }
-        if (count > 200) {
-            throw new ServiceException("数据量偏大，请调整时间跨度再试！");
+            if (count++ > max) {
+                throw new ServiceException("数据量偏大，请调整时间跨度再试！");
+            }
+            calendar.add(period.getField(), 1);
         }
     }
 
