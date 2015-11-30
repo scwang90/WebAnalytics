@@ -1,8 +1,10 @@
 package com.simpletech.webanalytics.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.simpletech.webanalytics.model.Visit;
+import com.simpletech.webanalytics.model.entity.IspValue;
 import com.simpletech.webanalytics.service.base.BaseService;
 
 /**
@@ -52,6 +54,16 @@ public interface VisitService extends BaseService<Visit> {
 	 * @return 分页列表数据
 	 */
 	List<Visit> findByPage(int limit, int start) throws Exception;
+
+	/**
+	 * 更新t_visit表中旧记录的运营商信息
+	 * @param where
+	 * @return
+	 * @throws Exception
+	 */
+	List<Visit> findWhereIsp(String where) throws Exception;
+
+
 
 //	/**
 //	 * 更新一条数据

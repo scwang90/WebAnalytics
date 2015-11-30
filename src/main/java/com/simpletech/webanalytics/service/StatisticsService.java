@@ -154,4 +154,14 @@ public interface StatisticsService {
      * @return  [入口|出口]页面
      */
     List<EnterCloseValue> enterclose(String idsite, EnterClose type, Date start, Date end) throws Exception;
+
+    /**
+     * 统计店铺isp信息
+     * @param siteId
+     * @param start
+     * @param end
+     * @return
+     * @throws Exception
+     */
+    List<IspValue> isp(String siteId,Date start,Date end) throws Exception;
 }

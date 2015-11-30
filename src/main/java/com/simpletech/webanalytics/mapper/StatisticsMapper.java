@@ -306,4 +306,21 @@ public interface StatisticsMapper {
      */
     @Select("SELECT t_url.url name,COUNT(t_visit.id) num FROM t_visit LEFT JOIN t_url ON t_visit.idurl_exit=t_url.id WHERE t_visit.idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY idurl_exit ORDER BY num DESC")
     List<EnterCloseValue> exitUrls(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end) throws Exception;
+
+    /**
+     * 统计isp信息
+     * @param siteId
+     * @param start
+     * @param end
+     * @return
+     * @throws Exception
+     */
+    @Select("SELECT\n" +
+            "  count(location_isp) num,\n" +
+            "  location_isp        name\n" +
+            "FROM t_visit\n" +
+            "WHERE idsite = ${siteId} AND location_isp IS NOT NULL AND (visit_servertime BETWEEN #{start} AND #{end})\n" +
+            "GROUP BY location_isp\n" +
+            "ORDER BY num DESC")
+    List<IspValue> isp(@Param("siteId") String siteId, @Param("start") Date start, @Param("end") Date end)throws Exception;
 }

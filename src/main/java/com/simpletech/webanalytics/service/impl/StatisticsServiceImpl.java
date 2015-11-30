@@ -190,7 +190,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public Map<String,Object> sharemap(String idsite, String urlId, Date start, Date end) throws Exception {
+    public Map<String, Object> sharemap(String idsite, String urlId, Date start, Date end) throws Exception {
         List<ShareLinePoint> list = dao.sharePoint(idsite, urlId, start, end);
         List<MapLineValue> lines = new ArrayList<>();
         List<MapPointValue> points = new ArrayList<>();
@@ -266,10 +266,27 @@ public class StatisticsServiceImpl implements StatisticsService {
     public List<EnterCloseValue> enterclose(String idsite, EnterClose type, Date start, Date end) throws Exception {
         switch (type) {
             case entry:
-                return dao.entryUrls(idsite,start,end);
+                return dao.entryUrls(idsite, start, end);
             case exit:
-                return dao.exitUrls(idsite,start,end);
+                return dao.exitUrls(idsite, start, end);
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public List<IspValue> isp(String siteId, Date start, Date end) throws Exception {
+        List<IspValue> values = dao.isp(siteId, start, end);
+        List<IspValue> newvalues = new ArrayList<>();
+        int count = 0;
+        for (IspValue ispValue : values) {
+            count += ispValue.getNum();
+        }
+
+        for (IspValue isp : values) {
+            int num = isp.getNum();
+            isp.setRate(1f * isp.getNum() / count);
+            newvalues.add(isp);
+        }
+        return newvalues;
     }
 }

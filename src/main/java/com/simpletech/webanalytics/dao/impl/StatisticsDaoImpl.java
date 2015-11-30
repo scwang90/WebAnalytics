@@ -689,5 +689,11 @@ public class StatisticsDaoImpl implements StatisticsDao {
     public List<EnterCloseValue> exitUrls(String idsite, Date start, Date end) throws Exception {
         return mapper.exitUrls(idsite, start, end);
     }
+
+    @Override
+    public List<IspValue> isp(String siteId,Date start,Date end)throws Exception{
+
+        return mapper.isp(siteId,start,end);
+    }
 }
 

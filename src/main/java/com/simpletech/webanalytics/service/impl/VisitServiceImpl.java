@@ -1,8 +1,11 @@
 package com.simpletech.webanalytics.service.impl;
 
+import com.ipmapping.BDIP;
+import com.ipmapping.txIP.IPTest;
 import com.simpletech.webanalytics.dao.VisitDao;
 import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.model.base.ModelBase;
+import com.simpletech.webanalytics.model.entity.IspValue;
 import com.simpletech.webanalytics.service.VisitService;
 import com.simpletech.webanalytics.service.base.BaseServiceImpl;
 import com.simpletech.webanalytics.util.Page;
@@ -10,6 +13,8 @@ import com.simpletech.webanalytics.util.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,6 +91,26 @@ public class VisitServiceImpl extends BaseServiceImpl<Visit> implements VisitSer
 	public int countAll() throws Exception {
 		return dao.countAll();
 	}
+
+	@Override
+	public List<Visit> findWhereIsp(String where) throws Exception {
+		List<Visit> visits=dao.findWhere(where);
+		List<Visit> newVisit=new ArrayList<>();
+//		IPTest txIp = new IPTest();
+		for(Visit vv:visits){
+			//提取运营商信息
+			BDIP bd=new BDIP();
+			String isp=bd.getIPXY(vv.getLocationIp())[2];
+//			String[] tx_location = txIp.txIpParser(vv.getLocationIp());
+//			vv.setLocationIsp(tx_location[4]);
+//			vv.setLocationIsp(null);
+			vv.setLocationIsp(isp);
+			update(vv);
+			newVisit.add(vv);
+		}
+		return newVisit;
+	}
+
 
 //	@Override
 //	public int updateCompared(Visit model) throws Exception {

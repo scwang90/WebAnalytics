@@ -1,6 +1,7 @@
 package com.simpletech.webanalytics.mapper;
 
 import com.simpletech.webanalytics.aspect.LoggingAspect;
+import com.simpletech.webanalytics.model.entity.IspValue;
 import com.simpletech.webanalytics.util.JacksonUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * 数据库表t_visit的Mapper层测试类
@@ -112,7 +114,7 @@ public class StatisticsMapperTester {
     @Test
     public void visit() throws Exception {
         Object result = mapper.visitDay("0", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"));
-        System.out.println(JacksonUtil.toJson(result).replace("{","\n{"));
+        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
@@ -127,4 +129,13 @@ public class StatisticsMapperTester {
         System.out.println(JacksonUtil.toJson(result));
     }
 
+    @Test
+    public void isp() throws Exception {
+        Object result = mapper.isp("1", monthf.parse("2015-10-0"), monthf.parse("2015-11-30"));
+        System.out.println(JacksonUtil.toJson(result));
+//        List<IspValue> ispValues=mapper.isp("1", monthf.parse("2015-10-0"), monthf.parse("2015-11-30"));
+//        for(IspValue value:ispValues){
+//            System.out.println(value.getName());
+//        }
+    }
 }

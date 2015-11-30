@@ -9,6 +9,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.util.JacksonUtil;
 
+import javax.xml.ws.Service;
+
 /**
  * 数据库表t_visit的Service层测试类
  * @author 树朾
@@ -49,8 +51,14 @@ public class VisitServiceTester {
 
 	@Test
 	public void findByPage() throws Exception {
-		Object result = service.findByPage(5,0);
+		Object result = service.findByPage(5, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}
-
+	@Test
+	public void findWhereIsp() throws Exception {
+//		Object result = service.findWhereIsp("where location_isp='UNICOM'");
+		Object result = service.findWhereIsp("");
+		service.findWhereIsp("where location_isp=''or location_isp='OTHER'");
+		System.out.println(JacksonUtil.toJson(result));
+	}
 }

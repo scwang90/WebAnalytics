@@ -49,8 +49,19 @@ public class VisitDaoTester {
 
 	@Test
 	public void findByPage() throws Exception {
-		Object result = dao.findByPage(5,0);
+		Object result = dao.findByPage(5, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}
-	
+
+	@Test
+	public void findAll() throws Exception {
+		Object result = dao.findAll();
+		System.out.println(JacksonUtil.toJson(result));
+	}
+
+	@Test
+	public void findWhere() throws Exception {
+		Object result = dao.findWhere("where location_isp is null");
+		System.out.println(JacksonUtil.toJson(result));
+	}
 }

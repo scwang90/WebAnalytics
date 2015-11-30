@@ -270,6 +270,24 @@ public class StatisticsController {
     }
 
     /**
+     * 统计运营商
+     * @param siteId 网站id
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return  isp统计值
+     * @throws Exception
+     */
+    @RequestMapping("visit/site/{siteId:\\d+}/isp")
+    public Object isp(@PathVariable String siteId, Integer offset, Period span, Date start, Date end)throws Exception{
+        end=timeEnd(end,span,offset);
+        start = timeStart(start,span,offset);
+
+        return service.isp(siteId,start,end);
+    }
+
+    /**
      * 检测时间分段合理性
      * @param period 时段周期 [时|日|周|月]
      * @param start  开始时间

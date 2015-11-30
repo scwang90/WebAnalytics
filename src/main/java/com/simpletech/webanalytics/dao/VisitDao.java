@@ -1,9 +1,11 @@
 package com.simpletech.webanalytics.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.simpletech.webanalytics.dao.base.BaseDao;
 import com.simpletech.webanalytics.model.Visit;
+import com.simpletech.webanalytics.model.entity.IspValue;
 
 /**
  * 数据库表t_visit的Dao接口
@@ -53,6 +55,9 @@ public interface VisitDao extends BaseDao<Visit>{
 	 * @return 分页列表数据
 	 */
 	List<Visit> findByPage(int limit, int start) throws Exception;
+
+	List<Visit> findWhere(String where) throws Exception;
+
 
 //	/**
 //	 * 更新一条数据

@@ -234,4 +234,13 @@ public interface StatisticsDao {
 	 * @return 获取出口页面列表
 	 */
 	List<EnterCloseValue> exitUrls(String idsite, Date start, Date end) throws Exception;
+
+	/**
+	 * 获取出口页面列表
+	 * @param siteId   网站ID
+	 * @param start    开始时间
+	 * @param end      结束时间
+	 * @return 获取出口页面列表
+	 */
+	List<IspValue> isp(String siteId, Date start, Date end) throws Exception;
 }
