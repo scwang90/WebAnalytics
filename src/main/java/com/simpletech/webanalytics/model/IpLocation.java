@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_ip_location
  * @author 树朾
- * @date 2015-10-16 10:38:40 中国标准时间
+ * @date 2015-11-30 16:24:11 中国标准时间
  */
 @Table("t_ip_location")
 public class IpLocation extends ModelBase{
@@ -78,30 +78,30 @@ public class IpLocation extends ModelBase{
 	@Column("create_time")
 	private java.util.Date createTime;
 	/**
-	 * 腾讯地区
+	 * 腾讯国家
 	 */
-	@Column("tx_districk")
-	private String txDistrick;
+	@Column("tx_country")
+	private String txCountry;
+	/**
+	 * 腾讯省份
+	 */
+	@Column("tx_province")
+	private String txProvince;
 	/**
 	 * 腾讯城市
 	 */
 	@Column("tx_city")
 	private String txCity;
 	/**
-	 * 腾讯国家
+	 * 腾讯地区
 	 */
-	@Column("tx_country")
-	private String txCountry;
+	@Column("tx_districk")
+	private String txDistrick;
 	/**
 	 * 腾讯运营商
 	 */
 	@Column("tx_isp")
 	private String txIsp;
-	/**
-	 * 腾讯省份
-	 */
-	@Column("tx_province")
-	private String txProvince;
 	/**
 	 * ipip国家
 	 */
@@ -113,7 +113,7 @@ public class IpLocation extends ModelBase{
 	@Column("ipip_province")
 	private String ipipProvince;
 	/**
-	 * ipip国家
+	 * ipip城市
 	 */
 	@Column("ipip_city")
 	private String ipipCity;
@@ -230,12 +230,20 @@ public class IpLocation extends ModelBase{
 		this.createTime = createTime;
 	}
 	
-	public String getTxDistrick(){
-		return this.txDistrick;
+	public String getTxCountry(){
+		return this.txCountry;
 	}
 
-	public void setTxDistrick(String txDistrick) {
-		this.txDistrick = txDistrick;
+	public void setTxCountry(String txCountry) {
+		this.txCountry = txCountry;
+	}
+	
+	public String getTxProvince(){
+		return this.txProvince;
+	}
+
+	public void setTxProvince(String txProvince) {
+		this.txProvince = txProvince;
 	}
 	
 	public String getTxCity(){
@@ -246,12 +254,12 @@ public class IpLocation extends ModelBase{
 		this.txCity = txCity;
 	}
 	
-	public String getTxCountry(){
-		return this.txCountry;
+	public String getTxDistrick(){
+		return this.txDistrick;
 	}
 
-	public void setTxCountry(String txCountry) {
-		this.txCountry = txCountry;
+	public void setTxDistrick(String txDistrick) {
+		this.txDistrick = txDistrick;
 	}
 	
 	public String getTxIsp(){
@@ -262,38 +270,30 @@ public class IpLocation extends ModelBase{
 		this.txIsp = txIsp;
 	}
 	
-	public String getTxProvince(){
-		return this.txProvince;
-	}
-
-	public void setTxProvince(String txProvince) {
-		this.txProvince = txProvince;
-	}
-
-	public String getIpipCountry() {
-		return ipipCountry;
+	public String getIpipCountry(){
+		return this.ipipCountry;
 	}
 
 	public void setIpipCountry(String ipipCountry) {
 		this.ipipCountry = ipipCountry;
 	}
-
-	public String getIpipProvince() {
-		return ipipProvince;
+	
+	public String getIpipProvince(){
+		return this.ipipProvince;
 	}
 
 	public void setIpipProvince(String ipipProvince) {
 		this.ipipProvince = ipipProvince;
 	}
-
-	public String getIpipCity() {
-		return ipipCity;
+	
+	public String getIpipCity(){
+		return this.ipipCity;
 	}
 
 	public void setIpipCity(String ipipCity) {
 		this.ipipCity = ipipCity;
 	}
-
+	
 	public java.util.Date getUpdateTime(){
 		return this.updateTime;
 	}

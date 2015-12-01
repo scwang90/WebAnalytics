@@ -1,9 +1,9 @@
 package com.simpletech.webanalytics.model.constant;
 
 /**
- * [入口|口页]枚举
+ * 页面标题链接排行-枚举
  * Created by Administrator on 2015/10/27.
  */
-public enum EnterClose {
-    entry,exit
+public enum PageRank {
+    title,url
 }

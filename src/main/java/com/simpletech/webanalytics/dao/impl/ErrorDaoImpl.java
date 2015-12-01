@@ -1,23 +1,13 @@
 package com.simpletech.webanalytics.dao.impl;
 
 import com.simpletech.webanalytics.dao.ErrorDao;
-import com.simpletech.webanalytics.dao.StatisticsDao;
 import com.simpletech.webanalytics.mapper.ErrorMapper;
-import com.simpletech.webanalytics.mapper.StatisticsMapper;
-import com.simpletech.webanalytics.model.Title;
-import com.simpletech.webanalytics.model.Url;
-import com.simpletech.webanalytics.model.constant.RankingType;
 import com.simpletech.webanalytics.model.entity.*;
 import com.simpletech.webanalytics.util.AfStringUtil;
-import com.simpletech.webanalytics.util.JacksonUtil;
-import com.webanalytics.useragent.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 数据库表t_visit的Dao实现

@@ -7,32 +7,42 @@ package com.simpletech.webanalytics.model.entity;
 public class PageValue {
 
 //    @JsonIgnore
-    private String pid;             //标题数据库ID（用于查询点击页面详情）
-    private String name;            //页面标题
+    private String id;             //标题数据库ID（用于查询点击页面详情）
+    private String url;            //页面链接
+    private String title;          //页面标题
 
-    private int uv;                 //独立用户数
-    private int vt;                 //visit 数
-    private int pv;                 //pv 数
-    private float ruv;              //独立用户 占比
-    private float rvt;              //visit 占比
-    private float rpv;              //pv 占比
+    private int uv;                //独立用户数
+    private int vt;                //visit 数
+    private int pv;                //pv 数
+    private float ruv;             //独立用户 占比
+    private float rvt;             //visit 占比
+    private float rpv;             //pv 占比
 
-    private Integer ts;             //平均加载时间 毫秒
+    private int loaded;            //平均加载时间 毫秒
+    private int spent;             //平均加载时间 毫秒
 
-    public String getPid() {
-        return pid;
+    public String getId() {
+        return id;
     }
 
-    public void setPid(String pid) {
-        this.pid = pid;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUrl() {
+        return url;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getUv() {
@@ -83,11 +93,19 @@ public class PageValue {
         this.rpv = rpv;
     }
 
-    public Integer getTs() {
-        return ts;
+    public int getLoaded() {
+        return loaded;
     }
 
-    public void setTs(Integer ts) {
-        this.ts = ts;
+    public void setLoaded(int loaded) {
+        this.loaded = loaded;
+    }
+
+    public int getSpent() {
+        return spent;
+    }
+
+    public void setSpent(int spent) {
+        this.spent = spent;
     }
 }

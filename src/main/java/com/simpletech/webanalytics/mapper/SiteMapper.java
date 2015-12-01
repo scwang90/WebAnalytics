@@ -15,7 +15,7 @@ import com.simpletech.webanalytics.dao.base.BaseDaoMybatisMYSQLImpl.MybatisMulti
 /**
  * 数据库表t_site的mapper接口
  * @author 树朾
- * @date 2015-10-28 14:33:37 中国标准时间
+ * @date 2015-11-30 16:24:11 中国标准时间
  */
 public interface SiteMapper extends MybatisMultiDao<Site>{
 
@@ -25,40 +25,40 @@ public interface SiteMapper extends MybatisMultiDao<Site>{
 	 * @return 改变的行数
 	 */
 	@Insert("INSERT INTO t_site ( id , create_time , update_time , name , domain , regex ) VALUES ( #{id} , #{createTime} , #{updateTime} , #{name} , #{domain} , #{regex} )")
-	int insert(Site model) throws Exception;
+	int insert(Site model);
 	/**
 	 * 根据ID删除
 	 * @param id 数据的主键ID
 	 * @return 改变的行数
 	 */
 	@Delete("DELETE FROM t_site WHERE id=#{id}")
-	int delete(@Param("id") Object id) throws Exception;
+	int delete(@Param("id") Object id);
 	/**
 	 * 更新一条数据
 	 * @param model 更新的数据
 	 * @return 改变的行数
 	 */
 	@Update("UPDATE t_site SET id=#{id} , create_time=#{createTime} , update_time=#{updateTime} , name=#{name} , domain=#{domain} , regex=#{regex} WHERE id=#{id} ")
-	int update(Site model) throws Exception;
+	int update(Site model);
 	/**
 	 * 统计全部出数据
 	 * @return 统计数
 	 */
 	@Select("SELECT COUNT(*) FROM t_site")
-	int countAll() throws Exception;
+	int countAll();
 	/**
 	 * 根据ID获取
 	 * @param id 主键ID
 	 * @return null 或者 主键等于id的数据
 	 */
 	@Select("SELECT id , create_time createTime , update_time updateTime , name , domain , regex FROM t_site WHERE id=#{id}")
-	Site findById(@Param("id") Object id) throws Exception;
+	Site findById(@Param("id") Object id);
 	/**
 	 * 获取全部数据
 	 * @return 全部数据列表
 	 */
 	@Select("SELECT id , create_time createTime , update_time updateTime , name , domain , regex FROM t_site ${order}")
-	List<Site> findAll(@Param("order") String order) throws Exception;
+	List<Site> findAll(@Param("order") String order);
 	/**
 	 * 分页查询数据
 	 * @param limit 最大返回
@@ -66,14 +66,14 @@ public interface SiteMapper extends MybatisMultiDao<Site>{
 	 * @return 分页列表数据
 	 */
 	@Select("SELECT id , create_time createTime , update_time updateTime , name , domain , regex FROM t_site ${order} LIMIT ${start},${limit}")
-	List<Site> findByPage(@Param("order") String order, @Param("limit") int limit, @Param("start") int start) throws Exception;
+	List<Site> findByPage(@Param("order") String order,@Param("limit") int limit,@Param("start") int start);
 	/**
 	 * 选择性删除
 	 * @param where SQL条件语句
 	 * @return 改变的行数
 	 */
 	@Delete("DELETE FROM t_site ${where}")
-	int deleteWhere(@Param("where") String where) throws Exception;
+	int deleteWhere(@Param("where") String where);
 	/**
 	 * 根据属性值删除
 	 * @param propertyName 数据库列名
@@ -81,14 +81,14 @@ public interface SiteMapper extends MybatisMultiDao<Site>{
 	 * @return 改变的行数
 	 */
 	@Delete("DELETE FROM t_site WHERE ${propertyName}=#{value}")
-	int deleteByPropertyName(@Param("propertyName") String propertyName, @Param("value") Object value) throws Exception;
+	int deleteByPropertyName(@Param("propertyName") String propertyName,@Param("value") Object value);
 	/**
 	 * 选择性统计
 	 * @param where SQL条件语句
 	 * @return 统计数
 	 */
 	@Select("SELECT COUNT(*) FROM t_site ${where}")
-	int countWhere(@Param("where") String where) throws Exception;
+	int countWhere(@Param("where") String where);
 	/**
 	 * 根据属性统计
 	 * @param propertyName 数据库列名
@@ -96,14 +96,14 @@ public interface SiteMapper extends MybatisMultiDao<Site>{
 	 * @return 统计数
 	 */
 	@Select("SELECT COUNT(*) FROM WHERE ${propertyName}=#{value}")
-	int countByPropertyName(@Param("propertyName") String propertyName, @Param("value") Object value) throws Exception;
+	int countByPropertyName(@Param("propertyName") String propertyName,@Param("value") Object value);
 	/**
 	 * 选择性查询
 	 * @param where SQL条件语句
 	 * @return 符合条件的列表数据
 	 */
 	@Select("SELECT id , create_time createTime , update_time updateTime , name , domain , regex FROM t_site ${where} ${order}")
-	List<Site> findWhere(@Param("order") String order, @Param("where") String where) throws Exception;
+	List<Site> findWhere(@Param("order") String order,@Param("where") String where);
 	/**
 	 * 选择性分页查询
 	 * @param where SQL条件语句
@@ -112,7 +112,7 @@ public interface SiteMapper extends MybatisMultiDao<Site>{
 	 * @return 符合条件的列表数据
 	 */
 	@Select("SELECT id , create_time createTime , update_time updateTime , name , domain , regex FROM t_site ${where} ${order} LIMIT ${start},${limit}")
-	List<Site> findWhereByPage(@Param("order") String order, @Param("where") String where, @Param("limit") int limit, @Param("start") int start) throws Exception;
+	List<Site> findWhereByPage(@Param("order") String order,@Param("where") String where,@Param("limit") int limit,@Param("start") int start);
 	/**
 	 * 根据属性查询
 	 * @param propertyName 数据库列名
@@ -120,5 +120,5 @@ public interface SiteMapper extends MybatisMultiDao<Site>{
 	 * @return 返回符合条件的数据列表
 	 */
 	@Select("SELECT id , create_time createTime , update_time updateTime , name , domain , regex FROM t_site WHERE ${propertyName}=#{value} ${order}")
-	List<Site> findByPropertyName(@Param("order") String order, @Param("propertyName") String propertyName, @Param("value") Object value) throws Exception;
+	List<Site> findByPropertyName(@Param("order") String order,@Param("propertyName") String propertyName,@Param("value") Object value);
 }

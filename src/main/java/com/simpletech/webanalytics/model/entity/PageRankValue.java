@@ -1,14 +1,14 @@
 package com.simpletech.webanalytics.model.entity;
 
 /**
- * Ò³ÃæÅÅÐÐÍ³¼ÆÖµ
- * Created by Ê÷–b on 2015/9/29.
+ * Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½Öµ
+ * Created by ï¿½ï¿½ï¿½b on 2015/9/29.
  */
-public class PageRankingValue {
+public class PageRankValue {
 
-    private String pid;     //Ò³ÃæID
-    private Integer num;    //·ÖÏíÊýÁ¿
-    private String url;     //Ò³ÃæÁ´½Ó
+    private String pid;     //Ò³ï¿½ï¿½ID
+    private Integer num;    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private String url;     //Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     public String getPid() {
         return pid;

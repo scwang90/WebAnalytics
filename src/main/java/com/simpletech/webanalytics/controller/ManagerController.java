@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * Created by 树朾 on 2015/10/9.
  */
 @RestController
-@RequestMapping("api/manage")
+@RequestMapping("v1/manage")
 public class ManagerController extends BaseController {
 
     @Autowired
@@ -59,8 +59,8 @@ public class ManagerController extends BaseController {
 
     @Intent("获取探针代码")
     @RequestMapping("site/tracker/{siteId:\\d+}")
-    public Object siteTracker(HttpServletRequest request,@PathVariable int siteId) throws Exception{
-        Matcher matcher = Pattern.compile("//(.+/)api/manage", Pattern.CASE_INSENSITIVE).matcher(request.getRequestURL());
+    public Object siteTracker(HttpServletRequest request, @PathVariable int siteId) throws Exception {
+        Matcher matcher = Pattern.compile("//(.+/)v1/manage", Pattern.CASE_INSENSITIVE).matcher(request.getRequestURL());
         matcher.find();
         String temp = "<!-- WebAnalytics -->\n" +
                 "<script type=\"text/javascript\">\n" +
@@ -76,7 +76,20 @@ public class ManagerController extends BaseController {
                 "    })();\n" +
                 "</script>\n" +
                 "<!-- End WebAnalytics Code -->";
-        return temp.replace("${siteId}", "" + siteId).replace("${domain}",matcher.group(1));
+        return temp.replace("${siteId}", "" + siteId).replace("${domain}", matcher.group(1));
     }
 
+    @Intent("获取探针事件代码")
+    @RequestMapping("site/tracker/event/{name}")
+    public Object siteTrackerEvent(HttpServletRequest request, @PathVariable String name) throws Exception {
+        String temp = "_wapaq.push(['trackEvent','&{name}','${value}']);";
+        return temp.replace("${name}", name).replace("${value}", "");
+    }
+
+    @Intent("获取探针事件代码")
+    @RequestMapping("site/tracker/event/{name}/{value}")
+    public Object siteTrackerEventValue(HttpServletRequest request, @PathVariable String name, @PathVariable String value) throws Exception {
+        String temp = "_wapaq.push(['trackEvent','&{name}','${value}']);";
+        return temp.replace("${name}", name).replace("${value}", value);
+    }
 }

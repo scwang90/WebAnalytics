@@ -15,7 +15,7 @@ import com.simpletech.webanalytics.dao.base.BaseDaoMybatisMYSQLImpl.MybatisMulti
 /**
  * 数据库表t_share_line_point的mapper接口
  * @author 树朾
- * @date 2015-10-28 14:33:37 中国标准时间
+ * @date 2015-11-30 16:24:11 中国标准时间
  */
 public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 
@@ -25,40 +25,40 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @return 改变的行数
 	 */
 	@Insert("INSERT INTO t_share_line_point ( id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv , share_span , share_time , create_time , update_time ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{idurl} , #{idvisitor} , #{idrefervisitor} , #{countPv} , #{shareSpan} , #{shareTime} , #{createTime} , #{updateTime} )")
-	int insert(ShareLinePoint model) throws Exception;
+	int insert(ShareLinePoint model);
 	/**
 	 * 根据ID删除
 	 * @param id 数据的主键ID
 	 * @return 改变的行数
 	 */
 	@Delete("DELETE FROM t_share_line_point WHERE id=#{id}")
-	int delete(@Param("id") Object id) throws Exception;
+	int delete(@Param("id") Object id);
 	/**
 	 * 更新一条数据
 	 * @param model 更新的数据
 	 * @return 改变的行数
 	 */
 	@Update("UPDATE t_share_line_point SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , idurl=#{idurl} , idvisitor=#{idvisitor} , idrefervisitor=#{idrefervisitor} , count_pv=#{countPv} , share_span=#{shareSpan} , share_time=#{shareTime} , create_time=#{createTime} , update_time=#{updateTime} WHERE id=#{id} ")
-	int update(ShareLinePoint model) throws Exception;
+	int update(ShareLinePoint model);
 	/**
 	 * 统计全部出数据
 	 * @return 统计数
 	 */
 	@Select("SELECT COUNT(*) FROM t_share_line_point")
-	int countAll() throws Exception;
+	int countAll();
 	/**
 	 * 根据ID获取
 	 * @param id 主键ID
 	 * @return null 或者 主键等于id的数据
 	 */
 	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point WHERE id=#{id}")
-	ShareLinePoint findById(@Param("id") Object id) throws Exception;
+	ShareLinePoint findById(@Param("id") Object id);
 	/**
 	 * 获取全部数据
 	 * @return 全部数据列表
 	 */
 	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point ${order}")
-	List<ShareLinePoint> findAll(@Param("order") String order) throws Exception;
+	List<ShareLinePoint> findAll(@Param("order") String order);
 	/**
 	 * 分页查询数据
 	 * @param limit 最大返回
@@ -66,14 +66,14 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @return 分页列表数据
 	 */
 	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point ${order} LIMIT ${start},${limit}")
-	List<ShareLinePoint> findByPage(@Param("order") String order, @Param("limit") int limit, @Param("start") int start) throws Exception;
+	List<ShareLinePoint> findByPage(@Param("order") String order,@Param("limit") int limit,@Param("start") int start);
 	/**
 	 * 选择性删除
 	 * @param where SQL条件语句
 	 * @return 改变的行数
 	 */
 	@Delete("DELETE FROM t_share_line_point ${where}")
-	int deleteWhere(@Param("where") String where) throws Exception;
+	int deleteWhere(@Param("where") String where);
 	/**
 	 * 根据属性值删除
 	 * @param propertyName 数据库列名
@@ -81,14 +81,14 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @return 改变的行数
 	 */
 	@Delete("DELETE FROM t_share_line_point WHERE ${propertyName}=#{value}")
-	int deleteByPropertyName(@Param("propertyName") String propertyName, @Param("value") Object value) throws Exception;
+	int deleteByPropertyName(@Param("propertyName") String propertyName,@Param("value") Object value);
 	/**
 	 * 选择性统计
 	 * @param where SQL条件语句
 	 * @return 统计数
 	 */
 	@Select("SELECT COUNT(*) FROM t_share_line_point ${where}")
-	int countWhere(@Param("where") String where) throws Exception;
+	int countWhere(@Param("where") String where);
 	/**
 	 * 根据属性统计
 	 * @param propertyName 数据库列名
@@ -96,14 +96,14 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @return 统计数
 	 */
 	@Select("SELECT COUNT(*) FROM WHERE ${propertyName}=#{value}")
-	int countByPropertyName(@Param("propertyName") String propertyName, @Param("value") Object value) throws Exception;
+	int countByPropertyName(@Param("propertyName") String propertyName,@Param("value") Object value);
 	/**
 	 * 选择性查询
 	 * @param where SQL条件语句
 	 * @return 符合条件的列表数据
 	 */
 	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point ${where} ${order}")
-	List<ShareLinePoint> findWhere(@Param("order") String order, @Param("where") String where) throws Exception;
+	List<ShareLinePoint> findWhere(@Param("order") String order,@Param("where") String where);
 	/**
 	 * 选择性分页查询
 	 * @param where SQL条件语句
@@ -112,7 +112,7 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @return 符合条件的列表数据
 	 */
 	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point ${where} ${order} LIMIT ${start},${limit}")
-	List<ShareLinePoint> findWhereByPage(@Param("order") String order, @Param("where") String where, @Param("limit") int limit, @Param("start") int start) throws Exception;
+	List<ShareLinePoint> findWhereByPage(@Param("order") String order,@Param("where") String where,@Param("limit") int limit,@Param("start") int start);
 	/**
 	 * 根据属性查询
 	 * @param propertyName 数据库列名
@@ -120,5 +120,5 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @return 返回符合条件的数据列表
 	 */
 	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point WHERE ${propertyName}=#{value} ${order}")
-	List<ShareLinePoint> findByPropertyName(@Param("order") String order, @Param("propertyName") String propertyName, @Param("value") Object value) throws Exception;
+	List<ShareLinePoint> findByPropertyName(@Param("order") String order,@Param("propertyName") String propertyName,@Param("value") Object value);
 }

@@ -4,21 +4,12 @@ package com.simpletech.webanalytics.model.entity;
  * 事件统计-排行
  * Created by 树朾 on 2015/9/29.
  */
-public class EventNameValue {
+public class EventNameSpanValue {
 
-    private String name;    //名称
     private long num;       //触发次数
     private int user;       //触发用户
     private float rnum;     //触发率 -触发次数/Visit次数
     private float ruser;    //参与度 -触发用户/总用户
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public long getNum() {
         return num;

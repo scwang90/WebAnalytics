@@ -1,4 +1,4 @@
-package com.simpletech.webanalytics.mapper;
+package com.simpletech.webanalytics.mapper.api;
 
 import com.simpletech.webanalytics.aspect.LoggingAspect;
 import com.simpletech.webanalytics.util.JacksonUtil;
@@ -33,13 +33,13 @@ public class StatisticsMapperTester {
 
     @Test
     public void entryUrls() throws Exception {
-        Object result = mapper.entryUrls("1", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"));
+        Object result = mapper.entryUrls("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"),10,0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void exitUrls() throws Exception {
-        Object result = mapper.exitUrls("1", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"));
+        Object result = mapper.exitUrls("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 10, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
@@ -87,7 +87,13 @@ public class StatisticsMapperTester {
 
     @Test
     public void eventDay() throws Exception {
-        Object result = mapper.eventDay("1", "ec", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        Object result = mapper.eventNameTrendDay("1", "ec", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
+    public void eventNameTrendDay() throws Exception {
+        Object result = mapper.eventNameTrendDay("1", "ec", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
@@ -105,19 +111,25 @@ public class StatisticsMapperTester {
 
     @Test
     public void event() throws Exception {
-        Object result = mapper.event("1", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        Object result = mapper.eventRank("1", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void visit() throws Exception {
-        Object result = mapper.visitDay("0", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"));
-        System.out.println(JacksonUtil.toJson(result).replace("{","\n{"));
+        Object result = mapper.visitTrendDay("0", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"));
+        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
     public void pageurl() throws Exception {
         Object result = mapper.pageurl("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
+    public void pagetitle() throws Exception {
+        Object result = mapper.pagetitle("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 

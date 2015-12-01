@@ -6,10 +6,11 @@ package com.simpletech.webanalytics.model.entity;
  */
 public class MapPointValue {
 
-    private String Id;  //节点ID
-    private Integer cl;  //分类 0 起始点 1 中间点 2 叶子节点
-    private Integer pv; //本节点的 PV 量
-    private String mk;  //remark 备注
+    private String Id;      //节点ID
+    private int cl;         //分类 0 起始点 1 中间点 2 叶子节点
+    private int pv;         //本节点的 PV 量
+    private int sh;         //被分享数
+    private String mk;      //remark 备注
 
     public String getId() {
         return Id;
@@ -33,6 +34,14 @@ public class MapPointValue {
 
     public void setPv(Integer pv) {
         this.pv = pv;
+    }
+
+    public int getSh() {
+        return sh;
+    }
+
+    public void setSh(int sh) {
+        this.sh = sh;
     }
 
     public String getMk() {

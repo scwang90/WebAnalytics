@@ -86,7 +86,7 @@ public class IndexController {
 
     @RequestMapping("sharemap/site/{siteId:\\d+}/{urlId}")
     public String sharemap(@PathVariable int siteId, @PathVariable String urlId, Model model) throws Exception {
-        Map<String, Object> root = (Map<String, Object>) service.sharemap(String.valueOf(siteId), urlId, new Date(-30136435200000l), new Date(33008486400000l));
+        Map<String, Object> root = (Map<String, Object>) service.shareMap(String.valueOf(siteId), urlId, new Date(-30136435200000l), new Date(33008486400000l));
         model.addAttribute("lines", JacksonUtil.toJson(root.get("lines")).replace("sts", "weight").replace("sId", "source").replace("eId", "target"));
         model.addAttribute("points", JacksonUtil.toJson(root.get("points")).replace("id", "name").replace("cl", "category").replace("pv", "value").replace("mk", "label"));
         return "sharemap";

@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_action
  * @author 树朾
- * @date 2015-10-28 14:33:37 中国标准时间
+ * @date 2015-11-30 16:24:11 中国标准时间
  */
 @Table("t_action")
 public class Action extends ModelBase{
@@ -63,6 +63,11 @@ public class Action extends ModelBase{
 	@Column("time_loaded")
 	private Integer timeLoaded;
 	/**
+	 * 访问时长（秒）
+	 */
+	@Column("time_spent")
+	private Integer timeSpent;
+	/**
 	 * 上一个PV的url ID
 	 */
 	@Column("ref_id_url")
@@ -73,7 +78,7 @@ public class Action extends ModelBase{
 	@Column("ref_id_title")
 	private String refIdTitle;
 	/**
-	 * 数据库列ref_time_spent
+	 * 上一个PV的访问时长（毫秒）
 	 */
 	@Column("ref_time_spent")
 	private Integer refTimeSpent;
@@ -167,6 +172,14 @@ public class Action extends ModelBase{
 
 	public void setTimeLoaded(Integer timeLoaded) {
 		this.timeLoaded = timeLoaded;
+	}
+	
+	public Integer getTimeSpent(){
+		return this.timeSpent;
+	}
+
+	public void setTimeSpent(Integer timeSpent) {
+		this.timeSpent = timeSpent;
 	}
 	
 	public String getRefIdUrl(){

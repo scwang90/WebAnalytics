@@ -32,6 +32,16 @@ public class DateSkip {
     }
 
     @Test
+    public void datespan() throws ParseException {
+        Date now = new Date();
+        System.out.println(full.format(now));
+        System.out.println(full.format(new Date(now.getTime()-365*24*60*60*1000)));
+        System.out.println(full.format(new Date(now.getTime()-365*24*60*60*1000l)));
+        System.out.println(full.format(full.parse("2015-11-05 21:31:28")));
+        System.out.println(full.format(new Date(full.parse("2015-11-05 21:31:28").getTime()+1553913*1000l)));
+    }
+
+    @Test
     public void dateskip() throws ParseException {
         int offset = -3;
         Period span = Period.year;

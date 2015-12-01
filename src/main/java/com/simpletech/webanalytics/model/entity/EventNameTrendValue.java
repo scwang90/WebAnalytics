@@ -1,17 +1,10 @@
 package com.simpletech.webanalytics.model.entity;
 
-import com.simpletech.webanalytics.model.constant.Period;
-import com.simpletech.webanalytics.util.AfStringUtil;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
- * 事件统计值
+ * 事件详细-趋势
  * Created by 树朾 on 2015/9/29.
  */
-public class EventPeriodValue extends PeriodValue{
+public class EventNameTrendValue extends PeriodValue{
 
     private int num;
     private int user;

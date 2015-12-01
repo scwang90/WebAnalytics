@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_visit
  * @author 树朾
- * @date 2015-10-28 14:33:37 中国标准时间
+ * @date 2015-11-30 16:24:11 中国标准时间
  */
 @Table("t_visit")
 public class Visit extends ModelBase{
@@ -168,6 +168,11 @@ public class Visit extends ModelBase{
 	@Column("location_city")
 	private String locationCity;
 	/**
+	 * 运营商
+	 */
+	@Column("location_isp")
+	private String locationIsp;
+	/**
 	 * 定位比较
 	 */
 	@Column("location_compared")
@@ -203,15 +208,15 @@ public class Visit extends ModelBase{
 	@Column("count_visits")
 	private Integer countVisits;
 	/**
-	 * 最后一次PV时间
-	 */
-	@Column("action_last_time")
-	private java.util.Date actionLastTime;
-	/**
 	 * 这次访问的事件总数
 	 */
 	@Column("count_events")
 	private Integer countEvents;
+	/**
+	 * 最后一次PV时间
+	 */
+	@Column("action_last_time")
+	private java.util.Date actionLastTime;
 
 	public Visit() {
 	}
@@ -472,6 +477,14 @@ public class Visit extends ModelBase{
 		this.locationCity = locationCity;
 	}
 	
+	public String getLocationIsp(){
+		return this.locationIsp;
+	}
+
+	public void setLocationIsp(String locationIsp) {
+		this.locationIsp = locationIsp;
+	}
+	
 	public Boolean getLocationCompared(){
 		return this.locationCompared;
 	}
@@ -528,20 +541,20 @@ public class Visit extends ModelBase{
 		this.countVisits = countVisits;
 	}
 	
-	public java.util.Date getActionLastTime(){
-		return this.actionLastTime;
-	}
-
-	public void setActionLastTime(java.util.Date actionLastTime) {
-		this.actionLastTime = actionLastTime;
-	}
-	
 	public Integer getCountEvents(){
 		return this.countEvents;
 	}
 
 	public void setCountEvents(Integer countEvents) {
 		this.countEvents = countEvents;
+	}
+	
+	public java.util.Date getActionLastTime(){
+		return this.actionLastTime;
+	}
+
+	public void setActionLastTime(java.util.Date actionLastTime) {
+		this.actionLastTime = actionLastTime;
 	}
 	
 }
