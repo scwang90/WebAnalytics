@@ -4,7 +4,7 @@ package com.simpletech.webanalytics.model.entity;
  * 事件详细-趋势
  * Created by 树朾 on 2015/9/29.
  */
-public class EventNameTrendValue extends PeriodValue{
+public class EventNameTrendValue extends TrendValue {
 
     private int num;
     private int user;

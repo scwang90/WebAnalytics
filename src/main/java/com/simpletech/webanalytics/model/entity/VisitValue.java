@@ -4,7 +4,7 @@ package com.simpletech.webanalytics.model.entity;
  * 访问统计数据
  * Created by 树朾 on 2015/9/25.
  */
-public class VisitValue extends PeriodValue{
+public class VisitValue extends TrendValue {
 
     private int vt;             //visit 数
     private int pv;             //pv 数

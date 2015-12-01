@@ -15,7 +15,7 @@ import java.util.Date;
  * 周期统计数据（基类）
  * Created by 树朾 on 2015/9/25.
  */
-public abstract class PeriodValue {
+public abstract class TrendValue {
 
     private static final SimpleDateFormat format = new SimpleDateFormat();
 
@@ -57,7 +57,7 @@ public abstract class PeriodValue {
     @JsonIgnore
     public void setEmpty() {
         try {
-            Field[] fields = AfReflecter.getField(this.getClass(), PeriodValue.class);
+            Field[] fields = AfReflecter.getField(this.getClass(), TrendValue.class);
             for (Field field : fields) {
                 if (!Modifier.isStatic(field.getModifiers())) {
                     field.setAccessible(true);

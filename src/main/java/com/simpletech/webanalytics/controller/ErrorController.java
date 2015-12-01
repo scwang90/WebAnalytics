@@ -1,7 +1,7 @@
 package com.simpletech.webanalytics.controller;
 
 import com.simpletech.webanalytics.model.constant.Ranking;
-import com.simpletech.webanalytics.model.entity.PeriodValue;
+import com.simpletech.webanalytics.model.entity.TrendValue;
 import com.simpletech.webanalytics.service.ErrorService;
 import com.simpletech.webanalytics.util.AfReflecter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class ErrorController {
      * @param list 数据库有效数据列表
      * @return 填充的数据
      */
-    private <T extends PeriodValue> List<T> fulldata(List<T> list, DateFormat format, int field, Date start, Date end, Class<T> clazz) {
+    private <T extends TrendValue> List<T> fulldata(List<T> list, DateFormat format, int field, Date start, Date end, Class<T> clazz) {
         Map<String, T> map = tomap(list);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(start);
@@ -71,7 +71,7 @@ public class ErrorController {
      * @param list 数据库有效数据列表
      * @return map
      */
-    private <T extends PeriodValue> Map<String, T> tomap(List<T> list) {
+    private <T extends TrendValue> Map<String, T> tomap(List<T> list) {
         Map<String, T> map = new LinkedHashMap<>();
         for (T value : list) {
             map.put(value.getDate(), value);

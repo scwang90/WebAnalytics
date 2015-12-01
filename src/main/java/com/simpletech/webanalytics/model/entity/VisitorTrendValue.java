@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 访问者数据
  * Created by 树朾 on 2015/9/30.
  */
-public class VisitorTrendValue extends PeriodValue{
+public class VisitorTrendValue extends TrendValue {
 
     private int uv;         //独立用户量 Unique Visitor
     private int nv;         //新用户量  New Visitor

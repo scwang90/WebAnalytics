@@ -15,7 +15,7 @@ import com.simpletech.webanalytics.dao.base.BaseDaoMybatisMYSQLImpl.MybatisMulti
 /**
  * 数据库表t_share_user的mapper接口
  * @author 树朾
- * @date 2015-11-30 16:24:11 中国标准时间
+ * @date 2015-12-01 15:41:57 中国标准时间
  */
 public interface ShareUserMapper extends MybatisMultiDao<ShareUser>{
 
