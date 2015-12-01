@@ -6,6 +6,7 @@ import com.ipmapping.txIP.IPTest;
 import com.simpletech.webanalytics.model.IpLocation;
 import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.service.IpLocationService;
+import com.simpletech.webanalytics.service.IspService;
 import com.simpletech.webanalytics.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -24,9 +25,15 @@ public class DoCompare {
     IpLocationService ipLocationService;
     @Autowired
     VisitService visitService;
+    @Autowired
+    IspService ispService;
 
     @Scheduled(cron = "0 0/1 * * * ?")//每分钟运行一次
     public void doTranslate() throws Exception {
+
+        //通过百度API获取运营商信息并插入t_visit中
+        ispService.findWhereIsp("where location_isp is null");
+
         System.out.println("对比开始");
         //取出所有需要对比的ip等信息
         List<IpLocation> list = ipLocationService.findAllIp();

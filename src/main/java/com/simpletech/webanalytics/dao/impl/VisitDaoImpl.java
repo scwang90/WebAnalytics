@@ -64,11 +64,6 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao{
 		return super.findByPage(limit, start);
 	}
 
-	@Override
-	public List<Visit> findWhere(String where) throws Exception {
-		return super.findWhere(where);
-	}
-
 	//	@Override
 //	public int updateCompared(Visit t) throws Exception {
 //		List<IpLocation> list=ipLocationMapper.findAllIp();

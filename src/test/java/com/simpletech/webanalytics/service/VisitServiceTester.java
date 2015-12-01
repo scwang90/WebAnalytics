@@ -54,11 +54,4 @@ public class VisitServiceTester {
 		Object result = service.findByPage(5, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}
-	@Test
-	public void findWhereIsp() throws Exception {
-//		Object result = service.findWhereIsp("where location_isp='UNICOM'");
-		Object result = service.findWhereIsp("");
-		service.findWhereIsp("where location_isp=''or location_isp='OTHER'");
-		System.out.println(JacksonUtil.toJson(result));
-	}
 }

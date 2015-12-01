@@ -128,14 +128,4 @@ public class StatisticsMapperTester {
         Object result = mapper.pageBrowser("0", "87df6e16-2f22-437f-93af-eb66ec5bf605", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
-
-    @Test
-    public void isp() throws Exception {
-        Object result = mapper.isp("1", monthf.parse("2015-10-0"), monthf.parse("2015-11-30"));
-        System.out.println(JacksonUtil.toJson(result));
-//        List<IspValue> ispValues=mapper.isp("1", monthf.parse("2015-10-0"), monthf.parse("2015-11-30"));
-//        for(IspValue value:ispValues){
-//            System.out.println(value.getName());
-//        }
-    }
 }

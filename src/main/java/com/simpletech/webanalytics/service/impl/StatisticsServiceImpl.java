@@ -273,20 +273,5 @@ public class StatisticsServiceImpl implements StatisticsService {
         return new ArrayList<>();
     }
 
-    @Override
-    public List<IspValue> isp(String siteId, Date start, Date end) throws Exception {
-        List<IspValue> values = dao.isp(siteId, start, end);
-        List<IspValue> newvalues = new ArrayList<>();
-        int count = 0;
-        for (IspValue ispValue : values) {
-            count += ispValue.getNum();
-        }
 
-        for (IspValue isp : values) {
-            int num = isp.getNum();
-            isp.setRate(1f * isp.getNum() / count);
-            newvalues.add(isp);
-        }
-        return newvalues;
-    }
 }

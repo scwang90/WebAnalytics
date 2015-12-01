@@ -59,9 +59,4 @@ public class VisitDaoTester {
 		System.out.println(JacksonUtil.toJson(result));
 	}
 
-	@Test
-	public void findWhere() throws Exception {
-		Object result = dao.findWhere("where location_isp is null");
-		System.out.println(JacksonUtil.toJson(result));
-	}
 }

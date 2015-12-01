@@ -92,25 +92,6 @@ public class VisitServiceImpl extends BaseServiceImpl<Visit> implements VisitSer
 		return dao.countAll();
 	}
 
-	@Override
-	public List<Visit> findWhereIsp(String where) throws Exception {
-		List<Visit> visits=dao.findWhere(where);
-		List<Visit> newVisit=new ArrayList<>();
-//		IPTest txIp = new IPTest();
-		for(Visit vv:visits){
-			//提取运营商信息
-			BDIP bd=new BDIP();
-			String isp=bd.getIPXY(vv.getLocationIp())[2];
-//			String[] tx_location = txIp.txIpParser(vv.getLocationIp());
-//			vv.setLocationIsp(tx_location[4]);
-//			vv.setLocationIsp(null);
-			vv.setLocationIsp(isp);
-			update(vv);
-			newVisit.add(vv);
-		}
-		return newVisit;
-	}
-
 
 //	@Override
 //	public int updateCompared(Visit model) throws Exception {

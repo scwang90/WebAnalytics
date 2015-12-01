@@ -56,8 +56,6 @@ public interface VisitDao extends BaseDao<Visit>{
 	 */
 	List<Visit> findByPage(int limit, int start) throws Exception;
 
-	List<Visit> findWhere(String where) throws Exception;
-
 
 //	/**
 //	 * 更新一条数据

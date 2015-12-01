@@ -23,12 +23,5 @@ public class StatisticsDaoTester {
 	@Autowired
 	StatisticsDao dao;
 
-	@Test
-	public void isp() throws Exception {
-
-		Object result = dao.isp("1",monthf.parse("2015-10-0"), monthf.parse("2015-11-30"));//查询出ua,ip,brand
-		System.out.println(JacksonUtil.toJson(result));
-
-	}
 
 }

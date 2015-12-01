@@ -55,13 +55,6 @@ public interface VisitService extends BaseService<Visit> {
 	 */
 	List<Visit> findByPage(int limit, int start) throws Exception;
 
-	/**
-	 * 更新t_visit表中旧记录的运营商信息
-	 * @param where
-	 * @return
-	 * @throws Exception
-	 */
-	List<Visit> findWhereIsp(String where) throws Exception;
 
 
 

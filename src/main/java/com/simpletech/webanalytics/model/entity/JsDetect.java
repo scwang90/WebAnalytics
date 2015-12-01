@@ -84,7 +84,7 @@ public class JsDetect {
     private String country;         //国家
     private String city;            //城市
     private String region;          //区域
-        private String isp;             //运营商
+    private String isp;             //运营商
     private String netType;         //网络类型
     private String endType;         //终端类型
     private String useragent;       //源 useragent
@@ -145,9 +145,9 @@ public class JsDetect {
 //            this.setIsp(tx_location[4]);
 
             //通过百度API获取运营商信息
-            BDIP bd=new BDIP();
-            String isp=bd.getIPXY(this.remoteAddr)[2];
-            this.setIsp(isp);
+//            BDIP bd=new BDIP();
+//            String isp=bd.getIPXY(this.remoteAddr)[2];
+//            this.setIsp(isp);
 
             if ("lost".equals(refer)){
                 setRefer(refer + "-" + request.getQueryString());

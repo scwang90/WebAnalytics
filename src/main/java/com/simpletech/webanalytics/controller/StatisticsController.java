@@ -7,6 +7,7 @@ import com.simpletech.webanalytics.model.constant.RankingType;
 import com.simpletech.webanalytics.model.entity.PeriodValue;
 import com.simpletech.webanalytics.model.entity.VisitValue;
 import com.simpletech.webanalytics.model.entity.VisitorValue;
+import com.simpletech.webanalytics.service.IspService;
 import com.simpletech.webanalytics.service.StatisticsService;
 import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.AfStringUtil;
@@ -31,6 +32,8 @@ public class StatisticsController {
 
     @Autowired
     StatisticsService service;
+    @Autowired
+    IspService ispService;
 
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder) throws Exception {
@@ -284,7 +287,7 @@ public class StatisticsController {
         end=timeEnd(end,span,offset);
         start = timeStart(start,span,offset);
 
-        return service.isp(siteId,start,end);
+        return ispService.isp(siteId,start,end);
     }
 
     /**

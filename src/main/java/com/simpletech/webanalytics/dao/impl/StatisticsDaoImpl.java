@@ -690,10 +690,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
         return mapper.exitUrls(idsite, start, end);
     }
 
-    @Override
-    public List<IspValue> isp(String siteId,Date start,Date end)throws Exception{
 
-        return mapper.isp(siteId,start,end);
-    }
 }
 
