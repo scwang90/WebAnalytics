@@ -3,7 +3,6 @@ package com.simpletech.webanalytics.dao.impl;
 import java.util.List;
 
 import com.simpletech.webanalytics.mapper.IpLocationMapper;
-import com.simpletech.webanalytics.model.Visit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

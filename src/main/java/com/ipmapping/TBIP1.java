@@ -146,7 +146,7 @@ public class TBIP1 {
         return outBuffer.toString();
     }
     public static void main(String []args){
-        String ip = "123.134.37.115";
+        String ip = "210.40.16.52";
         System.out.println("ip=" + ip );
         String[] ss1=getTBLocation(ip);
         for(int i=0;i<ss1.length;i++){

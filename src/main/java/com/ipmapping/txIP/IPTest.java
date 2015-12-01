@@ -1,5 +1,8 @@
 package com.ipmapping.txIP;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * WebAnalytics
  * Created by ChenQi on 2015/10/27 17:41.
@@ -7,18 +10,30 @@ package com.ipmapping.txIP;
 public class IPTest {
 
     public static void main(String[] args){
-        String ip="1.204.119.197";
+        String ip="210.40.16.52";
         String[] ss=txIpParser(ip);
         System.out.println("国家："+ss[0]+"  "+"省份："+ss[1]+"  "+"城市："+ss[2]+"  "+"区/县："+ss[3]+"  "+"运营商："+ss[4]);
     }
 
     public static String[] txIpParser(String ip){
-        String tx_country="",tx_province="",tx_city="",tx_district="",tx_isp="";
+        String tx_country="",tx_province="",tx_city="",tx_district="",isp="",tx_isp="";
         //指定纯真数据库的文件名，所在文件夹
         TXIP qqip=new TXIP("qqwry.dat","E:\\project\\IPResource");
         //测试IP 58.20.43.13
         String address=qqip.getIPLocation(ip).getCountry();
-        tx_isp=qqip.getIPLocation(ip).getArea();
+        isp=qqip.getIPLocation(ip).getArea();
+//        String rexEx="CHINANET|CSTNET|CERNET|CHINAGBN|UNINET|CNCNET|CMNET|CIETNET|CGWNET|CSNET";//匹配运营商
+          String rexEx="电信|科学技术|教育|金桥|联通|网通|移动|经济贸易|长城|卫星";//匹配运营商
+//
+        Pattern pattern_isp=Pattern.compile(rexEx,Pattern.CASE_INSENSITIVE);
+        Matcher matcher=pattern_isp.matcher(isp);
+        if(matcher.find()){
+            tx_isp=matcher.group(0);
+
+        }else{
+            tx_isp=isp;
+        }
+
 //        System.out.println(qqip.getIPLocation(ip).getCountry()+":"+qqip.getIPLocation(ip).getArea());
         String[] area={"香港","澳门","宁夏","西藏","广西","新疆","内蒙古"};
         for(String aa:area){

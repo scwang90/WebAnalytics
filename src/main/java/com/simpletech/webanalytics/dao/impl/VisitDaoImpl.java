@@ -9,6 +9,7 @@ import com.ipmapping.txIP.IPTest;
 import com.simpletech.webanalytics.mapper.IpLocationMapper;
 import com.simpletech.webanalytics.mapper.VisitMapper;
 import com.simpletech.webanalytics.model.IpLocation;
+import com.simpletech.webanalytics.model.entity.IspValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -63,7 +64,7 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao{
 		return super.findByPage(limit, start);
 	}
 
-//	@Override
+	//	@Override
 //	public int updateCompared(Visit t) throws Exception {
 //		List<IpLocation> list=ipLocationMapper.findAllIp();
 //		List<Visit> visitlist=visitMapper.findAll("");

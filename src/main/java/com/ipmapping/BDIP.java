@@ -18,7 +18,7 @@ public class BDIP {
     private static String bd_isp="";
 
 //      private static String ip=IPCatcherUtil.getWebIp();
-      private static String ip = "10.35.65.236";
+      private static String ip = "183.61.155.74";
 //      private static String ip = new IPTranslator().ip;
 
     /**
@@ -51,15 +51,65 @@ public class BDIP {
 //                return null;
 //            }
             //获取运营商
-            String rexEx="CHINANET|CSTNET|CERNET|CHINAGBN|UNINET|CNCNET|CMNET|CIETNET|CGWNET|CSNET";//匹配运营商
+            String rexEx="CHINANET|CSTNET|CERNET|CHINAGBN|UNINET|CNCNET|CMNET|CIETNET|CGWNET|CSNET|UNICOM|CRTC|NET";//匹配运营商
             String rexEx1="(\\w+?)\\|\\d+";//匹配运营商
             Pattern pattern_isp=Pattern.compile(rexEx1,Pattern.CASE_INSENSITIVE);
             Matcher matcher=pattern_isp.matcher(str);
             if(matcher.find()){
-                bd_isp=matcher.group(1);
+                String ispStr=matcher.group(1);
+                switch (ispStr){
+                    case "CHINANET":
+                        bd_isp="电信";
+                        break;
+                    case "UNICOM":
+                        bd_isp="联通";
+                        break;
+                    case "CRTC":
+                        bd_isp="铁通";
+                        break;
+                    case "CSTNET":
+                        bd_isp="科技网";
+                        break;
+                    case "CERNET":
+                        bd_isp="教育网";
+                        break;
+                    case "NET":
+                        bd_isp="天威视讯";
+                        break;
+                    case "CHINAGBN":
+                        bd_isp="金桥网";
+                        break;
+                    case "UNINET":
+                        bd_isp="联通";
+                        break;
+                    case "CNCNET":
+                        bd_isp="网通";
+                        break;
+                    case "CMNET":
+                        bd_isp="移动";
+                        break;
+                    case "CIETNET":
+                        bd_isp="经贸网";
+                        break;
+                    case "CGWNET":
+                        bd_isp="长城";
+                        break;
+                    case "CSNET":
+                        bd_isp="卫星网";
+                        break;
+                    case "OTHER":{
+                        //调用淘宝IP再次解析
+                        TBIP1 tb=new TBIP1();
+                        String[] tb_location=tb.getTBLocation(ip);
+                        bd_isp=tb_location[4].replace("\"","");
+                        break;
+                    }
+                    default:bd_isp=ispStr;
+                }
 
             }else{
-                bd_isp="";
+                //若匹配失败则保存IP信息
+                bd_isp="本机或局域网";
             }
             // 获取坐标位置
             if(!str.contains("failed")){
@@ -153,7 +203,20 @@ public class BDIP {
         return new String[]{"", "","","",bd_isp};
     }
 
-
+//    public static String getBd_isp(String str){
+//        //获取运营商
+//        String rexEx="CHINANET|CSTNET|CERNET|CHINAGBN|UNINET|CNCNET|CMNET|CIETNET|CGWNET|CSNET";//匹配运营商
+//        String rexEx1="(\\w+?)\\|\\d+";//匹配运营商
+//        Pattern pattern_isp=Pattern.compile(rexEx1,Pattern.CASE_INSENSITIVE);
+//        Matcher matcher=pattern_isp.matcher(str);
+//        if(matcher.find()){
+//            bd_isp=matcher.group(1);
+//
+//        }else{
+//            bd_isp="";
+//        }
+//        return bd_isp;
+//    }
     public static void main(String []args){
         System.out.println("ip=" + ip );
         String[] locate=getIPXY(ip);
@@ -162,5 +225,6 @@ public class BDIP {
         for(int i=0;i<location.length;i++){
             System.out.print(location[i]);
         }
+
     }
 }

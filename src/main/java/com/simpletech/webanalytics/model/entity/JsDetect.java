@@ -1,8 +1,10 @@
 package com.simpletech.webanalytics.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ipmapping.BDIP;
 import com.ipmapping.IP;
 import com.ipmapping.IPCatcherUtil;
+import com.ipmapping.txIP.IPTest;
 import com.simpletech.webanalytics.annotations.Must;
 import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.util.AfReflecter;
@@ -82,6 +84,7 @@ public class JsDetect {
     private String country;         //国家
     private String city;            //城市
     private String region;          //区域
+    private String isp;             //运营商
     private String netType;         //网络类型
     private String endType;         //终端类型
     private String useragent;       //源 useragent
@@ -135,6 +138,16 @@ public class JsDetect {
             this.country = addrs[0];
             this.region = addrs[1];
             this.city = addrs[2];
+
+//            //通过纯真IP库取出运营商信息
+//            IPTest txIp = new IPTest();
+//            String[] tx_location = txIp.txIpParser(this.remoteAddr);
+//            this.setIsp(tx_location[4]);
+
+            //通过百度API获取运营商信息
+//            BDIP bd=new BDIP();
+//            String isp=bd.getIPXY(this.remoteAddr)[2];
+//            this.setIsp(isp);
 
             if ("lost".equals(refer)){
                 setRefer(refer + "-" + request.getQueryString());
@@ -191,6 +204,7 @@ public class JsDetect {
         visit.setLocationCountry(this.getCountry());
         visit.setLocationCity(this.getCity());
         visit.setLocationRegion(this.getRegion());
+        visit.setLocationIsp(this.getIsp());
         visit.setEndModel(this.getModel());
         visit.setEndBrand(this.getBrand());
         visit.setEndType(this.getEndType());
@@ -485,7 +499,13 @@ public class JsDetect {
         }
         this.region = region;
     }
+    public String getIsp() {
+        return isp;
+    }
 
+    public void setIsp(String isp) {
+        this.isp = isp;
+    }
     public String getEndType() {
         return endType;
     }
