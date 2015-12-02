@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -30,8 +31,13 @@ public class IspDaoImpl implements IspDao {
     }
 
     @Override
-    public List<Visit> findWhereIsp(String where) throws Exception {
-        return mapper.findWhereIsp(where);
+    public List<Visit> findWhereIsp(String where,int limit,int start) throws Exception {
+        return mapper.findWhereIsp(where, limit, start);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> ispBatch(String where, int limit,int start) throws Exception{
+        return mapper.findWhere(where,limit,start);
     }
 
     @Override

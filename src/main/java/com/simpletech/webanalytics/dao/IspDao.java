@@ -5,6 +5,7 @@ import com.simpletech.webanalytics.model.entity.IspValue;
 import com.webanalytics.useragent.Application;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,7 +29,9 @@ public interface IspDao {
 	 * @return
 	 * @throws Exception
 	 */
-	List<Visit> findWhereIsp(String where) throws Exception;
+	List<Visit> findWhereIsp(String where,int limit,int start) throws Exception;
+
+	List<HashMap<String,Object>> ispBatch(String where,int limit,int start) throws Exception;
 	/**
 	 * 统计isp信息
 	 * @param siteId   网站ID

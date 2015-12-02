@@ -38,8 +38,12 @@ public class IspMapperTester {
 
     @Test
     public void findWhereIsp() throws Exception {
-        Object result = mapper.findWhereIsp("where location_isp is null");
+        Object result = mapper.findWhereIsp("where location_isp is null",1000,0);
         System.out.println(JacksonUtil.toJson(result));
     }
-
+    @Test
+    public void findWhere() throws Exception {
+        Object result = mapper.findWhere("where location_isp is null",10,0);
+        System.out.println(JacksonUtil.toJson(result));
+    }
 }

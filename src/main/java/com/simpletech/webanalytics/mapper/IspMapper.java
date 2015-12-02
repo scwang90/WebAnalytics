@@ -5,6 +5,7 @@ import com.simpletech.webanalytics.model.entity.IspValue;
 import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -29,8 +30,11 @@ public interface IspMapper {
 	 * @param where SQL条件语句
 	 * @return 符合条件的列表数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , new_user newUser , new_sub_user newSubUser , idvisitor , visit_servertime visitServertime , visit_localtime visitLocaltime , visit_totaltime visitTotaltime , idurl , idtitle , idurl_entry idurlEntry , idtitle_entry idtitleEntry , idurl_exit idurlExit , idtitle_exit idtitleExit , url_referer urlReferer , useragent , operate_system operateSystem , operate_version operateVersion , browser_name browserName , browser_version browserVersion , screen_resolution screenResolution , screen_depth screenDepth , sp_java spJava , sp_cookie spCookie , location_ip locationIp , location_lang locationLang , location_country locationCountry , location_region locationRegion , location_city locationCity ,location_isp locationIsp , location_compared locationCompared , end_app endApp , end_model endModel , end_brand endBrand , end_type endType , net_type netType , count_visits countVisits , action_last_time actionLastTime , count_events countEvents FROM t_visit ${where}")
-	List<Visit> findWhereIsp( @Param("where") String where) throws Exception;
+	@Select("SELECT id , idsite , idsubsite , create_time createTime , update_time updateTime , new_user newUser , new_sub_user newSubUser , idvisitor , visit_servertime visitServertime , visit_localtime visitLocaltime , visit_totaltime visitTotaltime , idurl , idtitle , idurl_entry idurlEntry , idtitle_entry idtitleEntry , idurl_exit idurlExit , idtitle_exit idtitleExit , url_referer urlReferer , useragent , operate_system operateSystem , operate_version operateVersion , browser_name browserName , browser_version browserVersion , screen_resolution screenResolution , screen_depth screenDepth , sp_java spJava , sp_cookie spCookie , location_ip locationIp , location_lang locationLang , location_country locationCountry , location_region locationRegion , location_city locationCity ,location_isp locationIsp , location_compared locationCompared , end_app endApp , end_model endModel , end_brand endBrand , end_type endType , net_type netType , count_visits countVisits , action_last_time actionLastTime , count_events countEvents FROM t_visit ${where} LIMIT ${start},${limit}")
+	List<Visit> findWhereIsp( @Param("where") String where,@Param("limit") int limit,@Param("start") int start) throws Exception;
+
+	@Select("SELECT id , idsite , idsubsite , create_time  , update_time  , new_user  , new_sub_user  , idvisitor , visit_servertime  , visit_localtime  , visit_totaltime  , idurl , idtitle , idurl_entry  , idtitle_entry  , idurl_exit  , idtitle_exit  , url_referer  , useragent , operate_system  , operate_version  , browser_name  , browser_version  , screen_resolution  , screen_depth  , sp_java  , sp_cookie  , location_ip  , location_lang  , location_country  , location_region  , location_city  ,location_isp  , location_compared  , end_app  , end_model  , end_brand  , end_type  , net_type  , count_visits  , action_last_time  , count_events  FROM t_visit ${where} LIMIT ${start},${limit}")
+	List<HashMap<String, Object>> findWhere( @Param("where") String where,@Param("limit") int limit,@Param("start") int start) throws Exception;
 
 	/**
 	 * 统计isp信息

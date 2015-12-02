@@ -22,7 +22,7 @@ public class IspDaoTester {
 
 	@Test
 	public void findWhereIsp() throws Exception {
-		Object result = dao.findWhereIsp("where location_isp is null");
+		Object result = dao.findWhereIsp("where location_isp is null",0,1000);
 		System.out.println(JacksonUtil.toJson(result));
 	}
 	

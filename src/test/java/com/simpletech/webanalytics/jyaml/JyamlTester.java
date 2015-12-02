@@ -4,7 +4,7 @@ import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.JacksonUtil;
 import com.webanalytics.useragent.Browser;
 import org.junit.Test;
-import org.yaml.snakeyaml.Yaml;
+//import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -29,31 +29,31 @@ public class JyamlTester {
         public HashMap engine;
     }
 
-    @Test
-    public void testYaml() throws FileNotFoundException {
-        Browsers[] load = new Yaml().loadAs(ClassLoader.getSystemResourceAsStream("browsers.yml"),Browsers[].class);
-        System.out.println(JacksonUtil.toJson(load));
-    }
-
-    @Test
-    public void testYamlWrite() throws IOException, IllegalAccessException {
-        List<HashMap<String, Object>> hashMaps = testToMap(Browser.values());
-        System.out.println(JacksonUtil.toJson(hashMaps));
-        FileWriter writer = new FileWriter("browsers.yml");
-        new Yaml().dumpAll(hashMaps.iterator(),writer);
-        writer.close();
-        System.out.println("转换成功");
-    }
-
-    @Test
-    public void testYamlReader() throws IOException, IllegalAccessException {
-        List<HashMap<String, Object>> hashMaps = testToMap(Browser.values());
-        System.out.println(JacksonUtil.toJson(hashMaps));
-        FileWriter writer = new FileWriter("browsers.yml");
-        new Yaml().dumpAll(hashMaps.iterator(),writer);
-        writer.close();
-        System.out.println("转换成功");
-    }
+//    @Test
+//    public void testYaml() throws FileNotFoundException {
+//        Browsers[] load = new Yaml().loadAs(ClassLoader.getSystemResourceAsStream("browsers.yml"),Browsers[].class);
+//        System.out.println(JacksonUtil.toJson(load));
+//    }
+//
+//    @Test
+//    public void testYamlWrite() throws IOException, IllegalAccessException {
+//        List<HashMap<String, Object>> hashMaps = testToMap(Browser.values());
+//        System.out.println(JacksonUtil.toJson(hashMaps));
+//        FileWriter writer = new FileWriter("browsers.yml");
+//        new Yaml().dumpAll(hashMaps.iterator(),writer);
+//        writer.close();
+//        System.out.println("转换成功");
+//    }
+//
+//    @Test
+//    public void testYamlReader() throws IOException, IllegalAccessException {
+//        List<HashMap<String, Object>> hashMaps = testToMap(Browser.values());
+//        System.out.println(JacksonUtil.toJson(hashMaps));
+//        FileWriter writer = new FileWriter("browsers.yml");
+//        new Yaml().dumpAll(hashMaps.iterator(),writer);
+//        writer.close();
+//        System.out.println("转换成功");
+//    }
 
     public List<HashMap<String, Object>> testToMap(Object[] models) throws IllegalAccessException {
         List<HashMap<String,Object>> maps = new ArrayList<>();

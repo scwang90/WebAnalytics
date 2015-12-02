@@ -5,6 +5,7 @@ import com.simpletech.webanalytics.model.entity.IspValue;
 import com.simpletech.webanalytics.service.base.BaseService;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,8 +21,9 @@ public interface IspService {
 	 * @return
 	 * @throws Exception
 	 */
-	List<Visit> findWhereIsp(String where) throws Exception;
-	
+	List<Visit> findWhereIsp(String where,int limit,int start) throws Exception;
+
+	List<HashMap<String,Object>> ispBatch(String where,int limit,int start) throws Exception;
 	/**
 	 * 统计店铺isp信息
 	 * @param siteId
