@@ -31,21 +31,20 @@ public class IspMapperTester {
     @Autowired
     IspMapper mapper;
 
-    @Before
-    public void setUp() {
-        LoggingAspect.log = false;
-    }
-
+//    @Before
+//    public void setUp() {
+//        LoggingAspect.log = false;
+//    }
     @Test
     public void findWhereIsp() throws Exception {
-        Object result = mapper.findWhereIsp("where location_isp is null",1000,0);
+        Object result = mapper.findWhereIsp("where location_isp is null group by location_ip order by visit_servertime DESC",1000,0);
         System.out.println(JacksonUtil.toJson(result));
     }
     @Test
     public void findWhere() throws Exception {
         long c=System.currentTimeMillis();
-        Object result = mapper.findWhere("where location_isp is null group by location_ip order by visit_servertime DESC",500,0);
-        System.out.println("查找500条数据耗时：" + (System.currentTimeMillis() - c) / 1000f + "秒");
-        System.out.println(JacksonUtil.toJson(result));
+        Object result = mapper.findWhere("where location_isp is null group by location_ip order by visit_servertime DESC",1000,0);
+        System.out.println("查找1000条数据耗时：" + (System.currentTimeMillis() - c) / 1000f + "秒");
+//        System.out.println(JacksonUtil.toJson(result));
     }
 }

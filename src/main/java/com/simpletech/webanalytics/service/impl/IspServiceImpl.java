@@ -97,7 +97,7 @@ public class IspServiceImpl implements IspService {
             int[] ints = statement.executeBatch();
             connection.commit();
             System.out.println("更新" + limit + "条数据耗时：" + (System.currentTimeMillis() - a) / 1000f + "秒");
-//            System.out.println(ints + "------------------------------------");
+            System.out.println(ints + "------------------------------------");
 
         } catch (Exception e) {
             e.printStackTrace();
