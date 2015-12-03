@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 /**
  * 数据库表t_visit的Service层测试类
@@ -21,6 +22,12 @@ public class IspServiceTester {
 	@Autowired
 	IspService service;
 
+	SimpleDateFormat monthf = new SimpleDateFormat("y-M-d");
+	@Test
+	public void isp() throws Exception {
+		Object result = service.isp("0", monthf.parse("2015-10-0"), monthf.parse("2015-11-30"));
+		System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+	}
 	@Test
 	public void findWhereIsp() throws Exception {
 //		Object result = service.findWhereIsp("where location_isp='UNICOM'");

@@ -128,4 +128,5 @@ public class StatisticsControllerTest {
         Object result = controller.visitSpan(1, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
+
 }

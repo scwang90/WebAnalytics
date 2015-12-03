@@ -2,6 +2,7 @@ package com.simpletech.webanalytics.controller;
 
 import com.simpletech.webanalytics.model.constant.*;
 import com.simpletech.webanalytics.model.entity.*;
+import com.simpletech.webanalytics.service.IspService;
 import com.simpletech.webanalytics.service.StatisticsService;
 import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.AfStringUtil;
@@ -26,7 +27,8 @@ public class StatisticsController {
 
     @Autowired
     StatisticsService service;
-
+    @Autowired
+    IspService ispService;
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder) throws Exception {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyyMMddHHmmss"), true));
@@ -361,6 +363,22 @@ public class StatisticsController {
         return service.visitSpan(idsite, start, end);
     }
 
+    /**
+     * 统计运营商信息
+     * @param offset
+     * @param span
+     * @param start
+     * @param end
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("visit/isp")
+    public Object isp(@PathVariable int siteId, String subsite, Integer offset, Period span, Date start, Date end) throws Exception {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return ispService.isp(idsite, start, end);
+    }
     /**
      * 检测时间分段合理性
      * @param period 时段周期 [时|日|周|月]
