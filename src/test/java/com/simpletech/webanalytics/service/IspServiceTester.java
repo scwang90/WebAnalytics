@@ -31,7 +31,7 @@ public class IspServiceTester {
 	@Test
 	public void ispBatch()throws Exception{
 //
-		Object result=service.ispBatch("where location_isp is null group by location_ip order by visit_servertime DESC", 100, 0);
+		Object result=service.ispBatch("where location_isp is null group by location_ip order by visit_servertime DESC", 500, 0);
 ////		service.findWhereIsp("where location_isp=''or location_isp='OTHER'");
 //		System.out.println(JacksonUtil.toJson(result));
 	}

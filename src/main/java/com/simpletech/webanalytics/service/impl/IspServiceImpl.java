@@ -66,6 +66,7 @@ public class IspServiceImpl implements IspService {
         long c=System.currentTimeMillis();
         List<HashMap<String, Object>> maps = dao.ispBatch(where, limit, start);
         System.out.println("查找" + limit + "条数据耗时：" + (System.currentTimeMillis() - c) / 1000f + "秒");
+        int num=0;
         try {
 
             long b=System.currentTimeMillis();
@@ -73,24 +74,25 @@ public class IspServiceImpl implements IspService {
                 String ip = map.get("location_ip").toString();
 //                String useragent = map.get("useragent").toString();
 //				String id=map.get("id").toString();
-//                System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+                System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 //				System.out.println("id="+ id);
-//                System.out.println("ip=" + ip);
+                System.out.println("ip=" + ip);
 //                System.out.println("useragent=" + useragent);
                 try {
                     BDIP bdip = new BDIP();
                     String isp = bdip.getIPXY(ip)[2];
-//                    System.out.println("ip->isp=" + ip + isp);
+                    System.out.println("ip->isp=" + ip + isp);
                     
                     statement.addBatch("UPDATE t_visit SET update_time='"+df.format(new Date()).toString()+"',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'");
 
                 } catch (Throwable e) {
                     System.out.println(ip + " - " + "转换失败");
+                    num++;
                     e.printStackTrace();
                 }
 
             }
-            System.out.println("百度转换"+limit+"条数据耗时：" + (System.currentTimeMillis() - b) / 1000f + "秒");
+            System.out.println("百度转换"+(limit-num)+"条数据耗时：" + (System.currentTimeMillis() - b) / 1000f + "秒");
             long a=System.currentTimeMillis();
             int[] ints = statement.executeBatch();
             connection.commit();

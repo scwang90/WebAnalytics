@@ -30,9 +30,10 @@ public class DoCompare {
 
     @Scheduled(cron = "0 0/1 * * * ?")//每分钟运行一次
     public void doTranslate() throws Exception {
+
         try {
-            //通过百度API获取运营商信息并插入t_visit中，每次处理前100条数据
-            ispService.ispBatch("where location_isp is null group by location_ip order by visit_servertime DESC",100,0);
+            //通过百度API获取运营商信息并插入t_visit中，每次处理前500条数据，因为访问百度接口耗时较长，因此一次处理的数据量不宜过大
+            ispService.ispBatch("where location_isp is null group by location_ip order by visit_servertime DESC",500,0);
         }catch (SQLException e){
             e.printStackTrace();
             System.out.println("数据库操作失败");

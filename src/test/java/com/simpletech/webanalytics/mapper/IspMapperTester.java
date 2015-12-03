@@ -43,7 +43,9 @@ public class IspMapperTester {
     }
     @Test
     public void findWhere() throws Exception {
-        Object result = mapper.findWhere("where location_isp is null",10,0);
+        long c=System.currentTimeMillis();
+        Object result = mapper.findWhere("where location_isp is null group by location_ip order by visit_servertime DESC",500,0);
+        System.out.println("查找500条数据耗时：" + (System.currentTimeMillis() - c) / 1000f + "秒");
         System.out.println(JacksonUtil.toJson(result));
     }
 }
