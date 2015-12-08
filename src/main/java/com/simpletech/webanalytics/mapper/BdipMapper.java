@@ -20,13 +20,6 @@ import com.simpletech.webanalytics.dao.base.BaseDaoMybatisMYSQLImpl.MybatisMulti
 public interface BdipMapper extends MybatisMultiDao<Bdip>{
 
 	/**
-	 * 插入一条新数据（不重复）
-	 * @param model 添加的数据
-	 * @return 改变的行数
-	 */
-	@Insert("INSERT INTO t_bdip ( id , create_time , update_time , bd_ip , bd_country , bd_region , bd_city , bd_isp ) VALUES ( #{id} , #{createTime} , #{updateTime} , #{bdIp} , #{bdCountry} , #{bdRegion} , #{bdCity} , #{bdIsp} )")
-	int add(Bdip model);
-	/**
 	 * 插入一条新数据
 	 * @param model 添加的数据
 	 * @return 改变的行数

@@ -37,33 +37,42 @@ public class IPTest {
 //        System.out.println(qqip.getIPLocation(ip).getCountry()+":"+qqip.getIPLocation(ip).getArea());
         String[] area={"香港","澳门","宁夏","西藏","广西","新疆","内蒙古"};
         for(String aa:area){
-            if(address.contains(aa)||address.contains("省")||address.contains("市")||address.contains("中国")){
-                tx_country="中国";
-                if(address.contains("省")){//23个省
-                    tx_province=address.substring(0,address.indexOf("省")+1);
-                }if(address.contains(aa)&&!address.contains("省")){//自治区和特别行政区
-                    tx_province=aa;
-                }
-                if(address.contains("市")&&address.contains("省")){//普通省市
-                    tx_city=address.substring(address.indexOf("省")+1,address.indexOf("市")+1);
-                }
-                if(address.contains("市")&&!address.contains("省")&&!address.contains(aa)){//直辖市
-                    tx_province=address.substring(0,address.indexOf("市")+1);
-                    tx_city=address.substring(0,address.indexOf("市")+1);
-                }
-                if(address.contains("市")&&address.contains(aa)){//自治区下的市
-                    tx_province=aa;
-                    tx_city=address.substring(address.indexOf(aa),address.indexOf("市")+1);
-                }
-                if(address.contains("区")){
-                    tx_district=address.substring(address.indexOf("市")+1,address.indexOf("区")+1);
-                }
-                if(address.contains("县")){
-                    tx_district=address.substring(address.indexOf("市")+1,address.indexOf("县")+1);
+            try {
+                if(address.contains(aa)||address.contains("省")||address.contains("市")||address.contains("中国")){
+                    tx_country="中国";
+                    if(address.contains("省")){//23个省
+                        tx_province=address.substring(0,address.indexOf("省")+1);
+                    }if(address.contains(aa)&&!address.contains("省")){//自治区和特别行政区
+                        tx_province=aa;
+                    }
+                    if(address.contains("市")&&address.contains("省")){//普通省市
+                        tx_city=address.substring(address.indexOf("省")+1,address.indexOf("市")+1);
+                    }
+                    if(address.contains("市")&&!address.contains("省")&&!address.contains(aa)){//直辖市
+                        tx_province=address.substring(0,address.indexOf("市")+1);
+                        tx_city=address.substring(0,address.indexOf("市")+1);
+                    }
+                    if(address.contains("市")&&address.contains(aa)){//自治区下的市
+                        tx_province=aa;
+                        tx_city=address.substring(address.indexOf(aa),address.indexOf("市")+1);
+                    }
+                    if(address.contains("区")){
+                        tx_district=address.substring(address.indexOf("市")+1,address.indexOf("区")+1);
+                    }
+                    if(address.contains("县")){
+                        tx_district=address.substring(address.indexOf("市")+1,address.indexOf("县")+1);
 
+                    }
+                    break;
+                }else{
+                    tx_country=address;
+                    tx_province="";
+                    tx_city="";
+                    tx_district="";
                 }
-                break;
-            }else{
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println("纯真ip转换异常！ip="+ip);
                 tx_country=address;
                 tx_province="";
                 tx_city="";

@@ -4,10 +4,12 @@ import com.ipmapping.BDIP;
 import com.ipmapping.TBIP1;
 import com.ipmapping.txIP.IPTest;
 import com.simpletech.webanalytics.dao.base.MultiDao;
+import com.simpletech.webanalytics.model.Bdip;
 import com.simpletech.webanalytics.model.IpLocation;
 import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.service.IspService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +27,8 @@ public class DoCompare {
     MultiDao<Visit> visitMultiDao;
     @Autowired
     MultiDao<IpLocation> ipLocationMultiDao;
+    @Autowired
+    MultiDao<Bdip> bdipMultiDao;
     @Autowired
     IspService ispService;
 
@@ -75,6 +79,7 @@ public class DoCompare {
                     /**
                      * 百度转换
                      */
+                    Bdip bdip=new Bdip();
                     BDIP bd = new BDIP();
                     String[] locate = bd.getIPXY(ip);
                     System.out.println("BDTranslate()");
@@ -84,6 +89,19 @@ public class DoCompare {
                     ipLocation.setBdCity(location[2].toString());
                     ipLocation.setBdDistrick(location[3].toString());
                     ipLocation.setBdIsp(location[4].toString());
+                    //向t_bdip中插入数据
+                    bdip.setId(id);
+                    bdip.setBdIp(ip);
+                    bdip.setBdCountry(location[0].toString());
+                    bdip.setBdRegion(location[1].toString());
+                    bdip.setBdCity(location[2].toString());
+                    bdip.setBdIsp(location[4].toString());
+                    System.out.println("百度插入^^^^^^");
+                    try {
+                        bdipMultiDao.insert(bdip);
+                    }catch (DuplicateKeyException e){
+                        System.out.println("该值已存在");
+                    }
 
                     /**
                      * 淘宝转换

@@ -161,8 +161,8 @@ public class BDIP {
             try {
 
                 URL url = new URL("http://api.map.baidu.com/geocoder/v2/?ak="+ak+"&callback=renderReverse&location="+x+","+y+"&output=json");
-                InputStream inputStream = url.openStream();
-                InputStreamReader inputReader = new InputStreamReader(inputStream);
+//                InputStream inputStream = url.openStream();
+//                InputStreamReader inputReader = new InputStreamReader(inputStream);
                 //BufferedReader reader = new BufferedReader(inputReader);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(
                         url.openStream(), "utf-8"));
@@ -203,7 +203,10 @@ public class BDIP {
                 bd_district=ss[6].split(",")[0];
 //            bd_isp=getIPXY(ip)[2];
                 return new String[]{bd_country,bd_province,bd_city,bd_district,bd_isp};
-            } catch (MalformedURLException e) {
+            }catch (UnknownHostException e){
+                System.out.println("百度API连接异常");
+            }
+            catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
