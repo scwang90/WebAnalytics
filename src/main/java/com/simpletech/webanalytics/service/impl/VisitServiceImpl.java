@@ -92,9 +92,9 @@ public class VisitServiceImpl extends BaseServiceImpl<Visit> implements VisitSer
 		return dao.countAll();
 	}
 
-	public List<Visit> findWhereByPage(String where,int limit, int start){
-		return dao.findWhereByPage(where,limit,start);
-	}
+//	public List<Visit> findWhereByPage(String where,int limit, int start){
+//		return dao.findWhereByPage(where,limit,start);
+//	}
 
 //	@Override
 //	public int updateCompared(Visit model) {

@@ -55,9 +55,9 @@ public class VisitServiceTester {
 		System.out.println(JacksonUtil.toJson(result));
 	}
 
-	@Test
-	public void findWhereByPage() throws Exception {
-		Object result = service.findWhereByPage("where location_compared is null group by location_ip order by visit_servertime", 5, 0);
-		System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
-	}
+//	@Test
+//	public void findWhereByPage() throws Exception {
+//		Object result = service.findWhereByPage("where location_compared is null group by location_ip order by visit_servertime", 5, 0);
+//		System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+//	}
 }

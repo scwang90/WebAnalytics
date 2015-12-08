@@ -64,10 +64,10 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao{
 		return super.findByPage(limit, start);
 	}
 
-	@Override
-	public List<Visit> findWhereByPage(String where,int limit, int start) {
-		return super.findWhereByPage(where,limit, start);
-	}
+//	@Override
+//	public List<Visit> findWhereByPage(String where,int limit, int start) {
+//		return super.findWhereByPage(where,limit, start);
+//	}
 
 	//	@Override
 //	public int updateCompared(Visit t) {

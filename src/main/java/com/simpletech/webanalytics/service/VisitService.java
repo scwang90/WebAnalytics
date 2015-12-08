@@ -55,7 +55,7 @@ public interface VisitService extends BaseService<Visit> {
 	 */
 	List<Visit> findByPage(int limit, int start);
 
-	List<Visit> findWhereByPage(String where,int limit, int start);
+//	List<Visit> findWhereByPage(String where,int limit, int start);
 
 
 //	/**

@@ -3,9 +3,10 @@ package com.simpletech.webanalytics.ipcomparetask;
 import com.ipmapping.BDIP;
 import com.ipmapping.TBIP1;
 import com.ipmapping.txIP.IPTest;
+import com.simpletech.webanalytics.dao.IpLocationDao;
+import com.simpletech.webanalytics.dao.base.MultiDao;
 import com.simpletech.webanalytics.model.IpLocation;
 import com.simpletech.webanalytics.model.Visit;
-import com.simpletech.webanalytics.service.IpLocationService;
 import com.simpletech.webanalytics.service.IspService;
 import com.simpletech.webanalytics.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,10 +23,11 @@ import java.util.List;
  */
 @Component
 public class DoCompare {
+
     @Autowired
-    IpLocationService ipLocationService;
+    MultiDao<Visit> visitMultiDao;
     @Autowired
-    VisitService visitService;
+    MultiDao<IpLocation> ipLocationMultiDao;
     @Autowired
     IspService ispService;
 
@@ -41,25 +44,36 @@ public class DoCompare {
 
         try {
             //取出需要对比的前250条ip信息
-            List<IpLocation> list = ipLocationService.findVisitWhereByPage("where location_compared is null group by location_ip order by visit_servertime", 250, 0);
+//            ipLocationMultiDao.findWhereByPage("where location_compared is null group by location_ip order by visit_servertime", 250, 0);
+//            List<IpLocation> list = ipLocationDao.findVisitWhereByPage("where location_compared is null group by location_ip order by visit_servertime", 250, 0);
+            List<Visit> list1=visitMultiDao.findWhereByPage("where location_compared is null group by location_ip order by visit_servertime", 250, 0);
             //取出所有的信息，后期更新时使用
-            List<Visit> vist=visitService.findWhereByPage("where location_compared is null group by location_ip order by visit_servertime", 250, 0);
-            if(!list.isEmpty()){
+            List<Visit> vist=visitMultiDao.findWhereByPage("where location_compared is null group by location_ip order by visit_servertime", 250, 0);
+            List<IpLocation> batchList=new ArrayList<>();
+            if(!list1.isEmpty()){
 
                 int i = 1;
-                for (IpLocation str : list) {
-                    String ip = str.getIp();
+                for (Visit str : list1) {
+                    IpLocation ipLocation=new IpLocation();
+
+                    String ip = str.getLocationIp();
+                    String id=str.getId();
+                    ipLocation.setId(id);
+                    ipLocation.setIp(ip);
+                    ipLocation.setIpipCity(str.getLocationCity());
+                    ipLocation.setIpipCountry(str.getLocationCountry());
+                    ipLocation.setIpipProvince(str.getLocationRegion());
                     /**
                      * 纯真IP转换
                      */
                     IPTest txIp = new IPTest();
                     String[] tx_location = txIp.txIpParser(ip);
                     System.out.println("TXTranslate()");
-                    str.setTxCountry(tx_location[0]);
-                    str.setTxProvince(tx_location[1]);
-                    str.setTxCity(tx_location[2]);
-                    str.setTxDistrick(tx_location[3]);
-                    str.setTxIsp(tx_location[4]);
+                    ipLocation.setTxCountry(tx_location[0]);
+                    ipLocation.setTxProvince(tx_location[1]);
+                    ipLocation.setTxCity(tx_location[2]);
+                    ipLocation.setTxDistrick(tx_location[3]);
+                    ipLocation.setTxIsp(tx_location[4]);
 
                     /**
                      * 百度转换
@@ -68,11 +82,11 @@ public class DoCompare {
                     String[] locate = bd.getIPXY(ip);
                     System.out.println("BDTranslate()");
                     String[] location = bd.getIPLocation(locate[1], locate[0]);
-                    str.setBdCountry(location[0].toString());
-                    str.setBdProvince(location[1].toString());
-                    str.setBdCity(location[2].toString());
-                    str.setBdDistrick(location[3].toString());
-                    str.setBdIsp(location[4].toString());
+                    ipLocation.setBdCountry(location[0].toString());
+                    ipLocation.setBdProvince(location[1].toString());
+                    ipLocation.setBdCity(location[2].toString());
+                    ipLocation.setBdDistrick(location[3].toString());
+                    ipLocation.setBdIsp(location[4].toString());
 
                     /**
                      * 淘宝转换
@@ -80,28 +94,29 @@ public class DoCompare {
                     TBIP1 tb=new TBIP1();
                     System.out.println("TBTranslate()");
                     String[] tb_location=tb.getTBLocation(ip);
-                    str.setTbCountry(tb_location[0]);
-                    str.setTbProvince(tb_location[1]);
-                    str.setTbCity(tb_location[2]);
-                    str.setTbDistrick(tb_location[3]);
-                    str.setTbIsp(tb_location[4]);
+                    ipLocation.setTbCountry(tb_location[0]);
+                    ipLocation.setTbProvince(tb_location[1]);
+                    ipLocation.setTbCity(tb_location[2]);
+                    ipLocation.setTbDistrick(tb_location[3]);
+                    ipLocation.setTbIsp(tb_location[4]);
 
-                    ipLocationService.insert(str);
+                    batchList.add(ipLocation);
+                    ipLocationMultiDao.insert(ipLocation);
+//                    ipLocationDao.insert(str);
                     System.out.println(i++);
                     //更新t_visit中location_compared字段
                     for(Visit ss:vist){
                         if(ss.getLocationIp().equals(ip)){
                             ss.setLocationCompared(true);
-                            visitService.update(ss);
+                            visitMultiDao.update(ss);
+                            System.out.println("update()");
                         }
                     }
                 }
+
             }else{
                 System.out.println("没有需要对比的IP");
             }
-        }catch (SQLException e){
-            System.out.println("读取数据失败");
-            e.printStackTrace();
         }catch (Exception e){
             System.out.println("转换失败");
             e.printStackTrace();

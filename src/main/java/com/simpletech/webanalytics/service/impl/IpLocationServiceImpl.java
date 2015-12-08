@@ -65,10 +65,10 @@ public class IpLocationServiceImpl extends BaseServiceImpl<IpLocation> implement
 		return dao.findByPage(limit, start);
 	}
 
-	@Override
-	public List<IpLocation> findVisitWhereByPage(String where,int limit, int start) throws Exception{
-		return dao.findVisitWhereByPage(where, limit, start);
-	}
+//	@Override
+//	public List<IpLocation> findVisitWhereByPage(String where,int limit, int start) throws Exception{
+//		return dao.findVisitWhereByPage(where, limit, start);
+//	}
 
 	@Override
 	public IpLocation findById(String id) {

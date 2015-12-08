@@ -56,7 +56,7 @@ public interface VisitDao extends BaseDao<Visit>{
 	 */
 	List<Visit> findByPage(int limit, int start);
 
-	List<Visit> findWhereByPage(String where,int limit, int start);
+//	List<Visit> findWhereByPage(String where,int limit, int start);
 //	/**
 //	 * 更新一条数据
 //	 * @param model 需要更新数据

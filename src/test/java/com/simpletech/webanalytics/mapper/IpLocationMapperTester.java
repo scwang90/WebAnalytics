@@ -142,9 +142,9 @@ public class IpLocationMapperTester {
 	@Test
 	public void findWhereByPage() throws Exception {
 
-		Object list= mapper.findVisitWhereByPage("where location_compared is null group by location_ip order by visit_servertime", 5, 0);
-
-		System.out.println(JacksonUtil.toJson(list).replace("{", "\n{"));
+//		Object list= mapper.findVisitWhereByPage("where location_compared is null group by location_ip order by visit_servertime", 5, 0);
+//
+//		System.out.println(JacksonUtil.toJson(list).replace("{", "\n{"));
 	}
 
 }

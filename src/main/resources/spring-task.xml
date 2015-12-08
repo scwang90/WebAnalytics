@@ -9,6 +9,6 @@
        http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
        <!-- 启动定时器 -->
-       <!--<task:annotation-driven/>-->
+       <task:annotation-driven/>
 
 </beans>

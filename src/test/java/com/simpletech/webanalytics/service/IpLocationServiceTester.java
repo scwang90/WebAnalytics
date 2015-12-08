@@ -26,11 +26,11 @@ public class IpLocationServiceTester {
     @Autowired
     IpLocationService ipLocationService;
 
-    @Test
-    public void findVisitWhereByPage()throws Exception{
-        Object object=ipLocationService.findVisitWhereByPage("where location_compared is null group by location_ip order by visit_servertime", 5, 0);
-        System.out.println(JacksonUtil.toJson(object).replace("{", "\n{"));
-    }
+//    @Test
+//    public void findVisitWhereByPage()throws Exception{
+//        Object object=ipLocationService.findVisitWhereByPage("where location_compared is null group by location_ip order by visit_servertime", 5, 0);
+//        System.out.println(JacksonUtil.toJson(object).replace("{", "\n{"));
+//    }
     @Test
     public void findAllIp()throws Exception{
         List<IpLocation> list=ipLocationService.findAllIp();

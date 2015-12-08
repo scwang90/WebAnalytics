@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -135,9 +136,12 @@ public class BDIP {
 
                 return new String[]{x, y,bd_isp};
             }
-        } catch (MalformedURLException e) {
+        } catch (UnknownHostException e){
+            System.out.println("百度接口访问失败");
+        }
+        catch (MalformedURLException e) {
             e.printStackTrace();
-            System.out.println("接口访问失败");
+
         } catch (IOException e) {
             e.printStackTrace();
         }

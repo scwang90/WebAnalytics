@@ -59,10 +59,10 @@ public class IpLocationDaoImpl extends BaseDaoImpl<IpLocation> implements IpLoca
 		return super.findByPage(limit, start);
 	}
 
-	@Override
-	public List<IpLocation> findVisitWhereByPage(String where,int limit, int start) {
-		return ipLocationMapper.findVisitWhereByPage(where, limit, start);
-	}
+//	@Override
+//	public List<IpLocation> findVisitWhereByPage(String where,int limit, int start) {
+//		return ipLocationMapper.findVisitWhereByPage(where, limit, start);
+//	}
 
 	@Override
 	public List<IpLocation> findAllIp(){
