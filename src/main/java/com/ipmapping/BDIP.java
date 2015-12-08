@@ -56,6 +56,7 @@ public class BDIP {
             //获取运营商
             String rexEx="CHINANET|CSTNET|CERNET|CHINAGBN|UNINET|CNCNET|CMNET|CIETNET|CGWNET|CSNET|UNICOM|CRTC|NET";//匹配运营商
             String rexEx1="(\\w+?)\\|\\d+";//匹配运营商
+
             Pattern pattern_isp=Pattern.compile(rexEx1,Pattern.CASE_INSENSITIVE);
             Matcher matcher=pattern_isp.matcher(str);
             if(matcher.find()){
@@ -109,10 +110,11 @@ public class BDIP {
 //                    }
 //                    default:bd_isp=ispStr;
 //                }
+                bd_isp=ispStr;
 
             }else{
                 //若匹配失败则保存IP信息
-                bd_isp="未知";
+                bd_isp="unknown";
             }
             // 获取坐标位置
             if(!str.contains("failed")){
