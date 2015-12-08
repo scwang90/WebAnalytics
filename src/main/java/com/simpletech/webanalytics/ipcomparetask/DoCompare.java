@@ -3,17 +3,14 @@ package com.simpletech.webanalytics.ipcomparetask;
 import com.ipmapping.BDIP;
 import com.ipmapping.TBIP1;
 import com.ipmapping.txIP.IPTest;
-import com.simpletech.webanalytics.dao.IpLocationDao;
 import com.simpletech.webanalytics.dao.base.MultiDao;
 import com.simpletech.webanalytics.model.IpLocation;
 import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.service.IspService;
-import com.simpletech.webanalytics.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

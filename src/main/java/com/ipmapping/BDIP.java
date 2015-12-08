@@ -60,55 +60,55 @@ public class BDIP {
             Matcher matcher=pattern_isp.matcher(str);
             if(matcher.find()){
                 String ispStr=matcher.group(1);
-                switch (ispStr){
-                    case "CHINANET":
-                        bd_isp="电信";
-                        break;
-                    case "UNICOM":
-                        bd_isp="联通";
-                        break;
-                    case "CRTC":
-                        bd_isp="铁通";
-                        break;
-                    case "CSTNET":
-                        bd_isp="科技网";
-                        break;
-                    case "CERNET":
-                        bd_isp="教育网";
-                        break;
-                    case "NET":
-                        bd_isp="天威视讯";
-                        break;
-                    case "CHINAGBN":
-                        bd_isp="金桥网";
-                        break;
-                    case "UNINET":
-                        bd_isp="联通";
-                        break;
-                    case "CNCNET":
-                        bd_isp="网通";
-                        break;
-                    case "CMNET":
-                        bd_isp="移动";
-                        break;
-                    case "CIETNET":
-                        bd_isp="经贸网";
-                        break;
-                    case "CGWNET":
-                        bd_isp="长城";
-                        break;
-                    case "CSNET":
-                        bd_isp="卫星网";
-                        break;
-                    case "OTHER":{
-                        //调用纯真IP再次解析
-                        IPTest cz=new IPTest();
-                        String[] cz_location=cz.txIpParser(ip);
-                        bd_isp=cz_location[4].replace("\"","");
-                        break;
-                    }
-                    default:bd_isp=ispStr;
-                }
+//                switch (ispStr){
+//                    case "CHINANET":
+//                        bd_isp="电信";
+//                        break;
+//                    case "UNICOM":
+//                        bd_isp="联通";
+//                        break;
+//                    case "CRTC":
+//                        bd_isp="铁通";
+//                        break;
+//                    case "CSTNET":
+//                        bd_isp="科技网";
+//                        break;
+//                    case "CERNET":
+//                        bd_isp="教育网";
+//                        break;
+//                    case "NET":
+//                        bd_isp="天威视讯";
+//                        break;
+//                    case "CHINAGBN":
+//                        bd_isp="金桥网";
+//                        break;
+//                    case "UNINET":
+//                        bd_isp="联通";
+//                        break;
+//                    case "CNCNET":
+//                        bd_isp="网通";
+//                        break;
+//                    case "CMNET":
+//                        bd_isp="移动";
+//                        break;
+//                    case "CIETNET":
+//                        bd_isp="经贸网";
+//                        break;
+//                    case "CGWNET":
+//                        bd_isp="长城";
+//                        break;
+//                    case "CSNET":
+//                        bd_isp="卫星网";
+//                        break;
+//                    case "OTHER":{
+//                        //调用纯真IP再次解析
+//                        IPTest cz=new IPTest();
+//                        String[] cz_location=cz.txIpParser(ip);
+//                        bd_isp=cz_location[4].replace("\"","");
+//                        break;
+//                    }
+//                    default:bd_isp=ispStr;
+//                }
 
             }else{
                 //若匹配失败则保存IP信息
