@@ -22,33 +22,33 @@ public class TitleDaoTester {
 	TitleDao dao;
 	
 	@Test
-	public void insert() throws Exception{
+	public void insert(){
 		Title model = new Title();
 		Object result = dao.insert(model);
 		System.out.println(JacksonUtil.toJson(result));
 	}
 	
 	@Test
-	public void update() throws Exception {
+	public void update() {
 		Title model = new Title();
 		Object result = dao.update(model);
 		System.out.println(JacksonUtil.toJson(result));
 	}
 	
 	@Test
-	public void delete() throws Exception {
+	public void delete() {
 		Object result = dao.delete("1");
 		System.out.println(JacksonUtil.toJson(result));
 	}
 	
 	@Test
-	public void countAll() throws Exception {
+	public void countAll() {
 		Object result = dao.countAll();
 		System.out.println(JacksonUtil.toJson(result));
 	}
 
 	@Test
-	public void findByPage() throws Exception {
+	public void findByPage() {
 		Object result = dao.findByPage(5,0);
 		System.out.println(JacksonUtil.toJson(result));
 	}

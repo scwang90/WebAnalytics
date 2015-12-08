@@ -35,96 +35,95 @@ public class StatisticsControllerTest {
     }
 
     @Test
-    public void testVisitorSpan() throws Exception {
+    public void testVisitorSpan() {
         Object result = controller.visitorSpan(1, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testVisitorTrend() throws Exception {
+    public void testVisitorTrend() {
         Object result = controller.visitorTrend(1, Period.hour, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testShareRank() throws Exception {
+    public void testShareRank() {
         Object result = controller.shareRank(1, "", 10, 0, -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testShareMap() throws Exception {
+    public void testShareMap() {
         Object result = controller.shareMap(1, "", "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testEnterexit() throws Exception {
+    public void testEnterexit() {
         Object result = controller.enterexit(1, EnterExit.entry, RankingType.pv, 10, 0, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testTitleurl() throws Exception {
+    public void testTitleurl() {
         Object result = controller.titleurl(1, PageRank.title, RankingType.pv, 10, 0, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testPageRank() throws Exception {
-        Object result = controller.pageRank(1, "", Ranking.brand, RankingType.pv, 10, 0, "", -1, Period.day, null, null);
+    public void testPageRank() {
+        Object result = controller.pageRank(1, "", Ranking.brand, RankingType.ip, 10, 0, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testRanking() throws Exception {
+    public void testRanking() {
         Object result = controller.ranking(1, Ranking.brand, RankingType.pv, 10, 0, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testEventName() throws Exception {
-
+    public void testEventName() {
     }
 
     @Test
-    public void testEventNameSpan() throws Exception {
+    public void testEventNameSpan() {
         Object result = controller.eventNameSpan(1, "ec", "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testEventNameTrend() throws Exception {
+    public void testEventNameTrend() {
         Object result = controller.eventNameTrend(1, "ec", Period.hour, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testEventRank() throws Exception {
+    public void testEventRank() {
         Object result = controller.eventRank(1, 10, 0, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testEventTrend() throws Exception {
+    public void testEventTrend() {
         Object result = controller.eventTrend(1, Period.hour, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testEventSpan() throws Exception {
+    public void testEventSpan() {
         Object result = controller.eventSpan(1, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testVisitTrend() throws Exception {
+    public void testVisitTrend() {
         Object result = controller.visitTrend(1, Period.hour, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
-    public void testVisitSpan() throws Exception {
+    public void testVisitSpan() {
         Object result = controller.visitSpan(1, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }

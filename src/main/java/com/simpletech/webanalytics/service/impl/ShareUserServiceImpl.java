@@ -24,14 +24,14 @@ public class ShareUserServiceImpl extends BaseServiceImpl<ShareUser> implements 
 	ShareUserDao dao;
 	
 	@Override
-	public int insert(ShareUser model) throws Exception{
+	public int insert(ShareUser model){
 		ModelBase.check(model);
 		ModelBase.fillNullID(model);
 		return dao.insert(model);
 	}
 	
 	@Override
-	public int update(ShareUser model) throws Exception {
+	public int update(ShareUser model) {
 		ShareUser old = findById(getModelID(model));
 		if (old == null) {
 			throw new ServiceException("请求更新记录不存在或已经被删除！");
@@ -41,37 +41,37 @@ public class ShareUserServiceImpl extends BaseServiceImpl<ShareUser> implements 
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return dao.delete(id);
 	}
 
 	@Override
-	public ShareUser findById(Object id) throws Exception{
+	public ShareUser findById(Object id){
 		return dao.findById(id);
 	}
 
 	@Override
-	public List<ShareUser> findAll() throws Exception{
+	public List<ShareUser> findAll(){
 		return dao.findAll();
 	}
 
 	@Override
-	public int delete(String id) throws Exception{
+	public int delete(String id){
 		return dao.delete(id);
 	}
 
 	@Override
-	public List<ShareUser> findByPage(int limit, int start) throws Exception {
+	public List<ShareUser> findByPage(int limit, int start) {
 		return dao.findByPage(limit,start);
 	}
 
 	@Override
-	public ShareUser findById(String id) throws Exception {
+	public ShareUser findById(String id) {
 		return dao.findById(id);
 	}
 	
 	@Override
-	public Page<ShareUser> listByPage(int pageSize, int pageNo) throws Exception{
+	public Page<ShareUser> listByPage(int pageSize, int pageNo){
 		int limit = pageSize; 
 		int start = pageNo*pageSize;
 		int totalRecord = dao.countAll();
@@ -83,7 +83,7 @@ public class ShareUserServiceImpl extends BaseServiceImpl<ShareUser> implements 
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return dao.countAll();
 	}
 }

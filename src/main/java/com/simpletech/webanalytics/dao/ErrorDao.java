@@ -20,17 +20,17 @@ public interface ErrorDao {
 	 * @param skip   分页起始
 	 * @return 客户端设备品牌排行
 	 */
-	List<ErrorValue> brand(int limit, int skip) throws Exception;
-	List<ErrorValue> model(int limit, int skip) throws Exception;
-	List<ErrorValue> nettype(int limit, int skip) throws Exception;
-	List<ErrorValue> browser(int limit, int skip) throws Exception;
-	List<ErrorValue> system(int limit, int skip) throws Exception;
-	List<ErrorValue> appname(int limit, int skip) throws Exception;
-	List<ErrorValue> resolution(int limit, int skip) throws Exception;
-	List<ErrorValue> depth(int limit, int skip) throws Exception;
-	List<ErrorValue> lang(int limit, int skip) throws Exception;
-	List<ErrorValue> country(int limit, int skip) throws Exception;
-	List<ErrorValue> province(int limit, int skip) throws Exception;
-	List<ErrorValue> city(int limit, int skip) throws Exception;
+	List<ErrorValue> brand(int limit, int skip);
+	List<ErrorValue> model(int limit, int skip);
+	List<ErrorValue> nettype(int limit, int skip);
+	List<ErrorValue> browser(int limit, int skip);
+	List<ErrorValue> system(int limit, int skip);
+	List<ErrorValue> appname(int limit, int skip);
+	List<ErrorValue> resolution(int limit, int skip);
+	List<ErrorValue> depth(int limit, int skip);
+	List<ErrorValue> lang(int limit, int skip);
+	List<ErrorValue> country(int limit, int skip);
+	List<ErrorValue> province(int limit, int skip);
+	List<ErrorValue> city(int limit, int skip);
 
 }

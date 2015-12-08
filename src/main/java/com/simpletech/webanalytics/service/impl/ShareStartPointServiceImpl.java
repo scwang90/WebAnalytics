@@ -24,14 +24,14 @@ public class ShareStartPointServiceImpl extends BaseServiceImpl<ShareStartPoint>
 	ShareStartPointDao dao;
 	
 	@Override
-	public int insert(ShareStartPoint model) throws Exception{
+	public int insert(ShareStartPoint model){
 		ModelBase.check(model);
 		ModelBase.fillNullID(model);
 		return dao.insert(model);
 	}
 	
 	@Override
-	public int update(ShareStartPoint model) throws Exception {
+	public int update(ShareStartPoint model) {
 		ShareStartPoint old = findById(getModelID(model));
 		if (old == null) {
 			throw new ServiceException("请求更新记录不存在或已经被删除！");
@@ -41,37 +41,37 @@ public class ShareStartPointServiceImpl extends BaseServiceImpl<ShareStartPoint>
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return dao.delete(id);
 	}
 
 	@Override
-	public ShareStartPoint findById(Object id) throws Exception{
+	public ShareStartPoint findById(Object id){
 		return dao.findById(id);
 	}
 
 	@Override
-	public List<ShareStartPoint> findAll() throws Exception{
+	public List<ShareStartPoint> findAll(){
 		return dao.findAll();
 	}
 
 	@Override
-	public int delete(String id) throws Exception{
+	public int delete(String id){
 		return dao.delete(id);
 	}
 
 	@Override
-	public List<ShareStartPoint> findByPage(int limit, int start) throws Exception {
+	public List<ShareStartPoint> findByPage(int limit, int start) {
 		return dao.findByPage(limit,start);
 	}
 
 	@Override
-	public ShareStartPoint findById(String id) throws Exception {
+	public ShareStartPoint findById(String id) {
 		return dao.findById(id);
 	}
 	
 	@Override
-	public Page<ShareStartPoint> listByPage(int pageSize, int pageNo) throws Exception{
+	public Page<ShareStartPoint> listByPage(int pageSize, int pageNo){
 		int limit = pageSize; 
 		int start = pageNo*pageSize;
 		int totalRecord = dao.countAll();
@@ -83,7 +83,7 @@ public class ShareStartPointServiceImpl extends BaseServiceImpl<ShareStartPoint>
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return dao.countAll();
 	}
 }

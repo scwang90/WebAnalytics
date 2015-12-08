@@ -18,7 +18,7 @@ public class TrackerDaoTester {
     TrackerDao dao;
 
     @Test
-    public void updateVisitEvent() throws Exception {
+    public void updateVisitEvent() {
         int row = dao.updateVisitEvent(1, "", "");
         System.out.println(row);
     }

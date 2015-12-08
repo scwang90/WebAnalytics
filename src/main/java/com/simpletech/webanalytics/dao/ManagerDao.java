@@ -19,7 +19,7 @@ public interface ManagerDao {
      * @param site 网站
      * @return 改变行数
      */
-    int insertSite(Site site) throws Exception;
+    int insertSite(Site site);
 
     /**
      * 更新网站
@@ -27,24 +27,6 @@ public interface ManagerDao {
      * @param site 网站
      * @return 改变行数
      */
-    int updateSite(Site site) throws Exception;
+    int updateSite(Site site);
 
-    /**
-     * 获取网站列表
-     *
-     * @param limit 分页限制
-     * @param start 分页开始
-     * @return 网站列表
-     */
-    List<Site> findList(int limit, int start) throws Exception;
-
-    /**
-     * 获取子站列表
-     *
-     * @param siteId 网站ID
-     * @param limit  分页限制
-     * @param start  分页开始
-     * @return 子站列表
-     */
-    List<Subsite> findSubList(int siteId, int limit, int start) throws Exception;
 }

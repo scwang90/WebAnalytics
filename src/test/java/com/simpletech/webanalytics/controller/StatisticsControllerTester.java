@@ -37,7 +37,7 @@ public class StatisticsControllerTester {
     }
 
     @Test
-    public void visit() throws Exception {
+    public void visit() {
         for (Norm norm : Norm.values()) {
             for (Period period : Period.values()) {
 //                Object result = controller.norm(norm, "1", period, monthf.parse("2015-9-0"), monthf.parse("2015-9-30"));
@@ -48,13 +48,13 @@ public class StatisticsControllerTester {
     }
 
     @Test
-    public void pagetitle() throws Exception {
+    public void pagetitle() {
         Object result = controller.titleurl(1, PageRank.title, RankingType.pv, 100, 0, null, 0, Period.month, null, null);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
-    public void pageurl() throws Exception {
+    public void pageurl() {
         Object result = controller.titleurl(1, PageRank.url, RankingType.pv, 100, 0, null, 0, Period.month, null, null);
         System.out.println(JacksonUtil.toJson(result));
     }

@@ -19,7 +19,7 @@ public abstract class UnsafeAllocator {
             final Object newInstance1 = constructorId1.get((Object)null);
             final Method allocateInstance = ignored1.getMethod("allocateInstance", new Class[]{Class.class});
             return new UnsafeAllocator() {
-                public <T> T newInstance(Class<T> c) throws Exception {
+                public <T> T newInstance(Class<T> c) throws Exception{
                     return (T)allocateInstance.invoke(newInstance1, new Object[]{c});
                 }
             };
@@ -29,7 +29,7 @@ public abstract class UnsafeAllocator {
                 ignored = ObjectInputStream.class.getDeclaredMethod("newInstance", new Class[]{Class.class, Class.class});
                 ignored.setAccessible(true);
                 return new UnsafeAllocator() {
-                    public <T> T newInstance(Class<T> c) throws Exception {
+                    public <T> T newInstance(Class<T> c) throws Exception{
                         return (T)ignored.invoke((Object)null, new Object[]{c, Object.class});
                     }
                 };
@@ -41,7 +41,7 @@ public abstract class UnsafeAllocator {
                     final Method newInstance = ObjectStreamClass.class.getDeclaredMethod("newInstance", new Class[]{Class.class, Integer.TYPE});
                     newInstance.setAccessible(true);
                     return new UnsafeAllocator() {
-                        public <T> T newInstance(Class<T> c) throws Exception {
+                        public <T> T newInstance(Class<T> c) throws Exception{
                             return (T)newInstance.invoke((Object)null, new Object[]{c, Integer.valueOf(constructorId)});
                         }
                     };

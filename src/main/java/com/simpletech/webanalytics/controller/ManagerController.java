@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * Created by 树朾 on 2015/10/9.
  */
 @RestController
-@RequestMapping("v1/manage")
+@RequestMapping("v1/manage/user/{userId}")
 public class ManagerController extends BaseController {
 
     @Autowired
@@ -35,31 +35,31 @@ public class ManagerController extends BaseController {
 
     @Intent("获取网站列表")
     @RequestMapping("site/list/{limit:\\d+}/{start:\\d+}")
-    public Object siteList(@PathVariable int limit, @PathVariable int start) throws Exception {
-        return mapExclude(service.findList(limit, start), new String[]{"updateTime", "createTime"});
+    public Object siteList(@PathVariable String userId,@PathVariable int limit, @PathVariable int start) {
+        return mapExclude(service.findList(userId, limit, start), new String[]{"updateTime", "createTime"});
     }
 
     @Intent("获取子站列表")
     @RequestMapping("site/list/sub/{siteId:\\d+}/{limit:\\d+}/{start:\\d+}")
-    public Object siteSublist(@PathVariable int siteId, @PathVariable int limit, @PathVariable int start) throws Exception {
-        return mapInclude(service.findSubList(siteId, limit, start), new String[]{"name", "remark"});
+    public Object siteSublist(@PathVariable String userId,@PathVariable int siteId, @PathVariable int limit, @PathVariable int start) {
+        return mapInclude(service.findSubList(userId, siteId, limit, start), new String[]{"name", "remark"});
     }
 
     @Intent("添加网站")
     @RequestMapping("site/add")
-    public Object siteAdd(@RequestBody Site site) throws Exception {
-        return service.insertSite(site);
+    public Object siteAdd(@PathVariable String userId,@RequestBody Site site) {
+        return service.insertSite(userId, site);
     }
 
     @Intent("更新网站")
     @RequestMapping("site/update")
-    public Object siteUpdate(@RequestBody Site site) throws Exception {
-        return service.updateSite(site);
+    public Object siteUpdate(@PathVariable String userId,@RequestBody Site site) {
+        return service.updateSite(userId, site);
     }
 
     @Intent("获取探针代码")
     @RequestMapping("site/tracker/{siteId:\\d+}")
-    public Object siteTracker(HttpServletRequest request, @PathVariable int siteId) throws Exception {
+    public Object siteTracker(@PathVariable String userId,HttpServletRequest request, @PathVariable int siteId) {
         Matcher matcher = Pattern.compile("//(.+/)v1/manage", Pattern.CASE_INSENSITIVE).matcher(request.getRequestURL());
         matcher.find();
         String temp = "<!-- WebAnalytics -->\n" +
@@ -81,14 +81,14 @@ public class ManagerController extends BaseController {
 
     @Intent("获取探针事件代码")
     @RequestMapping("site/tracker/event/{name}")
-    public Object siteTrackerEvent(HttpServletRequest request, @PathVariable String name) throws Exception {
+    public Object siteTrackerEvent(@PathVariable String userId,HttpServletRequest request, @PathVariable String name) {
         String temp = "_wapaq.push(['trackEvent','&{name}','${value}']);";
         return temp.replace("${name}", name).replace("${value}", "");
     }
 
     @Intent("获取探针事件代码")
     @RequestMapping("site/tracker/event/{name}/{value}")
-    public Object siteTrackerEventValue(HttpServletRequest request, @PathVariable String name, @PathVariable String value) throws Exception {
+    public Object siteTrackerEventValue(@PathVariable String userId,HttpServletRequest request, @PathVariable String name, @PathVariable String value) {
         String temp = "_wapaq.push(['trackEvent','&{name}','${value}']);";
         return temp.replace("${name}", name).replace("${value}", value);
     }

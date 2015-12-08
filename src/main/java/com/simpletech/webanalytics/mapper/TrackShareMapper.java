@@ -15,25 +15,25 @@ import org.apache.ibatis.annotations.Update;
 public interface TrackShareMapper {
 
     @Select("SELECT id , idsite , idsubsite , idvisitor , openid , unionid , nickname , headimgurl , sex , province , city , country , privilege , create_time createTime , update_time updateTime FROM t_share_user WHERE idsite=#{siteId} AND idvisitor=#{idvisitor}")
-    ShareUser getShareUser(@Param("siteId") int siteId,@Param("idvisitor") String idvisitor) throws Exception;
+    ShareUser getShareUser(@Param("siteId") int siteId,@Param("idvisitor") String idvisitor);
 
     @Insert("INSERT INTO t_share_user ( id , idsite , idsubsite , idvisitor , openid , unionid , nickname , headimgurl , sex , province , city , country , privilege , create_time , update_time ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{idvisitor} , #{openid} , #{unionid} , #{nickname} , #{headimgurl} , #{sex} , #{province} , #{city} , #{country} , #{privilege} , #{createTime} , #{updateTime} )")
-    int insertShareUser(ShareUser user) throws Exception;
+    int insertShareUser(ShareUser user);
 
 //    @Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point WHERE idsite=#{siteId} AND idurl=#{idurl} AND idvisitor=#{idvisitor}")
-//    ShareLinePoint getShareLinePoint(@Param("siteId") int siteId, @Param("idurl") String idurl, @Param("idvisitor") String idvisitor) throws Exception;
+//    ShareLinePoint getShareLinePoint(@Param("siteId") int siteId, @Param("idurl") String idurl, @Param("idvisitor") String idvisitor);
 
     @Insert("INSERT INTO t_share_line_point ( id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv , share_span , share_time , create_time , update_time ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{idurl} , #{idvisitor} , #{idrefervisitor} , #{countPv} , #{shareSpan} , #{shareTime} , #{createTime} , #{updateTime} )")
-    int insertShareLinePoint(ShareLinePoint point) throws Exception;
+    int insertShareLinePoint(ShareLinePoint point);
 
     @Select("SELECT id , idsite , idsubsite , idvisitor , idurl , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point WHERE idsite=#{siteId} AND idurl=#{idurl} AND idvisitor=#{idvisitor} AND idrefervisitor=#{idfromtor}")
-    ShareLinePoint getShareLinePoint(@Param("siteId") int siteId, @Param("idurl") String idurl, @Param("idfromtor") String idfromtor, @Param("idvisitor") String idvisitor) throws Exception;
+    ShareLinePoint getShareLinePoint(@Param("siteId") int siteId, @Param("idurl") String idurl, @Param("idfromtor") String idfromtor, @Param("idvisitor") String idvisitor);
 
     @Update("UPDATE t_share_line_point SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , idurl=#{idurl} , idvisitor=#{idvisitor} , idrefervisitor=#{idrefervisitor} , count_pv=#{countPv} , share_span=#{shareSpan} , share_time=#{shareTime} , create_time=#{createTime} , update_time=#{updateTime} WHERE id=#{id} ")
-    int updateShareLinePoint(ShareLinePoint point) throws Exception;
+    int updateShareLinePoint(ShareLinePoint point);
 
     @Update("UPDATE t_share_user SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , idvisitor=#{idvisitor} , openid=#{openid} , unionid=#{unionid} , nickname=#{nickname} , headimgurl=#{headimgurl} , sex=#{sex} , province=#{province} , city=#{city} , country=#{country} , privilege=#{privilege} , create_time=#{createTime} , update_time=#{updateTime} WHERE id=#{id} ")
-    int updateShareUser(ShareUser user) throws Exception;
+    int updateShareUser(ShareUser user);
 
     /**
      * 判断 idfromtor 是不是起始点
@@ -53,7 +53,7 @@ public interface TrackShareMapper {
      * @return  > 0 存在
      */
     @Select("SELECT COUNT(*) from t_share_start_point WHERE idvisitor=#{idfromtor} AND idurl=#{idurl}")
-    int existStartPoint(@Param("siteId") int siteId, @Param("idurl") String idurl, @Param("idfromtor") String idfromtor) throws Exception;
+    int existStartPoint(@Param("siteId") int siteId, @Param("idurl") String idurl, @Param("idfromtor") String idfromtor);
 
     /**
      * 添加起始点
@@ -62,6 +62,6 @@ public interface TrackShareMapper {
      * @throws Exception
      */
     @Insert("INSERT INTO t_share_start_point ( id , idsite , idsubsite , idurl , idvisitor , create_time , update_time ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{idurl} , #{idvisitor} , #{createTime} , #{updateTime} )")
-    int insertShareStartPoint(ShareStartPoint point) throws Exception;
+    int insertShareStartPoint(ShareStartPoint point);
 
 }

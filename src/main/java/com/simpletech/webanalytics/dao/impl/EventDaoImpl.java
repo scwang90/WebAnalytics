@@ -17,37 +17,37 @@ import com.simpletech.webanalytics.model.Event;
 public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao{
 
 	@Override
-	public int insert(Event t) throws Exception {
+	public int insert(Event t) {
 		return super.insert(t);
 	}
 
 	@Override
-	public int update(Event t) throws Exception {
+	public int update(Event t) {
 		return super.update(t);
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return super.delete(id);
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return super.countAll();
 	}
 
 	@Override
-	public Event findById(Object id) throws Exception {
+	public Event findById(Object id) {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<Event> findAll() throws Exception {
+	public List<Event> findAll() {
 		return super.findAll();
 	}
 
 	@Override
-	public List<Event> findByPage(int limit, int start) throws Exception {
+	public List<Event> findByPage(int limit, int start) {
 		return super.findByPage(limit, start);
 	}
 }

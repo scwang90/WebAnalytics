@@ -24,14 +24,14 @@ public class ActionServiceImpl extends BaseServiceImpl<Action> implements Action
 	ActionDao dao;
 	
 	@Override
-	public int insert(Action model) throws Exception{
+	public int insert(Action model){
 		ModelBase.check(model);
 		ModelBase.fillNullID(model);
 		return dao.insert(model);
 	}
 	
 	@Override
-	public int update(Action model) throws Exception {
+	public int update(Action model) {
 		Action old = findById(getModelID(model));
 		if (old == null) {
 			throw new ServiceException("请求更新记录不存在或已经被删除！");
@@ -41,37 +41,37 @@ public class ActionServiceImpl extends BaseServiceImpl<Action> implements Action
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return dao.delete(id);
 	}
 
 	@Override
-	public Action findById(Object id) throws Exception{
+	public Action findById(Object id){
 		return dao.findById(id);
 	}
 
 	@Override
-	public List<Action> findAll() throws Exception{
+	public List<Action> findAll(){
 		return dao.findAll();
 	}
 
 	@Override
-	public int delete(String id) throws Exception{
+	public int delete(String id){
 		return dao.delete(id);
 	}
 
 	@Override
-	public List<Action> findByPage(int limit, int start) throws Exception {
+	public List<Action> findByPage(int limit, int start) {
 		return dao.findByPage(limit,start);
 	}
 
 	@Override
-	public Action findById(String id) throws Exception {
+	public Action findById(String id) {
 		return dao.findById(id);
 	}
 	
 	@Override
-	public Page<Action> listByPage(int pageSize, int pageNo) throws Exception{
+	public Page<Action> listByPage(int pageSize, int pageNo){
 		int limit = pageSize; 
 		int start = pageNo*pageSize;
 		int totalRecord = dao.countAll();
@@ -83,7 +83,7 @@ public class ActionServiceImpl extends BaseServiceImpl<Action> implements Action
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return dao.countAll();
 	}
 }

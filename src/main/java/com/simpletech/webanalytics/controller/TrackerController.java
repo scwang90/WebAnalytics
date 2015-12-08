@@ -32,7 +32,7 @@ public class TrackerController {
      * @throws Exception
      */
     @RequestMapping("tracker")
-    public void tracker(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void tracker(HttpServletRequest request, HttpServletResponse response) throws Exception{
         Map<String, Object> map = request.getParameterMap();
         for (Map.Entry<String, Object> param : map.entrySet()) {
             if ("action_name".equals(param.getKey())){
@@ -63,7 +63,7 @@ public class TrackerController {
      * @throws Exception
      */
     @RequestMapping("1.0/tpv")
-    public void ptv(HttpServletRequest request, HttpServletResponse response, int idsite, JsDetect detect) throws Exception {
+    public void ptv(HttpServletRequest request, HttpServletResponse response, int idsite, JsDetect detect) throws Exception{
         detect.check();
         detect.bind(request, response);
         service.trackPageView(idsite, detect);
@@ -78,7 +78,7 @@ public class TrackerController {
      * @throws Exception
      */
     @RequestMapping("1.0/ten")
-    public void ten(HttpServletRequest request, HttpServletResponse response, int idsite, JsEvent event) throws Exception {
+    public void ten(HttpServletRequest request, HttpServletResponse response, int idsite, JsEvent event) throws Exception{
         event.check();
         event.bind(request, response);
         service.trackEvent(idsite, event);
@@ -93,7 +93,7 @@ public class TrackerController {
      * @throws Exception
      */
     @RequestMapping("1.0/tur")
-    public void tur(HttpServletRequest request, HttpServletResponse response, int idsite, JsUser user) throws Exception {
+    public void tur(HttpServletRequest request, HttpServletResponse response, int idsite, JsUser user) throws Exception{
         user.check();
         user.bind(request, response);
         service.trackerUser(idsite, user);

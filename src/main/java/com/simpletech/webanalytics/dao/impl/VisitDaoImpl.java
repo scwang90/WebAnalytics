@@ -30,42 +30,42 @@ public class VisitDaoImpl extends BaseDaoImpl<Visit> implements VisitDao{
 	@Autowired
 	IpLocationMapper ipLocationMapper;
 	@Override
-	public int insert(Visit t) throws Exception {
+	public int insert(Visit t) {
 		return super.insert(t);
 	}
 
 	@Override
-	public int update(Visit t) throws Exception {
+	public int update(Visit t) {
 		return super.update(t);
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return super.delete(id);
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return super.countAll();
 	}
 
 	@Override
-	public Visit findById(Object id) throws Exception {
+	public Visit findById(Object id) {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<Visit> findAll() throws Exception {
+	public List<Visit> findAll() {
 		return super.findAll();
 	}
 
 	@Override
-	public List<Visit> findByPage(int limit, int start) throws Exception {
+	public List<Visit> findByPage(int limit, int start) {
 		return super.findByPage(limit, start);
 	}
 
 	//	@Override
-//	public int updateCompared(Visit t) throws Exception {
+//	public int updateCompared(Visit t) {
 //		List<IpLocation> list=ipLocationMapper.findAllIp();
 //		List<Visit> visitlist=visitMapper.findAll("");
 //

@@ -17,37 +17,37 @@ import com.simpletech.webanalytics.model.Site;
 public class SiteDaoImpl extends BaseDaoImpl<Site> implements SiteDao{
 
 	@Override
-	public int insert(Site t) throws Exception {
+	public int insert(Site t) {
 		return super.insert(t);
 	}
 
 	@Override
-	public int update(Site t) throws Exception {
+	public int update(Site t) {
 		return super.update(t);
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return super.delete(id);
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return super.countAll();
 	}
 
 	@Override
-	public Site findById(Object id) throws Exception {
+	public Site findById(Object id) {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<Site> findAll() throws Exception {
+	public List<Site> findAll() {
 		return super.findAll();
 	}
 
 	@Override
-	public List<Site> findByPage(int limit, int start) throws Exception {
+	public List<Site> findByPage(int limit, int start) {
 		return super.findByPage(limit, start);
 	}
 }

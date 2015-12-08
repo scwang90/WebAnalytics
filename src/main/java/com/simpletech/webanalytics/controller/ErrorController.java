@@ -29,7 +29,7 @@ public class ErrorController {
      * @throws Exception
      */
     @RequestMapping("{ranking:brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city}/{limit:\\d+}/{skip:\\d+}")
-    public Object unknownError( @PathVariable Ranking ranking, @PathVariable int limit, @PathVariable int skip) throws Exception {
+    public Object unknownError( @PathVariable Ranking ranking, @PathVariable int limit, @PathVariable int skip) {
         return service.unknownError(ranking,limit, skip);
     }
 

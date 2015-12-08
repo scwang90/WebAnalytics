@@ -33,7 +33,7 @@ public class StatisticsMapperTester {
 
     @Test
     public void entryUrls() throws Exception {
-        Object result = mapper.entryUrls("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"),10,0);
+        Object result = mapper.entryUrls("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 10, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
@@ -45,37 +45,37 @@ public class StatisticsMapperTester {
 
     @Test
     public void nettype() throws Exception {
-        Object result = mapper.nettype("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        Object result = mapper.rankNettype("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void browser() throws Exception {
-        Object result = mapper.browser("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        Object result = mapper.rankBrowser("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void system() throws Exception {
-        Object result = mapper.system("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        Object result = mapper.rankSystem("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void model() throws Exception {
-        Object result = mapper.model("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        Object result = mapper.rankModel("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void brand() throws Exception {
-        Object result = mapper.brand("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        Object result = mapper.rankBrand("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void ip() throws Exception {
-        Object result = mapper.ip("0", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        Object result = mapper.rankIp("0", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 

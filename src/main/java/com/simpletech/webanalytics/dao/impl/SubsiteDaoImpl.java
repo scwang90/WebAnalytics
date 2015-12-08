@@ -17,37 +17,37 @@ import com.simpletech.webanalytics.model.Subsite;
 public class SubsiteDaoImpl extends BaseDaoImpl<Subsite> implements SubsiteDao{
 
 	@Override
-	public int insert(Subsite t) throws Exception {
+	public int insert(Subsite t) {
 		return super.insert(t);
 	}
 
 	@Override
-	public int update(Subsite t) throws Exception {
+	public int update(Subsite t) {
 		return super.update(t);
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return super.delete(id);
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return super.countAll();
 	}
 
 	@Override
-	public Subsite findById(Object id) throws Exception {
+	public Subsite findById(Object id) {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<Subsite> findAll() throws Exception {
+	public List<Subsite> findAll() {
 		return super.findAll();
 	}
 
 	@Override
-	public List<Subsite> findByPage(int limit, int start) throws Exception {
+	public List<Subsite> findByPage(int limit, int start) {
 		return super.findByPage(limit, start);
 	}
 }

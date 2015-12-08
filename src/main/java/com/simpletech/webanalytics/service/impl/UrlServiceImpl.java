@@ -24,14 +24,14 @@ public class UrlServiceImpl extends BaseServiceImpl<Url> implements UrlService{
 	UrlDao dao;
 	
 	@Override
-	public int insert(Url model) throws Exception{
+	public int insert(Url model){
 		ModelBase.check(model);
 		ModelBase.fillNullID(model);
 		return dao.insert(model);
 	}
 	
 	@Override
-	public int update(Url model) throws Exception {
+	public int update(Url model) {
 		Url old = findById(getModelID(model));
 		if (old == null) {
 			throw new ServiceException("请求更新记录不存在或已经被删除！");
@@ -41,37 +41,37 @@ public class UrlServiceImpl extends BaseServiceImpl<Url> implements UrlService{
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return dao.delete(id);
 	}
 
 	@Override
-	public Url findById(Object id) throws Exception{
+	public Url findById(Object id){
 		return dao.findById(id);
 	}
 
 	@Override
-	public List<Url> findAll() throws Exception{
+	public List<Url> findAll(){
 		return dao.findAll();
 	}
 
 	@Override
-	public int delete(String id) throws Exception{
+	public int delete(String id){
 		return dao.delete(id);
 	}
 
 	@Override
-	public List<Url> findByPage(int limit, int start) throws Exception {
+	public List<Url> findByPage(int limit, int start) {
 		return dao.findByPage(limit,start);
 	}
 
 	@Override
-	public Url findById(String id) throws Exception {
+	public Url findById(String id) {
 		return dao.findById(id);
 	}
 	
 	@Override
-	public Page<Url> listByPage(int pageSize, int pageNo) throws Exception{
+	public Page<Url> listByPage(int pageSize, int pageNo){
 		int limit = pageSize; 
 		int start = pageNo*pageSize;
 		int totalRecord = dao.countAll();
@@ -83,7 +83,7 @@ public class UrlServiceImpl extends BaseServiceImpl<Url> implements UrlService{
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return dao.countAll();
 	}
 }

@@ -17,40 +17,40 @@ public interface SubsiteService extends BaseService<Subsite> {
 	 * @param model 添加的数据
 	 * @return 改变行数
 	 */
-	int insert(Subsite model) throws Exception;
+	int insert(Subsite model);
 	/**
 	 * 根据ID删除
 	 * @param id 主键ID
 	 */
-	int delete(Object id) throws Exception;
+	int delete(Object id);
 	/**
 	 * 更新一条数据
 	 * @param model 需要更新数据
 	 * @return 改变行数
 	 */
-	int update(Subsite model) throws Exception;
+	int update(Subsite model);
 	/**
 	 * 统计全部出数据
 	 * @return 全部数据量
 	 */
-	int countAll() throws Exception;
+	int countAll();
 	/**
 	 * 根据ID获取
 	 * @param id 主键ID
 	 * @return 数据对象 or null
 	 */
-	Subsite findById(Object id) throws Exception;
+	Subsite findById(Object id);
 	/**
 	 * 获取全部数据
 	 * @return 全部所有数据
 	 */
-	List<Subsite> findAll() throws Exception;
+	List<Subsite> findAll();
 	/**
 	 * 分页查询数据
 	 * @param limit 分页最大值
 	 * @param start 开始编号
 	 * @return 分页列表数据
 	 */
-	List<Subsite> findByPage(int limit, int start) throws Exception;
+	List<Subsite> findByPage(int limit, int start);
 	
 }

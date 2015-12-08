@@ -1,7 +1,7 @@
 package com.simpletech.webanalytics.dao.impl;
 
 import com.simpletech.webanalytics.dao.TrackerDao;
-import com.simpletech.webanalytics.mapper.TrackerMapper;
+import com.simpletech.webanalytics.mapper.api.TrackerMapper;
 import com.simpletech.webanalytics.model.*;
 import com.simpletech.webanalytics.model.entity.JsDetect;
 import com.simpletech.webanalytics.util.AfReflecter;
@@ -30,7 +30,7 @@ public class TrackerDaoImpl implements TrackerDao {
     private static LruCache<String, Url> urlLruCache = new LruCache<>(1000);
 
     @Override
-    public synchronized Url getUrl(int siteId, String idsubsite, String url, String title) throws Exception {
+    public synchronized Url getUrl(int siteId, String idsubsite, String url, String title) {
         String cacheKey = "" + siteId + url.hashCode();
         Url _url_ = urlLruCache.get(cacheKey);
         if (_url_ != null) {
@@ -60,7 +60,7 @@ public class TrackerDaoImpl implements TrackerDao {
     private static LruCache<String, Title> titleLruCache = new LruCache<>(1000);
 
     @Override
-    public synchronized Title getTitle(int siteId, String idsubsite, String title) throws Exception {
+    public synchronized Title getTitle(int siteId, String idsubsite, String title) {
         String cacheKey = "" + siteId + title.hashCode();
         Title _title_ = titleLruCache.get(cacheKey);
         if (_title_ != null) {
@@ -89,7 +89,7 @@ public class TrackerDaoImpl implements TrackerDao {
     private static LruCache<String, Subsite> subsiteLruCache = new LruCache<>(10000);
 
     @Override
-    public synchronized Subsite getSubSite(int siteId, String idsubsite) throws Exception {
+    public synchronized Subsite getSubSite(int siteId, String idsubsite) {
         String cacheKey = siteId + idsubsite;
         Subsite subsite = subsiteLruCache.get(cacheKey);
         if (subsite != null) {
@@ -130,14 +130,14 @@ public class TrackerDaoImpl implements TrackerDao {
     }
 
     @Override
-    public Visit getVisitById(String idvisit) throws Exception {
+    public Visit getVisitById(String idvisit) {
         return mapper.getVisitById(idvisit);
     }
 
     private static SynchronizedLock<String> visitLocks = new SynchronizedLock<>(10000);
 
     @Override
-    public Visit getVisitHalfHour(int siteId, String idsubsite, JsDetect detect, Url url, Title title) throws Exception {
+    public Visit getVisitHalfHour(int siteId, String idsubsite, JsDetect detect, Url url, Title title) {
         synchronized (visitLocks.getLock(siteId + detect.getIdvtor())) {
             Visit visit = mapper.getVisitHalfHour(getIdSite(siteId, idsubsite), detect.getIdvtor());
             if (visit == null) {
@@ -159,24 +159,24 @@ public class TrackerDaoImpl implements TrackerDao {
     }
 
     @Override
-    public Action getActionHalfHour(int siteId, String idsubsite, JsDetect detect, Url url, Title title) throws Exception {
+    public Action getActionHalfHour(int siteId, String idsubsite, JsDetect detect, Url url, Title title) {
         return mapper.getActionHalfHour(getIdSite(siteId, idsubsite), detect.getIdvtor());
     }
 
     @Override
-    public Site findSiteById(int siteId) throws Exception {
+    public Site findSiteById(int siteId) {
         return mapper.findSiteById(siteId);
     }
 
     @Override
-    public void updateVisit(String idsubsite, Visit visit) throws Exception {
+    public void updateVisit(String idsubsite, Visit visit) {
         visit.setIdsubsite(idsubsite);
         AfReflecter.setMemberNoException(visit, "updateTime", new Date());
         mapper.updateVisit(visit);
     }
 
     @Override
-    public void insertAction(String idsubsite, Action action) throws Exception {
+    public void insertAction(String idsubsite, Action action) {
         action.fillNullID();
         action.setIdsubsite(idsubsite);
         AfReflecter.setMemberNoException(action, "createTime", new Date());
@@ -185,7 +185,7 @@ public class TrackerDaoImpl implements TrackerDao {
     }
 
     @Override
-    public void insertEvent(String idsubsite, Event event) throws Exception {
+    public void insertEvent(String idsubsite, Event event) {
         event.fillNullID();
         event.setIdsubsite(idsubsite);
         AfReflecter.setMemberNoException(event, "createTime", new Date());
@@ -194,7 +194,7 @@ public class TrackerDaoImpl implements TrackerDao {
     }
 
     @Override
-    public int updateVisitEvent(int siteId, String idsubsite, String idvtor) throws Exception {
+    public int updateVisitEvent(int siteId, String idsubsite, String idvtor) {
         Visit visit = mapper.findLastVisit(getIdSite(siteId, idsubsite), idvtor);
         if (visit == null) {
             return 0;
@@ -203,12 +203,12 @@ public class TrackerDaoImpl implements TrackerDao {
     }
 
     @Override
-    public int updateVisitPageView(String idvisit, String idurlExit, String idtitleExit) throws Exception {
+    public int updateVisitPageView(String idvisit, String idurlExit, String idtitleExit) {
         return mapper.updateVisitPageView(idvisit, idurlExit, idtitleExit);
     }
 
     @Override
-    public String newVisit(int siteId, String idsubsite, JsDetect detect, Url url, Title title) throws Exception {
+    public String newVisit(int siteId, String idsubsite, JsDetect detect, Url url, Title title) {
         Visit visit = detect.build(siteId);
         visit.setIdurlEntry(url.getId());
         visit.setIdtitleEntry(title.getId());

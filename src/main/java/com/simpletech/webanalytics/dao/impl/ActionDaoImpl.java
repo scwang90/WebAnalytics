@@ -17,37 +17,37 @@ import com.simpletech.webanalytics.model.Action;
 public class ActionDaoImpl extends BaseDaoImpl<Action> implements ActionDao{
 
 	@Override
-	public int insert(Action t) throws Exception {
+	public int insert(Action t) {
 		return super.insert(t);
 	}
 
 	@Override
-	public int update(Action t) throws Exception {
+	public int update(Action t) {
 		return super.update(t);
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return super.delete(id);
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return super.countAll();
 	}
 
 	@Override
-	public Action findById(Object id) throws Exception {
+	public Action findById(Object id) {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<Action> findAll() throws Exception {
+	public List<Action> findAll() {
 		return super.findAll();
 	}
 
 	@Override
-	public List<Action> findByPage(int limit, int start) throws Exception {
+	public List<Action> findByPage(int limit, int start) {
 		return super.findByPage(limit, start);
 	}
 }

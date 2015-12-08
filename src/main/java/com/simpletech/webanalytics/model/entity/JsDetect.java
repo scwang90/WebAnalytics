@@ -164,7 +164,7 @@ public class JsDetect {
     /**
      * 检测是否满足必须参数
      */
-    public void check() throws Exception {
+    public void check() {
         Field[] fields = AfReflecter.getFieldAnnotation(this.getClass(), Must.class);
         for (Field field:fields){
             String name = field.getName() + ":" + field.getAnnotation(Must.class).value();

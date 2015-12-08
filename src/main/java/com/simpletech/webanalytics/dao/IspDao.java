@@ -29,9 +29,9 @@ public interface IspDao {
 	 * @return
 	 * @throws Exception
 	 */
-	List<Visit> findWhereIsp(String where,int limit,int start) throws Exception;
+	List<Visit> findWhereIsp(String where,int limit,int start);
 
-	List<HashMap<String,Object>> ispBatch(String where,int limit,int start) throws Exception;
+	List<HashMap<String,Object>> ispBatch(String where,int limit,int start);
 	/**
 	 * 统计isp信息
 	 * @param siteId   网站ID
@@ -39,5 +39,5 @@ public interface IspDao {
 	 * @param end      结束时间
 	 * @return 获取出口页面列表
 	 */
-	List<IspValue> isp(String siteId, Date start, Date end) throws Exception;
+	List<IspValue> isp(String siteId, Date start, Date end);
 }

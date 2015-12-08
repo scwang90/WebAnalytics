@@ -16,7 +16,7 @@ public interface TrackerService {
      * @param event 事件参数接收对象
      * @throws Exception
      */
-    void trackEvent(int siteId, JsEvent event) throws Exception;
+    void trackEvent(int siteId, JsEvent event);
 
     /**
      * JS探针页面统计
@@ -24,7 +24,7 @@ public interface TrackerService {
      * @param detect 页面参数接收对象
      * @throws Exception
      */
-    void trackPageView(int siteId, JsDetect detect) throws Exception;
+    void trackPageView(int siteId, JsDetect detect);
 
     /**
      * JS探针用户信息
@@ -32,5 +32,5 @@ public interface TrackerService {
      * @param siteId 网站ID
      * @param user  事件接收对象
      */
-    void trackerUser(int siteId, JsUser user) throws Exception;
+    void trackerUser(int siteId, JsUser user);
 }

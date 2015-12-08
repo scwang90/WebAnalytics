@@ -30,7 +30,7 @@ public class BaseController {
      * @return map 列表
      * @throws Exception includes 中的参数错误
      */
-    protected List<Map<String, Object>> mapInclude(List<? extends Object> list, String[] includes) throws Exception {
+    protected List<Map<String, Object>> mapInclude(List<? extends Object> list, String[] includes) {
         List<Map<String, Object>> map = new ArrayList<>();
         for (Object model : list) {
             map.add(mapInclude(model, includes));
@@ -46,11 +46,11 @@ public class BaseController {
      * @return map
      * @throws Exception includes 中的参数错误
      */
-    protected Map<String, Object> mapInclude(Object model, String[] includes) throws Exception {
+    protected Map<String, Object> mapInclude(Object model, String[] includes) {
         Map<String, Object> map = new HashMap<>();
         if (model != null) {
             for (String include : includes) {
-                map.put(include, AfReflecter.getMember(model, include));
+                map.put(include, AfReflecter.getMemberNoException(model, include));
             }
         }
         return map;
@@ -64,7 +64,7 @@ public class BaseController {
      * @return map 列表
      * @throws Exception includes 中的参数错误
      */
-    protected List<Map<String, Object>> mapExclude(List<? extends Object> list, String[] excludes) throws Exception {
+    protected List<Map<String, Object>> mapExclude(List<? extends Object> list, String[] excludes) {
         List<Map<String, Object>> map = new ArrayList<>();
         String[] includes = null;
         for (Object model : list) {

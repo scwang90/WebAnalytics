@@ -33,7 +33,7 @@ public class TrackerServiceImpl implements TrackerService {
     private static SynchronizedLock<String> actionLocks = new SynchronizedLock<>(10000);
 
     @Override
-    public void trackPageView(int siteId, JsDetect detect) throws Exception {
+    public void trackPageView(int siteId, JsDetect detect) {
         Site site = dao.findSiteById(siteId);
         if (site != null) {
             String idsubsite = getIdSubSite(site, detect.getUrl());
@@ -72,7 +72,7 @@ public class TrackerServiceImpl implements TrackerService {
 
 
     @Override
-    public void trackEvent(int siteId, JsEvent event) throws Exception {
+    public void trackEvent(int siteId, JsEvent event) {
         Site site = dao.findSiteById(siteId);
         if (site != null) {
             String idsubsite = getIdSubSite(site, event.getUrl());
@@ -81,7 +81,7 @@ public class TrackerServiceImpl implements TrackerService {
         }
     }
 
-    public void trackerPageView(int siteId, JsDetect detect) throws Exception {
+    public void trackerPageView(int siteId, JsDetect detect) {
         Site site = dao.findSiteById(siteId);
         if (site != null) {
             String idsubsite = getIdSubSite(site, detect.getUrl());
@@ -109,7 +109,7 @@ public class TrackerServiceImpl implements TrackerService {
         }
     }
 
-    public void trackerEvent(int siteId, JsEvent event) throws Exception {
+    public void trackerEvent(int siteId, JsEvent event) {
         Site site = dao.findSiteById(siteId);
         if (site != null) {
             String idsubsite = getIdSubSite(site, event.getUrl());
@@ -139,7 +139,7 @@ public class TrackerServiceImpl implements TrackerService {
     }
 
     @Override
-    public void trackerUser(int siteId, JsUser user) throws Exception {
+    public void trackerUser(int siteId, JsUser user) {
         Site site = dao.findSiteById(siteId);
         if (site != null) {
             String idsubsite = getIdSubSite(site, user.getUrl());

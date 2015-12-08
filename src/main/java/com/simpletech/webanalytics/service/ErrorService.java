@@ -19,5 +19,5 @@ public interface ErrorService {
      * @param skip     分页起始
      * @return 排行数据
      */
-    List<ErrorValue> unknownError(Ranking ranking,int limit, int skip) throws Exception;
+    List<ErrorValue> unknownError(Ranking ranking,int limit, int skip);
 }

@@ -1,6 +1,7 @@
 package com.simpletech.webanalytics.service.impl;
 
 import com.simpletech.webanalytics.dao.ManagerDao;
+import com.simpletech.webanalytics.mapper.api.ManagerMapper;
 import com.simpletech.webanalytics.model.Site;
 import com.simpletech.webanalytics.model.Subsite;
 import com.simpletech.webanalytics.service.ManagerService;
@@ -21,25 +22,30 @@ public class ManagerServiceImpl implements ManagerService {
     @Autowired
     ManagerDao dao;
 
+    @Autowired
+    ManagerMapper mapper;
+
     @Override
-    public int insertSite(Site site) throws Exception {
+    public int insertSite(String userId, Site site) {
         site.check();
+        site.setIduser(userId);
         return dao.insertSite(site);
     }
 
     @Override
-    public int updateSite(Site site) throws Exception {
+    public int updateSite(String userId, Site site) {
         site.check();
+        site.setIduser(userId);
         return dao.updateSite(site);
     }
 
     @Override
-    public List<Site> findList(int limit, int start) throws Exception {
-        return dao.findList(limit, start);
+    public List<Site> findList(String userId, int limit, int start) {
+        return mapper.findSiteList(userId, limit, start);
     }
 
     @Override
-    public List<Subsite> findSubList(int siteId, int limit, int start) throws Exception {
-        return dao.findSubList(siteId, limit, start);
+    public List<Subsite> findSubList(String userId, int siteId, int limit, int start) {
+        return mapper.findSubSiteList(userId, siteId, limit, start);
     }
 }

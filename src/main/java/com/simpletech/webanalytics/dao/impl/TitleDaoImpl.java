@@ -17,37 +17,37 @@ import com.simpletech.webanalytics.model.Title;
 public class TitleDaoImpl extends BaseDaoImpl<Title> implements TitleDao{
 
 	@Override
-	public int insert(Title t) throws Exception {
+	public int insert(Title t) {
 		return super.insert(t);
 	}
 
 	@Override
-	public int update(Title t) throws Exception {
+	public int update(Title t) {
 		return super.update(t);
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return super.delete(id);
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return super.countAll();
 	}
 
 	@Override
-	public Title findById(Object id) throws Exception {
+	public Title findById(Object id) {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<Title> findAll() throws Exception {
+	public List<Title> findAll() {
 		return super.findAll();
 	}
 
 	@Override
-	public List<Title> findByPage(int limit, int start) throws Exception {
+	public List<Title> findByPage(int limit, int start) {
 		return super.findByPage(limit, start);
 	}
 }

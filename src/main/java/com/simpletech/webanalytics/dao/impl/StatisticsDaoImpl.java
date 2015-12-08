@@ -28,9 +28,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     StatisticsMapper mapper;
 
     @Override
-    public List<RankingValue> brand(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankBrand(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.brand(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankBrand(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             Brand venum = Brand.parserAcronym(value.getName());
             value.setName(venum.getName());
@@ -44,9 +44,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> model(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankModel(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.model(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankModel(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
@@ -63,9 +63,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> nettype(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankNettype(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.nettype(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankNettype(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             Nettype venum = Nettype.parserAcronym(value.getName());
             value.setName(venum.getName());
@@ -79,9 +79,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> browser(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankBrowser(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.browser(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankBrowser(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             Browser venum = Browser.parserAcronym(value.getName());
             value.setName(venum.getName());
@@ -95,9 +95,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> system(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankSystem(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.system(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankSystem(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             OperateSystem venum = OperateSystem.parserAcronym(value.getName());
             value.setName(venum.getName());
@@ -111,9 +111,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> appname(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankAppname(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.appname(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankAppname(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             Application venum = Application.parserAcronym(value.getName());
             value.setName(venum.getName());
@@ -127,9 +127,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> resolution(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankResolution(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.resolution(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankResolution(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
@@ -146,9 +146,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> depth(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankDepth(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.depth(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankDepth(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
@@ -165,9 +165,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> lang(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankLang(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.lang(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankLang(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
@@ -184,9 +184,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> country(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankCountry(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.country(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankCountry(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
@@ -203,9 +203,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> province(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankProvince(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.province(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankProvince(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
@@ -222,9 +222,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> city(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankCity(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.city(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankCity(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
@@ -241,9 +241,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> ip(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankIp(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.coutRanking(idsite, start, end);
-        List<RankingValue> list = mapper.ip(idsite, rankingtype.name(), start, end, limit, skip);
+        List<RankingValue> list = mapper.rankIp(idsite, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
                 value.setName(Brand.Unknown.name());
@@ -260,7 +260,26 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageBrand(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> rankIsp(String idsite, RankingType rankingtype, Date start, Date end, int limit, int skip) {
+        RankingValue count = mapper.coutRanking(idsite, start, end);
+        List<RankingValue> list = mapper.rankIsp(idsite, rankingtype.name(), start, end, limit, skip);
+        for (RankingValue value : list) {
+            if (AfStringUtil.isEmpty(value.getName())) {
+                value.setName(Brand.Unknown.name());
+                value.setRemark(Brand.Unknown.getRemark());
+            } else {
+                value.setRemark("");
+            }
+            value.setRuv(1f * value.getUv() / count.getUv());
+            value.setRpv(1f * value.getPv() / count.getPv());
+            value.setRip(1f * value.getIp() / count.getIp());
+            value.setRvt(1f * value.getVt() / count.getVt());
+        }
+        return list;
+    }
+
+    @Override
+    public List<RankingValue> pageBrand(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageBrand(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -276,7 +295,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageModel(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageModel(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageModel(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -295,7 +314,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageNettype(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageNettype(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageNettype(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -311,7 +330,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageBrowser(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageBrowser(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageBrowser(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -327,7 +346,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageSystem(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageSystem(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageSystem(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -343,7 +362,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageAppname(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageAppname(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageAppname(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -359,7 +378,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageResolution(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageResolution(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageResolution(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -378,7 +397,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageDepth(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageDepth(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageDepth(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -397,7 +416,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageLang(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageLang(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageLang(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -416,7 +435,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageCountry(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageCountry(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageCountry(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -435,7 +454,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageProvince(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageProvince(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageProvince(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -454,7 +473,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageCity(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageCity(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageCity(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -473,7 +492,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<RankingValue> pageIp(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageIp(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
         RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
         List<RankingValue> list = mapper.pageIp(idsite, idurl, rankingtype.name(), start, end, limit, skip);
         for (RankingValue value : list) {
@@ -492,7 +511,26 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<MapPointValue> fullNickName(List<MapPointValue> points) throws Exception {
+    public List<RankingValue> pageIsp(String idsite, String idurl, RankingType rankingtype, Date start, Date end, int limit, int skip) {
+        RankingValue count = mapper.pageCoutRank(idsite, idurl, start, end);
+        List<RankingValue> list = mapper.pageIsp(idsite, idurl, rankingtype.name(), start, end, limit, skip);
+        for (RankingValue value : list) {
+            if (AfStringUtil.isEmpty(value.getName())) {
+                value.setName(Brand.Unknown.name());
+                value.setRemark(Brand.Unknown.getRemark());
+            } else {
+                value.setRemark("");
+            }
+            value.setRuv(1f * value.getUv() / count.getUv());
+            value.setRpv(1f * value.getPv() / count.getPv());
+            value.setRip(1f * value.getIp() / count.getIp());
+            value.setRvt(1f * value.getVt() / count.getVt());
+        }
+        return list;
+    }
+
+    @Override
+    public List<MapPointValue> fullNickName(List<MapPointValue> points) {
         if (points.size() > 0) {
             String where = "WHERE idvisitor IN(%s)";
             StringBuffer builder = new StringBuffer();
@@ -517,12 +555,12 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<ShareLinePoint> sharePoint(String idsite, String urlId, Date start, Date end) throws Exception {
+    public List<ShareLinePoint> sharePoint(String idsite, String urlId, Date start, Date end) {
         return mapper.sharePoint(idsite, urlId, start, end);
     }
 
     @Override
-    public List<ShareStartPoint> getShareStartPoint(String idsite, String urlId, Date start, Date end) throws Exception {
+    public List<ShareStartPoint> getShareStartPoint(String idsite, String urlId, Date start, Date end) {
         return mapper.getShareStartPoint(idsite, urlId, start, end);
     }
 

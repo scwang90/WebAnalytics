@@ -17,37 +17,37 @@ import com.simpletech.webanalytics.model.ShareUser;
 public class ShareUserDaoImpl extends BaseDaoImpl<ShareUser> implements ShareUserDao{
 
 	@Override
-	public int insert(ShareUser t) throws Exception {
+	public int insert(ShareUser t) {
 		return super.insert(t);
 	}
 
 	@Override
-	public int update(ShareUser t) throws Exception {
+	public int update(ShareUser t) {
 		return super.update(t);
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return super.delete(id);
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return super.countAll();
 	}
 
 	@Override
-	public ShareUser findById(Object id) throws Exception {
+	public ShareUser findById(Object id) {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<ShareUser> findAll() throws Exception {
+	public List<ShareUser> findAll() {
 		return super.findAll();
 	}
 
 	@Override
-	public List<ShareUser> findByPage(int limit, int start) throws Exception {
+	public List<ShareUser> findByPage(int limit, int start) {
 		return super.findByPage(limit, start);
 	}
 }

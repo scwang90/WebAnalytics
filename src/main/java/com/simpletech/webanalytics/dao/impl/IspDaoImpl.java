@@ -26,22 +26,22 @@ public class IspDaoImpl implements IspDao {
     IspMapper mapper;
 
     @Override
-    public int updateIsp(Visit model) throws Exception{
+    public int updateIsp(Visit model){
         return mapper.updateIsp(model);
     }
 
     @Override
-    public List<Visit> findWhereIsp(String where,int limit,int start) throws Exception {
+    public List<Visit> findWhereIsp(String where,int limit,int start) {
         return mapper.findWhereIsp(where, limit, start);
     }
 
     @Override
-    public List<HashMap<String, Object>> ispBatch(String where, int limit,int start) throws Exception{
+    public List<HashMap<String, Object>> ispBatch(String where, int limit,int start){
         return mapper.findWhere(where,limit,start);
     }
 
     @Override
-    public List<IspValue> isp(String siteId,Date start,Date end)throws Exception{
+    public List<IspValue> isp(String siteId,Date start,Date end) {
 
         return mapper.isp(siteId, start, end);
     }

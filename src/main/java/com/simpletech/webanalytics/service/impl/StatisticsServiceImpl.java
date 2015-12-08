@@ -26,7 +26,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     StatisticsMapper mapper;
 
     @Override
-    public List<VisitValue> visitTrend(String idsite, Period period, Date start, Date end) throws Exception {
+    public List<VisitTrendValue> visitTrend(String idsite, Period period, Date start, Date end) {
         switch (period) {
             case hour:
                 return mapper.visitTrendHour(idsite, start, end);
@@ -41,22 +41,102 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public VisitValue visitSpan(String idsite, Date start, Date end) throws Exception {
+    public VisitSpanValue visitSpan(String idsite, Date start, Date end) {
         return mapper.visitSpan(idsite, start, end);
     }
 
     @Override
-    public EventSpanValue eventSpan(String idsite, Date start, Date end) throws Exception {
+    public List<VisitTrendValue> pageTrend(String idsite, String idurl, Period period, Date start, Date end) {
+        switch (period) {
+            case hour:
+                return mapper.pageTrendHour(idsite, idurl, start, end);
+            case day:
+                return mapper.pageTrendDay(idsite, idurl, start, end);
+            case week:
+                return mapper.pageTrendWeek(idsite, idurl, start, end);
+            case month:
+                return mapper.pageTrendMonth(idsite, idurl, start, end);
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public VisitSpanValue pageSpan(String idsite, String idurl, Date start, Date end) {
+        return mapper.pageSpan(idsite, idurl, start, end);
+    }
+
+    @Override
+    public List<VisitTimeMapValue> visitTimeMap(String idsite, TimeType type, Date start, Date end) {
+        List<VisitTimeMapValue> list = new ArrayList<>();
+        switch (type) {
+            case server:
+                list = mapper.visitServerTimeMap(idsite, start, end);
+                break;
+            case local:
+                list = mapper.visitLocalTimeMap(idsite, start, end);
+                break;
+        }
+        return list;
+    }
+    @Override
+    public List<VisitTimeMapValue> pageTimeMap(String idsite, String idurl, TimeType type, Date start, Date end) {
+        List<VisitTimeMapValue> list = new ArrayList<>();
+        switch (type) {
+            case server:
+                list = mapper.pageServerTimeMap(idsite, idurl, start, end);
+                break;
+            case local:
+                list = mapper.pageLocalTimeMap(idsite, idurl, start, end);
+                break;
+        }
+        return list;
+    }
+
+    @Override
+    public List<MapValue> visitPageMap(String idsite, VisitPageType type, String _map, Date start, Date end) {
+        List<MapValue> list = new ArrayList<>();
+
+        _map = "" + _map;
+        _map = _map.matches("(\\d+,)+\\d+") ? _map : "1,2,5,10";
+        _map = _map + "," + Integer.MAX_VALUE;
+        String[] maps = _map.split(",");
+        int lastValue = 1;
+        for (String map : maps) {
+            MapValue value = null;
+            switch (type) {
+                case view:
+                    value = mapper.visitPageViewMap(idsite, lastValue, Integer.parseInt(map), start, end);
+                    break;
+                case unique:
+                    value = mapper.visitPageUniqueMap(idsite, lastValue, Integer.parseInt(map), start, end);
+                    break;
+            }
+            value.map(lastValue, Integer.valueOf(map), "页");
+
+            if (map.equals(String.valueOf(Integer.MAX_VALUE))) {
+                if (!value.isEmpty()) {
+                    list.add(value);
+                }
+            } else {
+                list.add(value);
+            }
+            lastValue = Integer.parseInt(map) + 1;
+        }
+        return list;
+    }
+
+    @Override
+    public EventSpanValue eventSpan(String idsite, Date start, Date end) {
         return mapper.eventSpan(idsite, start, end);
     }
 
     @Override
-    public List<EventNameValue> eventRank(String idsite, Date start, Date end, int limit, int skip) throws Exception {
+    public List<EventNameValue> eventRank(String idsite, Date start, Date end, int limit, int skip) {
         return mapper.eventRank(idsite, start, end, limit, skip);
     }
 
     @Override
-    public List<EventTrendValue> eventTrend(String idsite, Period period, Date start, Date end) throws Exception {
+    public List<EventTrendValue> eventTrend(String idsite, Period period, Date start, Date end) {
         List<EventTrendValue> events = new ArrayList<>();
         switch (period) {
             case hour:
@@ -76,7 +156,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<EventNameTrendValue> eventNameTrend(String idsite, String category, Period period, Date start, Date end, int limit, int skip) throws Exception {
+    public List<EventNameTrendValue> eventNameTrend(String idsite, String category, Period period, Date start, Date end, int limit, int skip) {
         List<EventNameTrendValue> events = new ArrayList<>();
         switch (period) {
             case hour:
@@ -102,12 +182,12 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public EventNameSpanValue eventNameSpan(String idsite, String name, Date start, Date end) throws Exception {
+    public EventNameSpanValue eventNameSpan(String idsite, String name, Date start, Date end) {
         return mapper.eventNameSpan(idsite, name, start, end);
     }
 
     @Override
-    public List<PageValue> titleurl(String idsite, PageRank type, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<PageValue> titleurl(String idsite, PageRank type, RankingType ranktype, Date start, Date end, int limit, int skip) {
         List<PageValue> list = new ArrayList<>();
         switch (type) {
             case title:
@@ -121,7 +201,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public VisitorSpanValue visitorSpan(String idsite, Date start, Date end) throws Exception {
+    public VisitorSpanValue visitorSpan(String idsite, Date start, Date end) {
         VisitorSpanValue value = mapper.visitorSpan(idsite, start, end);
         //判断是否是主站
         boolean isSubSite = !idsite.matches("\\d+");
@@ -135,7 +215,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<VisitorTrendValue> visitorTrend(String idsite, Period period, Date start, Date end) throws Exception {
+    public List<VisitorTrendValue> visitorTrend(String idsite, Period period, Date start, Date end) {
         List<VisitorTrendValue> list = new ArrayList<>();
         switch (period) {
             case hour:
@@ -165,40 +245,42 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<RankingValue> ranking(String idsite, Ranking ranking, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> ranking(String idsite, Ranking ranking, RankingType ranktype, Date start, Date end, int limit, int skip) {
         switch (ranking) {
             case appname:
-                return dao.appname(idsite, ranktype, start, end, limit, skip);
+                return dao.rankAppname(idsite, ranktype, start, end, limit, skip);
             case brand:
-                return dao.brand(idsite, ranktype, start, end, limit, skip);
+                return dao.rankBrand(idsite, ranktype, start, end, limit, skip);
             case browser:
-                return dao.browser(idsite, ranktype, start, end, limit, skip);
+                return dao.rankBrowser(idsite, ranktype, start, end, limit, skip);
             case city:
-                return dao.city(idsite, ranktype, start, end, limit, skip);
+                return dao.rankCity(idsite, ranktype, start, end, limit, skip);
             case ip:
-                return dao.ip(idsite, ranktype, start, end, limit, skip);
+                return dao.rankIp(idsite, ranktype, start, end, limit, skip);
+            case isp:
+                return dao.rankIsp(idsite, ranktype, start, end, limit, skip);
             case country:
-                return dao.country(idsite, ranktype, start, end, limit, skip);
+                return dao.rankCountry(idsite, ranktype, start, end, limit, skip);
             case depth:
-                return dao.depth(idsite, ranktype, start, end, limit, skip);
+                return dao.rankDepth(idsite, ranktype, start, end, limit, skip);
             case lang:
-                return dao.lang(idsite, ranktype, start, end, limit, skip);
+                return dao.rankLang(idsite, ranktype, start, end, limit, skip);
             case model:
-                return dao.model(idsite, ranktype, start, end, limit, skip);
+                return dao.rankModel(idsite, ranktype, start, end, limit, skip);
             case nettype:
-                return dao.nettype(idsite, ranktype, start, end, limit, skip);
+                return dao.rankNettype(idsite, ranktype, start, end, limit, skip);
             case province:
-                return dao.province(idsite, ranktype, start, end, limit, skip);
+                return dao.rankProvince(idsite, ranktype, start, end, limit, skip);
             case resolution:
-                return dao.resolution(idsite, ranktype, start, end, limit, skip);
+                return dao.rankResolution(idsite, ranktype, start, end, limit, skip);
             case system:
-                return dao.system(idsite, ranktype, start, end, limit, skip);
+                return dao.rankSystem(idsite, ranktype, start, end, limit, skip);
         }
         return new ArrayList<>();
     }
 
     @Override
-    public List<RankingValue> pageRank(String idsite, String idurl, Ranking rank, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<RankingValue> pageRank(String idsite, String idurl, Ranking rank, RankingType ranktype, Date start, Date end, int limit, int skip) {
         switch (rank) {
             case appname:
                 return dao.pageAppname(idsite, idurl, ranktype, start, end, limit, skip);
@@ -210,6 +292,8 @@ public class StatisticsServiceImpl implements StatisticsService {
                 return dao.pageCity(idsite, idurl, ranktype, start, end, limit, skip);
             case ip:
                 return dao.pageIp(idsite, idurl, ranktype, start, end, limit, skip);
+            case isp:
+                return dao.pageIsp(idsite, idurl, ranktype, start, end, limit, skip);
             case country:
                 return dao.pageCountry(idsite, idurl, ranktype, start, end, limit, skip);
             case depth:
@@ -231,7 +315,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public Map<String, Object> shareMap(String idsite, String urlId, Date start, Date end) throws Exception {
+    public Map<String, Object> shareMap(String idsite, String urlId, Date start, Date end) {
         List<ShareLinePoint> list = dao.sharePoint(idsite, urlId, start, end);
         List<MapLineValue> lines = new ArrayList<>();
         List<MapPointValue> points = new ArrayList<>();
@@ -306,12 +390,12 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<PageRankValue> shareRank(String idsite, Date start, Date end, int limit, int skip) throws Exception {
+    public List<PageRankValue> shareRank(String idsite, Date start, Date end, int limit, int skip) {
         return mapper.shareRank(idsite, start, end, limit, skip);
     }
 
     @Override
-    public List<EnterCloseValue> enterexit(String idsite, EnterExit type, RankingType ranktype, Date start, Date end, int limit, int skip) throws Exception {
+    public List<EnterCloseValue> enterexit(String idsite, EnterExit type, RankingType ranktype, Date start, Date end, int limit, int skip) {
         switch (type) {
             case entry:
                 return mapper.entryUrls(idsite, ranktype.name(), start, end, limit, skip);

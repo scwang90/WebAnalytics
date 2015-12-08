@@ -17,37 +17,37 @@ import com.simpletech.webanalytics.model.ShareLinePoint;
 public class ShareLinePointDaoImpl extends BaseDaoImpl<ShareLinePoint> implements ShareLinePointDao{
 
 	@Override
-	public int insert(ShareLinePoint t) throws Exception {
+	public int insert(ShareLinePoint t) {
 		return super.insert(t);
 	}
 
 	@Override
-	public int update(ShareLinePoint t) throws Exception {
+	public int update(ShareLinePoint t) {
 		return super.update(t);
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return super.delete(id);
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return super.countAll();
 	}
 
 	@Override
-	public ShareLinePoint findById(Object id) throws Exception {
+	public ShareLinePoint findById(Object id) {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<ShareLinePoint> findAll() throws Exception {
+	public List<ShareLinePoint> findAll() {
 		return super.findAll();
 	}
 
 	@Override
-	public List<ShareLinePoint> findByPage(int limit, int start) throws Exception {
+	public List<ShareLinePoint> findByPage(int limit, int start) {
 		return super.findByPage(limit, start);
 	}
 }

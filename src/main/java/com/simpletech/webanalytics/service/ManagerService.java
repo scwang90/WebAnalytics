@@ -19,7 +19,7 @@ public interface ManagerService {
      * @param site 网站
      * @return 改变行数
      */
-    int insertSite(Site site) throws Exception;
+    int insertSite(String userId, Site site);
 
     /**
      * 更新网站
@@ -27,7 +27,7 @@ public interface ManagerService {
      * @param site 网站
      * @return 改变行数
      */
-    int updateSite(Site site) throws Exception;
+    int updateSite(String userId, Site site);
 
     /**
      * 获取网站列表
@@ -36,7 +36,7 @@ public interface ManagerService {
      * @param start 分页开始
      * @return 网站列表
      */
-    List<Site> findList(int limit, int start) throws Exception;
+    List<Site> findList(String userId, int limit, int start);
 
     /**
      * 获取子站列表
@@ -46,5 +46,5 @@ public interface ManagerService {
      * @param start  分页开始
      * @return 子站列表
      */
-    List<Subsite> findSubList(int siteId, int limit, int start) throws Exception;
+    List<Subsite> findSubList(String userId, int siteId, int limit, int start);
 }

@@ -26,7 +26,7 @@ public class TrackShareServiceImpl implements TrackShareService {
     TrackShareDao dao;
 
     @Override
-    public void trackerShare(int siteId, String idsubsite, JsDetect detect, Url url) throws Exception {
+    public void trackerShare(int siteId, String idsubsite, JsDetect detect, Url url) {
         if (AfStringUtil.isNotEmpty(detect.getFromvid()) && detect.getFromvts() > 0) {
             String idVisitor = detect.getIdvtor();
             String idFromtor = detect.getFromvid();
@@ -64,7 +64,7 @@ public class TrackShareServiceImpl implements TrackShareService {
     }
 
     @Override
-    public void addOrUpdateUser(int siteId, ShareUser user) throws Exception {
+    public void addOrUpdateUser(int siteId, ShareUser user) {
         ShareUser old = dao.getShareUser(user.getIdsite(), user.getIdvisitor());
         if (old == null) {
             user.setIdsite(siteId);

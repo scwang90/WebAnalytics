@@ -17,7 +17,7 @@ public interface MultiDao<T> extends BaseDao<T>{
 	 * @return
 	 * @throws Exception
 	 */
-	public int deleteWhere(String where) throws Exception;
+	public int deleteWhere(String where);
 	/**
 	 * 根据属性值删除
 	 * @param propertyName
@@ -25,14 +25,14 @@ public interface MultiDao<T> extends BaseDao<T>{
 	 * @return
 	 * @throws Exception
 	 */
-	public int deleteByPropertyName(String propertyName, Object value) throws Exception;
+	public int deleteByPropertyName(String propertyName, Object value);
 	/**
 	 * 选择性统计
 	 * @param where
 	 * @return
 	 * @throws Exception
 	 */
-	public int countWhere(String where) throws Exception;
+	public int countWhere(String where);
 	/**
 	 * 根据属性统计
 	 * @param propertyName
@@ -40,14 +40,14 @@ public interface MultiDao<T> extends BaseDao<T>{
 	 * @return
 	 * @throws Exception
 	 */
-	public int countByPropertyName(String propertyName, Object value) throws Exception;
+	public int countByPropertyName(String propertyName, Object value);
 	/**
 	 * 选择性查询
 	 * @param where
 	 * @return
 	 * @throws Exception
 	 */
-	public List<T> findWhere(String where) throws Exception;
+	public List<T> findWhere(String where);
 	/**
 	 * 选择性分页查询
 	 * @param where
@@ -56,7 +56,7 @@ public interface MultiDao<T> extends BaseDao<T>{
 	 * @return
 	 * @throws Exception
 	 */
-	public List<T> findWhereByPage(String where, int limit, int start) throws Exception;
+	public List<T> findWhereByPage(String where, int limit, int start);
 	/**
 	 * 根据属性查询
 	 * @param propertyName
@@ -64,6 +64,6 @@ public interface MultiDao<T> extends BaseDao<T>{
 	 * @return
 	 * @throws Exception
 	 */
-	public List<T> findByPropertyName(String propertyName, Object value) throws Exception;
+	public List<T> findByPropertyName(String propertyName, Object value);
 
 }

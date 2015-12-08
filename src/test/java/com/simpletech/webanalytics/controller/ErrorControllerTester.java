@@ -37,7 +37,7 @@ public class ErrorControllerTester {
 
 
     @Test
-    public void unknownError() throws Exception {
+    public void unknownError() {
         Object result = controller.unknownError(Ranking.browser,100,0);
         System.out.println(JacksonUtil.toJson(result));
     }

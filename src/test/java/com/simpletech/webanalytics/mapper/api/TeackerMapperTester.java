@@ -1,6 +1,6 @@
 package com.simpletech.webanalytics.mapper.api;
 
-import com.simpletech.webanalytics.mapper.TrackerMapper;
+import com.simpletech.webanalytics.mapper.api.TrackerMapper;
 import com.simpletech.webanalytics.util.JacksonUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;

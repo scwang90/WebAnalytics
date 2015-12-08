@@ -17,37 +17,37 @@ import com.simpletech.webanalytics.model.Url;
 public class UrlDaoImpl extends BaseDaoImpl<Url> implements UrlDao{
 
 	@Override
-	public int insert(Url t) throws Exception {
+	public int insert(Url t) {
 		return super.insert(t);
 	}
 
 	@Override
-	public int update(Url t) throws Exception {
+	public int update(Url t) {
 		return super.update(t);
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return super.delete(id);
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return super.countAll();
 	}
 
 	@Override
-	public Url findById(Object id) throws Exception {
+	public Url findById(Object id) {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<Url> findAll() throws Exception {
+	public List<Url> findAll() {
 		return super.findAll();
 	}
 
 	@Override
-	public List<Url> findByPage(int limit, int start) throws Exception {
+	public List<Url> findByPage(int limit, int start) {
 		return super.findByPage(limit, start);
 	}
 }

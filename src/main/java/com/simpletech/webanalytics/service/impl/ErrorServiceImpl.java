@@ -27,13 +27,12 @@ public class ErrorServiceImpl implements ErrorService {
 
 
 
-    public List<ErrorValue> unknownError(Ranking ranking,int limit, int skip) throws Exception {
+    public List<ErrorValue> unknownError(Ranking ranking,int limit, int skip) {
         switch (ranking) {
             case brand:
                 return dao.brand(limit, skip);
             case appname:
                 return dao.appname(limit, skip);
-
             case browser:
                 return dao.browser(limit, skip);
             case city:

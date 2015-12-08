@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_site
  * @author 树朾
- * @date 2015-12-01 15:41:57 中国标准时间
+ * @date 2015-12-03 17:25:05 中国标准时间
  */
 @Table("t_site")
 public class Site extends ModelBase{
@@ -18,6 +18,10 @@ public class Site extends ModelBase{
 	 */
 	@Id
 	private Integer id;
+	/**
+	 * 绑定用户ID
+	 */
+	private String iduser;
 	/**
 	 * 创建时间
 	 */
@@ -50,6 +54,14 @@ public class Site extends ModelBase{
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public String getIduser(){
+		return this.iduser;
+	}
+
+	public void setIduser(String iduser) {
+		this.iduser = iduser;
 	}
 	
 	public java.util.Date getCreateTime(){

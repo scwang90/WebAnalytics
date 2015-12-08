@@ -19,7 +19,7 @@ public interface TrackShareDao {
      * @param idvisitor 访问者ID
      * @return ShareUser or null
      */
-    ShareUser getShareUser(int siteId, String idvisitor) throws Exception;
+    ShareUser getShareUser(int siteId, String idvisitor);
 
     /**
      * 获取ShareUser对象 (如果不存在则添加)
@@ -30,7 +30,7 @@ public interface TrackShareDao {
      * @param detect    Js探针数据
      * @return 返回有效的 ShareUser 对象
      */
-    ShareUser getShareUser(int siteId, String idsubsite, String idvisitor, JsDetect detect) throws Exception;
+    ShareUser getShareUser(int siteId, String idsubsite, String idvisitor, JsDetect detect);
 
 //    /**
 //     * 获取上一个分享点 (如果不存在则添加)
@@ -42,7 +42,7 @@ public interface TrackShareDao {
 //     * @param fromts    时间分享时间
 //     * @return 返回有效的 ShareLinePoint 对象
 //     */
-//    ShareLinePoint getShareLinePoint(int siteId, String idsubsite, String idurl, String idfromtor, long fromts) throws Exception;
+//    ShareLinePoint getShareLinePoint(int siteId, String idsubsite, String idurl, String idfromtor, long fromts);
 
     /**
      * 获取本次分享点 (如果不存在则添加)
@@ -54,35 +54,35 @@ public interface TrackShareDao {
      * @param idvisitor 接受者ID
      * @return 返回有效的 ShareLinePoint 对象
      */
-    ShareLinePoint getShareLinePoint(int siteId, String idsubsite, String idurl, String idfromtor, String idvisitor) throws Exception;
+    ShareLinePoint getShareLinePoint(int siteId, String idsubsite, String idurl, String idfromtor, String idvisitor);
 
     /**
      * 添加分享点
      *
      * @param point ShareLinePoint
      */
-    int insertShareLinePoint(ShareLinePoint point) throws Exception;
+    int insertShareLinePoint(ShareLinePoint point);
 
     /**
      * 更新分享点
      *
      * @param tpoint ShareLinePoint
      */
-    int updateShareLinePoint(ShareLinePoint tpoint) throws Exception;
+    int updateShareLinePoint(ShareLinePoint tpoint);
 
     /**
      * 添加分用户
      *
      * @param user ShareUser
      */
-    int insertShareUser(ShareUser user) throws Exception;
+    int insertShareUser(ShareUser user);
 
     /**
      * 更新分用户
      *
      * @param user ShareUser
      */
-    int updateShareUser(ShareUser user) throws Exception;
+    int updateShareUser(ShareUser user);
 
     /**
      * 判断并创建起始点
@@ -92,5 +92,5 @@ public interface TrackShareDao {
      * @param idfromtor 分享者ID
      * @return true 创建
      */
-    boolean makeSureStartPoint(int siteId, String idsubsite, String idurl, String idfromtor) throws Exception;
+    boolean makeSureStartPoint(int siteId, String idsubsite, String idurl, String idfromtor);
 }

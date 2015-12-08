@@ -20,42 +20,42 @@ public class IpLocationDaoImpl extends BaseDaoImpl<IpLocation> implements IpLoca
 	@Autowired
 	IpLocationMapper ipLocationMapper;
 	@Override
-	public int insert(IpLocation t) throws Exception {
+	public int insert(IpLocation t) {
 		return super.insert(t);
 	}
 
 	@Override
-	public int update(IpLocation t) throws Exception {
+	public int update(IpLocation t) {
 		return super.update(t);
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return super.delete(id);
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return super.countAll();
 	}
 
 	@Override
-	public IpLocation findById(Object id) throws Exception {
+	public IpLocation findById(Object id) {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<IpLocation> findAll() throws Exception {
+	public List<IpLocation> findAll() {
 		return super.findAll();
 	}
 
 	@Override
-	public List<IpLocation> findByPage(int limit, int start) throws Exception {
+	public List<IpLocation> findByPage(int limit, int start) {
 		return super.findByPage(limit, start);
 	}
 
 	@Override
-	public List<IpLocation> findAllIp()throws Exception{
+	public List<IpLocation> findAllIp(){
 		List<IpLocation> ipLocations=ipLocationMapper.findAllIp();
 		return ipLocations;
 	}

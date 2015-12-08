@@ -17,37 +17,37 @@ import com.simpletech.webanalytics.model.ShareStartPoint;
 public class ShareStartPointDaoImpl extends BaseDaoImpl<ShareStartPoint> implements ShareStartPointDao{
 
 	@Override
-	public int insert(ShareStartPoint t) throws Exception {
+	public int insert(ShareStartPoint t) {
 		return super.insert(t);
 	}
 
 	@Override
-	public int update(ShareStartPoint t) throws Exception {
+	public int update(ShareStartPoint t) {
 		return super.update(t);
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return super.delete(id);
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return super.countAll();
 	}
 
 	@Override
-	public ShareStartPoint findById(Object id) throws Exception {
+	public ShareStartPoint findById(Object id) {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<ShareStartPoint> findAll() throws Exception {
+	public List<ShareStartPoint> findAll() {
 		return super.findAll();
 	}
 
 	@Override
-	public List<ShareStartPoint> findByPage(int limit, int start) throws Exception {
+	public List<ShareStartPoint> findByPage(int limit, int start) {
 		return super.findByPage(limit, start);
 	}
 }

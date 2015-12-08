@@ -27,12 +27,12 @@ public class TrackShareDaoImpl implements TrackShareDao {
     TrackShareMapper mapper;
 
     @Override
-    public ShareUser getShareUser(int siteId, String idvisitor) throws Exception {
+    public ShareUser getShareUser(int siteId, String idvisitor) {
         return mapper.getShareUser(siteId, idvisitor);
     }
 
     @Override
-    public ShareUser getShareUser(int siteId, String idsubsite, String idvisitor, JsDetect detect) throws Exception {
+    public ShareUser getShareUser(int siteId, String idsubsite, String idvisitor, JsDetect detect) {
         ShareUser user = mapper.getShareUser(siteId, idvisitor);
         if (user == null) {
             user = new ShareUser();
@@ -49,7 +49,7 @@ public class TrackShareDaoImpl implements TrackShareDao {
     }
 
 //    @Override
-//    public ShareLinePoint getShareLinePoint(int siteId, String idsubsite, String idurl, String idfromtor, long fromts) throws Exception {
+//    public ShareLinePoint getShareLinePoint(int siteId, String idsubsite, String idurl, String idfromtor, long fromts) {
 //        ShareLinePoint point = mapper.getShareLinePoint(siteId, idurl, idfromtor);
 //        if (point == null) {
 //            point = new ShareLinePoint();
@@ -68,32 +68,32 @@ public class TrackShareDaoImpl implements TrackShareDao {
 //    }
 
     @Override
-    public ShareLinePoint getShareLinePoint(int siteId, String idsubsite, String idurl, String idfromtor, String idvisitor) throws Exception {
+    public ShareLinePoint getShareLinePoint(int siteId, String idsubsite, String idurl, String idfromtor, String idvisitor) {
         return mapper.getShareLinePoint(siteId, idurl, idfromtor, idvisitor);
     }
 
     @Override
-    public int insertShareLinePoint(ShareLinePoint point) throws Exception {
+    public int insertShareLinePoint(ShareLinePoint point) {
         return mapper.insertShareLinePoint(point);
     }
 
     @Override
-    public int updateShareLinePoint(ShareLinePoint tpoint) throws Exception {
+    public int updateShareLinePoint(ShareLinePoint tpoint) {
         return mapper.updateShareLinePoint(tpoint);
     }
 
     @Override
-    public int insertShareUser(ShareUser user) throws Exception {
+    public int insertShareUser(ShareUser user) {
         return mapper.insertShareUser(user);
     }
 
     @Override
-    public int updateShareUser(ShareUser user) throws Exception {
+    public int updateShareUser(ShareUser user) {
         return mapper.updateShareUser(user);
     }
 
     @Override
-    public boolean makeSureStartPoint(int siteId, String idsubsite, String idurl, String idfromtor) throws Exception {
+    public boolean makeSureStartPoint(int siteId, String idsubsite, String idurl, String idfromtor) {
         if (mapper.isStartPoint(siteId, idurl, idfromtor) == 0 && mapper.existStartPoint(siteId, idurl, idfromtor) == 0){
             ShareStartPoint point = new ShareStartPoint();
             point.fillNullID();

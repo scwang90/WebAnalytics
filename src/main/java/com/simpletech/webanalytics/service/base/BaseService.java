@@ -10,7 +10,7 @@ import com.simpletech.webanalytics.util.Page;
  * @date 2015-10-15 12:18:28 中国标准时间
  */
 public interface BaseService<T> extends BaseDao<T>{
-	int delete(String id) throws Exception;
-	T findById(String id) throws Exception;
-	Page<T> listByPage(int pageSize, int pageNo) throws Exception;
+	int delete(String id);
+	T findById(String id);
+	Page<T> listByPage(int pageSize, int pageNo);
 }

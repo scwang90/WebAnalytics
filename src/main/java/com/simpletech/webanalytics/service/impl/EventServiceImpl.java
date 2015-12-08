@@ -24,14 +24,14 @@ public class EventServiceImpl extends BaseServiceImpl<Event> implements EventSer
 	EventDao dao;
 	
 	@Override
-	public int insert(Event model) throws Exception{
+	public int insert(Event model){
 		ModelBase.check(model);
 		ModelBase.fillNullID(model);
 		return dao.insert(model);
 	}
 	
 	@Override
-	public int update(Event model) throws Exception {
+	public int update(Event model) {
 		Event old = findById(getModelID(model));
 		if (old == null) {
 			throw new ServiceException("请求更新记录不存在或已经被删除！");
@@ -41,37 +41,37 @@ public class EventServiceImpl extends BaseServiceImpl<Event> implements EventSer
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return dao.delete(id);
 	}
 
 	@Override
-	public Event findById(Object id) throws Exception{
+	public Event findById(Object id){
 		return dao.findById(id);
 	}
 
 	@Override
-	public List<Event> findAll() throws Exception{
+	public List<Event> findAll(){
 		return dao.findAll();
 	}
 
 	@Override
-	public int delete(String id) throws Exception{
+	public int delete(String id){
 		return dao.delete(id);
 	}
 
 	@Override
-	public List<Event> findByPage(int limit, int start) throws Exception {
+	public List<Event> findByPage(int limit, int start) {
 		return dao.findByPage(limit,start);
 	}
 
 	@Override
-	public Event findById(String id) throws Exception {
+	public Event findById(String id) {
 		return dao.findById(id);
 	}
 	
 	@Override
-	public Page<Event> listByPage(int pageSize, int pageNo) throws Exception{
+	public Page<Event> listByPage(int pageSize, int pageNo){
 		int limit = pageSize; 
 		int start = pageNo*pageSize;
 		int totalRecord = dao.countAll();
@@ -83,7 +83,7 @@ public class EventServiceImpl extends BaseServiceImpl<Event> implements EventSer
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return dao.countAll();
 	}
 }

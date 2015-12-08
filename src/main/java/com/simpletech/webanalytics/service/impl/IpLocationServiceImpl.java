@@ -24,14 +24,14 @@ public class IpLocationServiceImpl extends BaseServiceImpl<IpLocation> implement
 	IpLocationDao dao;
 	
 	@Override
-	public int insert(IpLocation model) throws Exception{
+	public int insert(IpLocation model){
 		ModelBase.check(model);
 		ModelBase.fillNullID(model);
 		return dao.insert(model);
 	}
 	
 	@Override
-	public int update(IpLocation model) throws Exception {
+	public int update(IpLocation model) {
 		IpLocation old = findById(getModelID(model));
 		if (old == null) {
 			throw new ServiceException("请求更新记录不存在或已经被删除！");
@@ -41,37 +41,37 @@ public class IpLocationServiceImpl extends BaseServiceImpl<IpLocation> implement
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return dao.delete(id);
 	}
 
 	@Override
-	public IpLocation findById(Object id) throws Exception{
+	public IpLocation findById(Object id){
 		return dao.findById(id);
 	}
 
 	@Override
-	public List<IpLocation> findAll() throws Exception{
+	public List<IpLocation> findAll(){
 		return dao.findAll();
 	}
 
 	@Override
-	public int delete(String id) throws Exception{
+	public int delete(String id){
 		return dao.delete(id);
 	}
 
 	@Override
-	public List<IpLocation> findByPage(int limit, int start) throws Exception {
+	public List<IpLocation> findByPage(int limit, int start) {
 		return dao.findByPage(limit,start);
 	}
 
 	@Override
-	public IpLocation findById(String id) throws Exception {
+	public IpLocation findById(String id) {
 		return dao.findById(id);
 	}
 	
 	@Override
-	public Page<IpLocation> listByPage(int pageSize, int pageNo) throws Exception{
+	public Page<IpLocation> listByPage(int pageSize, int pageNo){
 		int limit = pageSize; 
 		int start = pageNo*pageSize;
 		int totalRecord = dao.countAll();
@@ -83,12 +83,12 @@ public class IpLocationServiceImpl extends BaseServiceImpl<IpLocation> implement
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return dao.countAll();
 	}
 
 	@Override
-	public List<IpLocation> findAllIp() throws Exception{
+	public List<IpLocation> findAllIp(){
 		return dao.findAllIp();
 	}
 }

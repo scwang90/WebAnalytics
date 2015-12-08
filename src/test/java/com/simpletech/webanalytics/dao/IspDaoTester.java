@@ -21,7 +21,7 @@ public class IspDaoTester {
 	IspDao dao;
 
 	@Test
-	public void findWhereIsp() throws Exception {
+	public void findWhereIsp() {
 		Object result = dao.findWhereIsp("where location_isp is null group by location_ip order by visit_servertime DESC",1000,0);
 		System.out.println(JacksonUtil.toJson(result));
 	}

@@ -23,7 +23,7 @@ public class ErrorDaoImpl implements ErrorDao {
 
     //ErrorValue value;
     @Override
-    public List<ErrorValue> brand(int limit, int skip) throws Exception {
+    public List<ErrorValue> brand(int limit, int skip) {
         List<ErrorValue> list = mapper.brand(limit, skip);//ua,ip,brand
         for (ErrorValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
@@ -34,7 +34,7 @@ public class ErrorDaoImpl implements ErrorDao {
     }
 
     @Override
-    public List<ErrorValue> model(int limit, int skip) throws Exception {
+    public List<ErrorValue> model(int limit, int skip) {
         List<ErrorValue> list = mapper.model(limit, skip);
         for (ErrorValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
@@ -45,7 +45,7 @@ public class ErrorDaoImpl implements ErrorDao {
     }
 
     @Override
-    public List<ErrorValue> nettype(int limit, int skip) throws Exception {
+    public List<ErrorValue> nettype(int limit, int skip) {
         List<ErrorValue> list = mapper.nettype(limit, skip);
         for (ErrorValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
@@ -56,7 +56,7 @@ public class ErrorDaoImpl implements ErrorDao {
     }
 
     @Override
-    public List<ErrorValue> browser(int limit, int skip) throws Exception {
+    public List<ErrorValue> browser(int limit, int skip) {
         List<ErrorValue> list = mapper.browser(limit, skip);
         for (ErrorValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
@@ -68,7 +68,7 @@ public class ErrorDaoImpl implements ErrorDao {
     }
 
     @Override
-    public List<ErrorValue> system(int limit, int skip) throws Exception {
+    public List<ErrorValue> system(int limit, int skip) {
         List<ErrorValue> list = mapper.system(limit, skip);
         for (ErrorValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
@@ -79,7 +79,7 @@ public class ErrorDaoImpl implements ErrorDao {
     }
 
     @Override
-    public List<ErrorValue> appname(int limit, int skip) throws Exception {
+    public List<ErrorValue> appname(int limit, int skip) {
         List<ErrorValue> list = mapper.appname(limit, skip);
         for (ErrorValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
@@ -90,7 +90,7 @@ public class ErrorDaoImpl implements ErrorDao {
     }
 
     @Override
-    public List<ErrorValue> resolution(int limit, int skip) throws Exception {
+    public List<ErrorValue> resolution(int limit, int skip) {
         List<ErrorValue> list = mapper.resolution(limit, skip);
         for (ErrorValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
@@ -101,7 +101,7 @@ public class ErrorDaoImpl implements ErrorDao {
     }
 
     @Override
-    public List<ErrorValue> depth(int limit, int skip) throws Exception {
+    public List<ErrorValue> depth(int limit, int skip) {
         List<ErrorValue> list = mapper.depth(limit, skip);
         for (ErrorValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
@@ -112,7 +112,7 @@ public class ErrorDaoImpl implements ErrorDao {
     }
 
     @Override
-    public List<ErrorValue> lang(int limit, int skip) throws Exception {
+    public List<ErrorValue> lang(int limit, int skip) {
         List<ErrorValue> list = mapper.lang( limit, skip);
         for (ErrorValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
@@ -123,7 +123,7 @@ public class ErrorDaoImpl implements ErrorDao {
     }
 
     @Override
-    public List<ErrorValue> country(int limit, int skip) throws Exception {
+    public List<ErrorValue> country(int limit, int skip) {
         List<ErrorValue> list = mapper.country(limit, skip);
         for (ErrorValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
@@ -134,7 +134,7 @@ public class ErrorDaoImpl implements ErrorDao {
     }
 
     @Override
-    public List<ErrorValue> province(int limit, int skip) throws Exception {
+    public List<ErrorValue> province(int limit, int skip) {
         List<ErrorValue> list = mapper.province(limit, skip);
         for (ErrorValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {
@@ -145,7 +145,7 @@ public class ErrorDaoImpl implements ErrorDao {
     }
 
     @Override
-    public List<ErrorValue> city(int limit, int skip) throws Exception {
+    public List<ErrorValue> city(int limit, int skip) {
         List<ErrorValue> list = mapper.city(limit, skip);
         for (ErrorValue value : list) {
             if (AfStringUtil.isEmpty(value.getName())) {

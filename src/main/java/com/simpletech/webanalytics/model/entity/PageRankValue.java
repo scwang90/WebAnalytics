@@ -1,21 +1,21 @@
 package com.simpletech.webanalytics.model.entity;
 
 /**
- * ҳ������ͳ��ֵ
- * Created by ���b on 2015/9/29.
+ * 页面排行
+ * Created by 树朾 on 2015/9/29.
  */
 public class PageRankValue {
 
-    private String pid;     //ҳ��ID
-    private Integer num;    //��������
-    private String url;     //ҳ������
+    private String id;     //页面ID
+    private Integer num;    //数量
+    private String url;     //链接
 
-    public String getPid() {
-        return pid;
+    public String getId() {
+        return id;
     }
 
-    public void setPid(String pid) {
-        this.pid = pid;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Integer getNum() {

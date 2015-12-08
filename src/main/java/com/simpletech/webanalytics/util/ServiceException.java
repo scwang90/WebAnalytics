@@ -5,7 +5,7 @@ package com.simpletech.webanalytics.util;
  * @author 树朾
  * @date 2015-09-21 17:03:53 中国标准时间
  */
-public class ServiceException extends Exception {
+public class ServiceException extends RuntimeException {
 
 	private static final long serialVersionUID = 3583566093089790852L;
 

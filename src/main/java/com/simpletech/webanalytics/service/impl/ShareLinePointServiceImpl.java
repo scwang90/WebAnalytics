@@ -24,14 +24,14 @@ public class ShareLinePointServiceImpl extends BaseServiceImpl<ShareLinePoint> i
 	ShareLinePointDao dao;
 	
 	@Override
-	public int insert(ShareLinePoint model) throws Exception{
+	public int insert(ShareLinePoint model){
 		ModelBase.check(model);
 		ModelBase.fillNullID(model);
 		return dao.insert(model);
 	}
 	
 	@Override
-	public int update(ShareLinePoint model) throws Exception {
+	public int update(ShareLinePoint model) {
 		ShareLinePoint old = findById(getModelID(model));
 		if (old == null) {
 			throw new ServiceException("请求更新记录不存在或已经被删除！");
@@ -41,37 +41,37 @@ public class ShareLinePointServiceImpl extends BaseServiceImpl<ShareLinePoint> i
 	}
 
 	@Override
-	public int delete(Object id) throws Exception {
+	public int delete(Object id) {
 		return dao.delete(id);
 	}
 
 	@Override
-	public ShareLinePoint findById(Object id) throws Exception{
+	public ShareLinePoint findById(Object id){
 		return dao.findById(id);
 	}
 
 	@Override
-	public List<ShareLinePoint> findAll() throws Exception{
+	public List<ShareLinePoint> findAll(){
 		return dao.findAll();
 	}
 
 	@Override
-	public int delete(String id) throws Exception{
+	public int delete(String id){
 		return dao.delete(id);
 	}
 
 	@Override
-	public List<ShareLinePoint> findByPage(int limit, int start) throws Exception {
+	public List<ShareLinePoint> findByPage(int limit, int start) {
 		return dao.findByPage(limit,start);
 	}
 
 	@Override
-	public ShareLinePoint findById(String id) throws Exception {
+	public ShareLinePoint findById(String id) {
 		return dao.findById(id);
 	}
 	
 	@Override
-	public Page<ShareLinePoint> listByPage(int pageSize, int pageNo) throws Exception{
+	public Page<ShareLinePoint> listByPage(int pageSize, int pageNo){
 		int limit = pageSize; 
 		int start = pageNo*pageSize;
 		int totalRecord = dao.countAll();
@@ -83,7 +83,7 @@ public class ShareLinePointServiceImpl extends BaseServiceImpl<ShareLinePoint> i
 	}
 
 	@Override
-	public int countAll() throws Exception {
+	public int countAll() {
 		return dao.countAll();
 	}
 }

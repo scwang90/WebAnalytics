@@ -23,7 +23,7 @@ public class GeneralController<T> extends BaseController{
 	 * @throws Exception 
 	 */
 	@Intent("添加%s")
-	public Object add(T model) throws Exception {
+	public Object add(T model) {
 		service.insert(model);
 		return null;
 	}
@@ -34,7 +34,7 @@ public class GeneralController<T> extends BaseController{
 	 * @throws Exception 
 	 */
 	@Intent("更新%s")
-	public Object update(T model) throws Exception {
+	public Object update(T model) {
 		service.update(model);
 		return null;
 	}
@@ -45,7 +45,7 @@ public class GeneralController<T> extends BaseController{
 	 * @throws Exception 
 	 */
 	@Intent("获取%s")
-	public Object get(String ID) throws Exception {
+	public Object get(String ID) {
 		Object model = service.findById(ID);
 		if (model == null) {
 			return "null";
@@ -58,7 +58,7 @@ public class GeneralController<T> extends BaseController{
 	 * @throws Exception 
 	 */
 	@Intent("删除%s")
-	public Object delete(final String ID) throws Exception {
+	public Object delete(final String ID) {
 		service.delete(ID);
 		return null;
 	}
@@ -69,7 +69,7 @@ public class GeneralController<T> extends BaseController{
 	 * @throws Exception 
 	 */
 	@Intent("统计%s")
-	public Object count() throws Exception {
+	public Object count() {
 		return service.countAll();
 	}
 
@@ -79,7 +79,7 @@ public class GeneralController<T> extends BaseController{
 	 * @throws Exception 
 	 */
 	@Intent("获取全部%s列表")
-	public Object list() throws Exception {
+	public Object list() {
 		return service.findAll();
 	}
 
@@ -91,7 +91,7 @@ public class GeneralController<T> extends BaseController{
 	 * @throws Exception 
 	 */
 	@Intent("获取%s列表")
-	public Object listByPage(int pageSize,int pageNo) throws Exception {
+	public Object listByPage(int pageSize,int pageNo) {
 		return service.listByPage(pageSize, pageNo);
 	}
 	

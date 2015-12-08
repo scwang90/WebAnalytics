@@ -25,7 +25,7 @@ public class ErrorDaoTester {
 	ErrorDao dao;
 
 	@Test
-	public void brand() throws Exception {
+	public void brand() {
 
 		Object result = dao.brand(100, 0);//查询出ua,ip,brand
 		System.out.println(JacksonUtil.toJson(result));
@@ -33,13 +33,13 @@ public class ErrorDaoTester {
 	}
 
 	@Test
-	public void model() throws Exception {
+	public void model() {
 		Object result = dao.model(100, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}
 
 	@Test
-	public void browser() throws Exception{
+	public void browser(){
 		Object result = dao.browser(100, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}
@@ -51,49 +51,49 @@ public class ErrorDaoTester {
 	}
 
 	@Test
-	public void nettype() throws Exception {
+	public void nettype() {
 		Object result = dao.nettype(100, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}
 
 	@Test
-	public void depth() throws Exception {
+	public void depth() {
 		Object result = dao.depth(100, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}
 
 	@Test
-	public void country() throws Exception {
+	public void country() {
 		Object result = dao.country(100, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}
 
 	@Test
-	public void appname() throws Exception {
+	public void appname() {
 		Object result = dao.appname(100, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}
 
 	@Test
-	public void province() throws Exception {
+	public void province() {
 		Object result = dao.province(100, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}
 
 	@Test
-	public void lang() throws Exception {
+	public void lang() {
 		Object result = dao.lang(100, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}
 
 	@Test
-	public void system() throws Exception {
+	public void system() {
 		Object result = dao.system(100, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}
 
 	@Test
-	public void resolution() throws Exception {
+	public void resolution() {
 		Object result = dao.resolution(100, 0);
 		System.out.println(JacksonUtil.toJson(result));
 	}

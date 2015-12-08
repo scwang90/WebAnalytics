@@ -18,11 +18,11 @@ public interface TrackShareService {
      * @param detect    JS探针数据
      * @param url       URl页面
      */
-    void trackerShare(int siteId, String idsubsite, JsDetect detect, Url url) throws Exception;
+    void trackerShare(int siteId, String idsubsite, JsDetect detect, Url url);
 
     /**
      * 添加或更新 user
      * @param user JsUser
      */
-    void addOrUpdateUser(int siteId, ShareUser user) throws Exception;
+    void addOrUpdateUser(int siteId, ShareUser user);
 }

@@ -21,15 +21,15 @@ public class ManagerControllerTester {
     ManagerController managerController;
 
     @Test
-    public void sitelist() throws Exception {
-        Object result = managerController.siteList(100, 0);
+    public void sitelist() {
+        Object result = managerController.siteList("",100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
-    public void siteadd() throws Exception {
+    public void siteadd() {
         Site model = new Site();
-        Object result = managerController.siteAdd(model);
+        Object result = managerController.siteAdd("",model);
         System.out.println(JacksonUtil.toJson(result));
     }
 
