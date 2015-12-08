@@ -53,6 +53,7 @@ public interface IpLocationService extends BaseService<IpLocation> {
 	 */
 	List<IpLocation> findByPage(int limit, int start);
 
+	List<IpLocation> findVisitWhereByPage(String where,int limit, int start) throws Exception;
 	/**
 	 * 查询t_visit表中的所有不重复的、未被对比的IP
 	 * @return

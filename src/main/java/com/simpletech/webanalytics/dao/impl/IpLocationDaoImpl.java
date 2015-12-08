@@ -3,6 +3,8 @@ package com.simpletech.webanalytics.dao.impl;
 import java.util.List;
 
 import com.simpletech.webanalytics.mapper.IpLocationMapper;
+import com.simpletech.webanalytics.mapper.VisitMapper;
+import com.simpletech.webanalytics.model.Visit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +21,9 @@ import com.simpletech.webanalytics.model.IpLocation;
 public class IpLocationDaoImpl extends BaseDaoImpl<IpLocation> implements IpLocationDao{
 	@Autowired
 	IpLocationMapper ipLocationMapper;
+
+	@Autowired
+	VisitMapper visitMapper;
 	@Override
 	public int insert(IpLocation t) {
 		return super.insert(t);
@@ -52,6 +57,11 @@ public class IpLocationDaoImpl extends BaseDaoImpl<IpLocation> implements IpLoca
 	@Override
 	public List<IpLocation> findByPage(int limit, int start) {
 		return super.findByPage(limit, start);
+	}
+
+	@Override
+	public List<IpLocation> findVisitWhereByPage(String where,int limit, int start) {
+		return ipLocationMapper.findVisitWhereByPage(where, limit, start);
 	}
 
 	@Override

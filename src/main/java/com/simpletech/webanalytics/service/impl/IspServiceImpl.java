@@ -1,6 +1,8 @@
 package com.simpletech.webanalytics.service.impl;
 
 import com.ipmapping.BDIP;
+import com.ipmapping.TBIP1;
+import com.ipmapping.txIP.IPTest;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.simpletech.webanalytics.dao.IspDao;
 import com.simpletech.webanalytics.model.Visit;
@@ -58,13 +60,13 @@ public class IspServiceImpl implements IspService {
 
     @Override
     public List<HashMap<String, Object>> ispBatch(String where, int limit, int start) throws Exception {
-        Connection connection = dataSource.getConnection();
-        connection.setAutoCommit(false);
-        Statement statement = connection.createStatement();
 
+        Connection connection=null;
+        Statement statement=null;
 //        System.out.println("connected");
         long c=System.currentTimeMillis();
         List<HashMap<String, Object>> maps = dao.ispBatch(where, limit, start);
+        List<String> batchList=new ArrayList<>();
         System.out.println("查找" + limit + "条数据耗时：" + (System.currentTimeMillis() - c) / 1000f + "秒");
         int num=0;
         try {
@@ -80,10 +82,37 @@ public class IspServiceImpl implements IspService {
 //                System.out.println("useragent=" + useragent);
                 try {
                     BDIP bdip = new BDIP();
-                    String isp = bdip.getIPXY(ip)[2];
-                    System.out.println("ip->isp=" + ip + isp);
-                    
-                    statement.addBatch("UPDATE t_visit SET update_time='"+df.format(new Date()).toString()+"',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'");
+                    //判断是否取得结果
+                    String []ispStr = bdip.getIPXY(ip);
+                    String isp;
+
+                    if(ispStr!=null){
+                        isp=ispStr[2];
+                        if(isp!=null){
+                            System.out.println("ip->isp=" + ip + isp);
+
+                            String sql="UPDATE t_visit SET update_time='"+df.format(new Date()).toString()+"',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
+                            batchList.add(sql);
+//                            statement.addBatch("UPDATE t_visit SET update_time='"+df.format(new Date()).toString()+"',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'");
+
+                        }else {
+                            isp="未知";
+                            System.out.println("ip->isp=" + ip + isp);
+                            String sql="UPDATE t_visit SET update_time='"+df.format(new Date()).toString()+"',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
+                            batchList.add(sql);
+//                            statement.addBatch("UPDATE t_visit SET update_time='"+df.format(new Date()).toString()+"',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'");
+
+                        }
+                    }else{
+                        System.out.println("参数错误，百度接口无法解析该IP，调用纯真IP再次解析");
+                        //调用纯真IP再次解析
+                        IPTest cz=new IPTest();
+                        String[] cz_location=cz.txIpParser(ip);
+                        isp=cz_location[4].replace("\"","");
+                        System.out.println("ip->isp=" + ip + isp);
+                        String sql="UPDATE t_visit SET update_time='"+df.format(new Date()).toString()+"',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
+                        batchList.add(sql);
+                    }
 
                 } catch (Throwable e) {
                     System.out.println(ip + " - " + "转换失败");
@@ -93,14 +122,25 @@ public class IspServiceImpl implements IspService {
 
             }
             System.out.println("百度转换"+(limit-num)+"条数据耗时：" + (System.currentTimeMillis() - b) / 1000f + "秒");
+
+
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            statement = connection.createStatement();
+            for(int i=0;i<batchList.size();i++){
+                statement.addBatch(batchList.get(i));
+            }
             long a=System.currentTimeMillis();
             int[] ints = statement.executeBatch();
             connection.commit();
             System.out.println("更新" + limit + "条数据耗时：" + (System.currentTimeMillis() - a) / 1000f + "秒");
             System.out.println(ints + "------------------------------------");
-
+            statement.clearBatch();
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            statement.close();
+            connection.close();
         }
         return maps;
     }

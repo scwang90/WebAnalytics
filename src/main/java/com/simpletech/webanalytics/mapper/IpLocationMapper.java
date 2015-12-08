@@ -130,6 +130,7 @@ public interface IpLocationMapper extends MybatisMultiDao<IpLocation>{
 	@Select("SELECT id ,location_ip ip , location_country ipipCountry , location_region ipipProvince , location_city ipipCity FROM t_visit WHERE location_compared is null group by location_ip")
 	List<IpLocation> findAllIp();
 
-
+	@Select("SELECT id ,visit_servertime,location_ip ip , location_country ipipCountry , location_region ipipProvince , location_city ipipCity FROM t_visit ${where}  LIMIT ${start},${limit}")
+	List<IpLocation> findVisitWhereByPage( @Param("where") String where, @Param("limit") int limit, @Param("start") int start);
 
 }

@@ -1,5 +1,7 @@
 package com.ipmapping;
 
+import com.ipmapping.txIP.IPTest;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +20,7 @@ public class BDIP {
     private static String bd_isp="";
 
 //      private static String ip=IPCatcherUtil.getWebIp();
-      private static String ip = "183.61.155.74";
+      private static String ip = "210.40.2.236";
 //      private static String ip = new IPTranslator().ip;
 
     /**
@@ -98,10 +100,10 @@ public class BDIP {
                         bd_isp="卫星网";
                         break;
                     case "OTHER":{
-                        //调用淘宝IP再次解析
-                        TBIP1 tb=new TBIP1();
-                        String[] tb_location=tb.getTBLocation(ip);
-                        bd_isp=tb_location[4].replace("\"","");
+                        //调用纯真IP再次解析
+                        IPTest cz=new IPTest();
+                        String[] cz_location=cz.txIpParser(ip);
+                        bd_isp=cz_location[4].replace("\"","");
                         break;
                     }
                     default:bd_isp=ispStr;
@@ -109,7 +111,7 @@ public class BDIP {
 
             }else{
                 //若匹配失败则保存IP信息
-                bd_isp="本机或局域网";
+                bd_isp="未知";
             }
             // 获取坐标位置
             if(!str.contains("failed")){
@@ -135,6 +137,7 @@ public class BDIP {
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            System.out.println("接口访问失败");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -220,11 +223,14 @@ public class BDIP {
     public static void main(String []args){
         System.out.println("ip=" + ip );
         String[] locate=getIPXY(ip);
-        System.out.println(" 经纬度:x="+locate[0]+"\t"+"y="+locate[1]+"\t"+"isp="+locate[2]);
-        String[] location=getIPLocation(locate[1],locate[0]);
-        for(int i=0;i<location.length;i++){
-            System.out.print(location[i]);
+        if(locate!=null){
+            System.out.println(" 经纬度:x="+locate[0]+"\t"+"y="+locate[1]+"\t"+"isp="+locate[2]);
+            String[] location=getIPLocation(locate[1],locate[0]);
+            for(int i=0;i<location.length;i++){
+                System.out.print(location[i]);
+            }
         }
+
 
     }
 }
