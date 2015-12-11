@@ -26,7 +26,7 @@ public interface ErrorMapper {
     List<ErrorValue> model(@Param("limit") int limit, @Param("skip") int skip);
     @Select("SELECT useragent uerAgent, location_ip ip, net_type remark FROM t_visit WHERE (net_type is null OR net_type='' OR net_type='UN') AND useragent LIKE '%nettype%' GROUP BY useragent  LIMIT ${skip},${limit}")
     List<ErrorValue> nettype(@Param("limit") int limit, @Param("skip") int skip);
-    @Select("SELECT useragent uerAgent, location_ip ip, browser_name remark FROM t_visit WHERE (browser_name is null OR browser_name='' OR browser_name='UN' OR browser_name='SF') GROUP BY useragent  LIMIT ${skip},${limit}")
+    @Select("SELECT useragent uerAgent, location_ip ip, browser_name remark FROM t_visit WHERE (browser_name is null OR browser_name='' OR browser_name='UN' OR (browser_name='SF' AND end_brand <>'AP')) GROUP BY useragent  LIMIT ${skip},${limit}")
     List<ErrorValue> browser(@Param("limit") int limit, @Param("skip") int skip);
     @Select("SELECT useragent uerAgent, location_ip ip,operate_system remark FROM t_visit WHERE (operate_system is null OR operate_system='' OR operate_system='UN')GROUP BY useragent LIMIT ${skip},${limit}")
     List<ErrorValue> system(@Param("limit") int limit, @Param("skip") int skip);
