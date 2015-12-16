@@ -1,5 +1,6 @@
-package com.simpletech.webanalytics.mapper;
+package com.simpletech.webanalytics.mapper.api;
 
+import com.simpletech.webanalytics.mapper.api.TrackShareMapper;
 import com.simpletech.webanalytics.util.JacksonUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +33,19 @@ public class TeackerShareMapperTester {
 
     @Test
     public void getVisitHalfHour() throws Exception {
-        Object result = mapper.getShareUser(0,"");
+        Object result = mapper.getShareUser(0, "");
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
+    public void checkStartPoint() throws Exception {
+        Object result = mapper.checkStartPoint(0, "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", "e101feab9939a450");
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
+    public void isStartPoint() throws Exception {
+        Object result = mapper.isStartPoint(1, "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", "e101feab9939a450");
         System.out.println(JacksonUtil.toJson(result));
     }
 

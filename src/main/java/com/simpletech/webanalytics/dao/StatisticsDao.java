@@ -82,9 +82,10 @@ public interface StatisticsDao {
 	/**
 	 * 填充昵称
 	 * @param points Map 数据
+	 * @param max 	 最大数据
 	 * @return 带昵称的 Map
 	 */
-	List<MapPointValue> fullNickName(List<MapPointValue> points);
+	List<MapPointValue> fullShareUserInfo(List<MapPointValue> points, int max);
 
 	/**
 	 * 获取起始点列表

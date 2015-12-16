@@ -23,11 +23,11 @@ public class IpLocationDaoTester {
 	@Autowired
 	IpLocationDao dao;
 
-	@Test
-	public void findAllIp() {
-
-		Object result = dao.findAllIp();
-		System.out.println(JacksonUtil.toJson(result).replace("{","\n{"));
-	}
+//	@Test
+//	public void findAllIp() {
+//
+//		Object result = dao.findAllIp();
+//		System.out.println(JacksonUtil.toJson(result).replace("{","\n{"));
+//	}
 
 }

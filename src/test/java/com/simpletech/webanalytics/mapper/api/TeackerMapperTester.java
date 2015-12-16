@@ -45,13 +45,13 @@ public class TeackerMapperTester {
 
     @Test
     public void getTitle() throws Exception {
-        Object result = mapper.getTitle(1,"探针测试标题".hashCode());
+        Object result = mapper.getTitle(1, "探针测试标题".hashCode());
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void existVisitor() throws Exception {
-        Object result = mapper.existVisitor(1,"idvtor");
+        Object result = mapper.existVisitor(1, "idvtor");
         System.out.println(JacksonUtil.toJson(result));
     }
 

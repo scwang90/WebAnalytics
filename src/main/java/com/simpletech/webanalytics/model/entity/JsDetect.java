@@ -65,6 +65,7 @@ public class JsDetect {
     /**
      * 分享传播
      */
+    private String shareto;  // 分享到
     private String fromvid;  // 分享者ID 16个字符的十六进制字符串
     private Long fromvts;    // 分享者分享时间
 
@@ -539,6 +540,17 @@ public class JsDetect {
 
     public void setAppname(String appname) {
         this.appname = appname;
+    }
+
+    public String getShareto() {
+        return shareto;
+    }
+
+    public void setShareto(String shareto) {
+        if (shareto != null && shareto.length() > 15) {
+            shareto = shareto.substring(0, 15);
+        }
+        this.shareto = shareto;
     }
 
     public String getFromvid() {

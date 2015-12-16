@@ -16,7 +16,7 @@ public class JsEvent extends JsDetect {
     @Must("事件动作")
     private String ea;      //(必需) 事件动作 (如: 播放、暂停、持续时间、添加播放列表,下载,点击……)
     private String en;      //(可选) 事件名称 (如: 电影名字,歌曲名称或文件名称…)
-    private Float ev;       //(可选) 事件的值 (必须是一个浮点数或整数值(数字),而不是一个字符串)
+    private Double ev;       //(可选) 事件的值 (必须是一个浮点数或整数值(数字),而不是一个字符串)
 
     public Event buildEvent(int idsite) {
         Event event = new Event();
@@ -54,11 +54,11 @@ public class JsEvent extends JsDetect {
         this.en = en;
     }
 
-    public Float getEv() {
+    public Double getEv() {
         return ev;
     }
 
-    public void setEv(Float ev) {
+    public void setEv(Double ev) {
         this.ev = ev;
     }
 }

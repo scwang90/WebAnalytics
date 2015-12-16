@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_share_start_point
  * @author 树朾
- * @date 2015-12-01 15:41:57 中国标准时间
+ * @date 2015-12-11 18:11:55 中国标准时间
  */
 @Table("t_share_start_point")
 public class ShareStartPoint extends ModelBase{

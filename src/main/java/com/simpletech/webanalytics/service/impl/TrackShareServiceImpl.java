@@ -1,8 +1,12 @@
 package com.simpletech.webanalytics.service.impl;
 
+import com.simpletech.webanalytics.dao.ShareUserDao;
 import com.simpletech.webanalytics.dao.TrackShareDao;
+import com.simpletech.webanalytics.mapper.ShareLinePointMapper;
+import com.simpletech.webanalytics.mapper.api.TrackShareMapper;
 import com.simpletech.webanalytics.model.ShareLinePoint;
 import com.simpletech.webanalytics.model.ShareUser;
+import com.simpletech.webanalytics.model.Title;
 import com.simpletech.webanalytics.model.Url;
 import com.simpletech.webanalytics.model.entity.JsDetect;
 import com.simpletech.webanalytics.service.TrackShareService;
@@ -25,17 +29,26 @@ public class TrackShareServiceImpl implements TrackShareService {
     @Autowired
     TrackShareDao dao;
 
+    @Autowired
+    TrackShareMapper mapper;
+
+    @Autowired
+    ShareUserDao shareUserDao;
+
+    @Autowired
+    ShareLinePointMapper linePointMapper;
+
     @Override
-    public void trackerShare(int siteId, String idsubsite, JsDetect detect, Url url) {
+    public void trackerShare(int siteId, String idsubsite, JsDetect detect, Url url, Title title) {
         if (AfStringUtil.isNotEmpty(detect.getFromvid()) && detect.getFromvts() > 0) {
             String idVisitor = detect.getIdvtor();
             String idFromtor = detect.getFromvid();
             if (!idVisitor.equals(idFromtor)) {
-                ShareUser formtor = dao.getShareUser(siteId, idsubsite, idVisitor, detect);
+//                ShareUser formtor = dao.getShareUser(siteId, idsubsite, idVisitor, detect);
                 //获取上一个点（不存在则添加）
 //                ShareLinePoint lpoint = dao.getShareLinePoint(siteId, idsubsite, url.getId(), idFromtor, detect.getFromvts());
                 //判断并产生起始点
-                dao.makeSureStartPoint(siteId, idsubsite, url.getId(), idFromtor);
+//                dao.makeSureStartPoint(siteId, idsubsite, url.getId(), idFromtor);
                 //获取本次分享点
                 ShareLinePoint tpoint = dao.getShareLinePoint(siteId, idsubsite, url.getId(), idFromtor, idVisitor);
                 if (tpoint == null) {
@@ -45,19 +58,24 @@ public class TrackShareServiceImpl implements TrackShareService {
                         tpoint.setIdsite(siteId);
                         tpoint.setIdrefervisitor(idFromtor);
                         tpoint.setIdvisitor(idVisitor);//创建上一个分享点
+                        tpoint.setShareTo(detect.getShareto());
+                        tpoint.setIsStartPoint(mapper.isStartPoint(siteId, url.getId(), idFromtor));
                         tpoint.fillNullID();
                         tpoint.setIdsubsite(idsubsite);
                         tpoint.setIdurl(url.getId());
+                        tpoint.setIdtitle(title.getId());
                         tpoint.setShareTime(new Date());
                         tpoint.setShareSpan(Math.abs(new Date().getTime() - detect.getFromvts()));
                         tpoint.setCountPv(1);
                         AfReflecter.setMemberNoException(tpoint, "createTime", new Date());
                         AfReflecter.setMemberNoException(tpoint, "updateTime", new Date());
-                        dao.insertShareLinePoint(tpoint);
+//                        dao.insertShareLinePoint(tpoint);
+                        linePointMapper.insert(tpoint);
                     }
                 } else {
                     tpoint.setCountPv(1 + tpoint.getCountPv());
-                    dao.updateShareLinePoint(tpoint);
+//                    dao.updateShareLinePoint(tpoint);
+                    linePointMapper.update(tpoint);
                 }
             }
         }
@@ -68,9 +86,11 @@ public class TrackShareServiceImpl implements TrackShareService {
         ShareUser old = dao.getShareUser(user.getIdsite(), user.getIdvisitor());
         if (old == null) {
             user.setIdsite(siteId);
-            dao.insertShareUser(user);
+//            dao.insertShareUser(user);
+            shareUserDao.insert(user);
         } else {
-            dao.updateShareUser(checkNullField(old, user));
+//            dao.updateShareUser(checkNullField(old, user));
+            shareUserDao.update(checkNullField(old, user));
         }
     }
 

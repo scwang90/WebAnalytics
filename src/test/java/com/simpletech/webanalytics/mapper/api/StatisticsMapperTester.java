@@ -33,13 +33,13 @@ public class StatisticsMapperTester {
 
     @Test
     public void entryUrls() throws Exception {
-        Object result = mapper.entryUrls("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 10, 0);
+        Object result = mapper.entryUrlsRank("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 10, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void exitUrls() throws Exception {
-        Object result = mapper.exitUrls("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 10, 0);
+        Object result = mapper.exitUrlsRank("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 10, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
@@ -123,14 +123,14 @@ public class StatisticsMapperTester {
 
     @Test
     public void pageurl() throws Exception {
-        Object result = mapper.pageurl("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
+        Object result = mapper.pageUrlRank("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void pagetitle() throws Exception {
-        Object result = mapper.pagetitle("1", "pv", monthf.parse("2015-10-0"), monthf.parse("2015-10-30"), 100, 0);
-        System.out.println(JacksonUtil.toJson(result));
+        Object result = mapper.pageTitleRank("1", "pv", monthf.parse("2015-12-0"), monthf.parse("2015-12-30"), 3, 0);
+        System.out.println(JacksonUtil.toJson(result).replace("{","\n{"));
     }
 
     @Test

@@ -15,7 +15,7 @@ import com.simpletech.webanalytics.dao.base.BaseDaoMybatisMYSQLImpl.MybatisMulti
 /**
  * 数据库表t_bdip的mapper接口
  * @author 树朾
- * @date 2015-12-08 12:53:52 中国标准时间
+ * @date 2015-12-11 18:11:54 中国标准时间
  */
 public interface BdipMapper extends MybatisMultiDao<Bdip>{
 
@@ -66,7 +66,7 @@ public interface BdipMapper extends MybatisMultiDao<Bdip>{
 	 * @return 分页列表数据
 	 */
 	@Select("SELECT id , create_time createTime , update_time updateTime , bd_ip bdIp , bd_country bdCountry , bd_region bdRegion , bd_city bdCity , bd_isp bdIsp FROM t_bdip ${order} LIMIT ${start},${limit}")
-	List<Bdip> findByPage(@Param("order") String order, @Param("limit") int limit, @Param("start") int start);
+	List<Bdip> findByPage(@Param("order") String order,@Param("limit") int limit,@Param("start") int start);
 	/**
 	 * 选择性删除
 	 * @param where SQL条件语句
@@ -81,7 +81,7 @@ public interface BdipMapper extends MybatisMultiDao<Bdip>{
 	 * @return 改变的行数
 	 */
 	@Delete("DELETE FROM t_bdip WHERE ${propertyName}=#{value}")
-	int deleteByPropertyName(@Param("propertyName") String propertyName, @Param("value") Object value);
+	int deleteByPropertyName(@Param("propertyName") String propertyName,@Param("value") Object value);
 	/**
 	 * 选择性统计
 	 * @param where SQL条件语句
@@ -96,14 +96,14 @@ public interface BdipMapper extends MybatisMultiDao<Bdip>{
 	 * @return 统计数
 	 */
 	@Select("SELECT COUNT(*) FROM WHERE ${propertyName}=#{value}")
-	int countByPropertyName(@Param("propertyName") String propertyName, @Param("value") Object value);
+	int countByPropertyName(@Param("propertyName") String propertyName,@Param("value") Object value);
 	/**
 	 * 选择性查询
 	 * @param where SQL条件语句
 	 * @return 符合条件的列表数据
 	 */
 	@Select("SELECT id , create_time createTime , update_time updateTime , bd_ip bdIp , bd_country bdCountry , bd_region bdRegion , bd_city bdCity , bd_isp bdIsp FROM t_bdip ${where} ${order}")
-	List<Bdip> findWhere(@Param("order") String order, @Param("where") String where);
+	List<Bdip> findWhere(@Param("order") String order,@Param("where") String where);
 	/**
 	 * 选择性分页查询
 	 * @param where SQL条件语句
@@ -112,7 +112,7 @@ public interface BdipMapper extends MybatisMultiDao<Bdip>{
 	 * @return 符合条件的列表数据
 	 */
 	@Select("SELECT id , create_time createTime , update_time updateTime , bd_ip bdIp , bd_country bdCountry , bd_region bdRegion , bd_city bdCity , bd_isp bdIsp FROM t_bdip ${where} ${order} LIMIT ${start},${limit}")
-	List<Bdip> findWhereByPage(@Param("order") String order, @Param("where") String where, @Param("limit") int limit, @Param("start") int start);
+	List<Bdip> findWhereByPage(@Param("order") String order,@Param("where") String where,@Param("limit") int limit,@Param("start") int start);
 	/**
 	 * 根据属性查询
 	 * @param propertyName 数据库列名
@@ -120,5 +120,5 @@ public interface BdipMapper extends MybatisMultiDao<Bdip>{
 	 * @return 返回符合条件的数据列表
 	 */
 	@Select("SELECT id , create_time createTime , update_time updateTime , bd_ip bdIp , bd_country bdCountry , bd_region bdRegion , bd_city bdCity , bd_isp bdIsp FROM t_bdip WHERE ${propertyName}=#{value} ${order}")
-	List<Bdip> findByPropertyName(@Param("order") String order, @Param("propertyName") String propertyName, @Param("value") Object value);
+	List<Bdip> findByPropertyName(@Param("order") String order,@Param("propertyName") String propertyName,@Param("value") Object value);
 }

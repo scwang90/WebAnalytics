@@ -12,8 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.text.SimpleDateFormat;
 
-import static org.junit.Assert.*;
-
 /**
  * 统计服务层测试类
  * Created by Administrator on 2015/11/30.
@@ -76,7 +74,7 @@ public class StatisticsServiceTest {
 
     @Test
     public void testTitleurl() throws Exception {
-        Object result = service.titleurl("1", PageRank.title, RankingType.pv, monthf.parse("2015-11-0"), monthf.parse("2015-11-30"), 10, 0);
+        Object result = service.titleurlRank("1", PageRank.title, RankingType.pv, monthf.parse("2015-11-0"), monthf.parse("2015-11-30"), 10, 0);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
@@ -94,7 +92,7 @@ public class StatisticsServiceTest {
 
     @Test
     public void testRanking() throws Exception {
-        Object result = service.ranking("1", Ranking.brand, RankingType.uv, monthf.parse("2015-11-0"), monthf.parse("2015-11-30"), 10, 0);
+        Object result = service.siteRank("1", Ranking.brand, RankingType.uv, monthf.parse("2015-11-0"), monthf.parse("2015-11-30"), 10, 0);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
@@ -112,13 +110,13 @@ public class StatisticsServiceTest {
 
     @Test
     public void testShareRank() throws Exception {
-        Object result = service.shareRank("1", monthf.parse("2015-11-0"), monthf.parse("2015-11-30"), 10, 0);
+        Object result = service.shareRank("1", monthf.parse("2015-12-0"), monthf.parse("2015-12-30"), 10, 0);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
     @Test
     public void testEnterexit() throws Exception {
-        Object result = service.enterexit("1", EnterExit.exit, RankingType.pv, monthf.parse("2015-11-0"), monthf.parse("2015-11-30"), 10, 0);
+        Object result = service.enterexitRank("1", EnterExit.exit, RankingType.pv, monthf.parse("2015-11-0"), monthf.parse("2015-11-30"), 10, 0);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 }

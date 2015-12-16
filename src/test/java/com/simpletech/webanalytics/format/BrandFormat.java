@@ -1,5 +1,7 @@
 package com.simpletech.webanalytics.format;
 
+import com.simpletech.webanalytics.model.entity.JsDetect;
+import com.simpletech.webanalytics.util.JacksonUtil;
 import com.webanalytics.useragent.Brand;
 import com.webanalytics.useragent.Platform;
 import org.junit.Test;
@@ -15,7 +17,7 @@ public class BrandFormat {
 
     @Test
     public void parser(){
-        String useragent = "Mozilla/5.0 (Linux; Android 4.4.2; zh-cn; SAMSUNG-SM-G9008W_TD/1.0 Android/4.4.2 Release/02.24.2014 Browser/AppleWebKit537.36 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/1.6 Mobile Safari/537.36";
+        String useragent = "GiONEE-GN700T_TD/v1 Linux/3.0.13 Android/4.0.4 Release/01.11.2013 Browser/AppleWebKit534.30/Mobile Safari/534.30 Mobile Android 4.0.4";
         Matcher matcher = Pattern.compile("\\b(mi ?.*|hm ?.*) build\\b", Pattern.CASE_INSENSITIVE).matcher(useragent);
         if (matcher.find()){
             System.out.println("find");

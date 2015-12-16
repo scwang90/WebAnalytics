@@ -30,7 +30,7 @@ public class BaseController {
      * @return map 列表
      * @throws Exception includes 中的参数错误
      */
-    protected List<Map<String, Object>> mapInclude(List<? extends Object> list, String[] includes) {
+    protected List<Map<String, Object>> mapInclude(List<? extends Object> list, String... includes) {
         List<Map<String, Object>> map = new ArrayList<>();
         for (Object model : list) {
             map.add(mapInclude(model, includes));
@@ -46,8 +46,8 @@ public class BaseController {
      * @return map
      * @throws Exception includes 中的参数错误
      */
-    protected Map<String, Object> mapInclude(Object model, String[] includes) {
-        Map<String, Object> map = new HashMap<>();
+    protected Map<String, Object> mapInclude(Object model, String... includes) {
+        Map<String, Object> map = new LinkedHashMap<>();
         if (model != null) {
             for (String include : includes) {
                 map.put(include, AfReflecter.getMemberNoException(model, include));
@@ -64,7 +64,7 @@ public class BaseController {
      * @return map 列表
      * @throws Exception includes 中的参数错误
      */
-    protected List<Map<String, Object>> mapExclude(List<? extends Object> list, String[] excludes) {
+    protected List<Map<String, Object>> mapExclude(List<? extends Object> list, String... excludes) {
         List<Map<String, Object>> map = new ArrayList<>();
         String[] includes = null;
         for (Object model : list) {
@@ -83,7 +83,7 @@ public class BaseController {
      * @param excludes excludes
      * @return includes
      */
-    private String[] getInclude(Class<? extends Object> clazz, String[] excludes) {
+    private String[] getInclude(Class<? extends Object> clazz, String... excludes) {
         List<String> ltInclude = new ArrayList<>();
         List<String> ltExclude = new ArrayList<>(Arrays.asList(excludes));
         Field[] fields = AfReflecter.getField(clazz);

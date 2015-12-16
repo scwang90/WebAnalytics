@@ -10,6 +10,9 @@ public class VisitSpanValue {
     private int pv;             //pv 数
     private int uv;             //独立用户数
     private int ip;             //pv 数
+    private int spent;          //平均耗时
+    private int exit;           //退出次数
+    private float rexit;        //退出率
 
     public int getVt() {
         return vt;
@@ -41,5 +44,29 @@ public class VisitSpanValue {
 
     public void setIp(int ip) {
         this.ip = ip;
+    }
+
+    public int getSpent() {
+        return spent;
+    }
+
+    public void setSpent(int spent) {
+        this.spent = spent;
+    }
+
+    public int getExit() {
+        return exit;
+    }
+
+    public void setExit(int exit) {
+        this.exit = exit;
+    }
+
+    public float getRexit() {
+        return rexit;
+    }
+
+    public void setRexit(float rexit) {
+        this.rexit = rexit;
     }
 }

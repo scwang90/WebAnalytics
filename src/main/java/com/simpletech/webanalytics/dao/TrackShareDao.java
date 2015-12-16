@@ -57,27 +57,6 @@ public interface TrackShareDao {
     ShareLinePoint getShareLinePoint(int siteId, String idsubsite, String idurl, String idfromtor, String idvisitor);
 
     /**
-     * 添加分享点
-     *
-     * @param point ShareLinePoint
-     */
-    int insertShareLinePoint(ShareLinePoint point);
-
-    /**
-     * 更新分享点
-     *
-     * @param tpoint ShareLinePoint
-     */
-    int updateShareLinePoint(ShareLinePoint tpoint);
-
-    /**
-     * 添加分用户
-     *
-     * @param user ShareUser
-     */
-    int insertShareUser(ShareUser user);
-
-    /**
      * 更新分用户
      *
      * @param user ShareUser

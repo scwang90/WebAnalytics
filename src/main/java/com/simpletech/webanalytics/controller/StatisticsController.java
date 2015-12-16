@@ -1,5 +1,6 @@
 package com.simpletech.webanalytics.controller;
 
+import com.simpletech.webanalytics.controller.base.BaseController;
 import com.simpletech.webanalytics.model.constant.*;
 import com.simpletech.webanalytics.model.entity.*;
 import com.simpletech.webanalytics.service.StatisticsService;
@@ -22,7 +23,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("v1/statistics/site/{siteId:\\d+}")
-public class StatisticsController {
+public class StatisticsController extends BaseController{
 
     @Autowired
     StatisticsService service;
@@ -74,9 +75,11 @@ public class StatisticsController {
     }
 
     /**
-     * 进入
+     * 页面分享-排行
      *
      * @param siteId 网站ID
+     * @param limit  分页限制
+     * @param skip   分页起始
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -92,7 +95,45 @@ public class StatisticsController {
     }
 
     /**
-     * 分享传播图点线列表
+     * 页面分享-趋势
+     *
+     * @param siteId 网站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return 页面分享排行
+     */
+    @RequestMapping("page/{urlId}/share/trend/{period:hour|day|week|month}")
+    public Object shareTrend(@PathVariable int siteId, @PathVariable Period period, @PathVariable String urlId, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        List<ShareTrendValue> list = service.shareTrend(idsite, urlId, period, start, end);
+        list = fulldata(list, period.getFormat(), period.getField(), start, end, ShareTrendValue.class);
+        return list;
+    }
+
+    /**
+     * 分享排行-总数
+     *
+     * @param siteId 网站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return 页面分享排行-总数
+     */
+    @RequestMapping("share/rank/count")
+    public Object shareRankCount(@PathVariable int siteId, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.shareRankCount(idsite, start, end);
+    }
+
+    /**
+     * 分享传播-图点线列表
      *
      * @param siteId 网站ID
      * @param urlId  页面ID
@@ -102,7 +143,7 @@ public class StatisticsController {
      * @param end    结束时间 ("yyyyMMddHHmmss")
      * @return 分享图点线列表
      */
-    @RequestMapping("share/map/page/{urlId}")
+    @RequestMapping("page/{urlId}/share/map")
     public Object shareMap(@PathVariable int siteId, @PathVariable String urlId, String subsite, Integer offset, Period span, Date start, Date end) {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
@@ -111,9 +152,65 @@ public class StatisticsController {
     }
 
     /**
-     * [入口|出口]页面
+     * 单页性别-排行
      *
      * @param siteId 网站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return 分享去向-排行
+     */
+    @RequestMapping("page/{urlId}/share/sex/rank/{ranktype:pv|uv}")
+    public Object shareSexRank(@PathVariable int siteId, @PathVariable String urlId, @PathVariable RankingType ranktype, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.shareSexRank(idsite, urlId, ranktype, start, end);
+    }
+
+    /**
+     * 整站性别-排行
+     *
+     * @param siteId 网站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return 分享去向-排行
+     */
+    @RequestMapping("share/sex/rank/{ranktype:pv|uv}")
+    public Object siteSexRank(@PathVariable int siteId, @PathVariable RankingType ranktype, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.siteSexRank(idsite, ranktype, start, end);
+    }
+
+    /**
+     * 分享去向-排行
+     *
+     * @param siteId 网站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return 分享去向-排行
+     */
+    @RequestMapping("page/{urlId}/share/to/rank/{ranktype:pv|uv}")
+    public Object shareToRank(@PathVariable int siteId, @PathVariable String urlId, @PathVariable RankingType ranktype, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.shareToRank(idsite, urlId, ranktype, start, end);
+    }
+
+    /**
+     * 页面排行-[入口|出口]
+     *
+     * @param siteId 网站ID
+     * @param limit  分页限制
+     * @param skip   分页起始
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -121,38 +218,74 @@ public class StatisticsController {
      * @return [入口|出口]页面
      */
     @RequestMapping("{type:entry|exit}/rank/{ranktype:pv|uv|vt|ip}/{limit:\\d+}/{skip:\\d+}")
-    public Object enterexit(@PathVariable int siteId, @PathVariable EnterExit type, @PathVariable RankingType ranktype, @PathVariable int limit, @PathVariable int skip, String subsite, Integer offset, Period span, Date start, Date end) {
+    public Object enterexitRank(@PathVariable int siteId, @PathVariable EnterExit type, @PathVariable RankingType ranktype, @PathVariable int limit, @PathVariable int skip, String subsite, Integer offset, Period span, Date start, Date end) {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
         String idsite = getIdSite(siteId, subsite);
-        return service.enterexit(idsite, type, ranktype, start, end, limit, skip);
+        return service.enterexitRank(idsite, type, ranktype, start, end, limit, skip);
     }
 
     /**
-     * 页面排行-标题和链接
+     * 页面排行-[入口|出口]-总数
      *
      * @param siteId 网站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
      * @param end    结束时间 ("yyyyMMddHHmmss")
-     * @param limit  分页限制
-     * @param skip   分页起始
-     * @return 标题排行
+     * @return [入口|出口]页面-总数
      */
-    @RequestMapping("{type:title|url}/rank/{ranktype:vt|uv|pv}/{limit:\\d+}/{skip:\\d+}")
-    public Object titleurl(@PathVariable int siteId, @PathVariable PageRank type, @PathVariable RankingType ranktype, @PathVariable int limit, @PathVariable int skip, String subsite, Integer offset, Period span, Date start, Date end) {
+    @RequestMapping("{type:entry|exit}/rank/count")
+    public Object enterexitRankCount(@PathVariable int siteId, @PathVariable EnterExit type, String subsite, Integer offset, Period span, Date start, Date end) {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
         String idsite = getIdSite(siteId, subsite);
-        return service.titleurl(idsite, type, ranktype, start, end, limit, skip);
+        return service.enterexitRankCount(idsite, type, start, end);
+    }
+
+    /**
+     * 页面排行-标题和链接
+     *
+     * @param siteId 网站ID
+     * @param limit  分页限制
+     * @param skip   分页起始
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return 标题排行
+     */
+    @RequestMapping("{type:title|url}/rank/{ranktype:vt|uv|pv}/{limit:\\d+}/{skip:\\d+}")
+    public Object titleurlRank(@PathVariable int siteId, @PathVariable PageRank type, @PathVariable RankingType ranktype, @PathVariable int limit, @PathVariable int skip, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.titleurlRank(idsite, type, ranktype, start, end, limit, skip);
+    }
+
+    /**
+     * 页面排行-标题和链接-总数
+     *
+     * @param siteId 网站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return 标题排行
+     */
+    @RequestMapping("{type:title|url}/rank/count")
+    public Object titleurlRankCount(@PathVariable int siteId, @PathVariable PageRank type, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.titleurlRankCount(idsite, type, start, end);
     }
 
     /**
      * 页面数据排行
-     * 设备品牌、设备型号、网络类型、浏览器、操作系统、APP、分辨率、颜色深度、语言、国家、省份、城市、IP地址
+     * 设备品牌、设备型号、网络类型、浏览器、操作系统、APP、分辨率、颜色深度、语言、国家、省份、城市、IP地址、运营商
      *
-     * @param ranking  排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip
+     * @param ranking  排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp
      * @param ranktype 排序类型 按 vt|uv|ip|pv
      * @param siteId   网站ID
      * @param urlId    页面ID
@@ -164,7 +297,7 @@ public class StatisticsController {
      * @param skip     分页起始
      * @return 排行数据
      */
-    @RequestMapping("page/{urlId}/{ranking:brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip}/rank/{ranktype:vt|uv|ip|pv}/{limit:\\d+}/{skip:\\d+}")
+    @RequestMapping("page/{urlId}/{ranking:brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp}/rank/{ranktype:vt|uv|ip|pv}/{limit:\\d+}/{skip:\\d+}")
     public Object pageRank(@PathVariable int siteId, @PathVariable String urlId, @PathVariable Ranking ranking, @PathVariable RankingType ranktype, @PathVariable int limit, @PathVariable int skip, String subsite, Integer offset, Period span, Date start, Date end) {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
@@ -172,12 +305,32 @@ public class StatisticsController {
         return service.pageRank(idsite, urlId, ranking, ranktype, start, end, limit, skip);
     }
 
+    /**
+     * 页面数据排行-总数
+     * 设备品牌、设备型号、网络类型、浏览器、操作系统、APP、分辨率、颜色深度、语言、国家、省份、城市、IP地址、运营商
+     *
+     * @param ranking 排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp
+     * @param siteId  网站ID
+     * @param urlId   页面ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
+     * @return 排行数据-总数
+     */
+    @RequestMapping("page/{urlId}/{ranking:brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp}/rank/count")
+    public Object pageRankCount(@PathVariable int siteId, @PathVariable String urlId, @PathVariable Ranking ranking, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.pageRankCount(idsite, urlId, ranking, start, end);
+    }
 
     /**
      * 站点数据排行
-     * 设备品牌、设备型号、网络类型、浏览器、操作系统、APP、分辨率、颜色深度、语言、国家、省份、城市、IP地址
+     * 设备品牌、设备型号、网络类型、浏览器、操作系统、APP、分辨率、颜色深度、语言、国家、省份、城市、IP地址、运营商
      *
-     * @param ranking  排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip
+     * @param ranking  排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp
      * @param ranktype 排序类型 按 vt|uv|ip|pv
      * @param siteId   网站ID
      * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
@@ -189,11 +342,31 @@ public class StatisticsController {
      * @return 排行数据
      */
     @RequestMapping("{ranking:brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp}/rank/{ranktype:vt|uv|ip|pv}/{limit:\\d+}/{skip:\\d+}")
-    public Object ranking(@PathVariable int siteId, @PathVariable Ranking ranking, @PathVariable RankingType ranktype, @PathVariable int limit, @PathVariable int skip, String subsite, Integer offset, Period span, Date start, Date end) {
+    public Object siteRank(@PathVariable int siteId, @PathVariable Ranking ranking, @PathVariable RankingType ranktype, @PathVariable int limit, @PathVariable int skip, String subsite, Integer offset, Period span, Date start, Date end) {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
         String idsite = getIdSite(siteId, subsite);
-        return service.ranking(idsite, ranking, ranktype, start, end, limit, skip);
+        return service.siteRank(idsite, ranking, ranktype, start, end, limit, skip);
+    }
+
+    /**
+     * 站点数据排行-总数
+     * 设备品牌、设备型号、网络类型、浏览器、操作系统、APP、分辨率、颜色深度、语言、国家、省份、城市、IP地址、运营商
+     *
+     * @param ranking 排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp
+     * @param siteId  网站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
+     * @return 排行数据-总数
+     */
+    @RequestMapping("{ranking:brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp}/rank/count")
+    public Object siteRankCount(@PathVariable int siteId, @PathVariable Ranking ranking, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.siteRankCount(idsite, ranking, start, end);
     }
 
     /**
@@ -278,6 +451,24 @@ public class StatisticsController {
         start = timeStart(start, span, offset);
         String idsite = getIdSite(siteId, subsite);
         return service.eventRank(idsite, start, end, limit, skip);
+    }
+
+    /**
+     * 事件统计-排行-总数
+     *
+     * @param siteId 网站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return 事件统计-排行-总数 {status:[true|false],data:1}
+     */
+    @RequestMapping("event/rank/count")
+    public Object eventRankCount(@PathVariable int siteId, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.eventRankCount(idsite, start, end);
     }
 
     /**
@@ -372,12 +563,12 @@ public class StatisticsController {
      * @return 统计数据
      */
     @RequestMapping("page/{urlId}/trend/{period:hour|day|week|month}")
-    public Object pageTrend(@PathVariable int siteId, @PathVariable String urlId, @PathVariable Period period, String subsite, Integer offset, Period span, Date start, Date end) {
+    public Object pageVisitTrend(@PathVariable int siteId, @PathVariable String urlId, @PathVariable Period period, String subsite, Integer offset, Period span, Date start, Date end) {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
         this.doCheckPeriod(period, start, end);
         String idsite = getIdSite(siteId, subsite);
-        List<VisitTrendValue> list = service.pageTrend(idsite, urlId, period, start, end);
+        List<VisitTrendValue> list = service.pageVisitTrend(idsite, urlId, period, start, end);
         list = fulldata(list, period.getFormat(), period.getField(), start, end, VisitTrendValue.class);
         return list;
     }
@@ -394,11 +585,11 @@ public class StatisticsController {
      * @return 统计数据
      */
     @RequestMapping("page/{urlId}/span")
-    public Object pageSpan(@PathVariable int siteId, @PathVariable String urlId, String subsite, Integer offset, Period span, Date start, Date end) {
+    public Object pageVisitSpan(@PathVariable int siteId, @PathVariable String urlId, String subsite, Integer offset, Period span, Date start, Date end) {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
         String idsite = getIdSite(siteId, subsite);
-        return service.pageSpan(idsite, urlId, start, end);
+        return service.pageVisitSpan(idsite, urlId, start, end);
     }
 
     /**
@@ -417,7 +608,8 @@ public class StatisticsController {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
         String idsite = getIdSite(siteId, subsite);
-        return service.visitTimeMap(idsite, type, start, end);
+        int days = countDays(Period.day, start, end);
+        return service.visitTimeMap(idsite, type, days, start, end);
     }
 
 
@@ -438,7 +630,8 @@ public class StatisticsController {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
         String idsite = getIdSite(siteId, subsite);
-        return service.pageTimeMap(idsite, urlId, type, start, end);
+        int days = countDays(Period.day, start, end);
+        return super.mapExclude(service.pageTimeMap(idsite, urlId, type, days, start, end),"ip","rip");
     }
 
     /**
@@ -459,6 +652,25 @@ public class StatisticsController {
         start = timeStart(start, span, offset);
         String idsite = getIdSite(siteId, subsite);
         return service.visitPageMap(idsite, type, map, start, end);
+    }
+
+    /**
+     * 计算分割段数
+     *
+     * @param period 时段周期 [时|日|周|月]
+     * @param start  开始时间
+     * @param end    结束时间
+     * @return 段数
+     */
+    private int countDays(Period period, Date start, Date end) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(start);
+        int count = 0;
+        while (calendar.getTime().before(end)) {
+            count++;
+            calendar.add(period.getField(), 1);
+        }
+        return count;
     }
 
     /**
@@ -489,7 +701,7 @@ public class StatisticsController {
      * @return 开始时间
      */
     private Date timeStart(Date start, Period span, Integer offset) {
-        if (span != null && offset != null /*&& !Period.hour.equals(span)*/) {
+        if (span != null && offset != null) {
             DateFormat format = span.getFormat();
             Calendar calendar = Calendar.getInstance();
             try {
@@ -587,7 +799,7 @@ public class StatisticsController {
      */
     private String getIdSite(int siteId, String subsite) {
         if (AfStringUtil.isNotEmpty(subsite)) {
-            String format = "%d AND idsubsite='%s'";
+            String format = "%d AND t.idsubsite='%s'";
             return String.format(format, siteId, subsite);
         }
         return String.valueOf(siteId);

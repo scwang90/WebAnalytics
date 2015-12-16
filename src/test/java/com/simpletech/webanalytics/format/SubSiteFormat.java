@@ -1,5 +1,6 @@
 package com.simpletech.webanalytics.format;
 
+import com.simpletech.webanalytics.model.ShareLinePoint;
 import com.simpletech.webanalytics.model.Site;
 import com.simpletech.webanalytics.util.AfStringUtil;
 import org.junit.Test;
@@ -33,4 +34,5 @@ public class SubSiteFormat {
         }
         return idsubsite;
     }
+
 }

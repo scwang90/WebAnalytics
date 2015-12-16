@@ -4,6 +4,7 @@ import com.simpletech.webanalytics.dao.StatisticsDao;
 import com.simpletech.webanalytics.mapper.api.StatisticsMapper;
 import com.simpletech.webanalytics.model.*;
 import com.simpletech.webanalytics.model.constant.RankingType;
+import com.simpletech.webanalytics.model.constant.WxSexType;
 import com.simpletech.webanalytics.model.entity.*;
 import com.simpletech.webanalytics.util.AfStringUtil;
 import com.webanalytics.useragent.*;
@@ -530,7 +531,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<MapPointValue> fullNickName(List<MapPointValue> points) {
+    public List<MapPointValue> fullShareUserInfo(List<MapPointValue> points, int max) {
         if (points.size() > 0) {
             String where = "WHERE idvisitor IN(%s)";
             StringBuffer builder = new StringBuffer();
@@ -544,10 +545,24 @@ public class StatisticsDaoImpl implements StatisticsDao {
             for (ShareUser user : users) {
                 map.put(user.getIdvisitor(), user);
             }
-            for (MapPointValue point : points) {
+            for (int i = 0; i < points.size() ; i++) {
+                MapPointValue point = points.get(i);
                 ShareUser user = map.get(point.getId());
                 if (user != null) {
                     point.setMk(user.getNickname());
+                    if (i < max) {
+                        point.setName(user.getNickname());
+                        point.setCity(user.getCity());
+                        point.setCountry(user.getCountry());
+                        point.setProvince(user.getProvince());
+                        point.setHead(user.getHeadimgurl());
+                        try {
+                            point.setSex(WxSexType.values()[Integer.parseInt(user.getSex())].value);
+                        } catch (Throwable ex) {
+                            ex.printStackTrace();
+                            point.setSex(WxSexType.nuknow.value);
+                        }
+                    }
                 }
             }
         }

@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_share_line_point
  * @author 树朾
- * @date 2015-12-01 15:41:57 中国标准时间
+ * @date 2015-12-11 18:11:55 中国标准时间
  */
 @Table("t_share_line_point")
 public class ShareLinePoint extends ModelBase{
@@ -31,6 +31,10 @@ public class ShareLinePoint extends ModelBase{
 	 */
 	private String idurl;
 	/**
+	 * 标题ID
+	 */
+	private String idtitle;
+	/**
 	 * 访问者ID
 	 */
 	private String idvisitor;
@@ -38,6 +42,16 @@ public class ShareLinePoint extends ModelBase{
 	 * 上个一访问者ID
 	 */
 	private String idrefervisitor;
+	/**
+	 * 是否起始分享
+	 */
+	@Column("is_start_point")
+	private Boolean isStartPoint;
+	/**
+	 * 分享到
+	 */
+	@Column("share_to")
+	private String shareTo;
 	/**
 	 * 点击量
 	 */
@@ -99,6 +113,14 @@ public class ShareLinePoint extends ModelBase{
 		this.idurl = idurl;
 	}
 	
+	public String getIdtitle(){
+		return this.idtitle;
+	}
+
+	public void setIdtitle(String idtitle) {
+		this.idtitle = idtitle;
+	}
+	
 	public String getIdvisitor(){
 		return this.idvisitor;
 	}
@@ -113,6 +135,22 @@ public class ShareLinePoint extends ModelBase{
 
 	public void setIdrefervisitor(String idrefervisitor) {
 		this.idrefervisitor = idrefervisitor;
+	}
+	
+	public Boolean getIsStartPoint(){
+		return this.isStartPoint;
+	}
+
+	public void setIsStartPoint(Boolean isStartPoint) {
+		this.isStartPoint = isStartPoint;
+	}
+	
+	public String getShareTo(){
+		return this.shareTo;
+	}
+
+	public void setShareTo(String shareTo) {
+		this.shareTo = shareTo;
 	}
 	
 	public Integer getCountPv(){

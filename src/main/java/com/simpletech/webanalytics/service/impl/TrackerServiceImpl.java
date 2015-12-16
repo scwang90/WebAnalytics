@@ -6,7 +6,6 @@ import com.simpletech.webanalytics.model.entity.JsEvent;
 import com.simpletech.webanalytics.model.*;
 import com.simpletech.webanalytics.model.entity.JsUser;
 import com.simpletech.webanalytics.service.*;
-import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.AfStringUtil;
 import com.simpletech.webanalytics.util.LruCache;
 import com.simpletech.webanalytics.util.SynchronizedLock;
@@ -66,7 +65,7 @@ public class TrackerServiceImpl implements TrackerService {
                 dao.insertAction(idsubsite, naction);
             }
 
-            trackShareService.trackerShare(siteId, idsubsite, detect, url);
+            trackShareService.trackerShare(siteId, idsubsite, detect, url, title);
         }
     }
 
@@ -105,7 +104,7 @@ public class TrackerServiceImpl implements TrackerService {
             action.setIdvisitor(detect.getIdvtor());
             dao.insertAction(idsubsite, action);
 
-            trackShareService.trackerShare(siteId, idsubsite, detect, url);
+            trackShareService.trackerShare(siteId, idsubsite, detect, url, title);
         }
     }
 
@@ -166,6 +165,10 @@ public class TrackerServiceImpl implements TrackerService {
                     idsubsite = matcher.group(index);
                 }
                 idsubsite = (AfStringUtil.isEmpty(idsubsite)) ? "" : idsubsite;
+            }
+            if (idsubsite.length() > 36) {
+                System.out.println("子站标识过长："+idsubsite);
+                idsubsite = "";
             }
         }
         return idsubsite;
