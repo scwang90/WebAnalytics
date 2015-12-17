@@ -379,7 +379,13 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public PageUserShare pageUserShare(String idsite, String urlId, String openid, Date start, Date end) {
-        return mapper.pageUserShare(idsite, urlId, openid, start, end);
+        PageUserShare share = mapper.pageUserShare(idsite, urlId, openid, start, end);
+        try {
+            share.setSex(WxSexType.values()[Integer.parseInt(share.getSex())].value);
+        } catch (Throwable ex) {
+            share.setSex(WxSexType.nuknow.value);
+        }
+        return share;
     }
 
     @Override

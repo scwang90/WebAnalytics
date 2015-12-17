@@ -945,7 +945,7 @@ public interface StatisticsMapper {
      * @param start  开始时间
      * @param end    结束时间
      */
-    @Select("SELECT COUNT(t.id) sh,COUNT(DISTINCT t.idvisitor) uv,SUM(t.count_pv) pv, openid , unionid , nickname , headimgurl , sex , province , city , country , privilege\n" +
+    @Select("SELECT COUNT(t.id) sh,COUNT(DISTINCT t.idvisitor) uv,SUM(t.count_pv) pv, openid , unionid , nickname name, headimgurl head, sex , province , city , country , privilege\n" +
             "FROM t_share_user AS tt\n" +
             "  LEFT JOIN t_share_line_point AS t ON t.idrefervisitor = tt.idvisitor\n" +
             "WHERE openid = #{openid} AND t.idurl=#{urlId} AND (t.create_time BETWEEN #{start} AND #{end})")

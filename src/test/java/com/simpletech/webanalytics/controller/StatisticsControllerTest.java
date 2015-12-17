@@ -236,7 +236,7 @@ public class StatisticsControllerTest {
 
     @Test
     public void pageUserShare() throws Exception {
-        Object result = controller.pageUserShare(1, "", "", "", 0, Period.month, null, null);
+        Object result = controller.pageUserShare(1, "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", "oVishs3rvqQm-ECsd7m6cOEdU-ws", "", 0, Period.month, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 }

@@ -3,6 +3,7 @@ package com.simpletech.webanalytics.dao.impl;
 import com.simpletech.webanalytics.dao.StatisticsDao;
 import com.simpletech.webanalytics.mapper.api.StatisticsMapper;
 import com.simpletech.webanalytics.model.*;
+import com.simpletech.webanalytics.model.constant.BDIPIspType;
 import com.simpletech.webanalytics.model.constant.RankingType;
 import com.simpletech.webanalytics.model.constant.WxSexType;
 import com.simpletech.webanalytics.model.entity.*;
@@ -526,6 +527,11 @@ public class StatisticsDaoImpl implements StatisticsDao {
             value.setRpv(1f * value.getPv() / count.getPv());
             value.setRip(1f * value.getIp() / count.getIp());
             value.setRvt(1f * value.getVt() / count.getVt());
+            try {
+                value.setName(BDIPIspType.valueOf(value.getName().toUpperCase()).value);
+            } catch (IllegalArgumentException | NullPointerException ignored) {
+            }
+
         }
         return list;
     }
@@ -545,7 +551,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
             for (ShareUser user : users) {
                 map.put(user.getIdvisitor(), user);
             }
-            for (int i = 0; i < points.size() ; i++) {
+            for (int i = 0; i < points.size(); i++) {
                 MapPointValue point = points.get(i);
                 ShareUser user = map.get(point.getId());
                 if (user != null) {
