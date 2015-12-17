@@ -233,4 +233,10 @@ public class StatisticsControllerTest {
         Object result = controller.visitPageMap(1, VisitPageType.unique, "2,5,6", "", 0, Period.month, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
+
+    @Test
+    public void pageUserShare() throws Exception {
+        Object result = controller.pageUserShare(1, "", "", "", 0, Period.month, null, null);
+        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+    }
 }

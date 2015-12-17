@@ -597,7 +597,7 @@ public interface StatisticsMapper {
     List<PageValue> pageUrlRank(@Param("idsite") String idsite, @Param("type") String type, @Param("start") Date start, @Param("end") Date end, @Param("limit") int limit, @Param("skip") int skip);
 
     @Select("SELECT COUNT(*) FROM (SELECT idurl FROM t_action AS t WHERE idsite = ${idsite} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY idurl) AS tt")
-    int pageUrlCount(@Param("idsite") String idsite,@Param("start") Date start, @Param("end") Date end);
+    int pageUrlCount(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end);
 
     /**
      * 新老用户-时段
@@ -871,6 +871,7 @@ public interface StatisticsMapper {
 
     /**
      * 分享到 - 排行
+     *
      * @param idsite 网站ID
      * @param type   排序类型
      * @param start  开始时间
@@ -883,7 +884,7 @@ public interface StatisticsMapper {
      * 单页性别-排行
      *
      * @param idsite 网站ID
-     * @param type 排序类型 按 uv|pv
+     * @param type   排序类型 按 uv|pv
      * @param start  开始时间
      * @param end    结束时间
      * @return 分享去向-排行
@@ -894,13 +895,13 @@ public interface StatisticsMapper {
             "      FROM t_share_line_point AS t LEFT JOIN t_share_user AS t1 ON t.idvisitor = t1.idvisitor\n" +
             "      WHERE idurl = #{urlId} AND (t.create_time BETWEEN #{start} AND #{end}) \n" +
             "      GROUP BY t.idvisitor) AS t WHERE t.sex IS NOT NULL GROUP BY t.sex ORDER BY ${type} DESC")
-    List<ShareSexRankValue> shareSexRank(@Param("idsite") String idsite , @Param("urlId") String urlId, @Param("type") String type, @Param("start") Date start, @Param("end") Date end);
+    List<ShareSexRankValue> shareSexRank(@Param("idsite") String idsite, @Param("urlId") String urlId, @Param("type") String type, @Param("start") Date start, @Param("end") Date end);
 
     /**
      * 整站性别-排行
      *
      * @param idsite 网站ID
-     * @param type 排序类型 按 uv|pv
+     * @param type   排序类型 按 uv|pv
      * @param start  开始时间
      * @param end    结束时间
      * @return 分享去向-排行
@@ -933,6 +934,22 @@ public interface StatisticsMapper {
      */
     @Select("SELECT id , idsite , idsubsite , idvisitor , openid , unionid , nickname , headimgurl , sex , province , city , country , privilege , create_time createTime , update_time updateTime FROM t_share_user ${where} ${order}")
     List<ShareUser> findShareUserWhere(@Param("order") String order, @Param("where") String where);
+
+
+    /**
+     * 单用户分享页码到情况
+     *
+     * @param idsite 网站ID
+     * @param urlId  页面ID
+     * @param openid 微信用户ID
+     * @param start  开始时间
+     * @param end    结束时间
+     */
+    @Select("SELECT COUNT(t.id) sh,COUNT(DISTINCT t.idvisitor) uv,SUM(t.count_pv) pv, openid , unionid , nickname , headimgurl , sex , province , city , country , privilege\n" +
+            "FROM t_share_user AS tt\n" +
+            "  LEFT JOIN t_share_line_point AS t ON t.idrefervisitor = tt.idvisitor\n" +
+            "WHERE openid = #{openid} AND t.idurl=#{urlId} AND (t.create_time BETWEEN #{start} AND #{end})")
+    PageUserShare pageUserShare(@Param("idsite") String idsite, @Param("urlId") String urlId, @Param("openid") String openid, @Param("start") Date start, @Param("end") Date end);
 
 
     /**
@@ -981,6 +998,7 @@ public interface StatisticsMapper {
      */
     @Select("SELECT id , idsite , idsubsite , idurl , idvisitor , create_time createTime , update_time updateTime FROM t_share_start_point AS t WHERE idurl=#{urlId} AND (create_time BETWEEN #{start} AND #{end}) ")
     List<ShareStartPoint> getShareStartPoint(@Param("idsite") String idsite, @Param("urlId") String urlId, @Param("start") Date start, @Param("end") Date end);
+
     /**
      * 获取起始点列表ID
      *
@@ -1076,6 +1094,7 @@ public interface StatisticsMapper {
 
     @Select("SELECT COUNT(*) FROM (SELECT idurl_exit FROM t_visit AS t WHERE idsite=${idsite} AND (visit_servertime BETWEEN #{start} AND #{end}) GROUP BY idurl_exit) AS tt")
     int exitUrlsRankCount(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end);
+
     /**
      * 访问页面数-分布
      *

@@ -38,6 +38,7 @@ public class StatisticsController extends BaseController{
      * 新老用户-趋势
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -56,6 +57,7 @@ public class StatisticsController extends BaseController{
      * 新老用户-趋势
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param period 时段周期 [时|日|周|月]
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
@@ -78,6 +80,7 @@ public class StatisticsController extends BaseController{
      * 页面分享-排行
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param limit  分页限制
      * @param skip   分页起始
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
@@ -98,6 +101,7 @@ public class StatisticsController extends BaseController{
      * 页面分享-趋势
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -118,6 +122,7 @@ public class StatisticsController extends BaseController{
      * 分享排行-总数
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -136,6 +141,7 @@ public class StatisticsController extends BaseController{
      * 分享传播-图点线列表
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param urlId  页面ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
@@ -155,6 +161,7 @@ public class StatisticsController extends BaseController{
      * 单页性别-排行
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -173,6 +180,7 @@ public class StatisticsController extends BaseController{
      * 整站性别-排行
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -191,6 +199,7 @@ public class StatisticsController extends BaseController{
      * 分享去向-排行
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -209,6 +218,7 @@ public class StatisticsController extends BaseController{
      * 页面排行-[入口|出口]
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param limit  分页限制
      * @param skip   分页起始
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
@@ -229,6 +239,7 @@ public class StatisticsController extends BaseController{
      * 页面排行-[入口|出口]-总数
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -247,6 +258,7 @@ public class StatisticsController extends BaseController{
      * 页面排行-标题和链接
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param limit  分页限制
      * @param skip   分页起始
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
@@ -267,6 +279,7 @@ public class StatisticsController extends BaseController{
      * 页面排行-标题和链接-总数
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -282,12 +295,33 @@ public class StatisticsController extends BaseController{
     }
 
     /**
+     * 分享统计-个人
+     * @param siteId   网站ID
+     * @param subsite  子站ID
+     * @param urlId    页面ID
+     * @param openid   微信用户ID
+     * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span     跨度 [day|week|month|year]
+     * @param start    开始时间 ("yyyyMMddHHmmss")
+     * @param end      结束时间 ("yyyyMMddHHmmss")
+     * @return 分享统计
+     */
+    @RequestMapping("page/{urlId}/user/{openid}/share")
+    public Object pageUserShare(@PathVariable int siteId, @PathVariable String urlId, @PathVariable String openid, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.pageUserShare(idsite, urlId, openid, start, end);
+    }
+
+    /**
      * 页面数据排行
      * 设备品牌、设备型号、网络类型、浏览器、操作系统、APP、分辨率、颜色深度、语言、国家、省份、城市、IP地址、运营商
      *
      * @param ranking  排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp
      * @param ranktype 排序类型 按 vt|uv|ip|pv
      * @param siteId   网站ID
+     * @param subsite  子站ID
      * @param urlId    页面ID
      * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span     跨度 [day|week|month|year]
@@ -311,6 +345,7 @@ public class StatisticsController extends BaseController{
      *
      * @param ranking 排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp
      * @param siteId  网站ID
+     * @param subsite  子站ID
      * @param urlId   页面ID
      * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span    跨度 [day|week|month|year]
@@ -333,6 +368,7 @@ public class StatisticsController extends BaseController{
      * @param ranking  排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp
      * @param ranktype 排序类型 按 vt|uv|ip|pv
      * @param siteId   网站ID
+     * @param subsite  子站ID
      * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span     跨度 [day|week|month|year]
      * @param start    开始时间 ("yyyyMMddHHmmss")
@@ -355,6 +391,7 @@ public class StatisticsController extends BaseController{
      *
      * @param ranking 排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp
      * @param siteId  网站ID
+     * @param subsite  子站ID
      * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span    跨度 [day|week|month|year]
      * @param start   开始时间 ("yyyyMMddHHmmss")
@@ -373,6 +410,7 @@ public class StatisticsController extends BaseController{
      * 事件详细-趋势
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param name   事件名称
      * @param period 时段周期 [时|日|周|月]
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
@@ -395,6 +433,7 @@ public class StatisticsController extends BaseController{
      * 事件详细-时段
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param name   事件名称
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
@@ -414,6 +453,7 @@ public class StatisticsController extends BaseController{
      * 事件详细-趋势
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param name   事件名称
      * @param period 时段周期 [时|日|周|月]
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
@@ -437,6 +477,7 @@ public class StatisticsController extends BaseController{
      * 事件统计-排行
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -457,6 +498,7 @@ public class StatisticsController extends BaseController{
      * 事件统计-排行-总数
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -475,6 +517,7 @@ public class StatisticsController extends BaseController{
      * 事件统计-趋势
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -495,6 +538,7 @@ public class StatisticsController extends BaseController{
      * 事件统计-时段
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -513,6 +557,7 @@ public class StatisticsController extends BaseController{
      * Visit|PV|UV|IP 趋势
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param period 时段周期 [时|日|周|月]
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
@@ -535,6 +580,7 @@ public class StatisticsController extends BaseController{
      * Visit|PV|UV|IP 时段
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
@@ -554,6 +600,7 @@ public class StatisticsController extends BaseController{
      * 页面 Visit|PV|UV|IP 趋势
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param urlId  页面ID
      * @param period 时段周期 [时|日|周|月]
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
@@ -577,6 +624,7 @@ public class StatisticsController extends BaseController{
      * 页面 Visit|PV|UV|IP 时段
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param urlId  页面ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
@@ -596,6 +644,7 @@ public class StatisticsController extends BaseController{
      * 访问时间-分布 （服务器时间，浏览器时间）
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param type   时间类型  server-服务器时间|local-浏览器时间
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span   跨度 [day|week|month|year]
@@ -617,6 +666,7 @@ public class StatisticsController extends BaseController{
      * 页面时间-分布 （服务器时间，浏览器时间）
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param type   时间类型  server-服务器时间|local-浏览器时间
      * @param urlId  页面ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
@@ -638,6 +688,7 @@ public class StatisticsController extends BaseController{
      * 访问页数-排行
      *
      * @param siteId 网站ID
+     * @param subsite  子站ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param type   时间类型  view-访问页数|unique-不同页数
      * @param map    分布格式 如格式 1,2,6,9 表示分布结果 1,2,3-6,7-9,大于9

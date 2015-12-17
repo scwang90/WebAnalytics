@@ -378,6 +378,11 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
+    public PageUserShare pageUserShare(String idsite, String urlId, String openid, Date start, Date end) {
+        return mapper.pageUserShare(idsite, urlId, openid, start, end);
+    }
+
+    @Override
     public List<RankingValue> pageRank(String idsite, String idurl, Ranking rank, RankingType ranktype, Date start, Date end, int limit, int skip) {
         switch (rank) {
             case appname:

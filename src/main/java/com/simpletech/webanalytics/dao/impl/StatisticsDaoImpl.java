@@ -551,6 +551,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
                 if (user != null) {
                     point.setMk(user.getNickname());
                     if (i < max) {
+                        point.setOpenid(user.getOpenid());
                         point.setName(user.getNickname());
                         point.setCity(user.getCity());
                         point.setCountry(user.getCountry());

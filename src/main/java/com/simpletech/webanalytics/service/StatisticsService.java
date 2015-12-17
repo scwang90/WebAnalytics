@@ -242,6 +242,18 @@ public interface StatisticsService {
      */
     int siteRankCount(String idsite, Ranking ranking, Date start, Date end);
 
+
+    /**
+     * 分享统计-个人
+     * @param idsite   网站ID
+     * @param urlId    页面ID
+     * @param openid   微信用户ID
+     * @param start    开始时间
+     * @param end      结束时间
+     * @return 分享统计
+     */
+    PageUserShare pageUserShare(String idsite, String urlId, String openid, Date start, Date end);
+
     /**
      * 页面数据排行
      * 设备品牌、设备型号、网络类型、浏览器、操作系统、APP、分辨率、颜色深度、语言、国家、省份、城市
