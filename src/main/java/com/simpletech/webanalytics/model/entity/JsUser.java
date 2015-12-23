@@ -85,8 +85,8 @@ public class JsUser extends ShareUser{
 
     @Override
     public void setHeadimgurl(String headimgurl) {
-        if (headimgurl != null && headimgurl.length() > 31) {
-            headimgurl = headimgurl.substring(0, 31);
+        if (headimgurl != null && headimgurl.length() > 255) {
+            headimgurl = headimgurl.substring(0, 255);
         }
         super.setHeadimgurl(headimgurl);
     }
