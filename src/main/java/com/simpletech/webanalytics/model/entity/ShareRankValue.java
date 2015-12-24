@@ -4,11 +4,12 @@ package com.simpletech.webanalytics.model.entity;
  * 页面排行
  * Created by 树朾 on 2015/9/29.
  */
-public class PageRankValue {
+public class ShareRankValue {
 
-    private String id;     //页面ID
+    private String id;      //页面ID
     private Integer num;    //数量
     private String url;     //链接
+    private String title;   //链接
 
     public String getId() {
         return id;
@@ -34,4 +35,11 @@ public class PageRankValue {
         this.url = url;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

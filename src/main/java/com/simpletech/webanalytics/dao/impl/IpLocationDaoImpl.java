@@ -64,11 +64,11 @@ public class IpLocationDaoImpl extends BaseDaoImpl<IpLocation> implements IpLoca
 //		return ipLocationMapper.findVisitWhereByPage(where, limit, start);
 //	}
 
-	@Override
-	public List<IpLocation> findAllIp(){
-		List<IpLocation> ipLocations=ipLocationMapper.findAllIp();
-		return ipLocations;
-	}
+//	@Override
+//	public List<IpLocation> findAllIp(){
+//		List<IpLocation> ipLocations=ipLocationMapper.findAllIp();
+//		return ipLocations;
+//	}
 
 }
 

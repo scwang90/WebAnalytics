@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_event
  * @author 树朾
- * @date 2015-12-01 15:41:57 中国标准时间
+ * @date 2015-12-11 18:11:55 中国标准时间
  */
 @Table("t_event")
 public class Event extends ModelBase{
@@ -60,7 +60,7 @@ public class Event extends ModelBase{
 	/**
 	 * 值
 	 */
-	private Float value;
+	private Double value;
 
 	public Event() {
 	}
@@ -145,11 +145,11 @@ public class Event extends ModelBase{
 		this.name = name;
 	}
 	
-	public Float getValue(){
+	public Double getValue(){
 		return this.value;
 	}
 
-	public void setValue(Float value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 	

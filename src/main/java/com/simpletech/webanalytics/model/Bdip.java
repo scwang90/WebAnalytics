@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.base.ModelBase;
 /**
  * 数据库表t_bdip
  * @author 树朾
- * @date 2015-12-08 12:53:53 中国标准时间
+ * @date 2015-12-11 18:11:55 中国标准时间
  */
 @Table("t_bdip")
 public class Bdip extends ModelBase{

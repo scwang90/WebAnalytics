@@ -1,14 +1,11 @@
 package com.simpletech.webanalytics.dao.impl;
 
 import com.simpletech.webanalytics.dao.TrackShareDao;
-import com.simpletech.webanalytics.mapper.TrackShareMapper;
+import com.simpletech.webanalytics.mapper.api.TrackShareMapper;
 import com.simpletech.webanalytics.model.ShareLinePoint;
 import com.simpletech.webanalytics.model.ShareStartPoint;
 import com.simpletech.webanalytics.model.ShareUser;
-import com.simpletech.webanalytics.model.base.ModelBase;
 import com.simpletech.webanalytics.model.entity.JsDetect;
-import com.simpletech.webanalytics.util.AfReflecter;
-import com.webanalytics.useragent.Browser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -35,15 +32,15 @@ public class TrackShareDaoImpl implements TrackShareDao {
     public ShareUser getShareUser(int siteId, String idsubsite, String idvisitor, JsDetect detect) {
         ShareUser user = mapper.getShareUser(siteId, idvisitor);
         if (user == null) {
-            user = new ShareUser();
-            user.setIdsite(siteId);
-            user.setIdvisitor(idvisitor);
-            user.fillNullID();
-            user.setIdsubsite(idsubsite);
-            user.setNickname(Browser.parserAcronym(detect.getBrowser()).getRemark() + " - " + detect.getVersion());
-            AfReflecter.setMemberNoException(user, "createTime", new Date());
-            AfReflecter.setMemberNoException(user, "updateTime", new Date());
-            mapper.insertShareUser(user);
+//            user = new ShareUser();
+//            user.setIdsite(siteId);
+//            user.setIdvisitor(idvisitor);
+//            user.fillNullID();
+//            user.setIdsubsite(idsubsite);
+//            user.setNickname(Browser.parserAcronym(detect.getBrowser()).getRemark() + " - " + detect.getVersion());
+//            AfReflecter.setMemberNoException(user, "createTime", new Date());
+//            AfReflecter.setMemberNoException(user, "updateTime", new Date());
+//            mapper.insertShareUser(user);
         }
         return user;
     }
@@ -73,28 +70,14 @@ public class TrackShareDaoImpl implements TrackShareDao {
     }
 
     @Override
-    public int insertShareLinePoint(ShareLinePoint point) {
-        return mapper.insertShareLinePoint(point);
-    }
-
-    @Override
-    public int updateShareLinePoint(ShareLinePoint tpoint) {
-        return mapper.updateShareLinePoint(tpoint);
-    }
-
-    @Override
-    public int insertShareUser(ShareUser user) {
-        return mapper.insertShareUser(user);
-    }
-
-    @Override
     public int updateShareUser(ShareUser user) {
         return mapper.updateShareUser(user);
     }
 
     @Override
     public boolean makeSureStartPoint(int siteId, String idsubsite, String idurl, String idfromtor) {
-        if (mapper.isStartPoint(siteId, idurl, idfromtor) == 0 && mapper.existStartPoint(siteId, idurl, idfromtor) == 0){
+//        if (mapper.isStartPoint(siteId, idurl, idfromtor) == 0 && mapper.existStartPoint(siteId, idurl, idfromtor) == 0){
+        if (mapper.checkStartPoint(siteId, idurl, idfromtor) == 0){
             ShareStartPoint point = new ShareStartPoint();
             point.fillNullID();
             point.setIdurl(idurl);

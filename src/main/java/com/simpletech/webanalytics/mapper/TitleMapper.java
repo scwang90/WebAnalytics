@@ -15,7 +15,7 @@ import com.simpletech.webanalytics.dao.base.BaseDaoMybatisMYSQLImpl.MybatisMulti
 /**
  * 数据库表t_title的mapper接口
  * @author 树朾
- * @date 2015-12-01 15:41:57 中国标准时间
+ * @date 2015-12-11 18:11:55 中国标准时间
  */
 public interface TitleMapper extends MybatisMultiDao<Title>{
 

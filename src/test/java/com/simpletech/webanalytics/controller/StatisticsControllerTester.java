@@ -49,13 +49,13 @@ public class StatisticsControllerTester {
 
     @Test
     public void pagetitle() {
-        Object result = controller.titleurl(1, PageRank.title, RankingType.pv, 100, 0, null, 0, Period.month, null, null);
+        Object result = controller.titleurlRank(1, PageRank.title, RankingType.pv, 100, 0, null, 0, Period.month, null, null);
         System.out.println(JacksonUtil.toJson(result));
     }
 
     @Test
     public void pageurl() {
-        Object result = controller.titleurl(1, PageRank.url, RankingType.pv, 100, 0, null, 0, Period.month, null, null);
+        Object result = controller.titleurlRank(1, PageRank.url, RankingType.pv, 100, 0, null, 0, Period.month, null, null);
         System.out.println(JacksonUtil.toJson(result));
     }
 

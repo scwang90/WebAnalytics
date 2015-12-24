@@ -18,7 +18,7 @@ public class PageValue {
     private float rvt;             //visit 占比
     private float rpv;             //pv 占比
 
-    private int loaded;            //平均加载时间 毫秒
+    private int load;              //平均加载时间 毫秒
     private int spent;             //平均加载时间 毫秒
 
     public String getId() {
@@ -93,12 +93,12 @@ public class PageValue {
         this.rpv = rpv;
     }
 
-    public int getLoaded() {
-        return loaded;
+    public int getLoad() {
+        return load;
     }
 
-    public void setLoaded(int loaded) {
-        this.loaded = loaded;
+    public void setLoad(int load) {
+        this.load = load;
     }
 
     public int getSpent() {

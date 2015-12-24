@@ -42,7 +42,7 @@ public interface ManagerMapper {
      * @param start 分页开始
      * @return 网站列表
      */
-    @Select("SELECT id , create_time createTime , update_time updateTime , name , domain , regex FROM t_site WHERE iduser=#{userId} LIMIT ${start},${limit}")
+    @Select("SELECT id, iduser , create_time createTime , update_time updateTime , name , domain , regex FROM t_site WHERE iduser=#{userId} LIMIT ${start},${limit}")
     List<Site> findSiteList(@Param("userId") String userId, @Param("limit") int limit, @Param("start") int start);
 
     /**

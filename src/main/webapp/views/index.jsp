@@ -35,6 +35,8 @@
 %>
 <h1>测试改变链接</h1>
 <%--<button onclick="location.href = ''+_wapaq.push(['linkChange', location.href]);">点击测试</button>--%>
+<%--_wapaq.push(['sendAuthUserInfo', user,appid]);--%>
+<button onclick="_wapaq.push(['sendAuthUserInfo', {openid:'132',nickname:'133'},'appid']);">点击测试授权信息</button>
 <button onclick="location.href = WADS.linkChange(location.href);">点击测试</button>
 <button onclick="location.href = remArg(location.href,['wa_share_vtor','wa_share_time']);">点击删除</button>
 <br>

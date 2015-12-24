@@ -1,25 +1,14 @@
 package com.simpletech.webanalytics.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
- * 分享传播图 点
- * Created by 树朾 on 2015/9/29.
+ * 个人分享统计值
+ * Created by 树朾 on 2015/9/30.
  */
-public class MapPointValue {
+public class PageUserShare {
 
-    private String Id;      //节点ID
-    private int cl;         //分类 0 起始点 1 中间点 2 叶子节点
-    private int pv;         //本节点的 PV 量
-    private int uv;         //本节点的 UV 量
-    private int sh;         //被分享数
-    private String mk;      //remark 备注
-    @JsonIgnore
-    public int opv;        //原始PV
-    @JsonIgnore
-    public int ouv;        //原始UV
-    @JsonIgnore
-    public boolean isStart;//原始节点类型
+    private int uv;         //带来用户数量 Unique Visitor
+    private int pv;         //带来PV数  Page View
+    private int sh;         //被分享的数量  shared
 
     /**
      * 微信用户openid
@@ -50,20 +39,12 @@ public class MapPointValue {
      */
     private String country;
 
-    public String getId() {
-        return Id;
+    public int getUv() {
+        return uv;
     }
 
-    public void setId(String id) {
-        Id = id;
-    }
-
-    public int getCl() {
-        return cl;
-    }
-
-    public void setCl(int cl) {
-        this.cl = cl;
+    public void setUv(int uv) {
+        this.uv = uv;
     }
 
     public int getPv() {
@@ -74,28 +55,12 @@ public class MapPointValue {
         this.pv = pv;
     }
 
-    public int getUv() {
-        return uv;
-    }
-
-    public void setUv(int uv) {
-        this.uv = uv;
-    }
-
     public int getSh() {
         return sh;
     }
 
     public void setSh(int sh) {
         this.sh = sh;
-    }
-
-    public String getMk() {
-        return mk;
-    }
-
-    public void setMk(String mk) {
-        this.mk = mk;
     }
 
     public String getOpenid() {
@@ -153,5 +118,4 @@ public class MapPointValue {
     public void setCountry(String country) {
         this.country = country;
     }
-
 }

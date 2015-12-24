@@ -2,6 +2,7 @@
     /**
      * 定义常量
      */
+    var REFER_SHARETO = "shareto";
     var REFER_VISITORID = "wa_share_vtor";
     var REFER_TIMESTAMP = "wa_share_time";
     /**
@@ -151,7 +152,7 @@
 
             configDiscardHashTag = false,
 
-            configDiscardUrlParams = false;
+            configDiscardUrlParams = true;
 
         var cookie = global.cookie;
         var hash = global.hash.sha1;
@@ -421,7 +422,19 @@
                 if (user == undefined || user == null)return;
                 var visitor = getValuesFromVisitorIdCookie(),
                     visitorId = visitor.uuid,
-                    param = ("url=" + encodeURIComponent(detect.url) + +"&idvtor=" + visitorId + +"&idsite=" + configTrackerSiteId + +"&openid=" + user.openid + +"&nickname=" + encodeURIComponent(encodeURIComponent(user.nickname)) + +"&sex=" + user.sex + +"&province=" + encodeURIComponent(encodeURIComponent(user.province)) + +"&city=" + encodeURIComponent(encodeURIComponent(user.city)) + +"&country=" + encodeURIComponent(encodeURIComponent(user.country)) + +"&headimgurl=" + user.headimgurl + +"&privilege=" + (user.privilege ? user.privilege.join(",") : "") + +"&unionid=" + user.unionid + +"&appid=" + appid);
+                    param = ("url=" + encodeURIComponent(detect.url) +
+                    "&idvisitor=" + visitorId +
+                    "&idsite=" + configTrackerSiteId +
+                    "&openid=" + user.openid +
+                    "&nickname=" + encodeURIComponent(encodeURIComponent(user.nickname)) +
+                    "&sex=" + user.sex +
+                    "&province=" + encodeURIComponent(encodeURIComponent(user.province)) +
+                    "&city=" + encodeURIComponent(encodeURIComponent(user.city)) +
+                    "&country=" + encodeURIComponent(encodeURIComponent(user.country)) +
+                    "&headimgurl=" + user.headimgurl +
+                    "&privilege=" + user.privilege +
+                    "&unionid=" + user.unionid +
+                    "&appid=" + appid);
                 var url = configTrackerUrl + path_track_userinfo;
                 global.ajax.send(url, param);
             }
@@ -448,7 +461,6 @@
      * &fromvts=1445397766568
      * &title=%E8%B4%B5%E5%B7%9E%E7%9C%81%E7%9B%B4%E6%9C%BA%E5%85%B3%E2%80%9C%E6%A6%9C%E6%A0%B7%E9%9D%92%E5%B9%B4%C2%B7%E7%AC%AC%E4%B8%80%E4%B9%A6%E8%AE%B0%E2%80%9D%E5%BE%AE%E4%BF%A1%E6%8A%95%E7%A5%A8
      * &url=http://112.124.118.30:8080/dcvote/wx/index.jsp?isappinstalled=0,org.apache.catalina.connector.ResponseFacade@ca1f21a
-     *
      */
     function Detect() {
         var _this = this;
@@ -467,6 +479,7 @@
         this.lang = (function () {
             return navigator ? navigator.language : empty;
         })();
+        this.shareto = global.url.getArg(REFER_SHARETO, "");
         this.fromvid = global.url.getArg(REFER_VISITORID, "");
         this.fromvts = global.url.getArg(REFER_TIMESTAMP, Math.round(new Date().getTime()));
         this.title = (function () {
@@ -502,7 +515,7 @@
                     url = url.replace(targetPattern, '');
                 }
                 if (tracker.getDiscardUrlParams()) {
-                    var targetPattern = new RegExp('?.*');
+                    var targetPattern = new RegExp('\\?.*');
                     url = url.replace(targetPattern, '');
                 }
                 return global.url.remArg(url, [REFER_VISITORID, REFER_TIMESTAMP])
@@ -543,13 +556,13 @@
          * &title=%E8%B4%B5%E5%B7%9E%E7%9C%81%E7%9B%B4%E6%9C%BA%E5%85%B
          * @returns {string}
          */
-        //alert("screen = " + this.screen);
         this.getParam = function () {
             return "&java=" + detect.java +
             "&cookie=" + detect.cookie +
             "&color=" + detect.color +
             "&cset=" + detect.cset +
             "&lang=" + detect.lang +
+            "&shareto=" + detect.shareto +
             "&fromvid=" + detect.fromvid +
             "&fromvts=" + detect.fromvts +
             "&refer=" + detect.refer +
@@ -557,15 +570,7 @@
             "&gtms=" + detect.gtms +
             "&title=" + global.encode(detect.title) +
             "&url=" + global.encode(detect.url);
-            //var param = "";
-            //for (var p in detect) {
-            //    if (typeof(detect[p]) != "function") {
-            //        param += "&" + p + "=" + ((global.isDefined(detect[p])) ? detect[p] : empty);
-            //    }
-            //}
-            //return param;
         };
-        //alert("getParam = " + this.getParam);
     }
 
     /**

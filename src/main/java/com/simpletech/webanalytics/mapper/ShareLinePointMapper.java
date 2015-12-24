@@ -15,7 +15,7 @@ import com.simpletech.webanalytics.dao.base.BaseDaoMybatisMYSQLImpl.MybatisMulti
 /**
  * 数据库表t_share_line_point的mapper接口
  * @author 树朾
- * @date 2015-12-01 15:41:57 中国标准时间
+ * @date 2015-12-11 18:11:55 中国标准时间
  */
 public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 
@@ -24,7 +24,7 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @param model 添加的数据
 	 * @return 改变的行数
 	 */
-	@Insert("INSERT INTO t_share_line_point ( id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv , share_span , share_time , create_time , update_time ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{idurl} , #{idvisitor} , #{idrefervisitor} , #{countPv} , #{shareSpan} , #{shareTime} , #{createTime} , #{updateTime} )")
+	@Insert("INSERT INTO t_share_line_point ( id , idsite , idsubsite , idurl , idtitle , idvisitor , idrefervisitor , is_start_point , share_to , count_pv , share_span , share_time , create_time , update_time ) VALUES ( #{id} , #{idsite} , #{idsubsite} , #{idurl} , #{idtitle} , #{idvisitor} , #{idrefervisitor} , #{isStartPoint} , #{shareTo} , #{countPv} , #{shareSpan} , #{shareTime} , #{createTime} , #{updateTime} )")
 	int insert(ShareLinePoint model);
 	/**
 	 * 根据ID删除
@@ -38,7 +38,7 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @param model 更新的数据
 	 * @return 改变的行数
 	 */
-	@Update("UPDATE t_share_line_point SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , idurl=#{idurl} , idvisitor=#{idvisitor} , idrefervisitor=#{idrefervisitor} , count_pv=#{countPv} , share_span=#{shareSpan} , share_time=#{shareTime} , create_time=#{createTime} , update_time=#{updateTime} WHERE id=#{id} ")
+	@Update("UPDATE t_share_line_point SET id=#{id} , idsite=#{idsite} , idsubsite=#{idsubsite} , idurl=#{idurl} , idtitle=#{idtitle} , idvisitor=#{idvisitor} , idrefervisitor=#{idrefervisitor} , is_start_point=#{isStartPoint} , share_to=#{shareTo} , count_pv=#{countPv} , share_span=#{shareSpan} , share_time=#{shareTime} , create_time=#{createTime} , update_time=#{updateTime} WHERE id=#{id} ")
 	int update(ShareLinePoint model);
 	/**
 	 * 统计全部出数据
@@ -51,13 +51,13 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @param id 主键ID
 	 * @return null 或者 主键等于id的数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point WHERE id=#{id}")
+	@Select("SELECT id , idsite , idsubsite , idurl , idtitle , idvisitor , idrefervisitor , is_start_point isStartPoint , share_to shareTo , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point WHERE id=#{id}")
 	ShareLinePoint findById(@Param("id") Object id);
 	/**
 	 * 获取全部数据
 	 * @return 全部数据列表
 	 */
-	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point ${order}")
+	@Select("SELECT id , idsite , idsubsite , idurl , idtitle , idvisitor , idrefervisitor , is_start_point isStartPoint , share_to shareTo , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point ${order}")
 	List<ShareLinePoint> findAll(@Param("order") String order);
 	/**
 	 * 分页查询数据
@@ -65,7 +65,7 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @param start 起始返回
 	 * @return 分页列表数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point ${order} LIMIT ${start},${limit}")
+	@Select("SELECT id , idsite , idsubsite , idurl , idtitle , idvisitor , idrefervisitor , is_start_point isStartPoint , share_to shareTo , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point ${order} LIMIT ${start},${limit}")
 	List<ShareLinePoint> findByPage(@Param("order") String order,@Param("limit") int limit,@Param("start") int start);
 	/**
 	 * 选择性删除
@@ -102,7 +102,7 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @param where SQL条件语句
 	 * @return 符合条件的列表数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point ${where} ${order}")
+	@Select("SELECT id , idsite , idsubsite , idurl , idtitle , idvisitor , idrefervisitor , is_start_point isStartPoint , share_to shareTo , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point ${where} ${order}")
 	List<ShareLinePoint> findWhere(@Param("order") String order,@Param("where") String where);
 	/**
 	 * 选择性分页查询
@@ -111,7 +111,7 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @param start 起始返回
 	 * @return 符合条件的列表数据
 	 */
-	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point ${where} ${order} LIMIT ${start},${limit}")
+	@Select("SELECT id , idsite , idsubsite , idurl , idtitle , idvisitor , idrefervisitor , is_start_point isStartPoint , share_to shareTo , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point ${where} ${order} LIMIT ${start},${limit}")
 	List<ShareLinePoint> findWhereByPage(@Param("order") String order,@Param("where") String where,@Param("limit") int limit,@Param("start") int start);
 	/**
 	 * 根据属性查询
@@ -119,6 +119,6 @@ public interface ShareLinePointMapper extends MybatisMultiDao<ShareLinePoint>{
 	 * @param value 值
 	 * @return 返回符合条件的数据列表
 	 */
-	@Select("SELECT id , idsite , idsubsite , idurl , idvisitor , idrefervisitor , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point WHERE ${propertyName}=#{value} ${order}")
+	@Select("SELECT id , idsite , idsubsite , idurl , idtitle , idvisitor , idrefervisitor , is_start_point isStartPoint , share_to shareTo , count_pv countPv , share_span shareSpan , share_time shareTime , create_time createTime , update_time updateTime FROM t_share_line_point WHERE ${propertyName}=#{value} ${order}")
 	List<ShareLinePoint> findByPropertyName(@Param("order") String order,@Param("propertyName") String propertyName,@Param("value") Object value);
 }

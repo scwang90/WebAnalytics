@@ -50,10 +50,17 @@ public enum Brand {
     Apple("apple", "AP", "苹果", "(iphone)|(ipad)|\\b(mac)\\b"),
     Apple1("apple", "AP", "苹果", "(apple)\\b|\\b(ios)\\b"),
 
+    Hisense("hisense", "HS", "海信", "\\b(hs-[\\w\\- ]+)\\b"),
+
+    GiONEE("gionee", "GINE", "金立", "\\b(gionee-[\\w\\- ]+)\\b"),
+
+
     Huawei("huawei", "HW", "华为", "\\b(pe-[\\w\\- ]+|plk-[\\w\\- ]+) build\\b"),
     Huawei1("huawei", "HW", "华为", "\\bhuawei ([\\w\\- ]+) build\\b"),
     Huawei2("huawei", "HW", "华为", "\\bbuild/huawei([\\w\\- ]+)"),
     Huawei3("huawei", "HW", "华为", "\\b(h[\\w\\- ]+) build\\b"),
+    Huawei4("huawei", "HW", "华为", "\\bhuawei ([\\w\\- ]+)\\b"),
+    Huawei5("huawei", "HW", "华为", "\\b(HONOR[_\\-][\\w\\- ]+)\\b"),
 
     Oppo("oppo","OPPO","欧珀 OPPO","\\b(r6[\\w\\-\\. ]+) build\\b"),
 

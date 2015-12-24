@@ -92,8 +92,8 @@ public class IpLocationServiceImpl extends BaseServiceImpl<IpLocation> implement
 		return dao.countAll();
 	}
 
-	@Override
-	public List<IpLocation> findAllIp(){
-		return dao.findAllIp();
-	}
+//	@Override
+//	public List<IpLocation> findAllIp(){
+//		return dao.findAllIp();
+//	}
 }

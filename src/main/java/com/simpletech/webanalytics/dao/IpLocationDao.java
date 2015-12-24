@@ -57,11 +57,11 @@ public interface IpLocationDao extends BaseDao<IpLocation>{
 
 //	List<IpLocation> findVisitWhereByPage(String where,int limit, int start) throws Exception;
 
-	/**
-	 * 查找t_visit中所有未被对比的IP
-	 * @return
-	 * @throws Exception
-	 */
-	List<IpLocation> findAllIp();
+//	/**
+//	 * 查找t_visit中所有未被对比的IP
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	List<IpLocation> findAllIp();
 
 }
