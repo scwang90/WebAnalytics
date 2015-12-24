@@ -35,7 +35,7 @@ public class ErrorDaoTester {
 	@Test
 	public void model() {
 		Object result = dao.model(100, 0);
-		System.out.println(JacksonUtil.toJson(result));
+		System.out.println(JacksonUtil.toJson(result).replaceAll(",\\{}","\n{"));
 	}
 
 	@Test

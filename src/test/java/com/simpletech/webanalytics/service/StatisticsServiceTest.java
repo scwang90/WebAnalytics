@@ -106,7 +106,7 @@ public class StatisticsServiceTest {
 
     @Test
     public void testShareMap() throws Exception {
-        Object result = service.shareMap("1", "", monthf.parse("2015-11-0"), monthf.parse("2015-11-30"));
+        Object result = service.shareMap("1", "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", monthf.parse("2015-12-0"), monthf.parse("2015-12-30"));
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 

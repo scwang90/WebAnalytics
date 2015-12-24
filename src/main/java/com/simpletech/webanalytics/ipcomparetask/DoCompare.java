@@ -35,8 +35,9 @@ public class DoCompare {
     @Scheduled(cron = "0 0/1 * * * ?")//每分钟运行一次
     public void doTranslate() {
         try {
-            //通过百度API获取运营商信息并插入t_visit中，每次处理前500条数据，因为访问百度接口耗时较长，因此一次处理的数据量不宜过大
-            ispService.ispBatch("where location_isp is null group by location_ip order by visit_servertime DESC",250,0);
+            //通过百度API获取运营商信息并插入t_visit中，每次处理前250条数据，因为访问百度接口耗时较长，因此一次处理的数据量不宜过大
+//            ispService.ispBatch("where location_isp is null group by location_ip order by visit_servertime DESC",250,0);
+            ispService.ispLocalBatch("where location_isp is null group by location_ip order by visit_servertime DESC",250,0);
         }catch (Exception e1){
             e1.printStackTrace();
             System.out.println("地址转换操作失败");
@@ -75,7 +76,7 @@ public class DoCompare {
                     ipLocation.setTxCity(tx_location[2]);
                     ipLocation.setTxDistrick(tx_location[3]);
                     ipLocation.setTxIsp(tx_location[4]);
-
+                    System.out.println("txIsp="+tx_location[4]);
                     /**
                      * 百度转换
                      */
@@ -116,17 +117,24 @@ public class DoCompare {
                     ipLocation.setTbIsp(tb_location[4]);
 
                     batchList.add(ipLocation);
-                    ipLocationMultiDao.insert(ipLocation);
-//                    ipLocationDao.insert(str);
-                    System.out.println(i++);
-                    //更新t_visit中location_compared字段
-                    for(Visit ss:vist){
-                        if(ss.getLocationIp().equals(ip)){
-                            ss.setLocationCompared(true);
-                            visitMultiDao.update(ss);
-                            System.out.println("update()");
+                    try{
+                        ipLocationMultiDao.insert(ipLocation);
+                        System.out.println(i++);
+                        //更新t_visit中location_compared字段
+                        for(Visit ss:vist){
+                            if(ss.getLocationIp().equals(ip)){
+                                ss.setLocationCompared(true);
+                                visitMultiDao.update(ss);
+                                System.out.println("update()");
+                            }
                         }
+                    }catch (Exception e){
+                        System.out.println("ip对比插入失败"+e);
+
                     }
+
+//                    ipLocationDao.insert(str);
+
                 }
 
             }else{

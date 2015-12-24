@@ -1,14 +1,15 @@
 package com.simpletech.webanalytics.service.impl;
 
 import com.ipmapping.BDIP;
-import com.ipmapping.TBIP1;
+import com.ipmapping.cnIP.IPCalculate;
 import com.ipmapping.txIP.IPTest;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.simpletech.webanalytics.dao.IPDao;
 import com.simpletech.webanalytics.dao.IspDao;
+import com.simpletech.webanalytics.model.IP;
 import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.model.entity.IspValue;
 import com.simpletech.webanalytics.service.IspService;
-import com.simpletech.webanalytics.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,8 @@ public class IspServiceImpl implements IspService {
 
     @Autowired
     IspDao dao;
-
+    @Autowired
+    IPDao ipDao;
     @Autowired
     ComboPooledDataSource dataSource;
 
@@ -61,87 +63,178 @@ public class IspServiceImpl implements IspService {
     @Override
     public List<HashMap<String, Object>> ispBatch(String where, int limit, int start) throws Exception {
 
-        Connection connection=null;
-        Statement statement=null;
+        Connection connection = null;
+        Statement statement = null;
 //        System.out.println("connected");
-        long c=System.currentTimeMillis();
+        long c = System.currentTimeMillis();
         List<HashMap<String, Object>> maps = dao.ispBatch(where, limit, start);
-        List<String> batchList=new ArrayList<>();
+        List<String> batchList = new ArrayList<>();
         System.out.println("查找" + limit + "条数据耗时：" + (System.currentTimeMillis() - c) / 1000f + "秒");
-        int num=0;
-        try {
+        int num = 0;
+        if (maps.size() > 0) {
+            try {
 
-            long b=System.currentTimeMillis();
-            for (HashMap<String, Object> map : maps) {
-                String ip = map.get("location_ip").toString();
+                long b = System.currentTimeMillis();
+                for (HashMap<String, Object> map : maps) {
+                    String ip = map.get("location_ip").toString();
 //                String useragent = map.get("useragent").toString();
 //				String id=map.get("id").toString();
-                System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+                    System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 //				System.out.println("id="+ id);
-                System.out.println("ip=" + ip);
+                    System.out.println("ip=" + ip);
 //                System.out.println("useragent=" + useragent);
-                try {
-                    BDIP bdip = new BDIP();
-                    //判断是否取得结果
-                    String []ispStr = bdip.getIPXY(ip);
-                    String isp;
+                    try {
+                        BDIP bdip = new BDIP();
+                        //判断是否取得结果
+                        String[] ispStr = bdip.getIPXY(ip);
+                        String isp;
 
-                    if(ispStr!=null){
-                        isp=ispStr[2];
-                        if(isp!=null){
-                            System.out.println("ip->isp=" + ip + isp);
+                        if (ispStr != null) {
+                            isp = ispStr[2];
+                            if (isp != null) {
+                                System.out.println("ip->isp=" + ip + isp);
 
-                            String sql="UPDATE t_visit SET update_time='"+df.format(new Date()).toString()+"',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
-                            batchList.add(sql);
+                                String sql = "UPDATE t_visit SET update_time='" + df.format(new Date()).toString() + "',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
+                                batchList.add(sql);
 //                            statement.addBatch("UPDATE t_visit SET update_time='"+df.format(new Date()).toString()+"',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'");
 
-                        }else {
-                            isp="未知";
-                            System.out.println("ip->isp=" + ip + isp);
-                            String sql="UPDATE t_visit SET update_time='"+df.format(new Date()).toString()+"',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
-                            batchList.add(sql);
+                            } else {
+                                isp = "未知";
+                                System.out.println("ip->isp=" + ip + isp);
+                                String sql = "UPDATE t_visit SET update_time='" + df.format(new Date()).toString() + "',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
+                                batchList.add(sql);
 //                            statement.addBatch("UPDATE t_visit SET update_time='"+df.format(new Date()).toString()+"',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'");
 
+                            }
+                        } else {
+                            System.out.println("参数错误，百度接口无法解析该IP，调用纯真IP再次解析");
+                            //调用纯真IP再次解析
+                            IPTest cz = new IPTest();
+                            String[] cz_location = cz.txIpParser(ip);
+                            isp = cz_location[4].replace("\"", "");
+                            System.out.println("ip->isp=" + ip + isp);
+                            String sql = "UPDATE t_visit SET update_time='" + df.format(new Date()).toString() + "',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
+                            batchList.add(sql);
                         }
-                    }else{
-                        System.out.println("参数错误，百度接口无法解析该IP，调用纯真IP再次解析");
-                        //调用纯真IP再次解析
-                        IPTest cz=new IPTest();
-                        String[] cz_location=cz.txIpParser(ip);
-                        isp=cz_location[4].replace("\"","");
-                        System.out.println("ip->isp=" + ip + isp);
-                        String sql="UPDATE t_visit SET update_time='"+df.format(new Date()).toString()+"',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
-                        batchList.add(sql);
+
+                    } catch (Throwable e) {
+                        System.out.println(ip + " - " + "转换失败");
+                        num++;
+                        e.printStackTrace();
                     }
 
-                } catch (Throwable e) {
-                    System.out.println(ip + " - " + "转换失败");
-                    num++;
-                    e.printStackTrace();
                 }
+                System.out.println("百度转换" + (limit - num) + "条数据耗时：" + (System.currentTimeMillis() - b) / 1000f + "秒");
 
+
+                connection = dataSource.getConnection();
+                connection.setAutoCommit(false);
+                statement = connection.createStatement();
+                for (int i = 0; i < batchList.size(); i++) {
+                    statement.addBatch(batchList.get(i));
+                }
+                long a = System.currentTimeMillis();
+                int[] ints = statement.executeBatch();
+                connection.commit();
+                System.out.println("更新" + limit + "条数据耗时：" + (System.currentTimeMillis() - a) / 1000f + "秒");
+                System.out.println(ints + "------------------------------------");
+                statement.clearBatch();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                statement.close();
+                connection.close();
             }
-            System.out.println("百度转换"+(limit-num)+"条数据耗时：" + (System.currentTimeMillis() - b) / 1000f + "秒");
-
-
-            connection = dataSource.getConnection();
-            connection.setAutoCommit(false);
-            statement = connection.createStatement();
-            for(int i=0;i<batchList.size();i++){
-                statement.addBatch(batchList.get(i));
-            }
-            long a=System.currentTimeMillis();
-            int[] ints = statement.executeBatch();
-            connection.commit();
-            System.out.println("更新" + limit + "条数据耗时：" + (System.currentTimeMillis() - a) / 1000f + "秒");
-            System.out.println(ints + "------------------------------------");
-            statement.clearBatch();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            statement.close();
-            connection.close();
+        } else {
+            System.out.println("无待处理记录");
         }
+
+        return maps;
+    }
+
+    /**
+     * 从ip数据库查找运营商信息
+     * @param where
+     * @param limit
+     * @param start
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<HashMap<String, Object>> ispLocalBatch(String where, int limit, int start) throws Exception {
+
+        Connection connection = null;
+        Statement statement = null;
+//        System.out.println("connected");
+        long c = System.currentTimeMillis();
+        List<HashMap<String, Object>> maps = dao.ispBatch(where, limit, start);
+        System.out.println("查找" + limit + "条数据耗时：" + (System.currentTimeMillis() - c) / 1000f + "秒");
+
+        List<String> batchList = new ArrayList<>();
+        IPCalculate ipCalculate = new IPCalculate();
+        int num = 0;
+        if (maps.size() > 0) {
+            try {
+                String isp = null;
+                long b = System.currentTimeMillis();
+                for (HashMap<String, Object> map : maps) {
+                    String ip = map.get("location_ip").toString();
+                    System.out.println("ip=" + ip);
+                    long ipNum = ipCalculate.validateIP(ip);
+                    try {
+                        List<IP> ipList = ipDao.find(ipNum);
+
+                        //判断是否取得结果
+                        if (ipList.size() > 0) {
+                            isp = ipList.get(0).getIsp().toString();
+                            if(isp.equals("移通")){
+                                isp="铁通";
+                            }
+                            System.out.println("ip->isp=" + ip + isp);
+
+                            String sql = "UPDATE t_visit SET update_time='" + df.format(new Date()).toString() + "',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
+                            batchList.add(sql);
+                        } else {
+                            //调用纯真IP再次解析
+                            IPTest cz = new IPTest();
+                            String[] cz_location = cz.txIpParser(ip);
+                            isp = cz_location[4].replace("\"", "");
+                            System.out.println("ip->isp=" + ip + isp);
+                            String sql = "UPDATE t_visit SET update_time='" + df.format(new Date()).toString() + "',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
+                            batchList.add(sql);
+                        }
+
+                    } catch (Exception e) {
+                        isp="unknown";
+                        String sql = "UPDATE t_visit SET update_time='" + df.format(new Date()).toString() + "',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
+                        batchList.add(sql);
+                        num++;
+                        e.printStackTrace();
+                    }
+                }
+                System.out.println("ip库转换" + (limit - num) + "条数据耗时：" + (System.currentTimeMillis() - b) / 1000f + "秒");
+
+                connection = dataSource.getConnection();
+                connection.setAutoCommit(false);
+                statement = connection.createStatement();
+                for (int i = 0; i < batchList.size(); i++) {
+                    statement.addBatch(batchList.get(i));
+                }
+                long a = System.currentTimeMillis();
+                statement.executeBatch();
+                connection.commit();
+                System.out.println("更新" + limit + "条数据耗时：" + (System.currentTimeMillis() - a) / 1000f + "秒");
+                statement.clearBatch();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                statement.close();
+                connection.close();
+            }
+        } else {
+            System.out.println("无待处理记录");
+        }
+
         return maps;
     }
 

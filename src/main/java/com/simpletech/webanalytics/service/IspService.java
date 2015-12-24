@@ -23,7 +23,25 @@ public interface IspService {
 	 */
 	List<Visit> findWhereIsp(String where,int limit,int start) throws Exception;
 
+	/**
+	 * 使用百度接口查找ISP
+	 * @param where
+	 * @param limit
+	 * @param start
+	 * @return
+	 * @throws Exception
+	 */
 	List<HashMap<String,Object>> ispBatch(String where,int limit,int start) throws Exception;
+
+	/**
+	 * 使用国内ip数据库查找IP地址对应的ISP信息
+	 * @param where
+	 * @param limit
+	 * @param start
+	 * @return
+	 * @throws Exception
+	 */
+	List<HashMap<String,Object>> ispLocalBatch(String where,int limit,int start) throws Exception;
 	/**
 	 * 统计店铺isp信息
 	 * @param siteId

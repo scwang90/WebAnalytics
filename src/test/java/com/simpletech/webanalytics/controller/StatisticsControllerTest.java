@@ -128,4 +128,10 @@ public class StatisticsControllerTest {
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
+    @Test
+    public void shareMap() {
+        Object result = controller.shareMap(1, "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", "",0, Period.month, null, null);
+        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+    }
+
 }

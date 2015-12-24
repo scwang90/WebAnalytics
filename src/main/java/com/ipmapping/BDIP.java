@@ -21,7 +21,7 @@ public class BDIP {
     private static String bd_isp="";
 
 //      private static String ip=IPCatcherUtil.getWebIp();
-      private static String ip = "210.40.2.236";
+      private static String ip = "211.71.63.251";
 //      private static String ip = new IPTranslator().ip;
 
     /**

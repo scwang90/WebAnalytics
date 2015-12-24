@@ -31,7 +31,7 @@ public class IspServiceTester {
 	@Test
 	public void findWhereIsp() throws Exception {
 //		Object result = service.findWhereIsp("where location_isp='UNICOM'");
-		Object result = service.findWhereIsp("where location_isp is null group by location_ip order by visit_servertime DESC",500,0);
+		Object result = service.findWhereIsp("where location_isp is null group by location_ip order by visit_servertime DESC", 500, 0);
 //		service.findWhereIsp("where location_isp=''or location_isp='OTHER'");
 		System.out.println(JacksonUtil.toJson(result));
 	}
@@ -39,6 +39,14 @@ public class IspServiceTester {
 	public void ispBatch()throws Exception{
 //
 		Object result=service.ispBatch("where location_isp is null group by location_ip order by visit_servertime DESC", 250, 0);
+////		service.findWhereIsp("where location_isp=''or location_isp='OTHER'");
+//		System.out.println(JacksonUtil.toJson(result));
+	}
+
+	@Test
+	public void ispLocalBatch()throws Exception{
+//
+		Object result=service.ispLocalBatch("where location_isp='unknown' group by location_ip order by visit_servertime DESC", 250, 0);
 ////		service.findWhereIsp("where location_isp=''or location_isp='OTHER'");
 //		System.out.println(JacksonUtil.toJson(result));
 	}
