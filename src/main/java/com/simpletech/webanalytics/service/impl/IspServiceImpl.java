@@ -195,10 +195,7 @@ public class IspServiceImpl implements IspService {
                             String sql = "UPDATE t_visit SET update_time='" + df.format(new Date()).toString() + "',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
                             batchList.add(sql);
                         } else {
-                            //调用纯真IP再次解析
-                            IPTest cz = new IPTest();
-                            String[] cz_location = cz.txIpParser(ip);
-                            isp = cz_location[4].replace("\"", "");
+                            isp="unknown";
                             System.out.println("ip->isp=" + ip + isp);
                             String sql = "UPDATE t_visit SET update_time='" + df.format(new Date()).toString() + "',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
                             batchList.add(sql);

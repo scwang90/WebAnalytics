@@ -58,29 +58,29 @@ public class StatisticsControllerTest {
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
-    @Test
-    public void testEnterexit() {
-        Object result = controller.enterexit(1, EnterExit.entry, RankingType.pv, 10, 0, "", -1, Period.day, null, null);
-        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
-    }
-
-    @Test
-    public void testTitleurl() {
-        Object result = controller.titleurl(1, PageRank.title, RankingType.pv, 10, 0, "", -1, Period.day, null, null);
-        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
-    }
-
-    @Test
-    public void testPageRank() {
-        Object result = controller.pageRank(1, "", Ranking.brand, RankingType.ip, 10, 0, "", -1, Period.day, null, null);
-        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
-    }
-
-    @Test
-    public void testRanking() {
-        Object result = controller.ranking(1, Ranking.brand, RankingType.pv, 10, 0, "", -1, Period.day, null, null);
-        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
-    }
+//    @Test
+//    public void testEnterexit() {
+//        Object result = controller.enterexit(1, EnterExit.entry, RankingType.pv, 10, 0, "", -1, Period.day, null, null);
+//        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+//    }
+//
+//    @Test
+//    public void testTitleurl() {
+//        Object result = controller.titleurl(1, PageRank.title, RankingType.pv, 10, 0, "", -1, Period.day, null, null);
+//        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+//    }
+//
+//    @Test
+//    public void testPageRank() {
+//        Object result = controller.pageRank(1, "", Ranking.brand, RankingType.ip, 10, 0, "", -1, Period.day, null, null);
+//        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+//    }
+//
+//    @Test
+//    public void testRanking() {
+//        Object result = controller.ranking(1, Ranking.brand, RankingType.pv, 10, 0, "", -1, Period.day, null, null);
+//        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+//    }
 
     @Test
     public void testEventName() {
