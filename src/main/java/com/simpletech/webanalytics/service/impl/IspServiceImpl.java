@@ -187,9 +187,10 @@ public class IspServiceImpl implements IspService {
                         //判断是否取得结果
                         if (ipList.size() > 0) {
                             isp = ipList.get(0).getIsp().toString();
-                            if(isp.equals("移通")){
-                                isp="铁通";
-                            }
+                            //移通网络确实存在
+//                            if(isp.equals("移通")){
+//                                isp="铁通";
+//                            }
                             System.out.println("ip->isp=" + ip + isp);
 
                             String sql = "UPDATE t_visit SET update_time='" + df.format(new Date()).toString() + "',  location_isp= '" + isp + "' WHERE location_ip = '" + ip + "'";
