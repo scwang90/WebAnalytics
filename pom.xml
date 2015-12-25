@@ -8,6 +8,24 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
+<!--    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>thirdparty</id>
+            <name>3rd party</name>
+            <url>http://108.108.108.10:8081/nexus/content/repositories/thirdparty/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>thirdparty</id>
+            <name>3rd party</name>
+            <url>http://108.108.108.10:8081/nexus/content/repositories/thirdparty/</url>
+        </pluginRepository>
+    </pluginRepositories>-->
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

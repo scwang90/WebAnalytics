@@ -329,6 +329,17 @@ public interface StatisticsService {
     List<ShareToRankValue> shareToRank(String idsite, String urlId, RankingType ranktype, Date start, Date end);
 
     /**
+     * 页面分享-时段
+     *
+     * @param idsite 网站ID
+     * @param idurl  页面ID
+     * @param start  开始时间
+     * @param end    结束时间
+     * @return 新老用户
+     */
+    ShareSpanValue shareSpan(String idsite, String idurl, Date start, Date end);
+
+    /**
      * 页面分享-趋势
      *
      * @param idsite 网站ID

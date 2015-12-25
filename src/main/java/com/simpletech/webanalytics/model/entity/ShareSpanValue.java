@@ -3,10 +3,10 @@ package com.simpletech.webanalytics.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * 分享趋势
+ * 分享时段
  * Created by 树朾 on 2015/9/30.
  */
-public class ShareTrendValue extends TrendValue {
+public class ShareSpanValue {
 
     private int vt;         //分享次数
     private int pv;         //打开次数

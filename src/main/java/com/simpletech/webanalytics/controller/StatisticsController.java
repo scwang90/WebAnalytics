@@ -98,6 +98,25 @@ public class StatisticsController extends BaseController{
     }
 
     /**
+     * 页面分享-时段
+     *
+     * @param siteId 网站ID
+     * @param subsite  子站ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return 页面分享排行
+     */
+    @RequestMapping("page/{urlId}/share/span")
+    public Object shareSpan(@PathVariable int siteId, @PathVariable String urlId, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.shareSpan(idsite, urlId, start, end);
+    }
+
+    /**
      * 页面分享-趋势
      *
      * @param siteId 网站ID

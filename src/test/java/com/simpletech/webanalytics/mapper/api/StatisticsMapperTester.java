@@ -139,4 +139,22 @@ public class StatisticsMapperTester {
         System.out.println(JacksonUtil.toJson(result));
     }
 
+    @Test
+    public void shareTrendHour() throws Exception {
+        Object result = mapper.shareTrendHour("1", "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", monthf.parse("2015-12-0"), monthf.parse("2015-12-30"));
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
+    public void shareSpan() throws Exception {
+        Object result = mapper.shareSpan("1", "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", monthf.parse("2015-12-0"), monthf.parse("2015-12-30"));
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
+    @Test
+    public void shareToRank() throws Exception {
+        Object result = mapper.shareToRank("1", "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", "pv", monthf.parse("2015-12-0"), monthf.parse("2015-12-30"));
+        System.out.println(JacksonUtil.toJson(result));
+    }
+
 }

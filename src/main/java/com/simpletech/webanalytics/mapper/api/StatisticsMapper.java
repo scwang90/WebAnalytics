@@ -877,7 +877,7 @@ public interface StatisticsMapper {
      * @param start  开始时间
      * @param end    结束时间
      */
-    @Select("SELECT share_to name,SUM(count_pv) pv,COUNT(DISTINCT idrefervisitor) uv FROM t_share_line_point AS t WHERE share_to IS NOT NULL AND idurl = #{idurl} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY share_to ORDER BY ${type} DESC")
+    @Select("SELECT share_to name,SUM(count_pv) pv,COUNT(DISTINCT idrefervisitor) ruv,COUNT(DISTINCT idvisitor) uv FROM t_share_line_point AS t WHERE share_to IS NOT NULL AND idurl = #{idurl} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY share_to ORDER BY ${type} DESC")
     List<ShareToRankValue> shareToRank(@Param("idsite") String idsite, @Param("idurl") String idurl, @Param("type") String type, @Param("start") Date start, @Param("end") Date end);
 
     /**
@@ -951,6 +951,16 @@ public interface StatisticsMapper {
             "WHERE openid = #{openid} AND t.idurl=#{urlId} AND (t.create_time BETWEEN #{start} AND #{end})")
     PageUserShare pageUserShare(@Param("idsite") String idsite, @Param("urlId") String urlId, @Param("openid") String openid, @Param("start") Date start, @Param("end") Date end);
 
+    /**
+     * 分享传播-时段
+     *
+     * @param idsite 网站ID
+     * @param start  开始时间
+     * @param end    结束时间
+     * @return 分享传播
+     */
+    @Select("SELECT SUM(count_pv) pv,COUNT(DISTINCT idrefervisitor) ruv,COUNT(DISTINCT idvisitor) uv, COUNT(id) vt FROM t_share_line_point AS t WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) AND idurl=#{idurl} ")
+    ShareSpanValue shareSpan(@Param("idsite") String idsite, @Param("idurl") String idurl, @Param("start") Date start, @Param("end") Date end);
 
     /**
      * 分享传播-趋势
@@ -960,16 +970,16 @@ public interface StatisticsMapper {
      * @param end    结束时间
      * @return 分享传播
      */
-    @Select("SELECT DATE_FORMAT(create_time,'%y%m%d%H') date,SUM(count_pv) pv,COUNT(DISTINCT idrefervisitor) uv, COUNT(id) vt FROM t_share_line_point AS t WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) AND idurl=#{idurl} GROUP BY date ORDER BY date ")
+    @Select("SELECT DATE_FORMAT(create_time,'%y%m%d%H') date,SUM(count_pv) pv,COUNT(DISTINCT idrefervisitor) ruv,COUNT(DISTINCT idvisitor) uv, COUNT(id) vt FROM t_share_line_point AS t WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) AND idurl=#{idurl} GROUP BY date ORDER BY date ")
     List<ShareTrendValue> shareTrendHour(@Param("idsite") String idsite, @Param("idurl") String idurl, @Param("start") Date start, @Param("end") Date end);
 
-    @Select("SELECT DATE_FORMAT(create_time,'%y%m%d') date,SUM(count_pv) pv,COUNT(DISTINCT idrefervisitor) uv, COUNT(id) vt FROM t_share_line_point AS t WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) AND idurl=#{idurl} GROUP BY date ORDER BY date ")
+    @Select("SELECT DATE_FORMAT(create_time,'%y%m%d') date,SUM(count_pv) pv,COUNT(DISTINCT idrefervisitor) ruv,COUNT(DISTINCT idvisitor) uv, COUNT(id) vt FROM t_share_line_point AS t WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) AND idurl=#{idurl} GROUP BY date ORDER BY date ")
     List<ShareTrendValue> shareTrendDay(@Param("idsite") String idsite, @Param("idurl") String idurl, @Param("start") Date start, @Param("end") Date end);
 
-    @Select("SELECT DATE_FORMAT(create_time,'%y-%u') date,SUM(count_pv) pv,COUNT(DISTINCT idrefervisitor) uv, COUNT(id) vt FROM t_share_line_point AS t WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) AND idurl=#{idurl} GROUP BY date ORDER BY date ")
+    @Select("SELECT DATE_FORMAT(create_time,'%y-%u') date,SUM(count_pv) pv,COUNT(DISTINCT idrefervisitor) ruv,COUNT(DISTINCT idvisitor) uv, COUNT(id) vt FROM t_share_line_point AS t WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) AND idurl=#{idurl} GROUP BY date ORDER BY date ")
     List<ShareTrendValue> shareTrendWeek(@Param("idsite") String idsite, @Param("idurl") String idurl, @Param("start") Date start, @Param("end") Date end);
 
-    @Select("SELECT DATE_FORMAT(create_time,'%y%m') date,SUM(count_pv) pv,COUNT(DISTINCT idrefervisitor) uv, COUNT(id) vt FROM t_share_line_point AS t WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) AND idurl=#{idurl} GROUP BY date ORDER BY date ")
+    @Select("SELECT DATE_FORMAT(create_time,'%y%m') date,SUM(count_pv) pv,COUNT(DISTINCT idrefervisitor) ruv,COUNT(DISTINCT idvisitor) uv, COUNT(id) vt FROM t_share_line_point AS t WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) AND idurl=#{idurl} GROUP BY date ORDER BY date ")
     List<ShareTrendValue> shareTrendMonth(@Param("idsite") String idsite, @Param("idurl") String idurl, @Param("start") Date start, @Param("end") Date end);
 
     /**

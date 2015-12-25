@@ -459,6 +459,11 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
+    public ShareSpanValue shareSpan(String idsite, String idurl, Date start, Date end) {
+        return mapper.shareSpan(idsite, idurl, start, end);
+    }
+
+    @Override
     public List<ShareTrendValue> shareTrend(String idsite, String idurl, Period period, Date start, Date end) {
         List<ShareTrendValue> list = new ArrayList<>();
         switch (period) {

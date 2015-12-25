@@ -239,4 +239,10 @@ public class StatisticsControllerTest {
         Object result = controller.pageUserShare(1, "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", "oVishs3rvqQm-ECsd7m6cOEdU-ws", "", 0, Period.month, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
+
+    @Test
+    public void shareSpan() throws Exception {
+        Object result = controller.shareSpan(1, "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", "", 0, Period.month, null, null);
+        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+    }
 }
