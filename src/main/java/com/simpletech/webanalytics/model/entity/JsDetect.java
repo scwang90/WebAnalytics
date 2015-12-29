@@ -5,6 +5,8 @@ import com.ipmapping.BDIP;
 import com.ipmapping.IP;
 import com.ipmapping.IPCatcherUtil;
 import com.ipmapping.txIP.IPTest;
+import com.simpletech.webanalytics.IspProcess.IPModel;
+import com.simpletech.webanalytics.IspProcess.ISPParse;
 import com.simpletech.webanalytics.annotations.Must;
 import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.util.AfReflecter;
@@ -156,11 +158,16 @@ public class JsDetect {
         } catch (Throwable e) {
             e.printStackTrace();
         }
-//        try{
-//            //ip运营商获取代码
-//        }catch (Throwable e){
-//            e.printStackTrace();
-//        }
+        try{
+            //ip运营商获取代码
+            ISPParse isp=new ISPParse();
+            IPModel ipModel=isp.ispParser(this.remoteAddr);
+            String ip_isp=ipModel.getIsp();
+            this.setIsp(ip_isp);
+
+        }catch (Throwable e){
+            e.printStackTrace();
+        }
     }
 
     public HttpServletRequest getRequest() {
