@@ -16,8 +16,8 @@ public class IPCalculate {
         }
 
         // 各个数字乘以相应的数量级
-        long ipNumTotle = ipNum[0] * 256 * 256 * 256 + ipNum[1] * 256 * 256 + ipNum[2] * 256 + ipNum[3];
+        long ipNumTotal = ipNum[0] * 256 * 256 * 256 + ipNum[1] * 256 * 256 + ipNum[2] * 256 + ipNum[3];
 
-        return ipNumTotle;
+        return ipNumTotal;
     }
 }

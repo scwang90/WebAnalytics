@@ -156,6 +156,11 @@ public class JsDetect {
         } catch (Throwable e) {
             e.printStackTrace();
         }
+//        try{
+//            //ip运营商获取代码
+//        }catch (Throwable e){
+//            e.printStackTrace();
+//        }
     }
 
     public HttpServletRequest getRequest() {
