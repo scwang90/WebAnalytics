@@ -159,7 +159,7 @@ public class JsDetect {
             e.printStackTrace();
         }
         try{
-            //ip运营商获取代码
+            //获取ip运营商
             ISPParse isp=new ISPParse();
             IPModel ipModel=isp.ispParser(this.remoteAddr);
             String ip_isp=ipModel.getIsp();
