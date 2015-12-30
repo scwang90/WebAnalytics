@@ -8,7 +8,7 @@ import com.simpletech.webanalytics.model.constant.RankingType;
 import com.simpletech.webanalytics.model.constant.WxSexType;
 import com.simpletech.webanalytics.model.entity.*;
 import com.simpletech.webanalytics.util.AfStringUtil;
-import com.webanalytics.useragent.*;
+import com.useragent.target.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

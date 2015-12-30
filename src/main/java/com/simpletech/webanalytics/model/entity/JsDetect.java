@@ -1,21 +1,18 @@
 package com.simpletech.webanalytics.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ipmapping.BDIP;
 import com.ipmapping.IP;
 import com.ipmapping.IPCatcherUtil;
-import com.ipmapping.txIP.IPTest;
-import com.simpletech.webanalytics.IspProcess.IPModel;
-import com.simpletech.webanalytics.IspProcess.ISPParse;
+import com.simpletech.webanalytics.ispprocess.IPModel;
+import com.simpletech.webanalytics.ispprocess.ISPParse;
 import com.simpletech.webanalytics.annotations.Must;
+import com.simpletech.webanalytics.ispprocess.IspParser;
 import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.util.AfReflecter;
 import com.simpletech.webanalytics.util.AfStringUtil;
 import com.simpletech.webanalytics.util.ServiceException;
-import com.webanalytics.useragent.UserAgent;
-import com.webanalytics.useragent.UserAgentParser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.useragent.UserAgent;
+import com.useragent.UserAgentParser;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
@@ -97,7 +94,7 @@ public class JsDetect {
     @JsonIgnore
     HttpServletRequest request;
 
-    static Pattern patternPiwikCookie = Pattern.compile("(\\w+)\\.",Pattern.CASE_INSENSITIVE);
+    static Pattern patternPiwikCookie = Pattern.compile("(\\w+)\\.", Pattern.CASE_INSENSITIVE);
 
     public void setRequest(HttpServletRequest request) {
         this.request = request;
@@ -142,30 +139,20 @@ public class JsDetect {
             this.region = addrs[1];
             this.city = addrs[2];
 
-//            //通过纯真IP库取出运营商信息
-//            IPTest txIp = new IPTest();
-//            String[] tx_location = txIp.txIpParser(this.remoteAddr);
-//            this.setIsp(tx_location[4]);
-
-            //通过百度API获取运营商信息
-//            BDIP bd=new BDIP();
-//            String isp=bd.getIPXY(this.remoteAddr)[2];
-//            this.setIsp(isp);
-
-            if ("lost".equals(refer)){
+            if ("lost".equals(refer)) {
                 setRefer(refer + "-" + request.getQueryString());
             }
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        try{
+        try {
             //获取ip运营商
-            ISPParse isp=new ISPParse();
-            IPModel ipModel=isp.ispParser(this.remoteAddr);
-            String ip_isp=ipModel.getIsp();
-            this.setIsp(ip_isp);
-
-        }catch (Throwable e){
+//            ISPParse isp = new ISPParse();
+//            IPModel ipModel = isp.ispParser(this.remoteAddr);
+//            String ip_isp = ipModel.getIsp();
+//            this.setIsp(ip_isp);
+            this.setIsp(IspParser.ispParser(this.remoteAddr));
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
@@ -177,18 +164,20 @@ public class JsDetect {
     /**
      * 检测是否满足必须参数
      */
-    public void check() {
+    public boolean check() {
         Field[] fields = AfReflecter.getFieldAnnotation(this.getClass(), Must.class);
-        for (Field field:fields){
+        for (Field field : fields) {
             String name = field.getName() + ":" + field.getAnnotation(Must.class).value();
             Object val = AfReflecter.getMemberNoException(this, field.getName());
-            if (val == null || AfStringUtil.isEmpty(val.toString())){
+            if (val == null || AfStringUtil.isEmpty(val.toString())) {
                 refer = "lost";
                 gtms = 1000;
-                new ServiceException("缺少参数["+name+"] url="+url).printStackTrace(System.err);
+                new ServiceException("缺少参数[" + name + "] url=" + url).printStackTrace(System.err);
                 //throw new ServiceException("缺少参数["+name+"]");
+                return false;
             }
         }
+        return true;
     }
 
     public void bind(HttpServletRequest request, HttpServletResponse response) {
@@ -297,7 +286,7 @@ public class JsDetect {
     public void setGtms(Integer gtms) {
         if (gtms < 0) {
             gtms = 10;
-            new ServiceException("页面加载时间范围错误 gtms="+gtms).printStackTrace(System.err);
+            new ServiceException("页面加载时间范围错误 gtms=" + gtms).printStackTrace(System.err);
         }
         this.gtms = gtms;
     }
@@ -318,15 +307,15 @@ public class JsDetect {
     }
 
     public void setTitle(String title) {
-        if(!title.matches("[\\u4E00-\\u9FA5]+")){
+        if (!title.matches("[\\u4E00-\\u9FA5]+")) {
             try {
-                title = new String(title.getBytes("ISO-8859-1"),"UTF-8");
+                title = new String(title.getBytes("ISO-8859-1"), "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         }
         if (title.length() > 127) {
-            title = title.substring(0,127);
+            title = title.substring(0, 127);
         }
         this.title = title;
     }
@@ -512,6 +501,7 @@ public class JsDetect {
         }
         this.region = region;
     }
+
     public String getIsp() {
         return isp;
     }
@@ -519,6 +509,7 @@ public class JsDetect {
     public void setIsp(String isp) {
         this.isp = isp;
     }
+
     public String getEndType() {
         return endType;
     }

@@ -2,7 +2,6 @@ package com.simpletech.webanalytics.dao;
 
 import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.model.entity.IspValue;
-import com.webanalytics.useragent.Application;
 
 import java.util.Date;
 import java.util.HashMap;

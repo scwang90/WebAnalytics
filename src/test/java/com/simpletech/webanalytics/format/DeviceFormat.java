@@ -1,6 +1,6 @@
 package com.simpletech.webanalytics.format;
 
-import com.webanalytics.useragent.Platform;
+import com.useragent.target.Platform;
 import org.junit.Test;
 
 import java.util.regex.Matcher;

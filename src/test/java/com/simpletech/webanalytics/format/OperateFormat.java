@@ -1,6 +1,6 @@
 package com.simpletech.webanalytics.format;
 
-import com.webanalytics.useragent.OperateSystem;
+import com.useragent.target.OperateSystem;
 import org.junit.Test;
 
 import java.util.regex.Pattern;

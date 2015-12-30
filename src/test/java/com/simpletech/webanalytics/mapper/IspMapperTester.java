@@ -1,11 +1,6 @@
 package com.simpletech.webanalytics.mapper;
 
-import com.simpletech.webanalytics.aspect.LoggingAspect;
-import com.simpletech.webanalytics.model.Visit;
-import com.simpletech.webanalytics.util.AfStringUtil;
 import com.simpletech.webanalytics.util.JacksonUtil;
-import com.webanalytics.useragent.*;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +8,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * 数据库表t_visit的Mapper层测试类

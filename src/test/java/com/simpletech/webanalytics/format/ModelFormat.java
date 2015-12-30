@@ -1,6 +1,6 @@
 package com.simpletech.webanalytics.format;
 
-import com.webanalytics.useragent.Brand;
+import com.useragent.target.Brand;
 import org.junit.Test;
 
 import java.util.regex.Matcher;

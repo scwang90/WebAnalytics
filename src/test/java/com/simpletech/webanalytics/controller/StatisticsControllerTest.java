@@ -36,7 +36,7 @@ public class StatisticsControllerTest {
 
     @Test
     public void testVisitorSpan() {
-        Object result = controller.visitorSpan(1, "", -1, Period.day, null, null);
+        Object result = controller.visitorSpan(4, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
@@ -130,8 +130,16 @@ public class StatisticsControllerTest {
 
     @Test
     public void shareMap() {
+        long start = System.currentTimeMillis();
         Object result = controller.shareMap(1, "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", "",0, Period.month, null, null);
-        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+        long end = System.currentTimeMillis();
+        System.out.println("spent="+(end-start)/1000);
+        String json;
+        start = System.currentTimeMillis();
+        System.out.println(json = JacksonUtil.toJson(result).replace("{", "\n{"));
+        end = System.currentTimeMillis();
+        System.out.println("spent="+(end-start)/1000);
+        System.out.println((json.length()*2)/1000+"kb");
     }
 
 }

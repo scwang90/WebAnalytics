@@ -2,7 +2,7 @@ package com.simpletech.webanalytics.mapper;
 
 import com.simpletech.webanalytics.aspect.LoggingAspect;
 import com.simpletech.webanalytics.util.AfStringUtil;
-import com.webanalytics.useragent.*;
+import com.useragent.target.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,10 +14,8 @@ import com.simpletech.webanalytics.model.Visit;
 import com.simpletech.webanalytics.util.JacksonUtil;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 数据库表t_visit的Mapper层测试类

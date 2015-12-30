@@ -15,8 +15,8 @@
 <%@ page import="com.ipmapping.IPCatcherUtil" %>
 <%@ page import="com.ipmapping.IP" %>
 <%@ page import="java.util.Arrays" %>
-<%@ page import="com.webanalytics.useragent.UserAgentParser" %>
-<%@ page import="com.webanalytics.useragent.UserAgent" %>
+<%@ page import="com.useragent.UserAgentParser" %>
+<%@ page import="com.useragent.UserAgent" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>

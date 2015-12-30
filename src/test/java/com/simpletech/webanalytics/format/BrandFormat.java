@@ -1,9 +1,6 @@
 package com.simpletech.webanalytics.format;
 
-import com.simpletech.webanalytics.model.entity.JsDetect;
-import com.simpletech.webanalytics.util.JacksonUtil;
-import com.webanalytics.useragent.Brand;
-import com.webanalytics.useragent.Platform;
+import com.useragent.target.Brand;
 import org.junit.Test;
 
 import java.util.regex.Matcher;

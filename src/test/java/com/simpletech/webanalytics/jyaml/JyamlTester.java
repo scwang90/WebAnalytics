@@ -1,14 +1,8 @@
 package com.simpletech.webanalytics.jyaml;
 
 import com.simpletech.webanalytics.util.AfReflecter;
-import com.simpletech.webanalytics.util.JacksonUtil;
-import com.webanalytics.useragent.Browser;
-import org.junit.Test;
 //import org.yaml.snakeyaml.Yaml;
 
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
