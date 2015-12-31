@@ -51,16 +51,16 @@ public class TrackerServiceImpl implements TrackerService {
                 naction.setIdvisitor(detect.getIdvtor());
                 naction.setRefTimeSpent(0);
 
-                Action action = dao.getActionHalfHour(siteId, idsubsite, detect, url, title);
-                if (action != null) {
-                    dao.updateVisitPageView(action.getIdvisit(), url.getId(), title.getId());
-                    naction.setIdvisit(action.getIdvisit());
-                    naction.setRefIdUrl(action.getIdurl());
-                    naction.setRefIdTitle(action.getIdtitle());
-                    naction.setRefTimeSpent((int)(new Date().getTime()-action.getCreateTime().getTime()));
-                } else {
-                    naction.setIdvisit(dao.newVisit(siteId, idsubsite, detect, url, title));
-                }
+//                Action action = dao.getActionHalfHour(siteId, idsubsite, detect, url, title);
+//                if (action != null) {
+//                    dao.updateVisitPageView(action.getIdvisit(), url.getId(), title.getId());
+//                    naction.setIdvisit(action.getIdvisit());
+//                    naction.setRefIdUrl(action.getIdurl());
+//                    naction.setRefIdTitle(action.getIdtitle());
+//                    naction.setRefTimeSpent((int)(new Date().getTime()-action.getCreateTime().getTime()));
+//                } else {
+//                    naction.setIdvisit(dao.newVisit(siteId, idsubsite, detect, url, title));
+//                }
 
 //                Action action = dao.getActionLast(siteId, idsubsite, detect, url, title);
 //                if (action != null && System.currentTimeMillis() - action.getCreateTime().getTime() < 30 * 60 * 1000) {
