@@ -153,9 +153,11 @@ public class StatisticsServiceImpl implements StatisticsService {
             switch (type) {
                 case view:
                     value = mapper.visitPageViewMap(idsite, lastValue, Integer.parseInt(map), start, end);
+                    if (value == null) value = new VisitPageViewMapValue();
                     break;
                 case unique:
                     value = mapper.visitPageUniqueMap(idsite, lastValue, Integer.parseInt(map), start, end);
+                    if (value == null) value = new VisitPageUniqueMapValue();
                     break;
             }
             value.map(lastValue, Integer.valueOf(map), "页");
@@ -168,6 +170,135 @@ public class StatisticsServiceImpl implements StatisticsService {
                 list.add(value);
             }
             lastValue = Integer.parseInt(map) + 1;
+        }
+        return list;
+    }
+
+    @Override
+    public List<FrequencyMapValue> visitFrequencyMap(String idsite, String map, Date start, Date end) {
+        List<FrequencyMapValue> values = new ArrayList<>();
+        map = map.matches("(\\d+,)+\\d+") ? map : "1,2,5";
+        map = map + "," + Integer.MAX_VALUE;
+        String[] maps = map.split(",");
+        int lastValue = 1, total = 0;
+        for (String _count : maps) {
+            FrequencyMapValue value = new FrequencyMapValue(lastValue, Integer.valueOf(_count), "次");
+            value.setNum(mapper.visitFrequencyMap(idsite, lastValue, Integer.parseInt(_count), start, end));
+
+            if (_count.equals(String.valueOf(Integer.MAX_VALUE))) {
+                if (value.getNum() > 0) {
+                    values.add(value);
+                }
+            } else {
+                values.add(value);
+            }
+            total += value.getNum();
+            lastValue = Integer.parseInt(_count) + 1;
+        }
+        for (FrequencyMapValue value : values) {
+            value.setRate(1f * value.getNum() / total);
+        }
+        return values;
+    }
+
+    @Override
+    public List<DurationMapValue> visitDurationMap(String idsite, String map, Date start, Date end) {
+        List<DurationMapValue> values = new ArrayList<>();
+        map = map.matches("(\\d[\\d\\.]*,)+\\d[\\d\\.]*") ? map : "5,30,60,120";
+        map = map + "," + Integer.MAX_VALUE;
+        String[] maps = map.split(",");
+        int tpv = 0,tvt = 0,tuv = 0,tip = 0;//total = 0;
+        float lastValue = 0;
+        for (String _map : maps) {
+            if (Float.parseFloat(_map) > lastValue) {
+                DurationMapValue value = mapper.visitDurationMap(idsite, (int) (lastValue * 60), (int) (Float.parseFloat(_map) * 60), start, end);
+                if (value == null) {
+                    value = new DurationMapValue();
+                }
+                value.map(lastValue, Float.parseFloat(_map), "分钟");
+
+                if (_map.equals(String.valueOf(Integer.MAX_VALUE))) {
+                    if (!value.isEmpty()) {
+                        values.add(value);
+                    }
+                } else {
+                    values.add(value);
+                }
+                tip += value.getIp();
+                tuv += value.getUv();
+                tpv += value.getPv();
+                tvt += value.getVt();
+                lastValue = Float.parseFloat(_map);
+//                DurationMapValue value = new DurationMapValue(lastValue, Float.parseFloat(_map), "分钟");
+//                value.setNum(mapper.visitDurationMap(idsite, (int) (lastValue * 60), (int) (Float.parseFloat(_map) * 60), start, end));
+//
+//                if (_map.equals(String.valueOf(Integer.MAX_VALUE))) {
+//                    if (value.getNum() > 0) {
+//                        values.add(value);
+//                    }
+//                } else {
+//                    values.add(value);
+//                }
+//                total += value.getNum();
+//                lastValue = Float.parseFloat(_map);
+            }
+        }
+        for (DurationMapValue value : values) {
+//            value.setRate(1f * value.getNum() / total);
+            value.setRip(1f * value.getIp() / tip);
+            value.setRuv(1f * value.getUv() / tuv);
+            value.setRpv(1f * value.getPv() / tpv);
+            value.setRvt(1f * value.getVt() / tvt);
+        }
+        return values;
+    }
+
+    @Override
+    public List<PeriodMapValue> visitPeriodMap(String idsite, String map, Date start, Date end) {
+        List<PeriodMapValue> list = new ArrayList<>();
+        map = map.matches("(\\d[\\d\\.]*,)+\\d[\\d\\.]*") ? map : "1,2,4,7,14";
+        map = map + "," + Integer.MAX_VALUE;
+        String[] maps = map.split(",");
+        int tpv = 0,tvt = 0,tuv = 0,tip = 0;//total = 0;
+        float lastValue = 0;
+        for (String _map : maps) {
+            PeriodMapValue value = mapper.visitPeriodMap(idsite, (int) (lastValue * 24 * 60 * 60), (int) (Float.parseFloat(_map) * 24 * 60 * 60), start, end);
+            if (value == null) {
+                value = new PeriodMapValue();
+            }
+            value.map(lastValue, Float.parseFloat(_map), "天");
+
+            if (_map.equals(String.valueOf(Integer.MAX_VALUE))) {
+                if (!value.isEmpty()) {
+                    list.add(value);
+                }
+            } else {
+                list.add(value);
+            }
+            tip += value.getIp();
+            tuv += value.getUv();
+            tpv += value.getPv();
+            tvt += value.getVt();
+            lastValue = Float.parseFloat(_map);
+//            PeriodMapValue value = new PeriodMapValue(lastValue, Float.parseFloat(_map), "天");
+//            value.setNum(mapper.visitPeriodMap(idsite, (int) (lastValue * 24 * 60 * 60), (int) (Float.parseFloat(_map) * 24 * 60 * 60), start, end));
+//
+//            if (_map.equals(String.valueOf(Integer.MAX_VALUE))) {
+//                if (value.getNum() > 0) {
+//                    list.add(value);
+//                }
+//            } else {
+//                list.add(value);
+//            }
+//            total += value.getNum();
+//            lastValue = Float.parseFloat(_map);
+        }
+        for (PeriodMapValue value : list) {
+//            value.setRate(1f * value.getNum() / total);
+            value.setRip(1f * value.getIp() / tip);
+            value.setRuv(1f * value.getUv() / tuv);
+            value.setRpv(1f * value.getPv() / tpv);
+            value.setRvt(1f * value.getVt() / tvt);
         }
         return list;
     }

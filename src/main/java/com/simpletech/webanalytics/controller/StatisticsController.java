@@ -23,7 +23,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("v1/statistics/site/{siteId:\\d+}")
-public class StatisticsController extends BaseController{
+public class StatisticsController extends BaseController {
 
     @Autowired
     StatisticsService service;
@@ -37,12 +37,12 @@ public class StatisticsController extends BaseController{
     /**
      * 新老用户-趋势
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 新老用户
      */
     @RequestMapping("visitor/span")
@@ -56,13 +56,13 @@ public class StatisticsController extends BaseController{
     /**
      * 新老用户-趋势
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param period 时段周期 [时|日|周|月]
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param period  时段周期 [时|日|周|月]
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 新老用户
      */
     @RequestMapping("visitor/trend/{period:hour|day|week|month}")
@@ -79,14 +79,14 @@ public class StatisticsController extends BaseController{
     /**
      * 页面分享-排行
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param limit  分页限制
-     * @param skip   分页起始
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param limit   分页限制
+     * @param skip    分页起始
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 页面分享排行
      */
     @RequestMapping("share/rank/{limit:\\d+}/{skip:\\d+}")
@@ -100,12 +100,12 @@ public class StatisticsController extends BaseController{
     /**
      * 页面分享-时段
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 页面分享排行
      */
     @RequestMapping("page/{urlId}/share/span")
@@ -119,12 +119,12 @@ public class StatisticsController extends BaseController{
     /**
      * 页面分享-趋势
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 页面分享排行
      */
     @RequestMapping("page/{urlId}/share/trend/{period:hour|day|week|month}")
@@ -140,12 +140,12 @@ public class StatisticsController extends BaseController{
     /**
      * 分享排行-总数
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 页面分享排行-总数
      */
     @RequestMapping("share/rank/count")
@@ -159,13 +159,13 @@ public class StatisticsController extends BaseController{
     /**
      * 分享传播-图点线列表
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param urlId  页面ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param urlId   页面ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 分享图点线列表
      */
     @RequestMapping("page/{urlId}/share/map")
@@ -179,12 +179,12 @@ public class StatisticsController extends BaseController{
     /**
      * 单页性别-排行
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 分享去向-排行
      */
     @RequestMapping("page/{urlId}/share/sex/rank/{ranktype:pv|uv}")
@@ -198,12 +198,12 @@ public class StatisticsController extends BaseController{
     /**
      * 整站性别-排行
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 分享去向-排行
      */
     @RequestMapping("share/sex/rank/{ranktype:pv|uv}")
@@ -217,12 +217,12 @@ public class StatisticsController extends BaseController{
     /**
      * 分享去向-排行
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 分享去向-排行
      */
     @RequestMapping("page/{urlId}/share/to/rank/{ranktype:pv|uv}")
@@ -236,14 +236,14 @@ public class StatisticsController extends BaseController{
     /**
      * 页面排行-[入口|出口]
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param limit  分页限制
-     * @param skip   分页起始
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param limit   分页限制
+     * @param skip    分页起始
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return [入口|出口]页面
      */
     @RequestMapping("{type:entry|exit}/rank/{ranktype:pv|uv|vt|ip}/{limit:\\d+}/{skip:\\d+}")
@@ -257,12 +257,12 @@ public class StatisticsController extends BaseController{
     /**
      * 页面排行-[入口|出口]-总数
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return [入口|出口]页面-总数
      */
     @RequestMapping("{type:entry|exit}/rank/count")
@@ -276,14 +276,14 @@ public class StatisticsController extends BaseController{
     /**
      * 页面排行-标题和链接
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param limit  分页限制
-     * @param skip   分页起始
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param limit   分页限制
+     * @param skip    分页起始
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 标题排行
      */
     @RequestMapping("{type:title|url}/rank/{ranktype:vt|uv|pv}/{limit:\\d+}/{skip:\\d+}")
@@ -297,12 +297,12 @@ public class StatisticsController extends BaseController{
     /**
      * 页面排行-标题和链接-总数
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 标题排行
      */
     @RequestMapping("{type:title|url}/rank/count")
@@ -315,14 +315,15 @@ public class StatisticsController extends BaseController{
 
     /**
      * 分享统计-个人
-     * @param siteId   网站ID
-     * @param subsite  子站ID
-     * @param urlId    页面ID
-     * @param openid   微信用户ID
-     * @param offset   偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span     跨度 [day|week|month|year]
-     * @param start    开始时间 ("yyyyMMddHHmmss")
-     * @param end      结束时间 ("yyyyMMddHHmmss")
+     *
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param urlId   页面ID
+     * @param openid  微信用户ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 分享统计
      */
     @RequestMapping("page/{urlId}/user/{openid}/share")
@@ -364,7 +365,7 @@ public class StatisticsController extends BaseController{
      *
      * @param ranking 排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp
      * @param siteId  网站ID
-     * @param subsite  子站ID
+     * @param subsite 子站ID
      * @param urlId   页面ID
      * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span    跨度 [day|week|month|year]
@@ -410,7 +411,7 @@ public class StatisticsController extends BaseController{
      *
      * @param ranking 排行类型 brand|model|nettype|browser|system|appname|resolution|depth|lang|country|province|city|ip|isp
      * @param siteId  网站ID
-     * @param subsite  子站ID
+     * @param subsite 子站ID
      * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
      * @param span    跨度 [day|week|month|year]
      * @param start   开始时间 ("yyyyMMddHHmmss")
@@ -428,16 +429,16 @@ public class StatisticsController extends BaseController{
     /**
      * 事件详细-趋势
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param name   事件名称
-     * @param period 时段周期 [时|日|周|月]
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
-     * @param limit  分页限制
-     * @param skip   分页起始
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param name    事件名称
+     * @param period  时段周期 [时|日|周|月]
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
+     * @param limit   分页限制
+     * @param skip    分页起始
      * @return 事件详细-趋势 {status:[true|false],data:[{time,date,num,rn,user,ru},...]}
      */
     @RequestMapping("event/name/{name}/trend/{period:hour|day|week|month}/{limit:\\d+}/{skip:\\d+}")
@@ -451,13 +452,13 @@ public class StatisticsController extends BaseController{
     /**
      * 事件详细-时段
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param name   事件名称
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param name    事件名称
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 事件详细-趋势 {status:[true|false],data:[{time,date,num,rn,user,ru},...]}
      */
     @RequestMapping("event/name/{name}/span")
@@ -471,14 +472,14 @@ public class StatisticsController extends BaseController{
     /**
      * 事件详细-趋势
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param name   事件名称
-     * @param period 时段周期 [时|日|周|月]
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param name    事件名称
+     * @param period  时段周期 [时|日|周|月]
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 事件详细-趋势 {status:[true|false],data:[{time,date,num,rn,user,ru},...]}
      */
     @RequestMapping("event/name/{name}/trend/{period:hour|day|week|month}")
@@ -495,14 +496,14 @@ public class StatisticsController extends BaseController{
     /**
      * 事件统计-排行
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
-     * @param limit  分页限制
-     * @param skip   分页起始
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
+     * @param limit   分页限制
+     * @param skip    分页起始
      * @return 事件统计-排行 {status:[true|false],data:[{name,num,rn,user,ru},...]}
      */
     @RequestMapping("event/rank/{limit:\\d+}/{skip:\\d+}")
@@ -516,12 +517,12 @@ public class StatisticsController extends BaseController{
     /**
      * 事件统计-排行-总数
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 事件统计-排行-总数 {status:[true|false],data:1}
      */
     @RequestMapping("event/rank/count")
@@ -535,12 +536,12 @@ public class StatisticsController extends BaseController{
     /**
      * 事件统计-趋势
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 事件统计-排行 {status:[true|false],data:[{name,num,rn,user,ru},...]}
      */
     @RequestMapping("event/trend/{period:hour|day|week|month}")
@@ -556,12 +557,12 @@ public class StatisticsController extends BaseController{
     /**
      * 事件统计-时段
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 事件统计-排行 {status:[true|false],data:[{name,num,rn,user,ru},...]}
      */
     @RequestMapping("event/span")
@@ -575,13 +576,13 @@ public class StatisticsController extends BaseController{
     /**
      * Visit|PV|UV|IP 趋势
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param period 时段周期 [时|日|周|月]
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param period  时段周期 [时|日|周|月]
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 统计数据
      */
     @RequestMapping("visit/trend/{period:hour|day|week|month}")
@@ -598,12 +599,12 @@ public class StatisticsController extends BaseController{
     /**
      * Visit|PV|UV|IP 时段
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 统计数据
      */
     @RequestMapping("visit/span")
@@ -618,14 +619,14 @@ public class StatisticsController extends BaseController{
     /**
      * 页面 Visit|PV|UV|IP 趋势
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param urlId  页面ID
-     * @param period 时段周期 [时|日|周|月]
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param urlId   页面ID
+     * @param period  时段周期 [时|日|周|月]
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 统计数据
      */
     @RequestMapping("page/{urlId}/trend/{period:hour|day|week|month}")
@@ -642,13 +643,13 @@ public class StatisticsController extends BaseController{
     /**
      * 页面 Visit|PV|UV|IP 时段
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param urlId  页面ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param urlId   页面ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 统计数据
      */
     @RequestMapping("page/{urlId}/span")
@@ -662,13 +663,13 @@ public class StatisticsController extends BaseController{
     /**
      * 访问时间-分布 （服务器时间，浏览器时间）
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param type   时间类型  server-服务器时间|local-浏览器时间
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param type    时间类型  server-服务器时间|local-浏览器时间
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 统计数据
      */
     @RequestMapping("visit/{type:server|local}/time/map")
@@ -684,14 +685,14 @@ public class StatisticsController extends BaseController{
     /**
      * 页面时间-分布 （服务器时间，浏览器时间）
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
-     * @param type   时间类型  server-服务器时间|local-浏览器时间
-     * @param urlId  页面ID
-     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param span   跨度 [day|week|month|year]
-     * @param start  开始时间 ("yyyyMMddHHmmss")
-     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param type    时间类型  server-服务器时间|local-浏览器时间
+     * @param urlId   页面ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
      * @return 统计数据
      */
     @RequestMapping("page/{urlId}/{type:server|local}/time/map")
@@ -700,28 +701,85 @@ public class StatisticsController extends BaseController{
         start = timeStart(start, span, offset);
         String idsite = getIdSite(siteId, subsite);
         int days = countDays(Period.day, start, end);
-        return super.mapExclude(service.pageTimeMap(idsite, urlId, type, days, start, end),"ip","rip");
+        return super.mapExclude(service.pageTimeMap(idsite, urlId, type, days, start, end), "ip", "rip");
     }
 
     /**
-     * 访问页数-排行
+     * 用户忠诚度-访问页数-排行
      *
-     * @param siteId 网站ID
-     * @param subsite  子站ID
+     * @param siteId  网站ID
+     * @param subsite 子站ID
+     * @param offset  偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param type    时间类型  view-访问页数|unique-不同页数
+     * @param map     分布格式 如格式 1,2,6,9 表示分布结果 1,2,3-6,7-9,大于9
+     * @param span    跨度 [day|week|month|year]
+     * @param start   开始时间 ("yyyyMMddHHmmss")
+     * @param end     结束时间 ("yyyyMMddHHmmss")
+     * @return 统计数据
+     */
+    @RequestMapping("visit/page/{type:view|unique}/map")
+    public Object visitPageMap(@PathVariable int siteId, @PathVariable VisitPageType type, @RequestParam String map, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.visitPageMap(idsite, type, map, start, end);
+    }
+
+    /**
+     * 用户忠诚度-访问时长-分布
+     *
+     * @param siteId 区域ID
      * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
-     * @param type   时间类型  view-访问页数|unique-不同页数
      * @param map    分布格式 如格式 1,2,6,9 表示分布结果 1,2,3-6,7-9,大于9
      * @param span   跨度 [day|week|month|year]
      * @param start  开始时间 ("yyyyMMddHHmmss")
      * @param end    结束时间 ("yyyyMMddHHmmss")
      * @return 统计数据
      */
-    @RequestMapping("visit/page/{type:view:unique}/map")
-    public Object visitPageMap(@PathVariable int siteId, @PathVariable VisitPageType type, @RequestParam String map, String subsite, Integer offset, Period span, Date start, Date end) {
+    @RequestMapping("visit/duration/map")
+    public Object visitDurationMap(@PathVariable int siteId, @RequestParam String map, String subsite, Integer offset, Period span, Date start, Date end) {
         end = timeEnd(end, span, offset);
         start = timeStart(start, span, offset);
         String idsite = getIdSite(siteId, subsite);
-        return service.visitPageMap(idsite, type, map, start, end);
+        return service.visitDurationMap(idsite, map, start, end);
+    }
+
+    /**
+     * 用户忠诚度-访问频次-分布
+     *
+     * @param siteId 区域ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param map    分布格式 如格式 1,2,6,9 表示分布结果 1,2,3-6,7-9,大于9
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return 统计数据
+     */
+    @RequestMapping("visit/frequency/map")
+    public Object visitFrequencyMap(@PathVariable int siteId, @RequestParam String map, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.visitFrequencyMap(idsite, map, start, end);
+    }
+
+    /**
+     * 用户忠诚度-访问周期-分布
+     *
+     * @param siteId 区域ID
+     * @param offset 偏移 0=当天 -1=昨天 1=明天 -2 2 -3...
+     * @param map    分布格式 如格式 1,2,6,9 表示分布结果 1,2,3-6,7-9,大于9
+     * @param span   跨度 [day|week|month|year]
+     * @param start  开始时间 ("yyyyMMddHHmmss")
+     * @param end    结束时间 ("yyyyMMddHHmmss")
+     * @return 统计数据
+     */
+    @RequestMapping("visit/period/map")
+    public Object visitPeriodMap(@PathVariable int siteId, @RequestParam String map, String subsite, Integer offset, Period span, Date start, Date end) {
+        end = timeEnd(end, span, offset);
+        start = timeStart(start, span, offset);
+        String idsite = getIdSite(siteId, subsite);
+        return service.visitPeriodMap(idsite, map, start, end);
     }
 
     /**

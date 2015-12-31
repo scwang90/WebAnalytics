@@ -66,6 +66,11 @@ public class Visit extends ModelBase{
 	@Column("visit_totaltime")
 	private Integer visitTotaltime;
 	/**
+	 * 上次访问到现在的时间差
+	 */
+	@Column("time_from_last")
+	private Integer timeFromLast;
+	/**
 	 * 当前urlID
 	 */
 	private String idurl;
@@ -308,7 +313,15 @@ public class Visit extends ModelBase{
 	public void setVisitTotaltime(Integer visitTotaltime) {
 		this.visitTotaltime = visitTotaltime;
 	}
-	
+
+	public Integer getTimeFromLast() {
+		return timeFromLast;
+	}
+
+	public void setTimeFromLast(Integer timeFromLast) {
+		this.timeFromLast = timeFromLast;
+	}
+
 	public String getIdurl(){
 		return this.idurl;
 	}

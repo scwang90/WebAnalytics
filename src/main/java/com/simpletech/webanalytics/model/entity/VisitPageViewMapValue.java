@@ -10,6 +10,10 @@ public class VisitPageViewMapValue extends MapValue{
     private int pv;             //pv 数
     private int uv;             //独立用户数
     private int ip;             //pv 数
+//    private float rvt;          //占比 visit 数
+//    private float rpv;          //占比 pv 数
+//    private float ruv;          //占比 独立用户数
+//    private float rip;          //占比 pv 数
 
     public VisitPageViewMapValue() {
     }
@@ -49,6 +53,38 @@ public class VisitPageViewMapValue extends MapValue{
     public void setIp(int ip) {
         this.ip = ip;
     }
+
+//    public float getRvt() {
+//        return rvt;
+//    }
+//
+//    public void setRvt(float rvt) {
+//        this.rvt = rvt;
+//    }
+//
+//    public float getRpv() {
+//        return rpv;
+//    }
+//
+//    public void setRpv(float rpv) {
+//        this.rpv = rpv;
+//    }
+//
+//    public float getRuv() {
+//        return ruv;
+//    }
+//
+//    public void setRuv(float ruv) {
+//        this.ruv = ruv;
+//    }
+//
+//    public float getRip() {
+//        return rip;
+//    }
+//
+//    public void setRip(float rip) {
+//        this.rip = rip;
+//    }
 
     @Override
     public boolean isEmpty() {

@@ -5,5 +5,6 @@ package com.simpletech.webanalytics.model.constant;
  * Created by 树朾 on 2015/10/8.
  */
 public enum VisitPageType {
-    view,unique
+    view,//浏览次数（不唯一）
+    unique//唯一页面（页面排重）
 }

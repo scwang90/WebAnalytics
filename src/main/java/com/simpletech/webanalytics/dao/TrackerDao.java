@@ -48,26 +48,50 @@ public interface TrackerDao {
     /**
      * 获取 siteId网站 访问者detect 30分钟内的 Visit（如果不存在则添加）
      *
-     * @param siteId 网站ID
+     * @param siteId    网站ID
      * @param idsubsite 子站ID
-     * @param detect 探针抓取对象
-     * @param url    Url 对象
-     * @param title  Title 对象
+     * @param detect    探针抓取对象
+     * @param url       Url 对象
+     * @param title     Title 对象
      * @return 返回有效的 Visit 对象
      */
     Visit getVisitHalfHour(int siteId, String idsubsite, JsDetect detect, Url url, Title title);
 
     /**
-     * 获取 siteId网站 访问者detect 30分钟内的 Action（如果不存在则添加）
+     * 获取 siteId网站 访问者detect 30分钟内的 Action
      *
-     * @param siteId 网站ID
+     * @param siteId    网站ID
      * @param idsubsite 子站ID
-     * @param detect 探针抓取对象
-     * @param url    Url 对象
-     * @param title  Title 对象
+     * @param detect    探针抓取对象
+     * @param url       Url 对象
+     * @param title     Title 对象
      * @return 返回有效的 Visit 对象
      */
     Action getActionHalfHour(int siteId, String idsubsite, JsDetect detect, Url url, Title title);
+
+    /**
+     * 获取 siteId网站 访问者detect 最后的 Action
+     *
+     * @param siteId    网站ID
+     * @param idsubsite 子站ID
+     * @param detect    探针抓取对象
+     * @param url       Url 对象
+     * @param title     Title 对象
+     * @return 返回有效的 Visit 对象
+     */
+    Action getActionLast(int siteId, String idsubsite, JsDetect detect, Url url, Title title);
+
+    /**
+     * 获取 siteId网站 访问者detect 最后的 Visit
+     *
+     * @param siteId    网站ID
+     * @param idsubsite 子站ID
+     * @param detect    探针抓取对象
+     * @param url       Url 对象
+     * @param title     Title 对象
+     * @return 返回有效的 Visit 对象
+     */
+    Visit getVisitLast(int siteId, String idsubsite, JsDetect detect, Url url, Title title);
 
     /**
      * 根据网站ID获取网站
@@ -79,31 +103,32 @@ public interface TrackerDao {
 
     /**
      * 更新 Visit
-     * @param idsubsite 子站ID
      *
-     * @param visit Visit
+     * @param idsubsite 子站ID
+     * @param visit     Visit
      */
     void updateVisit(String idsubsite, Visit visit);
 
     /**
      * 添加 action
-     * @param idsubsite 子站ID
      *
-     * @param action action
+     * @param idsubsite 子站ID
+     * @param action    action
      */
     void insertAction(String idsubsite, Action action);
 
     /**
      * 添加事件
-     * @param idsubsite 子站ID
      *
-     * @param event event
+     * @param idsubsite 子站ID
+     * @param event     event
      */
     void insertEvent(String idsubsite, Event event);
 
     /**
      * 新的 Event 产生时更新 Visit
-     *  主要是 事件数量统计
+     * 主要是 事件数量统计
+     *
      * @param siteId    网站ID
      * @param idsubsite 子站ID
      * @param idvtor    访问者ID
@@ -133,4 +158,30 @@ public interface TrackerDao {
      * @return 新的VisitID
      */
     String newVisit(int siteId, String idsubsite, JsDetect detect, Url url, Title title);
+
+    /**
+     * 新创建一个 Visit
+     *
+     * @param siteId    网站ID
+     * @param action    上一个Visit的最后一个log（可能为null）
+     * @param idsubsite 子站ID
+     * @param detect    探针抓取对象
+     * @param url       Url 对象
+     * @param title     Title 对象
+     * @return 新的VisitID
+     */
+    String newVisit(int siteId, String idsubsite, Action action, JsDetect detect, Url url, Title title);
+
+    /**
+     * 新创建一个 Visit
+     *
+     * @param siteId    网站ID
+     * @param last      上一个Visit
+     * @param idsubsite 子站ID
+     * @param detect    探针抓取对象
+     * @param url       Url 对象
+     * @param title     Title 对象
+     * @return 新的VisitID
+     */
+    String newVisit(int siteId, String idsubsite, Visit last, JsDetect detect, Url url, Title title);
 }

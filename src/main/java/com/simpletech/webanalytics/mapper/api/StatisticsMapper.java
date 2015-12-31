@@ -1106,7 +1106,7 @@ public interface StatisticsMapper {
     int exitUrlsRankCount(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end);
 
     /**
-     * 访问页面数-分布
+     * 用户忠诚度-访问页面数-分布
      *
      * @param idsite 网站ID
      * @param min    最小值
@@ -1148,5 +1148,50 @@ public interface StatisticsMapper {
             "      GROUP BY idvisit) AS tt\n" +
             "  WHERE up>=#{min} AND up<=#{max}")
     VisitPageUniqueMapValue visitPageUniqueMap(@Param("idsite") String idsite, @Param("min") int min, @Param("max") int max, @Param("start") Date start, @Param("end") Date end);
+
+    /**
+     * 用户忠诚度-访问频次-分布
+     *
+     * @param idsite 区域ID
+     * @param min    最小持续时间
+     * @param max    最大持续时间
+     * @param start  开始时间
+     * @param end    结束时间
+     * @return 数量
+     */
+    @Select("SELECT COUNT(*) FROM (SELECT COUNT(id) num FROM t_visit AS t WHERE idsite=${idsite} AND (create_time BETWEEN #{start} AND #{end}) GROUP BY idvisitor ) AS tt WHERE tt.num>=#{min} AND tt.num<=#{max} ")
+    int visitFrequencyMap(@Param("idsite") String idsite, @Param("min") int min, @Param("max") int max, @Param("start") Date start, @Param("end") Date end);
+
+    /**
+     * 用户忠诚度-访问时长-分布
+     *
+     * @param idsite 区域ID
+     * @param min    最小持续时间
+     * @param max    最大持续时间
+     * @param start  开始时间
+     * @param end    结束时间
+     * @return 数量
+     */
+    @Select("SELECT COUNT(id) vt,COUNT(DISTINCT idvisitor) uv,SUM(count_visits) pv,COUNT(DISTINCT location_ip) ip FROM t_visit AS t WHERE idsite=${idsite} AND visit_totaltime>#{min} AND visit_totaltime<=#{max} AND (create_time BETWEEN #{start} AND #{end}) ")
+    DurationMapValue visitDurationMap(@Param("idsite") String idsite, @Param("min") int min, @Param("max") int max, @Param("start") Date start, @Param("end") Date end);
+
+    /**
+     * 用户忠诚度-访问周期-分布
+     *
+     * @param idsite      网站ID
+     * @param start       开始时间
+     * @param end         结束时间
+     * @return 数量
+     */
+    @Select("SELECT COUNT(id) vt,COUNT(DISTINCT idvisitor) uv,COUNT(DISTINCT location_ip) ip,SUM(count_visits) pv " +
+            "FROM (SELECT AVG(time_from_last) period,id,idvisitor,location_ip,count_visits\n" +
+            "   FROM t_visit AS t \n" +
+            "   WHERE idsite=${idsite} \n" +
+            "   AND time_from_last > 0\n" +
+            "   AND (create_time BETWEEN #{start} AND #{end}) \n" +
+            "   GROUP BY idvisitor) AS tt\n" +
+            "WHERE tt.period>=#{min} AND tt.period<=#{max} \n")
+    PeriodMapValue visitPeriodMap(@Param("idsite") String idsite, @Param("min") int min, @Param("max") int max, @Param("start") Date start, @Param("end") Date end);
+
 
 }

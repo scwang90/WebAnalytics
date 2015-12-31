@@ -86,7 +86,7 @@ public interface StatisticsService {
     List<VisitTimeMapValue> pageTimeMap(String idsite, String idurl, TimeType type, int days, Date start, Date end);
 
     /**
-     * 访问页数 - 排行
+     * 用户忠诚度-访问页数-分布
      *
      * @param idsite 网站IDE
      * @param type   时间类型  server-服务器时间|local-浏览器时间
@@ -95,6 +95,40 @@ public interface StatisticsService {
      * @param end    结束时间   @return 访问时间
      */
     List<MapValue> visitPageMap(String idsite, VisitPageType type, String map, Date start, Date end);
+
+
+    /**
+     * 用户忠诚度-到访频次-分布
+     *
+     * @param idsite 区域ID
+     * @param map    分布格式 如格式 1,2,6,9 表示分布结果 1,2,3-6,7-9,大于9
+     * @param start  开始时间
+     * @param end    结束时间
+     * @return 统计数据
+     */
+    List<FrequencyMapValue> visitFrequencyMap(String idsite, String map, Date start, Date end);
+
+    /**
+     * 用户忠诚度-驻店时长-分布
+     *
+     * @param idsite 区域ID
+     * @param map    分布格式 如格式 1,2,6,9 表示分布结果 1,2,3-6,7-9,大于9
+     * @param start  开始时间
+     * @param end    结束时间
+     * @return 统计数据
+     */
+    List<DurationMapValue> visitDurationMap(String idsite, String map, Date start, Date end);
+
+    /**
+     * 用户忠诚度-访问周期-分布
+     *
+     * @param idsite 区域ID
+     * @param map    分布格式 如格式 1,2,6,9 表示分布结果 1,2,3-6,7-9,大于9
+     * @param start  开始时间
+     * @param end    结束时间
+     * @return 统计数据
+     */
+    List<PeriodMapValue> visitPeriodMap(String idsite, String map, Date start, Date end);
 
     /**
      * 事件统计-时段

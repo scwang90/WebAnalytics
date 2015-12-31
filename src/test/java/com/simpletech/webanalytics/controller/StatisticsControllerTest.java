@@ -35,6 +35,31 @@ public class StatisticsControllerTest {
     }
 
     @Test
+    public void visitDurationMap() {
+        Object result = controller.visitDurationMap(4, "1,2,6", "", -1, Period.day, null, null);
+        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+    }
+
+    @Test
+    public void visitFrequencyMap() {
+        Object result = controller.visitFrequencyMap(4, "1,2,6", "", -1, Period.day, null, null);
+        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+    }
+
+    @Test
+    public void visitPeriodMap() {
+        Object result = controller.visitPeriodMap(4, "1,2,6", "", -1, Period.day, null, null);
+        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+    }
+
+
+    @Test
+    public void visitPageMap() {
+        Object result = controller.visitPageMap(1, VisitPageType.unique, "1,2,6", "", -1, Period.month, null, null);
+        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+    }
+
+    @Test
     public void testVisitorSpan() {
         Object result = controller.visitorSpan(4, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
@@ -131,15 +156,15 @@ public class StatisticsControllerTest {
     @Test
     public void shareMap() {
         long start = System.currentTimeMillis();
-        Object result = controller.shareMap(1, "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", "",0, Period.month, null, null);
+        Object result = controller.shareMap(1, "5f8ddda3-3f4c-4408-b1b1-2768f2d76b17", "", 0, Period.month, null, null);
         long end = System.currentTimeMillis();
-        System.out.println("spent="+(end-start)/1000);
+        System.out.println("spent=" + (end - start) / 1000);
         String json;
         start = System.currentTimeMillis();
         System.out.println(json = JacksonUtil.toJson(result).replace("{", "\n{"));
         end = System.currentTimeMillis();
-        System.out.println("spent="+(end-start)/1000);
-        System.out.println((json.length()*2)/1000+"kb");
+        System.out.println("spent=" + (end - start) / 1000);
+        System.out.println((json.length() * 2) / 1000 + "kb");
     }
 
 }

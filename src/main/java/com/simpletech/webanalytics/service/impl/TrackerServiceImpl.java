@@ -1,6 +1,7 @@
 package com.simpletech.webanalytics.service.impl;
 
 import com.simpletech.webanalytics.dao.TrackerDao;
+import com.simpletech.webanalytics.mapper.api.TrackerMapper;
 import com.simpletech.webanalytics.model.entity.JsDetect;
 import com.simpletech.webanalytics.model.entity.JsEvent;
 import com.simpletech.webanalytics.model.*;
@@ -27,7 +28,6 @@ public class TrackerServiceImpl implements TrackerService {
     TrackerDao dao;
     @Autowired
     TrackShareService trackShareService;
-
 
     private static SynchronizedLock<String> actionLocks = new SynchronizedLock<>(10000);
 
@@ -60,6 +60,28 @@ public class TrackerServiceImpl implements TrackerService {
                     naction.setRefTimeSpent((int)(new Date().getTime()-action.getCreateTime().getTime()));
                 } else {
                     naction.setIdvisit(dao.newVisit(siteId, idsubsite, detect, url, title));
+                }
+
+//                Action action = dao.getActionLast(siteId, idsubsite, detect, url, title);
+//                if (action != null && System.currentTimeMillis() - action.getCreateTime().getTime() < 30 * 60 * 1000) {
+//                    dao.updateVisitPageView(action.getIdvisit(), url.getId(), title.getId());
+//                    naction.setIdvisit(action.getIdvisit());
+//                    naction.setRefIdUrl(action.getIdurl());
+//                    naction.setRefIdTitle(action.getIdtitle());
+//                    naction.setRefTimeSpent((int) (new Date().getTime() - action.getCreateTime().getTime()));
+//                } else {
+//                    naction.setIdvisit(dao.newVisit(siteId, idsubsite, action, detect, url, title));
+//                }
+
+                Visit visit = dao.getVisitLast(siteId, idsubsite, detect, url, title);
+                if (visit != null && System.currentTimeMillis() - visit.getActionLastTime().getTime() < 30 * 60 * 1000) {
+                    dao.updateVisitPageView(visit.getId(), url.getId(), title.getId());
+                    naction.setIdvisit(visit.getId());
+                    naction.setRefIdUrl(visit.getIdurlExit());
+                    naction.setRefIdTitle(visit.getIdtitleExit());
+                    naction.setRefTimeSpent((int) (new Date().getTime() - visit.getActionLastTime().getTime()));
+                } else {
+                    naction.setIdvisit(dao.newVisit(siteId, idsubsite, visit, detect, url, title));
                 }
 
                 dao.insertAction(idsubsite, naction);
@@ -167,7 +189,7 @@ public class TrackerServiceImpl implements TrackerService {
                 idsubsite = (AfStringUtil.isEmpty(idsubsite)) ? "" : idsubsite;
             }
             if (idsubsite.length() > 36) {
-                System.out.println("子站标识过长："+idsubsite);
+                System.out.println("子站标识过长：" + idsubsite);
                 idsubsite = "";
             }
         }

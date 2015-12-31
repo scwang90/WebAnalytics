@@ -26,6 +26,21 @@ public class TeackerMapperTester {
     TrackerMapper mapper;
 
     @Test
+    public void time() {
+        long start = System.currentTimeMillis(),end = 0;
+        System.out.println(JacksonUtil.toJson(mapper.getActionHalfHour("'1'","e358d13c181837b3")));
+        end = System.currentTimeMillis();
+        System.out.println((end-start));
+
+        start = System.currentTimeMillis();
+        System.out.println(JacksonUtil.toJson(mapper.getVisitLast("'1'","e358d13c181837b3")));
+        end = System.currentTimeMillis();
+        System.out.println((end-start));
+        //456
+        //1972
+    }
+
+    @Test
     public void updateVisitEvent() throws Exception {
         Object result = mapper.updateVisitEvent("1");
         System.out.println(JacksonUtil.toJson(result));

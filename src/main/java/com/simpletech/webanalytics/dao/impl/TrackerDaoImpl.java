@@ -164,6 +164,16 @@ public class TrackerDaoImpl implements TrackerDao {
     }
 
     @Override
+    public Action getActionLast(int siteId, String idsubsite, JsDetect detect, Url url, Title title) {
+        return mapper.getActionLast(getIdSite(siteId, idsubsite), detect.getIdvtor());
+    }
+
+    @Override
+    public Visit getVisitLast(int siteId, String idsubsite, JsDetect detect, Url url, Title title) {
+        return mapper.getVisitLast(getIdSite(siteId, idsubsite), detect.getIdvtor());
+    }
+
+    @Override
     public Site findSiteById(int siteId) {
         return mapper.findSiteById(siteId);
     }
@@ -221,10 +231,62 @@ public class TrackerDaoImpl implements TrackerDao {
         visit.setActionLastTime(new Date());
         visit.setCountVisits(1);
         visit.setCountEvents(0);
+        visit.setTimeFromLast(0);
         AfReflecter.setMemberNoException(visit, "createTime", new Date());
         AfReflecter.setMemberNoException(visit, "updateTime", new Date());
         mapper.insertVisit(visit);
         return visit.getId();
     }
+
+    @Override
+    public String newVisit(int siteId, String idsubsite, Action action, JsDetect detect, Url url, Title title) {
+        Visit visit = detect.build(siteId);
+        visit.setIdurlEntry(url.getId());
+        visit.setIdtitleEntry(title.getId());
+        visit.setIdurlExit(url.getId());
+        visit.setIdtitleExit(title.getId());
+        visit.setNewUser(!mapper.existVisitor(siteId, detect.getIdvtor()));
+        visit.setNewSubUser(AfStringUtil.isEmpty(idsubsite) ? visit.getNewUser() : !mapper.existSubVisitor(siteId, idsubsite, detect.getIdvtor()));
+        visit.fillNullID();
+        visit.setIdsubsite(idsubsite);
+        visit.setActionLastTime(new Date());
+        visit.setCountVisits(1);
+        visit.setCountEvents(0);
+        if (action != null) {
+            visit.setTimeFromLast((int) ((System.currentTimeMillis()-action.getCreateTime().getTime())/1000l));
+        } else {
+            visit.setTimeFromLast(0);
+        }
+        AfReflecter.setMemberNoException(visit, "createTime", new Date());
+        AfReflecter.setMemberNoException(visit, "updateTime", new Date());
+        mapper.insertVisit(visit);
+        return visit.getId();
+    }
+
+    @Override
+    public String newVisit(int siteId, String idsubsite, Visit last, JsDetect detect, Url url, Title title) {
+        Visit visit = detect.build(siteId);
+        visit.setIdurlEntry(url.getId());
+        visit.setIdtitleEntry(title.getId());
+        visit.setIdurlExit(url.getId());
+        visit.setIdtitleExit(title.getId());
+        visit.setNewUser(!mapper.existVisitor(siteId, detect.getIdvtor()));
+        visit.setNewSubUser(AfStringUtil.isEmpty(idsubsite) ? visit.getNewUser() : !mapper.existSubVisitor(siteId, idsubsite, detect.getIdvtor()));
+        visit.fillNullID();
+        visit.setIdsubsite(idsubsite);
+        visit.setActionLastTime(new Date());
+        visit.setCountVisits(1);
+        visit.setCountEvents(0);
+        if (last != null) {
+            visit.setTimeFromLast((int) ((System.currentTimeMillis()-last.getActionLastTime().getTime())/1000l));
+        } else {
+            visit.setTimeFromLast(0);
+        }
+        AfReflecter.setMemberNoException(visit, "createTime", new Date());
+        AfReflecter.setMemberNoException(visit, "updateTime", new Date());
+        mapper.insertVisit(visit);
+        return visit.getId();
+    }
+
 }
 
