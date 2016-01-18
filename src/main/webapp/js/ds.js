@@ -1,6 +1,6 @@
 (function () {
     /**
-     * 定义常量
+     * 定义分享添加参数常量
      */
     var REFER_SHARETO = "shareto";
     var REFER_VISITORID = "wa_share_vtor";
@@ -21,15 +21,17 @@
         performance = global.performance,
         jsverson = "1.0",
         server = "/tracker",
+        //事件接口 /tracker/1.0/ten
         path_track_event = "/" + jsverson + "/ten",
+        //探针接口 /tracker/1.0/tpv
         path_track_pageview = "/" + jsverson + "/tpv",
+        //授权接口 /tracker/1.0/tur
         path_track_userinfo = "/" + jsverson + "/tur";
 
     /**
      * 客户端探测对象（如 饼干、分辨率...）
      */
-    var tracker = new Tracker(server, "1");
-    var detect = new Detect(global);
+    var tracker = new Tracker(server, "0");
     window.WADS = {
         linkChange: tracker.linkChange,
         trackEvent: tracker.trackEvent,
@@ -51,16 +53,6 @@
 
     // replace initialization array with proxy object
     _wapaq = new TrackerProxy();
-
-    //tracker.trackPageView();
-    //for(var p in detect){
-    //    if(typeof(detect[p])!="function"){
-    //        var val = detect[p] || empty;
-    //        println(p + " = " + val)
-    //    }
-    //}
-    //println("uid" + " = " + tracker.getVisitor().uuid);
-    //println("cookie" + " : " + document.cookie);
 
     /************************************************************
      * Proxy object
@@ -138,8 +130,8 @@
 
     /**
      * 追踪器
-     * @param {Object} global
-     * @param {Object} detect
+     * @param {Object} trackerUrl
+     * @param {Object} siteId
      */
     function Tracker(trackerUrl, siteId) {
         var
@@ -234,8 +226,7 @@
                 cookieCreatedTs = getValuesFromVisitorIdCookie().createTs;
 
             var createTs = parseInt(cookieCreatedTs, 10);
-            var originalTimeout = (createTs) + configVisitorCookieTimeout - nowTs;
-            return originalTimeout;
+            return  (createTs) + configVisitorCookieTimeout - nowTs;
         }
 
         /*
@@ -318,6 +309,7 @@
          private Long lasts;     //(可选) 访问者上一次访问时间
          * */
         function getPageviewParam() {
+            var detect = new Detect(global);
             var visitor = getValuesFromVisitorIdCookie();
             return "idsite=" + configTrackerSiteId
                 + "&idvtor=" + visitor.uuid
@@ -336,6 +328,7 @@
          private Float ev;       //(可选) 事件的值 (必须是一个浮点数或整数值(数字),而不是一个字符串)
          * */
         function getEventParam(category, action, name, value) {
+            var detect = new Detect(global);
             var visitor = getValuesFromVisitorIdCookie();
             return "idsite=" + configTrackerSiteId
                 + "&idvtor=" + visitor.uuid
@@ -420,6 +413,7 @@
             },
             sendAuthUserInfo: function (user, appid) {
                 if (user == undefined || user == null)return;
+                var detect = new Detect(global);
                 var visitor = getValuesFromVisitorIdCookie(),
                     visitorId = visitor.uuid,
                     param = ("url=" + encodeURIComponent(detect.url) +
@@ -536,40 +530,22 @@
             return empty;
         })();
         /**
-         * lost-
-         * &rand=322690
-         * &idsite=2
-         * &idvtor=1def74766ca0ddf1
-         * &idn=1
-         * &idvc=0
-         * &idts=1445417788039
-         * &visits=1445417788040
-         * &lastts=
-         *
-         * &java=false
-         * &cookie=false
-         * &color=0
-         * &cset=UTF-8
-         * &lang=zh-CN
-         * &fromvid=
-         * &fromvts=1445417788034
-         * &title=%E8%B4%B5%E5%B7%9E%E7%9C%81%E7%9B%B4%E6%9C%BA%E5%85%B
          * @returns {string}
          */
         this.getParam = function () {
-            return "&java=" + detect.java +
-            "&cookie=" + detect.cookie +
-            "&color=" + detect.color +
-            "&cset=" + detect.cset +
-            "&lang=" + detect.lang +
-            "&shareto=" + detect.shareto +
-            "&fromvid=" + detect.fromvid +
-            "&fromvts=" + detect.fromvts +
-            "&refer=" + detect.refer +
-            "&screen=" + detect.screen +
-            "&gtms=" + detect.gtms +
-            "&title=" + global.encode(detect.title) +
-            "&url=" + global.encode(detect.url);
+            return "&java=" + _this.java +
+            "&cookie=" + _this.cookie +
+            "&color=" + _this.color +
+            "&cset=" + _this.cset +
+            "&lang=" + _this.lang +
+            "&shareto=" + _this.shareto +
+            "&fromvid=" + _this.fromvid +
+            "&fromvts=" + _this.fromvts +
+            "&refer=" + _this.refer +
+            "&screen=" + _this.screen +
+            "&gtms=" + _this.gtms +
+            "&title=" + global.encode(_this.title) +
+            "&url=" + global.encode(_this.url);
         };
     }
 

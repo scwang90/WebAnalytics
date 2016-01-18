@@ -61,7 +61,7 @@ public class StatisticsControllerTest {
 
     @Test
     public void testVisitorSpan() {
-        Object result = controller.visitorSpan(4, "", -1, Period.day, null, null);
+        Object result = controller.visitorSpan(3, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 
@@ -89,11 +89,14 @@ public class StatisticsControllerTest {
 //        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
 //    }
 //
-//    @Test
-//    public void testTitleurl() {
-//        Object result = controller.titleurl(1, PageRank.title, RankingType.pv, 10, 0, "", -1, Period.day, null, null);
-//        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
-//    }
+    @Test
+    public void testTitleurl() {
+        long start = System.currentTimeMillis();
+        Object result = controller.titleurlRank(3, PageRank.url, RankingType.uv, 10, 0, "", -1, Period.day, null, null);
+        long close = System.currentTimeMillis();
+        System.out.println("spent-" + (close - start));
+        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+    }
 //
 //    @Test
 //    public void testPageRank() {
@@ -149,7 +152,7 @@ public class StatisticsControllerTest {
 
     @Test
     public void testVisitSpan() {
-        Object result = controller.visitSpan(1, "", -1, Period.day, null, null);
+        Object result = controller.visitSpan(4, "", -1, Period.day, null, null);
         System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
     }
 

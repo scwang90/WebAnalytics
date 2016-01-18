@@ -36,14 +36,14 @@ public class JsDetect {
     private int idsite;     //(必需) 网站ID
     @Must("访问者ID")
     private String idvtor;  //(必需) 访问者ID 16个字符的十六进制字符串
-    private Boolean idn;    //(推荐) 是否新的访问者
+    private boolean idn;    //(推荐) 是否新的访问者
     @Must("访问者当前访问的次数")
-    private Integer idvc;   //(必需) 访问者当前访问的次数
+    private int idvc;       //(必需) 访问者当前访问的次数
     @Must("访问者第一次访问时间")
     private long idts;      //(必需) 访问者第一次访问时间
     @Must("访问者本次次访问时间")
-    private Long visits;    //(必需) 访问者本次次访问时间
-    private Long lastts;    //(按需) 访问者上一次访问时间
+    private long visits;    //(必需) 访问者本次次访问时间
+    private long lastts;    //(按需) 访问者上一次访问时间
 
     /**
      * 数据收集相关
@@ -51,12 +51,12 @@ public class JsDetect {
     @Must("当前页面的完整URL")
     private String url;     //(必需) 当前页面的完整URL
     @Must("页面加载时间")
-    private Integer gtms;   //(必需) 页面加载时间
+    private int gtms;       //(必需) 页面加载时间
     private String title;   //(推荐) 当前页面的标题
     private String screen;  //(推荐) 屏幕分辨率
     private String color;   //(可选) 颜色深度
-    private Boolean java;   //(推荐) 是否支持java
-    private Boolean cookie; //(推荐) 是否支持cookie
+    private boolean java;   //(推荐) 是否支持java
+    private boolean cookie; //(推荐) 是否支持cookie
     private String cset;    //(推荐) 浏览器编码
     private String lang;    //(推荐) 客户端语言
     private String refer;   //(推荐) 上一页面url
@@ -66,7 +66,7 @@ public class JsDetect {
      */
     private String shareto;  // 分享到
     private String fromvid;  // 分享者ID 16个字符的十六进制字符串
-    private Long fromvts;    // 分享者分享时间
+    private long fromvts;    // 分享者分享时间
 
 
     /**
@@ -143,7 +143,7 @@ public class JsDetect {
                 setRefer(refer + "-" + request.getQueryString());
             }
         } catch (Throwable e) {
-            e.printStackTrace();
+            new Exception(this.remoteAddr,e).printStackTrace();
         }
         try {
             //获取ip运营商
