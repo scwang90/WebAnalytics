@@ -30,6 +30,11 @@ import java.util.regex.Pattern;
 public class JsDetect {
 
     /**
+     * 后续添加的子站标识计算结果
+     */
+    public String idsubsite;//子站ID
+
+    /**
      * 访问者相关
      */
     @Must("网站ID")

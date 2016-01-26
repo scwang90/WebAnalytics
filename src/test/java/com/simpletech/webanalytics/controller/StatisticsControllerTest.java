@@ -31,7 +31,7 @@ public class StatisticsControllerTest {
 
     @Before
     public void setUp() {
-        LoggingAspect.log = false;
+        LoggingAspect.log = true;
     }
 
     @Test
@@ -104,11 +104,11 @@ public class StatisticsControllerTest {
 //        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
 //    }
 //
-//    @Test
-//    public void testRanking() {
-//        Object result = controller.ranking(1, Ranking.brand, RankingType.pv, 10, 0, "", -1, Period.day, null, null);
-//        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
-//    }
+    @Test
+    public void testRanking() {
+        Object result = controller.siteRank(6, Ranking.nettype, RankingType.pv, 10, 0, "", 0, Period.day, null, null);
+        System.out.println(JacksonUtil.toJson(result).replace("{", "\n{"));
+    }
 
     @Test
     public void testEventName() {

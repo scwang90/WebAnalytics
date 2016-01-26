@@ -37,6 +37,7 @@ public class TrackerServiceImpl implements TrackerService {
         if (site != null) {
             String idsubsite = getIdSubSite(site, detect.getUrl());
             dao.getSubSite(siteId, idsubsite);
+            detect.idsubsite = idsubsite;
 
             Url url = dao.getUrl(siteId, idsubsite, detect.getUrl(), detect.getTitle());
             Title title = dao.getTitle(siteId, idsubsite, detect.getTitle());
