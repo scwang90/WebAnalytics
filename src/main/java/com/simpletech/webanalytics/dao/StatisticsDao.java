@@ -87,14 +87,4 @@ public interface StatisticsDao {
 	 */
 	List<MapPointValue> fullShareUserInfo(List<MapPointValue> points, int max);
 
-	/**
-	 * 获取起始点列表
-	 * @param idsite   网站ID
-	 * @param urlId    页面ID
-	 * @param start    开始时间
-	 * @param end      结束时间
-	 * @return 起始点列表
-	 */
-	List<ShareStartPoint>  getShareStartPoint(String idsite, String urlId, Date start, Date end);
-
 }

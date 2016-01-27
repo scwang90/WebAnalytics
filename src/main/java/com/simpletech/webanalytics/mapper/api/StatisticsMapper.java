@@ -998,30 +998,6 @@ public interface StatisticsMapper {
     int shareRankCount(@Param("idsite") String idsite, @Param("start") Date start, @Param("end") Date end);
 
     /**
-     * 获取起始点列表
-     *
-     * @param idsite 网站ID
-     * @param urlId  页面ID
-     * @param start  开始时间
-     * @param end    结束时间
-     * @return 起始点列表
-     */
-    @Select("SELECT id , idsite , idsubsite , idurl , idvisitor , create_time createTime , update_time updateTime FROM t_share_start_point AS t WHERE idurl=#{urlId} AND (create_time BETWEEN #{start} AND #{end}) ")
-    List<ShareStartPoint> getShareStartPoint(@Param("idsite") String idsite, @Param("urlId") String urlId, @Param("start") Date start, @Param("end") Date end);
-
-    /**
-     * 获取起始点列表ID
-     *
-     * @param idsite 网站ID
-     * @param urlId  页面ID
-     * @param start  开始时间
-     * @param end    结束时间
-     * @return 起始点列表
-     */
-    @Select("SELECT idvisitor FROM t_share_start_point AS t WHERE idurl=#{urlId} AND (create_time BETWEEN #{start} AND #{end}) ")
-    List<String> getShareStartPointIds(@Param("idsite") String idsite, @Param("urlId") String urlId, @Param("start") Date start, @Param("end") Date end);
-
-    /**
      * 获取入口页面列表
      * Piwik SQL
      * SELECT visit_exit_idaction_url,t_log_action.name FROM `t_log_visit` LEFT JOIN t_log_action ON t_log_visit.visit_exit_idaction_url=t_log_action.idaction WHERE idsite=2 AND DATE_FORMAT(`visit_first_action_time`,'%y%m%d')=DATE_FORMAT(NOW(),'%y%m%d') GROUP BY visit_exit_idaction_url

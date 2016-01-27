@@ -581,10 +581,5 @@ public class StatisticsDaoImpl implements StatisticsDao {
         return mapper.sharePoint(idsite, urlId, start, end);
     }
 
-    @Override
-    public List<ShareStartPoint> getShareStartPoint(String idsite, String urlId, Date start, Date end) {
-        return mapper.getShareStartPoint(idsite, urlId, start, end);
-    }
-
 }
 
